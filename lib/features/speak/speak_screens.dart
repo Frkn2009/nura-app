@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/content/catalog.dart';
+import '../../data/content/language_guides.dart';
 import '../../data/models/models.dart';
+import '../../data/speech/speech_controller.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
@@ -88,6 +90,14 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   int holdSec = 0;
   Timer? timer;
   int score = 0;
+  final speech = SpeechController();
+  String heard = '';
+
+  @override
+  void initState() {
+    super.initState();
+    speech.warmUp();
+  }
 
   Scenario get scene => Catalog.byId(widget.scenarioId) ?? Catalog.forLang(LearnLang.en).first;
 
@@ -98,6 +108,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   @override
   void dispose() {
     timer?.cancel();
+    speech.dispose();
     super.dispose();
   }
 
@@ -116,6 +127,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     setState(() {
       holding = true;
       holdSec = 0;
+      heard = '';
     });
     timer?.cancel();
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -126,13 +138,27 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         _gate();
       }
     });
+    speech.startListen(
+      langCode: scene.lang.code,
+      onTick: (_) {},
+      onText: (t) => setState(() => heard = t),
+    );
   }
 
-  void _up() {
+  Future<void> _up() async {
     timer?.cancel();
+    final text = await speech.stopListen();
+    final expected = currentTurn.expected.toLowerCase();
+    final got = (text.isEmpty ? heard : text).toLowerCase();
+    var s = 62;
+    if (got.isNotEmpty) {
+      final words = expected.split(RegExp(r'\s+'));
+      final hit = words.where((w) => w.length > 2 && got.contains(w)).length;
+      s = (70 + (hit * 30 / (words.isEmpty ? 1 : words.length))).round().clamp(55, 98);
+    }
     setState(() {
       holding = false;
-      score = 78 + (currentTurn.expected.length % 17);
+      score = s;
       step = _Step.fix;
     });
     ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
@@ -231,6 +257,25 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Color(0xFFB8C8C0)),
               ),
+              if (LanguageGuide.of(scene.lang).tipFor(currentTurn.expected) != null) ...[
+                const SizedBox(height: 14),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1A4A3A),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Text(
+                    () {
+                      final tip = LanguageGuide.of(scene.lang).tipFor(currentTurn.expected)!;
+                      return '${tip.written}  →  ${tip.heard}\n${tip.example}  ≈  ${tip.exampleSaid}';
+                    }(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Nura.terrSoft, height: 1.35, fontSize: 13),
+                  ),
+                ),
+              ],
               const Spacer(),
               if (step == _Step.fix) ...[
                 Wrap(
@@ -272,11 +317,21 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 ),
                 const SizedBox(height: 10),
                 Text(holding ? '${holdSec}s' : i18n.holdToSpeak, style: const TextStyle(color: Color(0xFFB8C8C0))),
+                if (heard.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(heard, textAlign: TextAlign.center, style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 13)),
+                  ),
               ] else
                 FilledButton(
                   style: FilledButton.styleFrom(backgroundColor: Nura.terr),
-                  onPressed: _nextStep,
-                  child: Text(step == _Step.hear ? 'Dinledim' : 'Gölgeledim'),
+                  onPressed: () async {
+                    if (step == _Step.hear) {
+                      await speech.speakTarget(currentTurn.expected, scene.lang.code);
+                    }
+                    _nextStep();
+                  },
+                  child: Text(step == _Step.hear ? 'Dinle / duydum' : 'Gölgeledim'),
                 ),
             ],
           ),

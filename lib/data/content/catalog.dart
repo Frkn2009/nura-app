@@ -22,6 +22,7 @@ class Catalog {
     ..._pack(LearnLang.de, _de),
     ..._pack(LearnLang.fr, _fr),
     ..._pack(LearnLang.nl, _nl),
+    ..._pack(LearnLang.ar, _ar),
   ];
 
   static List<Scenario> _pack(LearnLang lang, List<_Raw> raws) {
@@ -58,13 +59,14 @@ class _Raw {
   final List<(String, String, String)> turns;
 }
 
-Map<UiLang, String> g(String tr, String en, String es, String de, String fr, String nl) => {
+Map<UiLang, String> g(String tr, String en, String es, String de, String fr, String nl, [String? ar]) => {
       UiLang.tr: tr,
       UiLang.en: en,
       UiLang.es: es,
       UiLang.de: de,
       UiLang.fr: fr,
       UiLang.nl: nl,
+      UiLang.ar: ar ?? en,
     };
 
 final _titlesAirport = g('Havaalanı check-in', 'Airport check-in', 'Facturación', 'Check-in', 'Enregistrement', 'Inchecken');

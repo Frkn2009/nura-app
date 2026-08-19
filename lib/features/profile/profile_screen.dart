@@ -53,6 +53,20 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () => ref.read(sessionProvider.notifier).setLearn(l),
             ),
           const SizedBox(height: 8),
+          NuraCard(
+            onTap: () => context.push('/guide'),
+            child: Row(
+              children: [
+                Text(p.learnLang.flag(), style: const TextStyle(fontSize: 22)),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Text('Yazım ve okunuş rehberi', style: TextStyle(fontWeight: FontWeight.w600)),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
           const Eyebrow('Ana dil / arayüz'),
           const SizedBox(height: 8),
           for (final u in UiLang.values)
@@ -69,9 +83,35 @@ class ProfileScreen extends ConsumerWidget {
             activeThumbColor: Nura.forest,
             onChanged: (v) => ref.read(sessionProvider.notifier).setPlus(v),
           ),
+          ListTile(
+            title: const Text('Gizlilik politikası'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/privacy'),
+          ),
+          ListTile(
+            title: const Text('Hesabı sil', style: TextStyle(color: Nura.terr)),
+            subtitle: const Text('Bu telefondaki tüm ilerleme silinir'),
+            onTap: () async {
+              final ok = await showDialog<bool>(
+                context: context,
+                builder: (c) => AlertDialog(
+                  title: const Text('Hesabı sil?'),
+                  content: const Text('Dil, seri ve kalıplar bu cihazdan gider. Geri alınmaz.'),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Vazgeç')),
+                    TextButton(onPressed: () => Navigator.pop(c, true), child: const Text('Sil')),
+                  ],
+                ),
+              );
+              if (ok == true) {
+                await ref.read(sessionProvider.notifier).wipeAccount();
+                if (context.mounted) context.go('/onboarding');
+              }
+            },
+          ),
           const SizedBox(height: 8),
           const Text(
-            'Ekonomi USD kilitli. Reklam eCPM ve AI maliyeti dolar. Mağaza fiyatı yerelleşir.',
+            'Ekonomi USD kilitli. Ses mümkün olduğunca cihazda.',
             style: TextStyle(color: Nura.muted, fontSize: 13, height: 1.4),
           ),
         ],

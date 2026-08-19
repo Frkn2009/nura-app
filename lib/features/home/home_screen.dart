@@ -122,7 +122,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text('My Progress', style: Theme.of(context).textTheme.titleLarge),
+          Text('İlerleme', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -132,6 +132,23 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
+          NuraCard(
+            onTap: () => context.push('/guide'),
+            child: Row(
+              children: [
+                Text(p.learnLang.flag(), style: const TextStyle(fontSize: 22)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    '${p.learnLang.label(p.uiLang)} nasıl okunur',
+                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
           NuraCard(
             onTap: () => context.push('/review'),
             child: Row(

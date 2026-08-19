@@ -104,6 +104,11 @@ class SessionController extends Notifier<UserProfile> {
 
   int _epochDay() => DateTime.now().millisecondsSinceEpoch ~/ 86400000;
 
+  Future<void> wipeAccount() async {
+    await _prefs.remove(_key);
+    state = UserProfile.empty;
+  }
+
   Scenario todayScenario() {
     final list = Catalog.forLang(state.learnLang);
     if (list.isEmpty) {

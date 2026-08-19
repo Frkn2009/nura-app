@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
+import '../../features/guide/language_guide_screen.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
@@ -24,6 +25,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     final pages = [
       _native(i18n, p),
       _learn(i18n, p),
+      LanguageGuideBody(lang: p.learnLang),
       _why(i18n, p),
       _level(i18n, p),
     ];

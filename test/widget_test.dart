@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nura/data/content/catalog.dart';
+import 'package:nura/data/content/language_guides.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 
@@ -11,9 +12,21 @@ void main() {
     }
   });
 
+  test('Arabic A1 pack exists', () {
+    expect(Catalog.forLang(LearnLang.ar).length, 8);
+    expect(Catalog.byId('ar_cafe')?.phrases.first.target, contains('قهوة'));
+    expect(LanguageGuide.of(LearnLang.ar).headline.toLowerCase(), contains('arapça'));
+  });
+
   test('NIE phrase exists in Spanish', () {
     expect(Catalog.byId('es_nie'), isNotNull);
     expect(Catalog.phraseById('es_nie_0')?.target, contains('NIE'));
+  });
+
+  test('Dutch oe maps to u sound', () {
+    final g = LanguageGuide.of(LearnLang.nl);
+    expect(g.rules.first.written, 'oe');
+    expect(g.tipFor('boek')?.heard.toLowerCase(), contains('u'));
   });
 
   test('offline translate hits Spanish rent from Turkish', () {

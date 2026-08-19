@@ -1,6 +1,6 @@
-enum LearnLang { en, es, de, fr, nl }
+enum LearnLang { en, es, de, fr, nl, ar }
 
-enum UiLang { tr, en, es, de, fr, nl }
+enum UiLang { tr, en, es, de, fr, nl, ar }
 
 enum Motive { work, travel, exam, life }
 
@@ -20,6 +20,8 @@ extension LearnLangX on LearnLang {
         return '🇫🇷';
       case LearnLang.nl:
         return '🇳🇱';
+      case LearnLang.ar:
+        return '🇸🇦';
     }
   }
 
@@ -32,6 +34,7 @@ extension LearnLangX on LearnLang {
         UiLang.de: 'Englisch',
         UiLang.fr: 'Anglais',
         UiLang.nl: 'Engels',
+        UiLang.ar: 'الإنجليزية',
       },
       LearnLang.es: {
         UiLang.tr: 'İspanyolca',
@@ -40,6 +43,7 @@ extension LearnLangX on LearnLang {
         UiLang.de: 'Spanisch',
         UiLang.fr: 'Espagnol',
         UiLang.nl: 'Spaans',
+        UiLang.ar: 'الإسبانية',
       },
       LearnLang.de: {
         UiLang.tr: 'Almanca',
@@ -48,6 +52,7 @@ extension LearnLangX on LearnLang {
         UiLang.de: 'Deutsch',
         UiLang.fr: 'Allemand',
         UiLang.nl: 'Duits',
+        UiLang.ar: 'الألمانية',
       },
       LearnLang.fr: {
         UiLang.tr: 'Fransızca',
@@ -56,6 +61,7 @@ extension LearnLangX on LearnLang {
         UiLang.de: 'Französisch',
         UiLang.fr: 'Français',
         UiLang.nl: 'Frans',
+        UiLang.ar: 'الفرنسية',
       },
       LearnLang.nl: {
         UiLang.tr: 'Flemenkçe',
@@ -86,6 +92,8 @@ extension UiLangX on UiLang {
         return 'Français';
       case UiLang.nl:
         return 'Nederlands';
+      case UiLang.ar:
+        return 'العربية';
     }
   }
 }

@@ -102,6 +102,7 @@ class OfflineTranslate {
         LearnLang.de => r.$3,
         LearnLang.fr => r.$4,
         LearnLang.nl => r.$5,
+        LearnLang.ar => _arWord(r.$1),
       };
       out[target] = {
         UiLang.tr: r.$6,
@@ -110,8 +111,32 @@ class OfflineTranslate {
         UiLang.de: r.$3,
         UiLang.fr: r.$4,
         UiLang.nl: r.$5,
+        UiLang.ar: _arWord(r.$1),
       };
     }
     return out;
   }
+
+  static String _arWord(String en) => switch (en) {
+        'hello' => 'مرحبا',
+        'please' => 'من فضلك',
+        'thank you' => 'شكرا',
+        'yes' => 'نعم',
+        'no' => 'لا',
+        'water' => 'ماء',
+        'bathroom' => 'الحمام',
+        'help' => 'مساعدة',
+        'today' => 'اليوم',
+        'tomorrow' => 'غدا',
+        'left' => 'يسار',
+        'right' => 'يمين',
+        'station' => 'المحطة',
+        'airport' => 'المطار',
+        'rent' => 'إيجار',
+        'contract' => 'عقد',
+        'NIE number' => 'رقم الإقامة',
+        'I don’t understand' => 'لا أفهم',
+        'Do you speak English?' => 'هل تتكلم الإنجليزية؟',
+        _ => en,
+      };
 }
