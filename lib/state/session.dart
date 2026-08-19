@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/l10n/i18n.dart';
 import '../data/content/catalog.dart';
 import '../data/models/models.dart';
+import '../data/supabase/supa_service.dart';
 
 final prefsProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError('prefs override in main');
@@ -47,6 +49,11 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> _save(UserProfile p) async {
     state = p;
     await _prefs.setString(_key, jsonEncode(p.toJson()));
+    // Giriş yapılmışsa ve anahtarlar girilmişse buluta da yaz.
+    // Hata olsa bile akışı kesme; veri yerelde zaten duruyor.
+    if (Supa.enabled) {
+      unawaited(Supa.pushProfile(p).catchError((_) {}));
+    }
   }
 
   Future<void> setUi(UiLang ui) => _save(state.copyWith(uiLang: ui));
@@ -103,6 +110,16 @@ class SessionController extends Notifier<UserProfile> {
   }
 
   int _epochDay() => DateTime.now().millisecondsSinceEpoch ~/ 86400000;
+
+  /// Girişten sonra buluttan gelen profili kabul et.
+  Future<void> importRemote(UserProfile remote) async {
+    await _save(remote);
+  }
+
+  /// Yerel profili buluta yaz (girişten hemen sonra, bulutta satır yoksa).
+  Future<void> pushCurrent() async {
+    await Supa.pushProfile(state);
+  }
 
   Future<void> wipeAccount() async {
     await _prefs.remove(_key);

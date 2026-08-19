@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/ads/ad_gate_screen.dart';
+import '../../features/auth/auth_screen.dart';
 import '../../features/legal/privacy_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
 import '../../features/clips/clips_screen.dart';
@@ -30,6 +31,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/review', parentNavigatorKey: _root, builder: (_, __) => const ReviewScreen()),
       GoRoute(path: '/guide', parentNavigatorKey: _root, builder: (_, __) => const LanguageGuideScreen()),
       GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
+      GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),
       GoRoute(
         path: '/session',
         parentNavigatorKey: _root,
