@@ -208,6 +208,32 @@ final _es = <_Raw>[
     ('El agente pregunta qué buscas.', 'Estoy buscando un piso.', 'Estoy buscando un piso.'),
     ('Te enseña un anuncio.', '¿Cuánto es el alquiler?', '¿Cuánto es el alquiler?'),
   ]),
+  _Raw(
+    'nie',
+    g('NIE / kayıt', 'NIE / registration', 'NIE y empadronamiento', 'NIE / Anmeldung', 'NIE / enregistrement', 'NIE / inschrijving'),
+    [
+      ('Quiero solicitar el NIE.', g('NIE başvurusu yapmak istiyorum.', 'I want to apply for the NIE.', 'Quiero solicitar el NIE.', 'Ich möchte die NIE beantragen.', 'Je veux demander le NIE.', 'Ik wil de NIE aanvragen.')),
+      ('Necesito empadronarme.', g('Belediyeye kayıt olmam lazım.', 'I need to register at the town hall.', 'Necesito empadronarme.', 'Ich muss mich anmelden.', 'Je dois m’inscrire à la mairie.', 'Ik moet me inschrijven.')),
+      ('¿Qué documentos necesito?', g('Hangi evraklar lazım?', 'What documents do I need?', '¿Qué documentos necesito?', 'Welche Unterlagen brauche ich?', 'Quels documents faut-il ?', 'Welke documenten heb ik nodig?')),
+    ],
+    [
+      ('En extranjería te preguntan.', 'Quiero solicitar el NIE.', 'Quiero solicitar el NIE.'),
+      ('Te piden papeles.', '¿Qué documentos necesito?', '¿Qué documentos necesito?'),
+    ],
+  ),
+  _Raw(
+    'contrato',
+    g('Kira sözleşmesi', 'Rental contract', 'Contrato de alquiler', 'Mietvertrag', 'Contrat de location', 'Huurcontract'),
+    [
+      ('¿La fianza es de un mes?', g('Depozito bir aylık mı?', 'Is the deposit one month?', '¿La fianza es de un mes?', 'Ist die Kaution ein Monat?', 'La caution est d’un mois ?', 'Is de borg één maand?')),
+      ('¿Incluye agua y luz?', g('Su ve elektrik dahil mi?', 'Does it include water and electricity?', '¿Incluye agua y luz?', 'Sind Wasser und Strom inklusive?', 'Ça inclut l’eau et l’électricité ?', 'Zit water en stroom erbij?')),
+      ('Quiero leer el contrato.', g('Sözleşmeyi okumak istiyorum.', 'I want to read the contract.', 'Quiero leer el contrato.', 'Ich möchte den Vertrag lesen.', 'Je veux lire le contrat.', 'Ik wil het contract lezen.')),
+    ],
+    [
+      ('El casero habla de dinero.', '¿La fianza es de un mes?', '¿La fianza es de un mes?'),
+      ('Te da papeles.', 'Quiero leer el contrato.', 'Quiero leer el contrato.'),
+    ],
+  ),
 ];
 
 final _de = <_Raw>[

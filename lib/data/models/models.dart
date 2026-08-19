@@ -153,6 +153,8 @@ class UserProfile {
     required this.phrasesKnown,
     required this.speakSecondsUsed,
     required this.speakDayKey,
+    required this.bonusSpeakSeconds,
+    required this.adsWatchedToday,
     required this.learnedIds,
     required this.srs,
   });
@@ -168,6 +170,8 @@ class UserProfile {
   final int phrasesKnown;
   final int speakSecondsUsed;
   final String speakDayKey;
+  final int bonusSpeakSeconds;
+  final int adsWatchedToday;
   final Set<String> learnedIds;
   final Map<String, int> srs; // phraseId -> due epoch days
 
@@ -183,16 +187,22 @@ class UserProfile {
     phrasesKnown: 0,
     speakSecondsUsed: 0,
     speakDayKey: '',
+    bonusSpeakSeconds: 0,
+    adsWatchedToday: 0,
     learnedIds: {},
     srs: {},
   );
 
-  int get freeSpeakLimitSec => 60;
+  static const maxRewardedAdsPerDay = 3;
+
+  int get speakAllowance => isPlus ? 3600 : 60 + bonusSpeakSeconds;
 
   int remainingSpeakSeconds() {
-    if (isPlus) return 60 * 60;
-    return (freeSpeakLimitSec - speakSecondsUsed).clamp(0, freeSpeakLimitSec);
+    if (isPlus) return 3600;
+    return (speakAllowance - speakSecondsUsed).clamp(0, speakAllowance);
   }
+
+  bool get canWatchAd => !isPlus && adsWatchedToday < maxRewardedAdsPerDay;
 
   UserProfile copyWith({
     UiLang? uiLang,
@@ -206,6 +216,8 @@ class UserProfile {
     int? phrasesKnown,
     int? speakSecondsUsed,
     String? speakDayKey,
+    int? bonusSpeakSeconds,
+    int? adsWatchedToday,
     Set<String>? learnedIds,
     Map<String, int>? srs,
   }) {
@@ -221,6 +233,8 @@ class UserProfile {
       phrasesKnown: phrasesKnown ?? this.phrasesKnown,
       speakSecondsUsed: speakSecondsUsed ?? this.speakSecondsUsed,
       speakDayKey: speakDayKey ?? this.speakDayKey,
+      bonusSpeakSeconds: bonusSpeakSeconds ?? this.bonusSpeakSeconds,
+      adsWatchedToday: adsWatchedToday ?? this.adsWatchedToday,
       learnedIds: learnedIds ?? this.learnedIds,
       srs: srs ?? this.srs,
     );
@@ -238,6 +252,8 @@ class UserProfile {
         'phrasesKnown': phrasesKnown,
         'speakSecondsUsed': speakSecondsUsed,
         'speakDayKey': speakDayKey,
+        'bonusSpeakSeconds': bonusSpeakSeconds,
+        'adsWatchedToday': adsWatchedToday,
         'learnedIds': learnedIds.toList(),
         'srs': srs,
       };
@@ -255,6 +271,8 @@ class UserProfile {
       phrasesKnown: j['phrasesKnown'] as int? ?? 0,
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',
+      bonusSpeakSeconds: j['bonusSpeakSeconds'] as int? ?? 0,
+      adsWatchedToday: j['adsWatchedToday'] as int? ?? 0,
       learnedIds: {...(j['learnedIds'] as List? ?? const []).cast<String>()},
       srs: ((j['srs'] as Map?) ?? const {}).map((k, v) => MapEntry('$k', (v as num).toInt())),
     );

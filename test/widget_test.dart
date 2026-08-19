@@ -4,10 +4,16 @@ import 'package:nura/data/models/models.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 
 void main() {
-  test('each learn language has 8 A1 scenes', () {
+  test('each learn language has a full A1 pack', () {
     for (final lang in LearnLang.values) {
-      expect(Catalog.forLang(lang).length, 8, reason: lang.name);
+      final n = Catalog.forLang(lang).length;
+      expect(n, lang == LearnLang.es ? 10 : 8, reason: lang.name);
     }
+  });
+
+  test('NIE phrase exists in Spanish', () {
+    expect(Catalog.byId('es_nie'), isNotNull);
+    expect(Catalog.phraseById('es_nie_0')?.target, contains('NIE'));
   });
 
   test('offline translate hits Spanish rent from Turkish', () {

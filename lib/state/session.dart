@@ -36,7 +36,12 @@ class SessionController extends Notifier<UserProfile> {
   UserProfile _rollDay(UserProfile p) {
     final t = _today();
     if (p.speakDayKey == t) return p;
-    return p.copyWith(speakSecondsUsed: 0, speakDayKey: t);
+    return p.copyWith(
+      speakSecondsUsed: 0,
+      speakDayKey: t,
+      bonusSpeakSeconds: 0,
+      adsWatchedToday: 0,
+    );
   }
 
   Future<void> _save(UserProfile p) async {
@@ -64,6 +69,37 @@ class SessionController extends Notifier<UserProfile> {
     final ids = {...state.learnedIds, id};
     final due = {...state.srs, id: _epochDay() + 1};
     await _save(state.copyWith(learnedIds: ids, phrasesKnown: ids.length, srs: due));
+  }
+
+  Future<void> watchRewardedAd() async {
+    var p = _rollDay(state);
+    if (!p.canWatchAd) return;
+    await _save(p.copyWith(
+      bonusSpeakSeconds: p.bonusSpeakSeconds + 60,
+      adsWatchedToday: p.adsWatchedToday + 1,
+    ));
+  }
+
+  List<Phrase> duePhrases() {
+    final today = _epochDay();
+    final out = <Phrase>[];
+    for (final e in state.srs.entries) {
+      if (e.value > today) continue;
+      final p = Catalog.phraseById(e.key);
+      if (p != null) out.add(p);
+    }
+    return out;
+  }
+
+  Future<void> grade(String id, int quality) async {
+    // quality: 0 again, 3 good, 5 easy
+    final add = switch (quality) {
+      >= 5 => 7,
+      >= 3 => 3,
+      _ => 0,
+    };
+    final due = {...state.srs, id: _epochDay() + add};
+    await _save(state.copyWith(srs: due));
   }
 
   int _epochDay() => DateTime.now().millisecondsSinceEpoch ~/ 86400000;

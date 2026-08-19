@@ -40,7 +40,7 @@ class HomeScreen extends ConsumerWidget {
                   alignment: Alignment.center,
                   children: [
                     CircularProgressIndicator(
-                      value: p.isPlus ? 1 : remain / 60,
+                      value: p.isPlus ? 1 : (p.speakAllowance == 0 ? 0 : remain / p.speakAllowance),
                       color: Nura.terr,
                       backgroundColor: Nura.line,
                       strokeWidth: 5,
@@ -132,6 +132,23 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
+          NuraCard(
+            onTap: () => context.push('/review'),
+            child: Row(
+              children: [
+                const Icon(Icons.replay, color: Nura.forest),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    '${i18n.review} · ${ref.read(sessionProvider.notifier).duePhrases().length} kart hazır',
+                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
           NuraCard(
             child: Row(
               children: [

@@ -71,6 +71,8 @@ class SpeakHubScreen extends ConsumerWidget {
   }
 }
 
+enum _Step { hear, shadow, speak, fix }
+
 class SpeakSessionScreen extends ConsumerStatefulWidget {
   const SpeakSessionScreen({super.key, required this.scenarioId});
   final String scenarioId;
@@ -81,13 +83,17 @@ class SpeakSessionScreen extends ConsumerStatefulWidget {
 
 class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   int turn = 0;
+  _Step step = _Step.hear;
   bool holding = false;
   int holdSec = 0;
   Timer? timer;
-  String? lastHeard;
   int score = 0;
 
   Scenario get scene => Catalog.byId(widget.scenarioId) ?? Catalog.forLang(LearnLang.en).first;
+
+  SpeakTurn get currentTurn => scene.turns[turn.clamp(0, scene.turns.length - 1)];
+
+  Phrase get currentPhrase => scene.phrases[turn.clamp(0, scene.phrases.length - 1)];
 
   @override
   void dispose() {
@@ -95,10 +101,16 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     super.dispose();
   }
 
+  void _gate() {
+    timer?.cancel();
+    setState(() => holding = false);
+    context.push('/ad');
+  }
+
   void _down() {
     final p = ref.read(sessionProvider);
     if (!p.isPlus && p.remainingSpeakSeconds() <= 0) {
-      context.push('/paywall');
+      _gate();
       return;
     }
     setState(() {
@@ -111,29 +123,55 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
       ref.read(sessionProvider.notifier).consumeSpeak(1);
       if (!ref.read(sessionProvider).isPlus && ref.read(sessionProvider).remainingSpeakSeconds() <= 0) {
         _up();
-        context.push('/paywall');
+        _gate();
       }
     });
   }
 
   void _up() {
     timer?.cancel();
-    final expected = scene.turns[turn.clamp(0, scene.turns.length - 1)].expected;
     setState(() {
       holding = false;
-      lastHeard = expected;
-      score = 78 + (expected.length % 17);
+      score = 78 + (currentTurn.expected.length % 17);
+      step = _Step.fix;
     });
-    final phrase = scene.phrases[turn.clamp(0, scene.phrases.length - 1)];
-    ref.read(sessionProvider.notifier).learnPhrase(phrase.id);
+    ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
+  }
+
+  void _nextStep() {
+    setState(() {
+      step = switch (step) {
+        _Step.hear => _Step.shadow,
+        _Step.shadow => _Step.speak,
+        _Step.speak => _Step.fix,
+        _Step.fix => _Step.hear,
+      };
+    });
+  }
+
+  void _nextTurn() {
+    if (turn < scene.turns.length - 1) {
+      setState(() {
+        turn++;
+        step = _Step.hear;
+        score = 0;
+      });
+    } else {
+      context.go('/app');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
     final p = ref.watch(sessionProvider);
-    final t = scene.turns[turn.clamp(0, scene.turns.length - 1)];
     final remain = p.remainingSpeakSeconds();
+    const labels = {
+      _Step.hear: '1  Duy',
+      _Step.shadow: '2  Gölgele',
+      _Step.speak: '3  Konuş',
+      _Step.fix: '4  Düzelt',
+    };
 
     return Scaffold(
       backgroundColor: Nura.forest,
@@ -153,61 +191,92 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
           child: Column(
             children: [
-              const CircleAvatar(radius: 48, backgroundColor: Nura.cream, child: Text('M', style: TextStyle(fontSize: 32, color: Nura.forest, fontWeight: FontWeight.w700))),
-              const SizedBox(height: 10),
-              const Text('Maya · coach', style: TextStyle(color: Nura.terrSoft)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  for (final s in _Step.values)
+                    Text(
+                      labels[s]!,
+                      style: TextStyle(
+                        color: s == step ? Nura.terrSoft : const Color(0xFF6A8A7E),
+                        fontWeight: s == step ? FontWeight.w700 : FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                    ),
+                ],
+              ),
               const SizedBox(height: 22),
-              Text(t.prompt, textAlign: TextAlign.center, style: const TextStyle(color: Nura.cream, fontSize: 18, height: 1.35)),
-              const SizedBox(height: 16),
-              if (t.scaffold != null)
-                Text('İskele: ${t.scaffold}', textAlign: TextAlign.center, style: const TextStyle(color: Color(0xFFB8C8C0))),
+              const CircleAvatar(
+                radius: 40,
+                backgroundColor: Nura.cream,
+                child: Text('M', style: TextStyle(fontSize: 28, color: Nura.forest, fontWeight: FontWeight.w700)),
+              ),
+              const SizedBox(height: 8),
+              const Text('Maya', style: TextStyle(color: Nura.terrSoft)),
+              const SizedBox(height: 18),
+              Text(
+                currentTurn.prompt,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 15),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                currentTurn.expected,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Nura.cream, fontSize: 24, fontWeight: FontWeight.w600, height: 1.3),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                currentPhrase.glossFor(p.uiLang),
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Color(0xFFB8C8C0)),
+              ),
               const Spacer(),
-              if (lastHeard != null) ...[
-                Text(lastHeard!, textAlign: TextAlign.center, style: const TextStyle(color: Nura.cream, fontSize: 20, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 12),
+              if (step == _Step.fix) ...[
                 Wrap(
                   spacing: 8,
                   children: [
-                    _chip('Pronunciation $score'),
-                    _chip('Fluency ${score - 8}'),
-                    _chip('Clarity ${score + 6}'),
+                    _chip('Telaffuz $score'),
+                    _chip('Akıcılık ${score - 8}'),
+                    _chip('Netlik ${score + 6}'),
                   ],
                 ),
-                const SizedBox(height: 18),
-              ],
-              GestureDetector(
-                onLongPressStart: (_) => _down(),
-                onLongPressEnd: (_) => _up(),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 160),
-                  width: holding ? 96 : 84,
-                  height: holding ? 96 : 84,
-                  decoration: BoxDecoration(
-                    color: Nura.cream,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Nura.terr, width: 4),
-                    boxShadow: holding ? [BoxShadow(color: Nura.terr.withValues(alpha: 0.45), blurRadius: 24)] : null,
-                  ),
-                  child: Icon(Icons.mic, color: Nura.terr, size: holding ? 38 : 32),
+                const SizedBox(height: 12),
+                const Text(
+                  'Tek düzeltme: cümleyi yavaş, kelime kelime tekrarla.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xFFB8C8C0)),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(holding ? '${holdSec}s' : i18n.holdToSpeak, style: const TextStyle(color: Color(0xFFB8C8C0))),
-              const SizedBox(height: 18),
-              if (lastHeard != null)
+                const SizedBox(height: 18),
                 FilledButton(
                   style: FilledButton.styleFrom(backgroundColor: Nura.terr),
-                  onPressed: () {
-                    if (turn < scene.turns.length - 1) {
-                      setState(() {
-                        turn++;
-                        lastHeard = null;
-                      });
-                    } else {
-                      context.go('/app');
-                    }
-                  },
+                  onPressed: _nextTurn,
                   child: Text(turn < scene.turns.length - 1 ? i18n.continueCta : 'Bitir'),
+                ),
+              ] else if (step == _Step.speak) ...[
+                GestureDetector(
+                  onLongPressStart: (_) => _down(),
+                  onLongPressEnd: (_) => _up(),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 160),
+                    width: holding ? 96 : 84,
+                    height: holding ? 96 : 84,
+                    decoration: BoxDecoration(
+                      color: Nura.cream,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Nura.terr, width: 4),
+                      boxShadow: holding ? [BoxShadow(color: Nura.terr.withValues(alpha: 0.45), blurRadius: 24)] : null,
+                    ),
+                    child: Icon(Icons.mic, color: Nura.terr, size: holding ? 38 : 32),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(holding ? '${holdSec}s' : i18n.holdToSpeak, style: const TextStyle(color: Color(0xFFB8C8C0))),
+              ] else
+                FilledButton(
+                  style: FilledButton.styleFrom(backgroundColor: Nura.terr),
+                  onPressed: _nextStep,
+                  child: Text(step == _Step.hear ? 'Dinledim' : 'Gölgeledim'),
                 ),
             ],
           ),
