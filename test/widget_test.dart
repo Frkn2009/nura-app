@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nura/data/content/catalog.dart';
 import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
+import 'package:nura/data/models/achievements.dart';
 import 'package:nura/data/models/leaderboard.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/speech/speech_controller.dart';
@@ -146,6 +147,24 @@ void main() {
     expect(entry.rank, 12);
     expect(entry.xp, 340);
     expect(entry.isMe, true);
+  });
+
+
+  test('all ten achievements have metadata and persist in profiles', () {
+    expect(Achievement.values.length, 10);
+    for (final achievement in Achievement.values) {
+      expect(achievement.title, isNotEmpty);
+      expect(achievement.description, isNotEmpty);
+    }
+    final profile = UserProfile.empty.copyWith(
+      completedScenes: 3,
+      gamesCompleted: 2,
+      completedLanguages: {LearnLang.en, LearnLang.es, LearnLang.de},
+      achievements: {Achievement.firstStep, Achievement.gamer},
+    );
+    final restored = UserProfile.fromJson(profile.toJson());
+    expect(restored.completedLanguages.length, 3);
+    expect(restored.achievements, containsAll(profile.achievements));
   });
 
 }

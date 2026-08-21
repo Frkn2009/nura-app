@@ -258,7 +258,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         score = 0;
       });
     } else {
-      await ref.read(sessionProvider.notifier).completeScene();
+      await ref.read(sessionProvider.notifier).completeScene(scene.lang);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Sahne tamamlandı · +50 XP')),

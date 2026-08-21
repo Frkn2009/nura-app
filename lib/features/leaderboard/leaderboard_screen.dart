@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/models/achievements.dart';
 import '../../data/models/leaderboard.dart';
 import '../../data/supabase/supa_service.dart';
 import '../../state/session.dart';
@@ -21,10 +22,20 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   @override
   void initState() {
     super.initState();
-    if (Supa.currentEmail != null) request = Supa.weeklyLeaderboard();
+    if (Supa.currentEmail != null) request = _load();
   }
 
-  void _reload() => setState(() => request = Supa.weeklyLeaderboard());
+  Future<List<LeaderboardEntry>> _load() async {
+    final entries = await Supa.weeklyLeaderboard();
+    if (mounted && entries.any((entry) => entry.isMe && entry.rank == 1)) {
+      await ref.read(sessionProvider.notifier).unlockAchievement(
+            Achievement.weeklyChampion,
+          );
+    }
+    return entries;
+  }
+
+  void _reload() => setState(() => request = _load());
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +47,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
         child: email == null
             ? _signedOut(context, profile.dailyXp)
             : FutureBuilder<List<LeaderboardEntry>>(
-                future: request ??= Supa.weeklyLeaderboard(),
+                future: request ??= _load(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -89,7 +100,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
     final ownOutside = entries.where((entry) => entry.isMe && entry.rank > 10).firstOrNull;
     return RefreshIndicator(
       onRefresh: () async {
-        final next = await Supa.weeklyLeaderboard();
+        final next = await _load();
         if (mounted) setState(() => request = Future.value(next));
       },
       child: ListView(

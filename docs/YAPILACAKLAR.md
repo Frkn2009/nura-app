@@ -66,16 +66,16 @@
 - [x] Kendi sıranı gör
 
 ### 9. Başarım / Rozet Sistemi
-- [ ] 🏅 İlk Adım — İlk sahneyi tamamla
-- [ ] 🔥 Ateş Başladı — 3 gün üst üste seri
-- [ ] 📚 10 Kalıp — 10 cümle öğren
-- [ ] 🎮 Oyuncu — İlk oyunu tamamla
-- [ ] 🌍 Gezgin — 3 farklı dilde sahne tamamla
-- [ ] 💎 Plus — Plus üye ol
-- [ ] 🏆 Hafta Birincisi — Leaderboard 1. ol
-- [ ] ⭐ 100 XP — Günlük hedefe ulaş
-- [ ] 🔥🔥 7 Gün Seri — 1 hafta kesintisiz
-- [ ] 🎯 Mükemmel — Bir oyunda %100 doğru
+- [x] 🏅 İlk Adım — İlk sahneyi tamamla
+- [x] 🔥 Ateş Başladı — 3 gün üst üste seri
+- [x] 📚 10 Kalıp — 10 cümle öğren
+- [x] 🎮 Oyuncu — İlk oyunu tamamla
+- [x] 🌍 Gezgin — 3 farklı dilde sahne tamamla
+- [x] 💎 Plus — Plus üye ol
+- [x] 🏆 Hafta Birincisi — Leaderboard 1. ol
+- [x] ⭐ 100 XP — Günlük hedefe ulaş
+- [x] 🔥🔥 7 Gün Seri — 1 hafta kesintisiz
+- [x] 🎯 Mükemmel — Bir oyunda %100 doğru
 
 ### 10. Bildirimler — Öğretmen gibi
 - [ ] "Hadi derse! 📚 Bugün henüz pratik yapmadın"

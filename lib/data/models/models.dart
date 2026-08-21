@@ -1,3 +1,5 @@
+import 'achievements.dart';
+
 /// 30 öğrenme dili
 enum LearnLang {
   en, es, de, fr, nl, ar, // mevcut 6
@@ -215,9 +217,14 @@ class UserProfile {
     required this.onboarded,
     required this.isPlus,
     required this.streak,
+    required this.lastPracticeDayKey,
     required this.totalXp,
     required this.dailyXp,
     required this.xpDayKey,
+    required this.completedScenes,
+    required this.gamesCompleted,
+    required this.completedLanguages,
+    required this.achievements,
     required this.phrasesKnown,
     required this.speakSecondsUsed,
     required this.speakDayKey,
@@ -235,9 +242,14 @@ class UserProfile {
   final bool onboarded;
   final bool isPlus;
   final int streak;
+  final String lastPracticeDayKey;
   final int totalXp;
   final int dailyXp;
   final String xpDayKey;
+  final int completedScenes;
+  final int gamesCompleted;
+  final Set<LearnLang> completedLanguages;
+  final Set<Achievement> achievements;
   final int phrasesKnown;
   final int speakSecondsUsed;
   final String speakDayKey;
@@ -255,9 +267,14 @@ class UserProfile {
     onboarded: false,
     isPlus: false,
     streak: 0,
+    lastPracticeDayKey: '',
     totalXp: 0,
     dailyXp: 0,
     xpDayKey: '',
+    completedScenes: 0,
+    gamesCompleted: 0,
+    completedLanguages: {},
+    achievements: {},
     phrasesKnown: 0,
     speakSecondsUsed: 0,
     speakDayKey: '',
@@ -313,9 +330,14 @@ class UserProfile {
     bool? onboarded,
     bool? isPlus,
     int? streak,
+    String? lastPracticeDayKey,
     int? totalXp,
     int? dailyXp,
     String? xpDayKey,
+    int? completedScenes,
+    int? gamesCompleted,
+    Set<LearnLang>? completedLanguages,
+    Set<Achievement>? achievements,
     int? phrasesKnown,
     int? speakSecondsUsed,
     String? speakDayKey,
@@ -333,9 +355,14 @@ class UserProfile {
       onboarded: onboarded ?? this.onboarded,
       isPlus: isPlus ?? this.isPlus,
       streak: streak ?? this.streak,
+      lastPracticeDayKey: lastPracticeDayKey ?? this.lastPracticeDayKey,
       totalXp: totalXp ?? this.totalXp,
       dailyXp: dailyXp ?? this.dailyXp,
       xpDayKey: xpDayKey ?? this.xpDayKey,
+      completedScenes: completedScenes ?? this.completedScenes,
+      gamesCompleted: gamesCompleted ?? this.gamesCompleted,
+      completedLanguages: completedLanguages ?? this.completedLanguages,
+      achievements: achievements ?? this.achievements,
       phrasesKnown: phrasesKnown ?? this.phrasesKnown,
       speakSecondsUsed: speakSecondsUsed ?? this.speakSecondsUsed,
       speakDayKey: speakDayKey ?? this.speakDayKey,
@@ -355,9 +382,14 @@ class UserProfile {
         'onboarded': onboarded,
         'isPlus': isPlus,
         'streak': streak,
+        'lastPracticeDayKey': lastPracticeDayKey,
         'totalXp': totalXp,
         'dailyXp': dailyXp,
         'xpDayKey': xpDayKey,
+        'completedScenes': completedScenes,
+        'gamesCompleted': gamesCompleted,
+        'completedLanguages': completedLanguages.map((language) => language.name).toList(),
+        'achievements': achievements.map((achievement) => achievement.name).toList(),
         'phrasesKnown': phrasesKnown,
         'speakSecondsUsed': speakSecondsUsed,
         'speakDayKey': speakDayKey,
@@ -377,9 +409,20 @@ class UserProfile {
       onboarded: j['onboarded'] as bool? ?? false,
       isPlus: j['isPlus'] as bool? ?? false,
       streak: (j['streak'] as num?)?.toInt() ?? 0,
+      lastPracticeDayKey: j['lastPracticeDayKey'] as String? ?? '',
       totalXp: (j['totalXp'] as num?)?.toInt() ?? 0,
       dailyXp: (j['dailyXp'] as num?)?.toInt() ?? 0,
       xpDayKey: j['xpDayKey'] as String? ?? '',
+      completedScenes: (j['completedScenes'] as num?)?.toInt() ?? 0,
+      gamesCompleted: (j['gamesCompleted'] as num?)?.toInt() ?? 0,
+      completedLanguages: (j['completedLanguages'] as List? ?? const [])
+          .map((value) => LearnLang.values.asNameMap()['$value'])
+          .whereType<LearnLang>()
+          .toSet(),
+      achievements: (j['achievements'] as List? ?? const [])
+          .map((value) => Achievement.values.asNameMap()['$value'])
+          .whereType<Achievement>()
+          .toSet(),
       phrasesKnown: j['phrasesKnown'] as int? ?? 0,
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',

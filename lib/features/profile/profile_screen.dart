@@ -71,6 +71,23 @@ class ProfileScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: 10),
+          NuraCard(
+            onTap: () => context.push('/achievements'),
+            child: Row(
+              children: [
+                const Icon(Icons.military_tech_outlined, color: Nura.sunflower),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'Başarımlar · ${p.achievements.length} / 10',
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
           const SizedBox(height: 18),
           if (cloudOn) ...[
             const Eyebrow('NURA Hesap'),

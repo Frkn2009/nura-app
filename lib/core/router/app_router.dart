@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/achievements/achievements_screen.dart';
 import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/clips/clips_screen.dart';
@@ -34,6 +35,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/clips', parentNavigatorKey: _root, builder: (_, __) => const ClipsScreen()),
       GoRoute(path: '/guide', parentNavigatorKey: _root, builder: (_, __) => const LanguageGuideScreen()),
       GoRoute(path: '/leaderboard', parentNavigatorKey: _root, builder: (_, __) => const LeaderboardScreen()),
+      GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, __) => const AchievementsScreen()),
       GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
       GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),
       GoRoute(

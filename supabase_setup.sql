@@ -36,9 +36,14 @@ alter table public.profiles add column if not exists daily_goal_min int not null
 alter table public.profiles add column if not exists onboarded boolean not null default false;
 alter table public.profiles add column if not exists is_plus boolean not null default false;
 alter table public.profiles add column if not exists streak int not null default 0;
+alter table public.profiles add column if not exists last_practice_day_key text not null default '';
 alter table public.profiles add column if not exists total_xp int not null default 0;
 alter table public.profiles add column if not exists daily_xp int not null default 0;
 alter table public.profiles add column if not exists xp_day_key text not null default '';
+alter table public.profiles add column if not exists completed_scenes int not null default 0;
+alter table public.profiles add column if not exists games_completed int not null default 0;
+alter table public.profiles add column if not exists completed_languages jsonb not null default '[]';
+alter table public.profiles add column if not exists achievements jsonb not null default '[]';
 alter table public.profiles add column if not exists phrases_known int not null default 0;
 alter table public.profiles add column if not exists speak_seconds_used int not null default 0;
 alter table public.profiles add column if not exists speak_day_key text not null default '';
