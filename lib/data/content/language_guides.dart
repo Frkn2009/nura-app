@@ -491,9 +491,9 @@ final Map<LearnLang, LanguageGuide> _all = {
     lang: LearnLang.sw,
     headline: 'Svahili: Bantu + Arapça etki, fonetik',
     intro: 'Svahili Latin harfli, fonetik. Sınıf sistemi (m-, wa-, ki-, vi- gibi ön ekler) ana kural.',
-    firstWeek: 'Fonetik oku. ng\' = ŋ. Sınıf eklerini tanı.',
+    firstWeek: 'Fonetik oku. ng = ŋ. Sınıf eklerini tanı.',
     rules: const [
-      SoundRule(written: 'ng'', heard: 'ŋ (nazal)', example: 'ng\'ombe', exampleSaid: 'ŋombe', why: 'Tek nazal ses.'),
+      SoundRule(written: 'ng', heard: 'ŋ (nazal)', example: 'ngombe', exampleSaid: 'ŋombe', why: 'Tek nazal ses.'),
       SoundRule(written: 'dh', heard: 'ð (peltek d)', example: 'dhahabu', exampleSaid: 'ðahabu', why: 'İngilizce th gibi.'),
       SoundRule(written: 'ny', heard: 'ñ', example: 'nyumba', exampleSaid: 'ñumba', why: 'Burundan y.'),
     ],
