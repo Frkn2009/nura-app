@@ -107,6 +107,29 @@ class Supa {
   }
 
   /// Buluttaki profili getir. Satır yoksa null.
+  static Future<void> pushFamilyProfile(UserProfile profile) async {
+    if (!enabled) return;
+    final uid = _c.auth.currentUser?.id;
+    if (uid == null) return;
+    await _c.from('family_profiles').upsert({
+      'user_id': uid,
+      'profile_id': profile.profileId,
+      'profile_name': profile.profileName,
+      'profile_data': profile.toJson(),
+      'updated_at': DateTime.now().toIso8601String(),
+    }, onConflict: 'user_id,profile_id');
+  }
+
+  static Future<List<UserProfile>> pullFamilyProfiles() async {
+    if (!enabled || _c.auth.currentUser == null) return const [];
+    final rows = await _c.from('family_profiles').select('profile_data');
+    return (rows as List)
+        .map((row) => UserProfile.fromJson(
+              Map<String, dynamic>.from(row['profile_data'] as Map),
+            ))
+        .toList(growable: false);
+  }
+
   static Future<UserProfile?> pullProfile() async {
     if (!enabled) return null;
     final uid = _c.auth.currentUser?.id;

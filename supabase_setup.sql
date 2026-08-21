@@ -182,3 +182,26 @@ language sql security definer stable set search_path = public as $$
 $$;
 revoke all on function public.get_weekly_leaderboard(int) from public;
 grant execute on function public.get_weekly_leaderboard(int) to authenticated;
+
+-- 6) Plus aile planı profilleri
+create table if not exists public.family_profiles (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  profile_id text not null,
+  profile_name text not null,
+  profile_data jsonb not null default '{}',
+  updated_at timestamptz not null default now(),
+  primary key (user_id, profile_id)
+);
+alter table public.family_profiles enable row level security;
+drop policy if exists "family_profiles_select_own" on public.family_profiles;
+create policy "family_profiles_select_own" on public.family_profiles
+  for select using (auth.uid() = user_id);
+drop policy if exists "family_profiles_insert_own" on public.family_profiles;
+create policy "family_profiles_insert_own" on public.family_profiles
+  for insert with check (auth.uid() = user_id);
+drop policy if exists "family_profiles_update_own" on public.family_profiles;
+create policy "family_profiles_update_own" on public.family_profiles
+  for update using (auth.uid() = user_id);
+drop policy if exists "family_profiles_delete_own" on public.family_profiles;
+create policy "family_profiles_delete_own" on public.family_profiles
+  for delete using (auth.uid() = user_id);

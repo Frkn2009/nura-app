@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:nura/core/theme/dark_theme.dart';
 import 'package:nura/data/content/catalog.dart';
@@ -279,6 +281,27 @@ void main() {
       UserProfile.empty.copyWith(themePreference: AppThemePreference.dark).toJson(),
     );
     expect(restored.themePreference, AppThemePreference.dark);
+  });
+
+
+  test('Plus family plan keeps four isolated local profiles', () async {
+    SharedPreferences.setMockInitialValues({});
+    final preferences = await SharedPreferences.getInstance();
+    final container = ProviderContainer(
+      overrides: [prefsProvider.overrideWithValue(preferences)],
+    );
+    addTearDown(container.dispose);
+    final controller = container.read(sessionProvider.notifier);
+    await controller.setPlus(true);
+    expect(await controller.addFamilyProfile('Deniz'), true);
+    expect(await controller.addFamilyProfile('Ada'), true);
+    expect(await controller.addFamilyProfile('Mert'), true);
+    expect(controller.familyProfiles().length, 4);
+    expect(await controller.addFamilyProfile('Beşinci'), false);
+    final profiles = controller.familyProfiles();
+    expect(profiles.map((profile) => profile.profileName),
+        containsAll(['Ana Profil', 'Deniz', 'Ada', 'Mert']));
+    expect(profiles.map((profile) => profile.profileId).toSet().length, 4);
   });
 
 }

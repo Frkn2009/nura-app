@@ -211,6 +211,8 @@ extension XpRankX on XpRank {
 
 class UserProfile {
   const UserProfile({
+    required this.profileId,
+    required this.profileName,
     required this.uiLang,
     required this.learnLang,
     required this.motive,
@@ -241,6 +243,8 @@ class UserProfile {
     required this.srs,
   });
 
+  final String profileId;
+  final String profileName;
   final UiLang uiLang;
   final LearnLang learnLang;
   final Motive motive;
@@ -271,6 +275,8 @@ class UserProfile {
   final Map<String, int> srs;
 
   static const empty = UserProfile(
+    profileId: 'main',
+    profileName: 'Ana Profil',
     uiLang: UiLang.tr,
     learnLang: LearnLang.es,
     motive: Motive.travel,
@@ -347,6 +353,8 @@ class UserProfile {
       (dailyXp / dailyXpGoal).clamp(0, 1).toDouble();
 
   UserProfile copyWith({
+    String? profileId,
+    String? profileName,
     UiLang? uiLang,
     LearnLang? learnLang,
     Motive? motive,
@@ -377,6 +385,8 @@ class UserProfile {
     Map<String, int>? srs,
   }) {
     return UserProfile(
+      profileId: profileId ?? this.profileId,
+      profileName: profileName ?? this.profileName,
       uiLang: uiLang ?? this.uiLang,
       learnLang: learnLang ?? this.learnLang,
       motive: motive ?? this.motive,
@@ -409,6 +419,8 @@ class UserProfile {
   }
 
   Map<String, dynamic> toJson() => {
+        'profileId': profileId,
+        'profileName': profileName,
         'uiLang': uiLang.name,
         'learnLang': learnLang.name,
         'motive': motive.name,
@@ -441,6 +453,8 @@ class UserProfile {
 
   factory UserProfile.fromJson(Map<String, dynamic> j) {
     return UserProfile(
+      profileId: j['profileId'] as String? ?? 'main',
+      profileName: j['profileName'] as String? ?? 'Ana Profil',
       uiLang: UiLang.values.asNameMap()[j['uiLang'] as String? ?? 'tr'] ?? UiLang.tr,
       learnLang: LearnLang.values.asNameMap()[j['learnLang'] as String? ?? 'es'] ?? LearnLang.es,
       motive: Motive.values.asNameMap()[j['motive'] as String? ?? 'travel'] ?? Motive.travel,

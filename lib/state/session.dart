@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import '../core/l10n/i18n.dart';
 import '../data/content/catalog.dart';
@@ -21,15 +22,23 @@ final i18nProvider = Provider<I18n>((ref) => I18n(ref.watch(sessionProvider).uiL
 
 class SessionController extends Notifier<UserProfile> {
   static const _key = 'nura.profile.v1';
+  static const _profilePrefix = 'nura.family.profile.';
+  static const _activeProfileKey = 'nura.family.active';
 
   SharedPreferences get _prefs => ref.read(prefsProvider);
 
   @override
   UserProfile build() {
-    final raw = _prefs.getString(_key);
-    var p = raw == null ? UserProfile.empty : UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
-    p = _withAchievements(_rollDay(p));
-    return p;
+    final activeId = _prefs.getString(_activeProfileKey) ?? 'main';
+    final raw = _prefs.getString('$_profilePrefix$activeId') ??
+        _prefs.getString(_key);
+    var profile = raw == null
+        ? UserProfile.empty
+        : UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    if (profile.profileId != activeId) {
+      profile = profile.copyWith(profileId: activeId);
+    }
+    return _withAchievements(_rollDay(profile));
   }
 
   String _today() {
@@ -85,11 +94,17 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> _save(UserProfile p) async {
     p = _withAchievements(p);
     state = p;
-    await _prefs.setString(_key, jsonEncode(p.toJson()));
+    final encoded = jsonEncode(p.toJson());
+    await _prefs.setString(_activeProfileKey, p.profileId);
+    await _prefs.setString('$_profilePrefix${p.profileId}', encoded);
+    await _prefs.setString(_key, encoded);
     // Giriş yapılmışsa ve anahtarlar girilmişse buluta da yaz.
     // Hata olsa bile akışı kesme; veri yerelde zaten duruyor.
     if (Supa.enabled) {
       unawaited(Supa.pushProfile(p).catchError((_) {}));
+      if (p.isPlus) {
+        unawaited(Supa.pushFamilyProfile(p).catchError((_) {}));
+      }
     }
   }
 
@@ -105,6 +120,67 @@ class SessionController extends Notifier<UserProfile> {
       _save(state.copyWith(reminderHour: hour == 10 ? 10 : 19));
   Future<void> setThemePreference(AppThemePreference value) =>
       _save(state.copyWith(themePreference: value));
+
+  List<UserProfile> familyProfiles() {
+    final profiles = <String, UserProfile>{state.profileId: state};
+    for (final key in _prefs.getKeys().where((key) => key.startsWith(_profilePrefix))) {
+      final raw = _prefs.getString(key);
+      if (raw == null) continue;
+      try {
+        final profile = UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+        profiles[profile.profileId] = profile;
+      } catch (_) {}
+    }
+    final list = profiles.values.toList()
+      ..sort((a, b) {
+        if (a.profileId == 'main') return -1;
+        if (b.profileId == 'main') return 1;
+        return a.profileName.compareTo(b.profileName);
+      });
+    return list;
+  }
+
+  Future<bool> addFamilyProfile(String name) async {
+    if (!state.isPlus || familyProfiles().length >= 4) return false;
+    await _prefs.setString(
+      '$_profilePrefix${state.profileId}',
+      jsonEncode(state.toJson()),
+    );
+    final id = const Uuid().v4();
+    final profile = UserProfile.empty.copyWith(
+      profileId: id,
+      profileName: name.trim().isEmpty ? 'Aile Profili' : name.trim(),
+      uiLang: state.uiLang,
+      learnLang: state.learnLang,
+      isPlus: true,
+      onboarded: true,
+      themePreference: state.themePreference,
+      notificationsEnabled: false,
+    );
+    await _save(profile);
+    return true;
+  }
+
+  Future<bool> switchFamilyProfile(String profileId) async {
+    final raw = _prefs.getString('$_profilePrefix$profileId');
+    if (raw == null) return false;
+    final profile = UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    await _save(_rollDay(profile));
+    return true;
+  }
+
+  Future<void> renameFamilyProfile(String name) async {
+    final clean = name.trim();
+    if (clean.isEmpty) return;
+    await _save(state.copyWith(profileName: clean));
+  }
+
+  Future<bool> deleteFamilyProfile(String profileId) async {
+    if (profileId == 'main' || profileId == state.profileId) return false;
+    final removed = await _prefs.remove('$_profilePrefix$profileId');
+    if (removed) state = state.copyWith();
+    return removed;
+  }
 
   Future<void> consumeSpeak(int seconds) async {
     var p = _rollDay(state);
@@ -248,12 +324,28 @@ class SessionController extends Notifier<UserProfile> {
     await _save(remote);
   }
 
+
+  Future<void> importFamilyProfiles(List<UserProfile> profiles) async {
+    for (final profile in profiles.take(4)) {
+      await _prefs.setString(
+        '$_profilePrefix${profile.profileId}',
+        jsonEncode(profile.toJson()),
+      );
+    }
+    state = state.copyWith();
+  }
+
   /// Yerel profili buluta yaz (girişten hemen sonra, bulutta satır yoksa).
   Future<void> pushCurrent() async {
     await Supa.pushProfile(state);
   }
 
   Future<void> wipeAccount() async {
+    for (final key in _prefs.getKeys().where(
+          (key) => key.startsWith(_profilePrefix) || key == _activeProfileKey,
+        )) {
+      await _prefs.remove(key);
+    }
     await _prefs.remove(_key);
     state = UserProfile.empty;
   }

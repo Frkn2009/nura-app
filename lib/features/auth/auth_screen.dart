@@ -82,6 +82,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     } else {
       await sess.pushCurrent();
     }
+    final family = await Supa.pullFamilyProfiles();
+    await sess.importFamilyProfiles(family);
   }
 
   @override

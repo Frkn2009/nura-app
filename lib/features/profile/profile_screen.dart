@@ -73,6 +73,23 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           NuraCard(
+            onTap: () => context.push('/family'),
+            child: Row(
+              children: [
+                const Icon(Icons.family_restroom_outlined, color: Nura.mintDark),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'Profil · ${p.profileName}',
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                const Icon(Icons.swap_horiz, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          NuraCard(
             onTap: () => context.push('/achievements'),
             child: Row(
               children: [

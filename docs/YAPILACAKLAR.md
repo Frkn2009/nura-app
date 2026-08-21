@@ -113,7 +113,7 @@
 - [x] Bulut çeviri (Plus) — güvenli Supabase Edge Function hazır
 - [x] Widget (Android/iOS günlük ders, XP ve seri widget’ı)
 - [x] Karanlık mod
-- [ ] Çoklu profil (aile planı)
+- [x] Çoklu profil (Plus aile planı, 4 ayrı profil + bulut senkronu)
 
 ---
 
