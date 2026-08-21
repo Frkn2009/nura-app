@@ -103,6 +103,8 @@ class SessionController extends Notifier<UserProfile> {
       _save(state.copyWith(notificationsEnabled: value));
   Future<void> setReminderHour(int hour) =>
       _save(state.copyWith(reminderHour: hour == 10 ? 10 : 19));
+  Future<void> setThemePreference(AppThemePreference value) =>
+      _save(state.copyWith(themePreference: value));
 
   Future<void> consumeSpeak(int seconds) async {
     var p = _rollDay(state);

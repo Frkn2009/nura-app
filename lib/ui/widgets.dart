@@ -16,9 +16,9 @@ class NuraCard extends StatelessWidget {
     final box = Container(
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: color ?? Nura.card,
+        color: color ?? Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(Nura.radius),
-        border: Border.all(color: Nura.line),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: child,
     );
@@ -81,9 +81,16 @@ class ChoiceTile extends StatelessWidget {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            color: selected ? Nura.cream2 : Nura.card,
+            color: selected
+                ? Theme.of(context).colorScheme.primaryContainer
+                : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(Nura.radius),
-            border: Border.all(color: selected ? Nura.forest : Nura.line, width: selected ? 1.6 : 1),
+            border: Border.all(
+              color: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).dividerColor,
+              width: selected ? 1.6 : 1,
+            ),
           ),
           child: Row(
             children: [
@@ -92,16 +99,16 @@ class ChoiceTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Nura.ink)),
+                    Text(title, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Theme.of(context).colorScheme.onSurface)),
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
-                      Text(subtitle!, style: const TextStyle(color: Nura.muted, fontSize: 13)),
+                      Text(subtitle!, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13)),
                     ],
                   ],
                 ),
               ),
               if (selected)
-                const Icon(Icons.check_circle, color: Nura.forest),
+                Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary),
             ],
           ),
         ),

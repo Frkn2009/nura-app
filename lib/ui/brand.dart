@@ -138,15 +138,18 @@ class _NuraAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final useDarkMark = onDark || Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
-        NuraWordmark(onDark: onDark, compact: true),
+        NuraWordmark(onDark: useDarkMark, compact: true),
         if (pageTitle != null) ...[
           Container(
             width: 1,
             height: 22,
             margin: const EdgeInsets.symmetric(horizontal: 11),
-            color: onDark ? Colors.white24 : Nura.fog,
+            color: useDarkMark
+                ? Colors.white24
+                : Theme.of(context).dividerColor,
           ),
           Flexible(
             child: DefaultTextStyle.merge(

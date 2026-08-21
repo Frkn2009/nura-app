@@ -25,8 +25,8 @@ class AppShell extends ConsumerWidget {
       body: child,
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
-        backgroundColor: Colors.white,
-        indicatorColor: Nura.mintLight,
+        backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
+        indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         onDestinationSelected: (i) {
           const paths = ['/app', '/app/speak', '/app/games', '/app/translate', '/app/you'];

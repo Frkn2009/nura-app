@@ -36,7 +36,7 @@
 - [x] Renk paleti: modern, temiz, mağaza kalitesinde
 - [x] Tutarlı border-radius, spacing, tipografi
 - [x] Duolingo sevimli ama NURA daha ciddi-profesyonel
-- [ ] Karanlık mod desteği (ileride)
+- [x] Karanlık mod desteği (sistem/açık/koyu seçimi)
 
 ---
 
@@ -112,7 +112,7 @@
 - [x] Maya nöral TTS (kadın neural/premium cihaz sesini otomatik önceler)
 - [x] Bulut çeviri (Plus) — güvenli Supabase Edge Function hazır
 - [x] Widget (Android/iOS günlük ders, XP ve seri widget’ı)
-- [ ] Karanlık mod
+- [x] Karanlık mod
 - [ ] Çoklu profil (aile planı)
 
 ---

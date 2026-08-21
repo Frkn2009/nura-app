@@ -170,6 +170,23 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () => ref.read(sessionProvider.notifier).setUi(u),
             ),
           const SizedBox(height: 16),
+          const Eyebrow('Görünüm'),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: SegmentedButton<AppThemePreference>(
+              segments: const [
+                ButtonSegment(value: AppThemePreference.system, icon: Icon(Icons.brightness_auto_outlined), label: Text('Sistem')),
+                ButtonSegment(value: AppThemePreference.light, icon: Icon(Icons.light_mode_outlined), label: Text('Açık')),
+                ButtonSegment(value: AppThemePreference.dark, icon: Icon(Icons.dark_mode_outlined), label: Text('Koyu')),
+              ],
+              selected: {p.themePreference},
+              onSelectionChanged: (value) => ref
+                  .read(sessionProvider.notifier)
+                  .setThemePreference(value.first),
+            ),
+          ),
+          const SizedBox(height: 16),
           const Eyebrow('Hatırlatmalar'),
           const SizedBox(height: 6),
           SwitchListTile(

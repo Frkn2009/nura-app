@@ -22,6 +22,8 @@ enum Motive { work, travel, exam, life }
 
 enum Cefr { a1, a2, b1, b2 }
 
+enum AppThemePreference { system, light, dark }
+
 extension LearnLangX on LearnLang {
   String get code => name;
 
@@ -227,6 +229,7 @@ class UserProfile {
     required this.achievements,
     required this.notificationsEnabled,
     required this.reminderHour,
+    required this.themePreference,
     required this.phrasesKnown,
     required this.speakSecondsUsed,
     required this.speakDayKey,
@@ -256,6 +259,7 @@ class UserProfile {
   final Set<Achievement> achievements;
   final bool notificationsEnabled;
   final int reminderHour;
+  final AppThemePreference themePreference;
   final int phrasesKnown;
   final int speakSecondsUsed;
   final String speakDayKey;
@@ -285,6 +289,7 @@ class UserProfile {
     achievements: {},
     notificationsEnabled: true,
     reminderHour: 19,
+    themePreference: AppThemePreference.system,
     phrasesKnown: 0,
     speakSecondsUsed: 0,
     speakDayKey: '',
@@ -360,6 +365,7 @@ class UserProfile {
     Set<Achievement>? achievements,
     bool? notificationsEnabled,
     int? reminderHour,
+    AppThemePreference? themePreference,
     int? phrasesKnown,
     int? speakSecondsUsed,
     String? speakDayKey,
@@ -389,6 +395,7 @@ class UserProfile {
       achievements: achievements ?? this.achievements,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       reminderHour: reminderHour ?? this.reminderHour,
+      themePreference: themePreference ?? this.themePreference,
       phrasesKnown: phrasesKnown ?? this.phrasesKnown,
       speakSecondsUsed: speakSecondsUsed ?? this.speakSecondsUsed,
       speakDayKey: speakDayKey ?? this.speakDayKey,
@@ -420,6 +427,7 @@ class UserProfile {
         'achievements': achievements.map((achievement) => achievement.name).toList(),
         'notificationsEnabled': notificationsEnabled,
         'reminderHour': reminderHour,
+        'themePreference': themePreference.name,
         'phrasesKnown': phrasesKnown,
         'speakSecondsUsed': speakSecondsUsed,
         'speakDayKey': speakDayKey,
@@ -457,6 +465,9 @@ class UserProfile {
           .toSet(),
       notificationsEnabled: j['notificationsEnabled'] as bool? ?? true,
       reminderHour: (j['reminderHour'] as num?)?.toInt() ?? 19,
+      themePreference: AppThemePreference.values.asNameMap()[
+              j['themePreference'] as String? ?? 'system'] ??
+          AppThemePreference.system,
       phrasesKnown: j['phrasesKnown'] as int? ?? 0,
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',

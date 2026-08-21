@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:nura/core/theme/dark_theme.dart';
 import 'package:nura/data/content/catalog.dart';
 import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
@@ -267,6 +268,17 @@ void main() {
     );
     expect(neural, greaterThan(basic));
     expect(wrongLanguage, -1000);
+  });
+
+
+  test('dark theme and user preference are persisted', () {
+    final dark = buildNuraDarkTheme();
+    expect(dark.brightness, Brightness.dark);
+    expect(dark.colorScheme.surface.computeLuminance(), lessThan(.1));
+    final restored = UserProfile.fromJson(
+      UserProfile.empty.copyWith(themePreference: AppThemePreference.dark).toJson(),
+    );
+    expect(restored.themePreference, AppThemePreference.dark);
   });
 
 }
