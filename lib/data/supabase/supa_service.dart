@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/supabase_config.dart';
+import '../models/clan.dart';
 import '../models/leaderboard.dart';
 import '../models/models.dart';
 
@@ -63,6 +64,30 @@ class Supa {
   static Future<void> deleteAccount() async {
     await _c.rpc('delete_my_account');
     await _c.auth.signOut();
+  }
+
+  // ---------- TAKIM / CLAN ----------
+
+  static Future<List<ClanMemberEntry>> myClan() async {
+    if (!enabled || _c.auth.currentUser == null) return const [];
+    final response = await _c.rpc('get_my_clan');
+    return (response as List)
+        .map((row) => ClanMemberEntry.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ))
+        .toList(growable: false);
+  }
+
+  static Future<void> createClan(String name) async {
+    await _c.rpc('create_clan', params: {'p_name': name.trim()});
+  }
+
+  static Future<void> joinClan(String code) async {
+    await _c.rpc('join_clan', params: {'p_code': code.trim().toUpperCase()});
+  }
+
+  static Future<void> leaveClan() async {
+    await _c.rpc('leave_clan');
   }
 
   // ---------- PROFİL ----------

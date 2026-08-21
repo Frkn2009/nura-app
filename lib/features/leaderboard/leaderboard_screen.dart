@@ -110,6 +110,18 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
           Text('Bu hafta', style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 5),
           const Text('Pazartesi 00.00 UTC’de yenilenir', style: TextStyle(color: Nura.muted)),
+          const SizedBox(height: 14),
+          NuraCard(
+            onTap: () => context.push('/clan'),
+            child: const Row(
+              children: [
+                Icon(Icons.groups_outlined, color: Nura.mintDark),
+                SizedBox(width: 12),
+                Expanded(child: Text('Takım sıralaması ve davet kodu', style: TextStyle(fontWeight: FontWeight.w600))),
+                Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
           const SizedBox(height: 18),
           if (top.isEmpty)
             const NuraCard(

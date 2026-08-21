@@ -6,6 +6,7 @@ import '../../features/achievements/achievements_screen.dart';
 import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/clips/clips_screen.dart';
+import '../../features/clan/clan_screen.dart';
 import '../../features/events/weekly_event_screen.dart';
 import '../../features/family/family_profiles_screen.dart';
 import '../../features/legal/privacy_screen.dart';
@@ -39,6 +40,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/leaderboard', parentNavigatorKey: _root, builder: (_, __) => const LeaderboardScreen()),
       GoRoute(path: '/event', parentNavigatorKey: _root, builder: (_, __) => const WeeklyEventScreen()),
       GoRoute(path: '/family', parentNavigatorKey: _root, builder: (_, __) => const FamilyProfilesScreen()),
+      GoRoute(path: '/clan', parentNavigatorKey: _root, builder: (_, __) => const ClanScreen()),
       GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, __) => const AchievementsScreen()),
       GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
       GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),

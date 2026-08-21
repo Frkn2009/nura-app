@@ -157,6 +157,11 @@ begin
   insert into public.leaderboard(week_start, user_id, xp) values (v_week, v_user, p_amount)
   on conflict (week_start, user_id) do update
     set xp = public.leaderboard.xp + excluded.xp, updated_at = now();
+  insert into public.clan_xp(clan_id, user_id, week_start, xp)
+    select member.clan_id, v_user, v_week, p_amount
+    from public.clan_members member where member.user_id = v_user
+  on conflict (clan_id, user_id, week_start) do update
+    set xp = public.clan_xp.xp + excluded.xp;
 end;
 $$;
 revoke all on function public.record_xp(int, text) from public;
@@ -205,3 +210,119 @@ create policy "family_profiles_update_own" on public.family_profiles
 drop policy if exists "family_profiles_delete_own" on public.family_profiles;
 create policy "family_profiles_delete_own" on public.family_profiles
   for delete using (auth.uid() = user_id);
+
+-- 7) Clan / takım sistemi
+create table if not exists public.clans (
+  id uuid primary key default gen_random_uuid(),
+  name text not null check (char_length(name) between 3 and 32),
+  join_code text not null unique,
+  owner_id uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+create table if not exists public.clan_members (
+  clan_id uuid not null references public.clans(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  joined_at timestamptz not null default now(),
+  primary key (clan_id, user_id),
+  unique (user_id)
+);
+create table if not exists public.clan_xp (
+  clan_id uuid not null references public.clans(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  week_start date not null,
+  xp int not null default 0,
+  primary key (clan_id, user_id, week_start)
+);
+
+alter table public.clans enable row level security;
+alter table public.clan_members enable row level security;
+alter table public.clan_xp enable row level security;
+
+create or replace function public.create_clan(p_name text)
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  v_user uuid := auth.uid();
+  v_clan uuid;
+  v_code text;
+begin
+  if v_user is null then raise exception 'authentication_required'; end if;
+  if char_length(trim(p_name)) not between 3 and 32 then raise exception 'invalid_name'; end if;
+  if exists (select 1 from public.clan_members where user_id = v_user) then raise exception 'already_in_clan'; end if;
+  loop
+    v_code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
+    exit when not exists (select 1 from public.clans where join_code = v_code);
+  end loop;
+  insert into public.clans(name, join_code, owner_id)
+    values (trim(p_name), v_code, v_user) returning id into v_clan;
+  insert into public.clan_members(clan_id, user_id) values (v_clan, v_user);
+end;
+$$;
+
+create or replace function public.join_clan(p_code text)
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  v_user uuid := auth.uid();
+  v_clan uuid;
+begin
+  if v_user is null then raise exception 'authentication_required'; end if;
+  if exists (select 1 from public.clan_members where user_id = v_user) then raise exception 'already_in_clan'; end if;
+  select id into v_clan from public.clans where join_code = upper(trim(p_code));
+  if v_clan is null then raise exception 'clan_not_found'; end if;
+  insert into public.clan_members(clan_id, user_id) values (v_clan, v_user);
+end;
+$$;
+
+create or replace function public.leave_clan()
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  v_user uuid := auth.uid();
+  v_clan uuid;
+  v_owner uuid;
+begin
+  select clan_id into v_clan from public.clan_members where user_id = v_user;
+  if v_clan is null then return; end if;
+  select owner_id into v_owner from public.clans where id = v_clan;
+  if v_owner = v_user and (select count(*) from public.clan_members where clan_id = v_clan) > 1 then
+    raise exception 'owner_cannot_leave';
+  end if;
+  if v_owner = v_user then delete from public.clans where id = v_clan;
+  else delete from public.clan_members where clan_id = v_clan and user_id = v_user;
+  end if;
+end;
+$$;
+
+create or replace function public.get_my_clan()
+returns table (
+  clan_id uuid, clan_name text, join_code text, rank bigint,
+  user_id uuid, player_name text, xp int, is_me boolean, is_owner boolean
+)
+language sql security definer stable set search_path = public as $$
+  with mine as (
+    select member.clan_id from public.clan_members member where member.user_id = auth.uid()
+  ), ranked as (
+    select member.clan_id, member.user_id,
+      dense_rank() over (order by coalesce(points.xp, 0) desc, member.joined_at) as rank,
+      coalesce(points.xp, 0)::int as xp
+    from public.clan_members member
+    join mine on mine.clan_id = member.clan_id
+    left join public.clan_xp points on points.clan_id = member.clan_id
+      and points.user_id = member.user_id
+      and points.week_start = date_trunc('week', timezone('utc', now()))::date
+  )
+  select clan.id, clan.name, clan.join_code, ranked.rank, ranked.user_id,
+    coalesce(nullif(trim(profile.display_name), ''), 'NURA ' || upper(left(ranked.user_id::text, 4))),
+    ranked.xp, ranked.user_id = auth.uid(), clan.owner_id = ranked.user_id
+  from ranked
+  join public.clans clan on clan.id = ranked.clan_id
+  left join public.profiles profile on profile.user_id = ranked.user_id
+  order by ranked.rank, ranked.user_id;
+$$;
+
+revoke all on function public.create_clan(text) from public;
+revoke all on function public.join_clan(text) from public;
+revoke all on function public.leave_clan() from public;
+revoke all on function public.get_my_clan() from public;
+grant execute on function public.create_clan(text) to authenticated;
+grant execute on function public.join_clan(text) to authenticated;
+grant execute on function public.leave_clan() to authenticated;
+grant execute on function public.get_my_clan() to authenticated;

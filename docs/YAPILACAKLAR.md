@@ -60,7 +60,7 @@
 
 ### 8. Leaderboard / Sıralama
 - [x] Haftalık sıralama tablosu
-- [ ] Clan/Takım sistemi (ileride)
+- [x] Clan/Takım sistemi (davet kodu, haftalık takım XP sıralaması)
 - [x] Supabase'de `leaderboard` tablosu
 - [x] Top 10 gösterimi
 - [x] Kendi sıranı gör

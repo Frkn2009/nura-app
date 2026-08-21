@@ -9,6 +9,7 @@ import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
 import 'package:nura/data/events/weekly_event.dart';
 import 'package:nura/data/models/achievements.dart';
+import 'package:nura/data/models/clan.dart';
 import 'package:nura/data/models/leaderboard.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/notifications/notification_service.dart';
@@ -302,6 +303,24 @@ void main() {
     expect(profiles.map((profile) => profile.profileName),
         containsAll(['Ana Profil', 'Deniz', 'Ada', 'Mert']));
     expect(profiles.map((profile) => profile.profileId).toSet().length, 4);
+  });
+
+
+  test('clan member rows preserve team rank and ownership', () {
+    final member = ClanMemberEntry.fromJson({
+      'clan_id': 'clan-1',
+      'clan_name': 'NURA Takımı',
+      'join_code': 'A1B2C3',
+      'rank': 1,
+      'user_id': 'user-1',
+      'player_name': 'Deniz',
+      'xp': 420,
+      'is_me': true,
+      'is_owner': true,
+    });
+    expect(member.rank, 1);
+    expect(member.joinCode, 'A1B2C3');
+    expect(member.isOwner, true);
   });
 
 }
