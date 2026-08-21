@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nura/data/content/catalog.dart';
+import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/speech/speech_controller.dart';
@@ -94,6 +95,18 @@ void main() {
         expect(hit, isNotNull, reason: '${from.name}: $source');
         expect(hit!.origin, TranslationOrigin.dictionary);
       }
+    }
+  });
+
+
+  test('clips are generated from every curriculum phrase in all 30 languages', () {
+    for (final language in LearnLang.values) {
+      final clips = ClipCatalog.forLang(language);
+      final phraseCount = Catalog.forLang(language)
+          .fold<int>(0, (total, scenario) => total + scenario.phrases.length);
+      expect(clips.length, phraseCount, reason: language.name);
+      expect(clips, isNotEmpty, reason: language.name);
+      expect(clips.every((clip) => clip.scenario.lang == language), true);
     }
   });
 

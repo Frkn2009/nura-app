@@ -161,10 +161,15 @@ class SpeechController {
     }
   }
 
-  Future<void> speakTarget(String text, String langCode) async {
+  Future<void> speakTarget(
+    String text,
+    String langCode, {
+    double rate = .42,
+  }) async {
     try {
       await _tts.stop();
       await _tts.setLanguage(localeOf(langCode));
+      await _tts.setSpeechRate(rate.clamp(.2, .6).toDouble());
       await _setFemaleVoice(langCode);
       await _tts.speak(text);
     } catch (_) {}

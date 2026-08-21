@@ -31,6 +31,35 @@ class SpeakHubScreen extends ConsumerWidget {
             style: const TextStyle(color: Nura.muted),
           ),
           const SizedBox(height: 16),
+          NuraCard(
+            onTap: () => context.push('/clips'),
+            color: Nura.mintLight,
+            child: Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Nura.mintDark,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 30),
+                ),
+                const SizedBox(width: 13),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(i18n.clips, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                      const Text('Kısa cümleleri dinle, gölgele ve konuş', style: TextStyle(color: Nura.muted, fontSize: 12)),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.mintDark),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
           if (!p.isPlus && remain <= 0)
             NuraCard(
               color: Nura.pale,

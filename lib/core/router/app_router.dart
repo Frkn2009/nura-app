@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
+import '../../features/clips/clips_screen.dart';
 import '../../features/legal/privacy_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
 import '../../features/games/games_screen.dart';
@@ -29,6 +30,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/paywall', parentNavigatorKey: _root, builder: (_, __) => const PaywallScreen()),
       GoRoute(path: '/ad', parentNavigatorKey: _root, builder: (_, __) => const AdGateScreen()),
       GoRoute(path: '/review', parentNavigatorKey: _root, builder: (_, __) => const ReviewScreen()),
+      GoRoute(path: '/clips', parentNavigatorKey: _root, builder: (_, __) => const ClipsScreen()),
       GoRoute(path: '/guide', parentNavigatorKey: _root, builder: (_, __) => const LanguageGuideScreen()),
       GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
       GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),

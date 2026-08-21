@@ -27,10 +27,10 @@
 - [x] Plus ile genişletilmiş bulut çeviri (Supabase Edge Function altyapısı hazır; provider secret/deploy ileride)
 
 ### 4. Klipler — Dolu içerik
-- [ ] Her dilde kısa video/ses klipleri gibi kartlar
-- [ ] Swipe ile gezme
-- [ ] Her klipin altında: yavaş / gölgele / konuş butonları
-- [ ] Senaryolardaki cümlelerden otomatik klip üretimi
+- [x] Her dilde kısa video/ses klipleri gibi kartlar
+- [x] Swipe ile gezme
+- [x] Her klipin altında: yavaş / gölgele / konuş butonları
+- [x] Senaryolardaki cümlelerden otomatik klip üretimi
 
 ### 5. Tema — Profesyonel ve ciddi
 - [ ] Renk paleti: modern, temiz, mağaza kalitesinde
