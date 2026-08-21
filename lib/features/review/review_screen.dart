@@ -24,7 +24,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final due = ref.read(sessionProvider.notifier).duePhrases();
 
     return Scaffold(
-      appBar: AppBar(title: Text(i18n.review)),
+      appBar: NuraAppBar(pageTitle: Text(i18n.review)),
       body: SafeArea(
         child: due.isEmpty
             ? const Center(

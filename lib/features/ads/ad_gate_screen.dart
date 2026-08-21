@@ -51,7 +51,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
     final p = ref.watch(sessionProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Süre doldu')),
+      appBar: NuraAppBar(pageTitle: const Text('Süre doldu')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 16, 22, 24),

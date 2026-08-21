@@ -39,7 +39,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
             children: [
               Row(
                 children: [
-                  const Text('NURA', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Nura.forest, letterSpacing: 1)),
+                  const NuraWordmark(),
                   const Spacer(),
                   Text('${step + 1} / ${pages.length}', style: const TextStyle(color: Nura.soft, fontSize: 13)),
                 ],

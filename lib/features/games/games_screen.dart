@@ -218,7 +218,7 @@ class _MatchGameScreenState extends State<MatchGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('🧩 Kelime Eşleştirme')),
+      appBar: NuraAppBar(pageTitle: const Text('🧩 Kelime Eşleştirme')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -353,7 +353,7 @@ class _SpeedQuizScreenState extends State<SpeedQuizScreen> {
   Widget build(BuildContext context) {
     if (finished) {
       return Scaffold(
-        appBar: AppBar(title: const Text('⚡ Sonuç')),
+        appBar: NuraAppBar(pageTitle: const Text('⚡ Sonuç')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -370,8 +370,8 @@ class _SpeedQuizScreenState extends State<SpeedQuizScreen> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text('⚡ $timeLeft saniye'),
+      appBar: NuraAppBar(
+        pageTitle: Text('⚡ $timeLeft saniye'),
         actions: [Padding(padding: const EdgeInsets.only(right: 16, top: 16), child: Text('$correct ✓', style: const TextStyle(color: Nura.mint, fontWeight: FontWeight.w700)))],
       ),
       body: SafeArea(
@@ -475,7 +475,7 @@ class _ListenGameScreenState extends State<ListenGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('👂 Dinle & Seç · ${round + 1}/10')),
+      appBar: NuraAppBar(pageTitle: Text('👂 Dinle & Seç · ${round + 1}/10')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 16, 22, 22),

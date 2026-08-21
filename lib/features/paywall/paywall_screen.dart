@@ -20,7 +20,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
     return Scaffold(
-      appBar: AppBar(leading: IconButton(icon: const Icon(Icons.close), onPressed: () => context.pop())),
+      appBar: NuraAppBar(leading: IconButton(icon: const Icon(Icons.close), onPressed: () => context.pop())),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),

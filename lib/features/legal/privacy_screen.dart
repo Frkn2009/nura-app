@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../ui/widgets.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -8,7 +9,7 @@ class PrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Gizlilik')),
+      appBar: NuraAppBar(pageTitle: const Text('Gizlilik')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(22, 12, 22, 32),
         children: const [

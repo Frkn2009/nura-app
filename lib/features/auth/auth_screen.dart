@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/supabase/supa_service.dart';
 import '../../state/session.dart';
+import '../../ui/widgets.dart';
 
 /// NURA Hesap — e-posta + şifre ile giriş / kayıt.
 class AuthScreen extends ConsumerStatefulWidget {
@@ -87,9 +88,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Nura.cream,
-      appBar: AppBar(
+      appBar: NuraAppBar(
         backgroundColor: Nura.cream,
-        title: const Text('NURA Hesap'),
+        pageTitle: const Text('Hesap'),
       ),
       body: SafeArea(
         child: ListView(

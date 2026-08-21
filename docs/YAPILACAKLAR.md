@@ -9,10 +9,10 @@
 ## 🔴 KRİTİK — HEMEN YAPILACAK
 
 ### 1. Logo — Sol üste NURA logosu
-- [ ] Uygulama içinde sol üst köşede NURA logosu/yazısı
-- [ ] AppBar'da her sayfada görünsün
-- [ ] Profesyonel, temiz, telif sorunsuz özel tasarım
-- [ ] Uygulama ikonu (app icon) da bu logo olsun
+- [x] Uygulama içinde sol üst köşede NURA logosu/yazısı
+- [x] AppBar'da her sayfada görünsün
+- [x] Profesyonel, temiz, telif sorunsuz özel tasarım
+- [x] Uygulama ikonu (app icon) da bu logo olsun
 
 ### 2. Konuş Butonu — Mikrofon aktif olsun
 - [ ] Mikrofon izni düzgün isteniyor mu kontrol

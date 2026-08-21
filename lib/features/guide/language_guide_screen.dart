@@ -19,8 +19,8 @@ class LanguageGuideScreen extends ConsumerWidget {
     final g = LanguageGuide.of(lang ?? p.learnLang);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${g.lang.flag()}  ${g.lang.label(p.uiLang)}'),
+      appBar: NuraAppBar(
+        pageTitle: Text('${g.lang.flag()}  ${g.lang.label(p.uiLang)}'),
         automaticallyImplyLeading: !onboarding,
       ),
       body: ListView(

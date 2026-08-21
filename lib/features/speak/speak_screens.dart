@@ -201,10 +201,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
 
     return Scaffold(
       backgroundColor: Nura.forest,
-      appBar: AppBar(
+      appBar: NuraAppBar(
         backgroundColor: Nura.forest,
         foregroundColor: Nura.cream,
-        title: Text(scene.title(p.uiLang)),
+        pageTitle: Text(scene.title(p.uiLang)),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16, top: 18),

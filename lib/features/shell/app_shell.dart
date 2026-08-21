@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../state/session.dart';
+import '../../ui/widgets.dart';
 
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.child});
@@ -20,6 +21,7 @@ class AppShell extends ConsumerWidget {
     if (loc.startsWith('/app/you')) index = 4;
 
     return Scaffold(
+      appBar: NuraAppBar(),
       body: child,
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
