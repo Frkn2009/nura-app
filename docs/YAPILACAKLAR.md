@@ -21,9 +21,9 @@
 - [x] Ses her zaman kadın
 
 ### 3. Çeviri — Google Translate tarzı genel çeviri
-- [ ] 30 dil arası çeviri (dropdown ile dil seçimi)
-- [ ] Swap butonu (dil değiştir)
-- [ ] Müfredat + sözlük tabanlı (uydurma çeviri yok)
+- [x] 30 dil arası çeviri (dropdown ile dil seçimi)
+- [x] Swap butonu (dil değiştir)
+- [x] Müfredat + sözlük tabanlı (uydurma çeviri yok)
 - [ ] Plus ile genişletilmiş bulut çeviri (ileride)
 
 ### 4. Klipler — Dolu içerik

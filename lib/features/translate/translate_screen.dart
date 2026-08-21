@@ -35,32 +35,53 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
   }
 
   void _swap() {
+    final previousTranslation = hit?.target;
     setState(() {
-      final temp = fromLang;
+      final previousFrom = fromLang;
       fromLang = toLang;
-      toLang = temp;
-      if (ctrl.text.isNotEmpty) _go();
+      toLang = previousFrom;
+      if (previousTranslation != null) ctrl.text = previousTranslation;
+      hit = null;
+      searched = false;
+    });
+    if (ctrl.text.trim().isNotEmpty) _go();
+  }
+
+  void _setFrom(LearnLang language) {
+    setState(() {
+      if (language == toLang) toLang = fromLang;
+      fromLang = language;
+      hit = null;
+      searched = false;
+    });
+  }
+
+  void _setTo(LearnLang language) {
+    setState(() {
+      if (language == fromLang) fromLang = toLang;
+      toLang = language;
+      hit = null;
+      searched = false;
     });
   }
 
   void _go() {
-    final p = ref.read(sessionProvider);
+    FocusManager.instance.primaryFocus?.unfocus();
+    final input = ctrl.text.trim();
+    if (input.isEmpty) {
+      setState(() {
+        searched = false;
+        hit = null;
+      });
+      return;
+    }
     setState(() {
       searched = true;
-      // Hedef dilde ara
-      hit = OfflineTranslate.lookup(
-        input: ctrl.text,
-        learn: toLang,
-        ui: UiLang.values.firstWhere((u) => u.name == fromLang.name, orElse: () => p.uiLang),
+      hit = OfflineTranslate.translate(
+        input: input,
+        from: fromLang,
+        to: toLang,
       );
-      // Bulunamadıysa kaynak dilde de ara
-      if (hit == null) {
-        hit = OfflineTranslate.lookup(
-          input: ctrl.text,
-          learn: fromLang,
-          ui: UiLang.values.firstWhere((u) => u.name == toLang.name, orElse: () => UiLang.en),
-        );
-      }
     });
   }
 
@@ -96,7 +117,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                         value: l,
                         child: Text('${l.flag()} ${l.label(p.uiLang)}'),
                       )).toList(),
-                      onChanged: (v) { if (v != null) setState(() => fromLang = v); },
+                      onChanged: (value) { if (value != null) _setFrom(value); },
                     ),
                   ),
                 ),
@@ -114,7 +135,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                         value: l,
                         child: Text('${l.flag()} ${l.label(p.uiLang)}'),
                       )).toList(),
-                      onChanged: (v) { if (v != null) setState(() => toLang = v); },
+                      onChanged: (value) { if (value != null) _setTo(value); },
                     ),
                   ),
                 ),
@@ -179,9 +200,14 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   Text(hit!.target,
                       style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700, height: 1.3)),
                   const SizedBox(height: 10),
-                  Text(hit!.gloss, style: const TextStyle(color: Colors.white70, fontSize: 16)),
+                  Text(
+                    hit!.origin == TranslationOrigin.curriculum
+                        ? 'NURA müfredatından doğrulandı'
+                        : 'NURA sözlüğünden doğrulandı',
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
                   const SizedBox(height: 8),
-                  Text('güven ${(hit!.confidence * 100).round()}%',
+                  Text('güven ${(hit!.confidence * 100).round()}% · ${hit!.gloss}',
                       style: const TextStyle(color: Colors.white60, fontSize: 12)),
                 ],
               ),
@@ -206,11 +232,11 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             spacing: 8,
             runSpacing: 8,
             children: [
-              for (final q in ['merhaba', 'teşekkürler', 'lütfen', 'ne kadar', 'tuvalet', 'anlamıyorum', 'yardım', 'istasyon', 'kira'])
+              for (final suggestion in OfflineTranslate.suggestions(fromLang))
                 ActionChip(
-                  label: Text(q),
+                  label: Text(suggestion),
                   onPressed: () {
-                    ctrl.text = q;
+                    ctrl.text = suggestion;
                     _go();
                   },
                 ),

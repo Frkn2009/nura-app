@@ -68,4 +68,33 @@ void main() {
     expect(SpeechController.pronunciationScore('こんにちは', 'こんにちは'), 100);
   });
 
+
+  test('curriculum translation supports every one of the 30 x 30 directions', () {
+    for (final from in LearnLang.values) {
+      final source = Catalog.forLang(from).first.phrases.first.target;
+      for (final to in LearnLang.values) {
+        final hit = OfflineTranslate.translate(input: source, from: from, to: to);
+        expect(hit, isNotNull, reason: '${from.name} → ${to.name}');
+        expect(hit!.target, isNotEmpty);
+        expect(hit.origin, TranslationOrigin.curriculum);
+      }
+    }
+  });
+
+  test('verified dictionary has six entries in all 30 languages', () {
+    for (final from in LearnLang.values) {
+      final suggestions = OfflineTranslate.suggestions(from);
+      expect(suggestions.length, 6, reason: from.name);
+      for (final source in suggestions) {
+        final hit = OfflineTranslate.translate(
+          input: source,
+          from: from,
+          to: LearnLang.sw,
+        );
+        expect(hit, isNotNull, reason: '${from.name}: $source');
+        expect(hit!.origin, TranslationOrigin.dictionary);
+      }
+    }
+  });
+
 }
