@@ -44,6 +44,8 @@ alter table public.profiles add column if not exists completed_scenes int not nu
 alter table public.profiles add column if not exists games_completed int not null default 0;
 alter table public.profiles add column if not exists completed_languages jsonb not null default '[]';
 alter table public.profiles add column if not exists achievements jsonb not null default '[]';
+alter table public.profiles add column if not exists notifications_enabled boolean not null default true;
+alter table public.profiles add column if not exists reminder_hour int not null default 19 check (reminder_hour in (10, 19));
 alter table public.profiles add column if not exists phrases_known int not null default 0;
 alter table public.profiles add column if not exists speak_seconds_used int not null default 0;
 alter table public.profiles add column if not exists speak_day_key text not null default '';

@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
 import 'core/supabase_config.dart';
+import 'data/notifications/notification_service.dart';
 import 'state/session.dart';
 
 Future<void> main() async {
@@ -17,6 +18,12 @@ Future<void> main() async {
       url: SupaConfig.url,
       publishableKey: SupaConfig.publishableKey,
     );
+  }
+
+  try {
+    await NotificationService.initialize();
+  } catch (_) {
+    // Bildirim desteği olmayan platformlarda uygulama açılışını engelleme.
   }
 
   final prefs = await SharedPreferences.getInstance();

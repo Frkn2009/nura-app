@@ -5,6 +5,7 @@ import 'package:nura/data/content/language_guides.dart';
 import 'package:nura/data/models/achievements.dart';
 import 'package:nura/data/models/leaderboard.dart';
 import 'package:nura/data/models/models.dart';
+import 'package:nura/data/notifications/notification_service.dart';
 import 'package:nura/data/speech/speech_controller.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 import 'package:nura/state/session.dart';
@@ -165,6 +166,23 @@ void main() {
     final restored = UserProfile.fromJson(profile.toJson());
     expect(restored.completedLanguages.length, 3);
     expect(restored.achievements, containsAll(profile.achievements));
+  });
+
+
+  test('daily notification copy covers lesson, streak, game and Plus', () {
+    final base = UserProfile.empty;
+    expect(NotificationService.contentFor(base, 0).$1, contains('Hadi derse!'));
+    expect(NotificationService.contentFor(base.copyWith(streak: 5), 1).$2, contains('5 gün'));
+    expect(NotificationService.contentFor(base, 2).$2, contains('Harf Sıralama'));
+    expect(NotificationService.contentFor(base.copyWith(isPlus: true), 0).$1, 'NURA Plus');
+  });
+
+  test('notification preference and hour persist', () {
+    final restored = UserProfile.fromJson(
+      UserProfile.empty.copyWith(notificationsEnabled: false, reminderHour: 10).toJson(),
+    );
+    expect(restored.notificationsEnabled, false);
+    expect(restored.reminderHour, 10);
   });
 
 }

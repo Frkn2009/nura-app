@@ -78,12 +78,12 @@
 - [x] 🎯 Mükemmel — Bir oyunda %100 doğru
 
 ### 10. Bildirimler — Öğretmen gibi
-- [ ] "Hadi derse! 📚 Bugün henüz pratik yapmadın"
-- [ ] "🔥 Serin 5 gün! Bugün kırma!"
-- [ ] "🎮 Yeni oyun: Harf Sıralama dene!"
-- [ ] Günde 1 bildirim (sabah 10:00 veya akşam 19:00)
-- [ ] Plus kullanıcılara özel bildirimler
-- [ ] Bildirim kapatma seçeneği profilde
+- [x] "Hadi derse! 📚 Bugün henüz pratik yapmadın"
+- [x] "🔥 Serin 5 gün! Bugün kırma!"
+- [x] "🎮 Yeni oyun: Harf Sıralama dene!"
+- [x] Günde 1 bildirim (sabah 10:00 veya akşam 19:00)
+- [x] Plus kullanıcılara özel bildirimler
+- [x] Bildirim kapatma seçeneği profilde
 
 ### 11. Maskot / Karakter
 - [ ] NURA'nın maskotu: sevimli bir karakter (baykuş/kedi/robot?)

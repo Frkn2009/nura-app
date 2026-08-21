@@ -170,6 +170,35 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () => ref.read(sessionProvider.notifier).setUi(u),
             ),
           const SizedBox(height: 16),
+          const Eyebrow('Hatırlatmalar'),
+          const SizedBox(height: 6),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Günlük pratik bildirimi'),
+            subtitle: const Text('Günde yalnızca bir kez'),
+            value: p.notificationsEnabled,
+            activeThumbColor: Nura.mintDark,
+            onChanged: (value) => ref
+                .read(sessionProvider.notifier)
+                .setNotificationsEnabled(value),
+          ),
+          if (p.notificationsEnabled) ...[
+            const SizedBox(height: 4),
+            SizedBox(
+              width: double.infinity,
+              child: SegmentedButton<int>(
+                segments: const [
+                  ButtonSegment(value: 10, label: Text('Sabah 10.00'), icon: Icon(Icons.light_mode_outlined)),
+                  ButtonSegment(value: 19, label: Text('Akşam 19.00'), icon: Icon(Icons.nightlight_outlined)),
+                ],
+                selected: {p.reminderHour},
+                onSelectionChanged: (hours) => ref
+                    .read(sessionProvider.notifier)
+                    .setReminderHour(hours.first),
+              ),
+            ),
+          ],
+          const SizedBox(height: 16),
           SwitchListTile(
             title: const Text('Plus’ı aç (geliştirici)'),
             subtitle: const Text('Mağaza bağlanınca RevenueCat alır'),

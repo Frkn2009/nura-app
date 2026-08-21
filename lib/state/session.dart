@@ -93,6 +93,10 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> setCefr(Cefr c) => _save(state.copyWith(cefr: c));
   Future<void> finishOnboarding() => _save(state.copyWith(onboarded: true, streak: 1));
   Future<void> setPlus(bool v) => _save(state.copyWith(isPlus: v));
+  Future<void> setNotificationsEnabled(bool value) =>
+      _save(state.copyWith(notificationsEnabled: value));
+  Future<void> setReminderHour(int hour) =>
+      _save(state.copyWith(reminderHour: hour == 10 ? 10 : 19));
 
   Future<void> consumeSpeak(int seconds) async {
     var p = _rollDay(state);

@@ -225,6 +225,8 @@ class UserProfile {
     required this.gamesCompleted,
     required this.completedLanguages,
     required this.achievements,
+    required this.notificationsEnabled,
+    required this.reminderHour,
     required this.phrasesKnown,
     required this.speakSecondsUsed,
     required this.speakDayKey,
@@ -250,6 +252,8 @@ class UserProfile {
   final int gamesCompleted;
   final Set<LearnLang> completedLanguages;
   final Set<Achievement> achievements;
+  final bool notificationsEnabled;
+  final int reminderHour;
   final int phrasesKnown;
   final int speakSecondsUsed;
   final String speakDayKey;
@@ -275,6 +279,8 @@ class UserProfile {
     gamesCompleted: 0,
     completedLanguages: {},
     achievements: {},
+    notificationsEnabled: true,
+    reminderHour: 19,
     phrasesKnown: 0,
     speakSecondsUsed: 0,
     speakDayKey: '',
@@ -338,6 +344,8 @@ class UserProfile {
     int? gamesCompleted,
     Set<LearnLang>? completedLanguages,
     Set<Achievement>? achievements,
+    bool? notificationsEnabled,
+    int? reminderHour,
     int? phrasesKnown,
     int? speakSecondsUsed,
     String? speakDayKey,
@@ -363,6 +371,8 @@ class UserProfile {
       gamesCompleted: gamesCompleted ?? this.gamesCompleted,
       completedLanguages: completedLanguages ?? this.completedLanguages,
       achievements: achievements ?? this.achievements,
+      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      reminderHour: reminderHour ?? this.reminderHour,
       phrasesKnown: phrasesKnown ?? this.phrasesKnown,
       speakSecondsUsed: speakSecondsUsed ?? this.speakSecondsUsed,
       speakDayKey: speakDayKey ?? this.speakDayKey,
@@ -390,6 +400,8 @@ class UserProfile {
         'gamesCompleted': gamesCompleted,
         'completedLanguages': completedLanguages.map((language) => language.name).toList(),
         'achievements': achievements.map((achievement) => achievement.name).toList(),
+        'notificationsEnabled': notificationsEnabled,
+        'reminderHour': reminderHour,
         'phrasesKnown': phrasesKnown,
         'speakSecondsUsed': speakSecondsUsed,
         'speakDayKey': speakDayKey,
@@ -423,6 +435,8 @@ class UserProfile {
           .map((value) => Achievement.values.asNameMap()['$value'])
           .whereType<Achievement>()
           .toSet(),
+      notificationsEnabled: j['notificationsEnabled'] as bool? ?? true,
+      reminderHour: (j['reminderHour'] as num?)?.toInt() ?? 19,
       phrasesKnown: j['phrasesKnown'] as int? ?? 0,
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',
