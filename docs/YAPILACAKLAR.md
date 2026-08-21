@@ -15,10 +15,10 @@
 - [x] Uygulama ikonu (app icon) da bu logo olsun
 
 ### 2. Konuş Butonu — Mikrofon aktif olsun
-- [ ] Mikrofon izni düzgün isteniyor mu kontrol
-- [ ] Web'de kısıtlı — telefonda tam çalışmalı
-- [ ] Basılı tut → konuş → bırak → skor göster
-- [ ] Ses her zaman kadın
+- [x] Mikrofon izni düzgün isteniyor mu kontrol
+- [x] Web'de kısıtlı — telefonda tam çalışmalı
+- [x] Basılı tut → konuş → bırak → skor göster
+- [x] Ses her zaman kadın
 
 ### 3. Çeviri — Google Translate tarzı genel çeviri
 - [ ] 30 dil arası çeviri (dropdown ile dil seçimi)

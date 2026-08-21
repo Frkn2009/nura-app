@@ -3,17 +3,34 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-/// Cihaz TTS + STT. Ses her zaman kadın.
+/// Mikrofonun uygulamadaki kullanılabilirlik durumu.
+enum SpeechAvailability {
+  unknown,
+  ready,
+  permissionDenied,
+  permissionPermanentlyDenied,
+  unavailable,
+}
+
+/// Cihaz TTS + STT denetleyicisi.
+///
+/// Mobilde mikrofon iznini açıkça ister. Web'de izin akışını tarayıcıya
+/// bırakarak SpeechRecognition desteği varsa sınırlı kullanım sağlar. TTS'te
+/// cihazın ilgili dildeki kadın sesi seçilir; ses metadatası sunmayan eski
+/// motorlarda kadın ses profiline yakın sabit pitch kullanılır.
 class SpeechController {
   final _tts = FlutterTts();
   final _stt = SpeechToText();
   Timer? _tick;
   String _buffer = '';
   bool _ready = false;
+  SpeechAvailability _availability = SpeechAvailability.unknown;
 
   bool get deviceSpeechAvailable => _ready;
+  SpeechAvailability get availability => _availability;
 
   static String localeOf(String langCode) => switch (langCode) {
         'es' => 'es-ES',
@@ -48,99 +65,107 @@ class SpeechController {
         _ => 'en-US',
       };
 
-  /// Kadın ses seç — iOS ve Android'de farklı yöntemle
+  static const _femaleVoiceHints = <String>[
+    'female', 'woman', 'kadın',
+    // Apple / Microsoft / Android'de yaygın kadın sesleri.
+    'samantha', 'karen', 'moira', 'tessa', 'fiona', 'amelie', 'audrey',
+    'anna', 'petra', 'milena', 'yelda', 'mei-jia', 'ting-ting', 'kyoko',
+    'o-ren', 'yuna', 'paulina', 'ellen', 'alice', 'monica', 'luciana',
+    'nora', 'sara', 'zosia', 'ioana', 'mariam', 'kanya', 'linh',
+    'damayanti', 'lesya', 'carmit', 'zuzana', 'alva', 'satu', 'veena',
+    'filiz', 'susan', 'hazel', 'zira', 'aria', 'jenny', 'sonia', 'natasha',
+  ];
+
   Future<void> _setFemaleVoice(String langCode) async {
+    const femalePitch = 1.12;
+    await _tts.setPitch(femalePitch);
     try {
-      final locale = localeOf(langCode);
+      final rawVoices = await _tts.getVoices;
+      if (rawVoices is! List || rawVoices.isEmpty) return;
 
-      if (kIsWeb) return; // Web'de voice seçimi kısıtlı
+      final locale = localeOf(langCode).toLowerCase();
+      final language = langCode.toLowerCase();
+      final voices = rawVoices
+          .whereType<Map>()
+          .where((voice) {
+            final voiceLocale = (voice['locale'] ?? '').toString().toLowerCase().replaceAll('_', '-');
+            return voiceLocale == locale || voiceLocale.startsWith('$language-') || voiceLocale == language;
+          })
+          .toList();
+      if (voices.isEmpty) return;
 
-      // Mevcut sesleri al
-      final voices = await _tts.getVoices as List<dynamic>?;
-      if (voices == null || voices.isEmpty) return;
-
-      // Bu dil için kadın ses bul
-      final femaleVoice = voices.cast<Map>().where((v) {
-        final name = (v['name'] ?? '').toString().toLowerCase();
-        final loc = (v['locale'] ?? '').toString().toLowerCase();
-        final langMatch = loc.startsWith(langCode.toLowerCase());
-        // Kadın ses isimleri genelde: female, woman, kadın,
-        // veya belirli isimler: Samantha, Karen, Milena, Amelie, Yelda...
-        final isFemale = name.contains('female') ||
-            name.contains('woman') ||
-            name.contains('kadın') ||
-            // iOS yaygın kadın sesleri
-            name.contains('samantha') ||
-            name.contains('karen') ||
-            name.contains('amelie') ||
-            name.contains('anna') ||
-            name.contains('milena') ||
-            name.contains('yelda') ||
-            name.contains('mei-jia') ||
-            name.contains('kyoko') ||
-            name.contains('yuna') ||
-            name.contains('paulina') ||
-            name.contains('ellen') ||
-            name.contains('alice') ||
-            name.contains('monica') ||
-            name.contains('luciana') ||
-            name.contains('nora') ||
-            name.contains('sara') ||
-            name.contains('zosia') ||
-            name.contains('ioana') ||
-            name.contains('mariam') ||
-            name.contains('tessa') ||
-            name.contains('kanya') ||
-            name.contains('linh') ||
-            name.contains('damayanti') ||
-            name.contains('lesya') ||
-            name.contains('carmit') ||
-            // Android yaygın kadın ses göstergeleri
-            name.contains('female') ||
+      bool isFemale(Map voice) {
+        final name = (voice['name'] ?? '').toString().toLowerCase();
+        final gender = (voice['gender'] ?? '').toString().toLowerCase();
+        return gender == 'female' ||
+            gender == 'f' ||
             name.contains('f-') ||
-            // gender alanı varsa
-            (v['gender'] ?? '').toString().toLowerCase() == 'female';
-        return langMatch && isFemale;
-      }).toList();
-
-      if (femaleVoice.isNotEmpty) {
-        await _tts.setVoice({
-          'name': femaleVoice.first['name'].toString(),
-          'locale': femaleVoice.first['locale'].toString(),
-        });
-        return;
+            _femaleVoiceHints.any(name.contains);
       }
 
-      // Kadın ses bulunamazsa, bu dildeki herhangi bir sesi kullan
-      // ama pitch'i yükselterek daha kadınsı yap
-      if (!kIsWeb) {
-        await _tts.setPitch(1.15); // biraz daha tiz = kadınsı
-      }
+      // Açık kadın metadata/ismi olan sesi zorunlu olarak öncele.
+      final selected = voices.where(isFemale).firstOrNull ?? voices.first;
+      await _tts.setVoice({
+        'name': selected['name'].toString(),
+        'locale': selected['locale'].toString(),
+      });
     } catch (_) {
-      // Ses seçimi başarısız olursa varsayılanla devam et
-      try {
-        await _tts.setPitch(1.15);
-      } catch (_) {}
+      // Bazı üretici TTS motorları ses listesini sağlamaz; sabit kadın ses
+      // profili korunarak motorun seçtiği yerel sesle devam edilir.
     }
   }
 
-  Future<void> warmUp() async {
+  Future<bool> _initializeRecognition() async {
     try {
-      await Permission.microphone.request();
-      _ready = await _stt.initialize();
-      await _tts.setSpeechRate(0.42);
-      await _tts.setVolume(1);
-      await _tts.setPitch(1.1); // varsayılan: hafif kadınsı ton
+      _ready = await _stt.initialize(
+        onError: (SpeechRecognitionError _) {},
+      );
     } catch (_) {
       _ready = false;
+    }
+    _availability = _ready
+        ? SpeechAvailability.ready
+        : SpeechAvailability.unavailable;
+    return _ready;
+  }
+
+  /// İzni hazırlar ve cihaz konuşma tanımayı destekliyorsa `true` döndürür.
+  Future<bool> warmUp() async {
+    try {
+      // permission_handler web'de tarayıcı izin diyaloğunu yönetmez. STT'nin
+      // ilk listen çağrısı güvenli tarayıcı bağlamında istemi kendisi açar.
+      if (!kIsWeb) {
+        var permission = await Permission.microphone.status;
+        if (permission.isDenied) {
+          permission = await Permission.microphone.request();
+        }
+        if (permission.isPermanentlyDenied || permission.isRestricted) {
+          _availability = SpeechAvailability.permissionPermanentlyDenied;
+          return false;
+        }
+        if (!permission.isGranted) {
+          _availability = SpeechAvailability.permissionDenied;
+          return false;
+        }
+      }
+
+      final ready = await _initializeRecognition();
+      await _tts.setSpeechRate(0.42);
+      await _tts.setVolume(1);
+      await _tts.setPitch(1.12);
+      return ready;
+    } catch (_) {
+      _ready = false;
+      _availability = SpeechAvailability.unavailable;
+      return false;
     }
   }
 
   Future<void> speakTarget(String text, String langCode) async {
     try {
+      await _tts.stop();
       await _tts.setLanguage(localeOf(langCode));
       await _setFemaleVoice(langCode);
-      await _tts.stop();
       await _tts.speak(text);
     } catch (_) {}
   }
@@ -151,32 +176,41 @@ class SpeechController {
     } catch (_) {}
   }
 
-  Future<void> startListen({
+  /// Kaydı başlatır. Başarılı olmadığında sayaç çalıştırılmaz.
+  Future<bool> startListen({
     required String langCode,
     required void Function(int seconds) onTick,
     void Function(String text)? onText,
   }) async {
     _buffer = '';
-    var sec = 0;
     _tick?.cancel();
-    _tick = Timer.periodic(const Duration(seconds: 1), (_) => onTick(++sec));
-    if (!_ready) {
-      try {
-        _ready = await _stt.initialize();
-      } catch (_) {}
-    }
-    if (!_ready) return;
+    if (!_ready && !await warmUp()) return false;
+
     try {
       await _stt.listen(
         localeId: localeOf(langCode),
-        listenFor: const Duration(seconds: 20),
+        listenFor: const Duration(seconds: 30),
         pauseFor: const Duration(seconds: 3),
-        onResult: (r) {
-          _buffer = r.recognizedWords;
+        listenOptions: SpeechListenOptions(
+          partialResults: true,
+          cancelOnError: true,
+          listenMode: ListenMode.confirmation,
+        ),
+        onResult: (result) {
+          _buffer = result.recognizedWords;
           onText?.call(_buffer);
         },
       );
-    } catch (_) {}
+      var seconds = 0;
+      _tick = Timer.periodic(
+        const Duration(seconds: 1),
+        (_) => onTick(++seconds),
+      );
+      return true;
+    } catch (_) {
+      _availability = SpeechAvailability.unavailable;
+      return false;
+    }
   }
 
   Future<String> stopListen() async {
@@ -187,7 +221,63 @@ class SpeechController {
     return _buffer;
   }
 
+  /// STT metnini beklenen cümleyle karşılaştırıp 0–100 arası şeffaf bir skor
+  /// üretir. Boş kayıt asla yapay bir geçer not almaz.
+  static int pronunciationScore(String expected, String heard) {
+    String normalize(String value) => value
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\p{L}\p{N}\s]', unicode: true), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+
+    final target = normalize(expected);
+    final actual = normalize(heard);
+    if (target.isEmpty || actual.isEmpty) return 0;
+    if (target == actual) return 100;
+
+    final maxLength = target.runes.length > actual.runes.length
+        ? target.runes.length
+        : actual.runes.length;
+    final characterSimilarity =
+        1 - (_levenshtein(target.runes.toList(), actual.runes.toList()) / maxLength);
+
+    final targetWords = target.split(' ').toSet();
+    final actualWords = actual.split(' ').toSet();
+    final matches = targetWords.intersection(actualWords).length;
+    final wordSimilarity = matches / targetWords.length;
+    return (100 * (characterSimilarity * .65 + wordSimilarity * .35))
+        .round()
+        .clamp(0, 100);
+  }
+
+  static int _levenshtein(List<int> a, List<int> b) {
+    var previous = List<int>.generate(b.length + 1, (index) => index);
+    for (var i = 0; i < a.length; i++) {
+      final current = List<int>.filled(b.length + 1, 0)..[0] = i + 1;
+      for (var j = 0; j < b.length; j++) {
+        final cost = a[i] == b[j] ? 0 : 1;
+        final deletion = previous[j + 1] + 1;
+        final insertion = current[j] + 1;
+        final substitution = previous[j] + cost;
+        current[j + 1] = deletion < insertion
+            ? (deletion < substitution ? deletion : substitution)
+            : (insertion < substitution ? insertion : substitution);
+      }
+      previous = current;
+    }
+    return previous.last;
+  }
+
   void dispose() {
     _tick?.cancel();
+    _stt.cancel();
+    _tts.stop();
+  }
+}
+
+extension<T> on Iterable<T> {
+  T? get firstOrNull {
+    final iterator = this.iterator;
+    return iterator.moveNext() ? iterator.current : null;
   }
 }

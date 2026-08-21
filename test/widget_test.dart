@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nura/data/content/catalog.dart';
 import 'package:nura/data/content/language_guides.dart';
 import 'package:nura/data/models/models.dart';
+import 'package:nura/data/speech/speech_controller.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 
 void main() {
@@ -59,4 +60,12 @@ void main() {
     }
     expect(total, 242);
   });
+
+  test('pronunciation scoring is honest and deterministic', () {
+    expect(SpeechController.pronunciationScore('Hello, world!', ''), 0);
+    expect(SpeechController.pronunciationScore('Hello, world!', 'hello world'), 100);
+    expect(SpeechController.pronunciationScore('Good morning', 'good evening'), inInclusiveRange(30, 75));
+    expect(SpeechController.pronunciationScore('こんにちは', 'こんにちは'), 100);
+  });
+
 }

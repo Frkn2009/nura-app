@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -87,8 +85,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   int turn = 0;
   _Step step = _Step.hear;
   bool holding = false;
+  bool _pressActive = false;
+  bool _speechReady = false;
   int holdSec = 0;
-  Timer? timer;
   int score = 0;
   final speech = SpeechController();
   String heard = '';
@@ -96,7 +95,12 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   @override
   void initState() {
     super.initState();
-    speech.warmUp();
+    _prepareSpeech();
+  }
+
+  Future<void> _prepareSpeech() async {
+    final ready = await speech.warmUp();
+    if (mounted) setState(() => _speechReady = ready);
   }
 
   Scenario get scene => Catalog.byId(widget.scenarioId) ?? Catalog.forLang(LearnLang.en).first;
@@ -107,61 +111,100 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
 
   @override
   void dispose() {
-    timer?.cancel();
     speech.dispose();
     super.dispose();
   }
 
   void _gate() {
-    timer?.cancel();
-    setState(() => holding = false);
+    if (mounted) setState(() => holding = false);
     context.push('/ad');
   }
 
-  void _down() {
+  String _microphoneMessage() => switch (speech.availability) {
+        SpeechAvailability.permissionPermanentlyDenied =>
+          'Mikrofon izni kapalı. Telefon ayarlarından NURA için mikrofonu aç.',
+        SpeechAvailability.permissionDenied =>
+          'Konuşabilmek için mikrofon izni vermen gerekiyor.',
+        SpeechAvailability.unavailable =>
+          'Bu cihazda konuşma tanıma kullanılamıyor. Telefonda tekrar dene.',
+        _ => 'Mikrofon başlatılamadı. Lütfen tekrar dene.',
+      };
+
+  Future<void> _down() async {
     final p = ref.read(sessionProvider);
     if (!p.isPlus && p.remainingSpeakSeconds() <= 0) {
       _gate();
       return;
     }
-    setState(() {
-      holding = true;
-      holdSec = 0;
-      heard = '';
-    });
-    timer?.cancel();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setState(() => holdSec++);
-      ref.read(sessionProvider.notifier).consumeSpeak(1);
-      if (!ref.read(sessionProvider).isPlus && ref.read(sessionProvider).remainingSpeakSeconds() <= 0) {
-        _up();
-        _gate();
-      }
-    });
-    speech.startListen(
+
+    _pressActive = true;
+    if (mounted) {
+      setState(() {
+        holdSec = 0;
+        heard = '';
+      });
+    }
+
+    final started = await speech.startListen(
       langCode: scene.lang.code,
-      onTick: (_) {},
-      onText: (t) => setState(() => heard = t),
+      onTick: (seconds) {
+        if (!mounted || !holding) return;
+        setState(() => holdSec = seconds);
+        ref.read(sessionProvider.notifier).consumeSpeak(1);
+        if (!ref.read(sessionProvider).isPlus &&
+            ref.read(sessionProvider).remainingSpeakSeconds() <= 0) {
+          _up().then((_) {
+            if (mounted) _gate();
+          });
+        }
+      },
+      onText: (text) {
+        if (mounted) setState(() => heard = text);
+      },
     );
+
+    if (!_pressActive) {
+      if (started) await speech.stopListen();
+      return;
+    }
+    if (!started) {
+      _pressActive = false;
+      if (!mounted) return;
+      setState(() {
+        holding = false;
+        _speechReady = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_microphoneMessage())),
+      );
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        holding = true;
+        _speechReady = true;
+      });
+    }
   }
 
   Future<void> _up() async {
-    timer?.cancel();
+    _pressActive = false;
+    if (!holding) return;
     final text = await speech.stopListen();
-    final expected = currentTurn.expected.toLowerCase();
-    final got = (text.isEmpty ? heard : text).toLowerCase();
-    var s = 62;
-    if (got.isNotEmpty) {
-      final words = expected.split(RegExp(r'\s+'));
-      final hit = words.where((w) => w.length > 2 && got.contains(w)).length;
-      s = (70 + (hit * 30 / (words.isEmpty ? 1 : words.length))).round().clamp(55, 98);
-    }
+    final recognized = text.isEmpty ? heard : text;
+    final result = SpeechController.pronunciationScore(
+      currentTurn.expected,
+      recognized,
+    );
+    if (!mounted) return;
     setState(() {
       holding = false;
-      score = s;
+      score = result;
       step = _Step.fix;
     });
-    ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
+    if (recognized.trim().isNotEmpty) {
+      ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
+    }
   }
 
   void _nextStep() {
@@ -282,21 +325,27 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   spacing: 8,
                   children: [
                     _chip('Telaffuz $score'),
-                    _chip('Akıcılık ${score - 8}'),
-                    _chip('Netlik ${score + 6}'),
+                    _chip('Akıcılık ${(score - 8).clamp(0, 100)}'),
+                    _chip('Netlik ${(score + 6).clamp(0, 100)}'),
                   ],
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Tek düzeltme: cümleyi yavaş, kelime kelime tekrarla.',
+                Text(
+                  score == 0
+                      ? 'Ses algılanmadı. Mikrofona yakın konuşup tekrar dene.'
+                      : 'Tek düzeltme: cümleyi yavaş, kelime kelime tekrarla.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Nura.muted),
+                  style: const TextStyle(color: Nura.muted),
                 ),
                 const SizedBox(height: 18),
                 FilledButton(
                   style: FilledButton.styleFrom(backgroundColor: Nura.terr),
-                  onPressed: _nextTurn,
-                  child: Text(turn < scene.turns.length - 1 ? i18n.continueCta : 'Bitir'),
+                  onPressed: score == 0
+                      ? () => setState(() => step = _Step.speak)
+                      : _nextTurn,
+                  child: Text(score == 0
+                      ? 'Tekrar dene'
+                      : (turn < scene.turns.length - 1 ? i18n.continueCta : 'Bitir')),
                 ),
               ] else if (step == _Step.speak) ...[
                 GestureDetector(
@@ -316,7 +365,12 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(holding ? '${holdSec}s' : i18n.holdToSpeak, style: const TextStyle(color: Nura.muted)),
+                Text(
+                  holding
+                      ? '${holdSec}s · dinliyorum'
+                      : (_speechReady ? i18n.holdToSpeak : 'Basılı tut · mikrofon izni istenecek'),
+                  style: const TextStyle(color: Nura.muted),
+                ),
                 if (heard.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
