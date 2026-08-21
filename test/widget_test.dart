@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nura/data/content/catalog.dart';
 import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
+import 'package:nura/data/events/weekly_event.dart';
 import 'package:nura/data/models/achievements.dart';
 import 'package:nura/data/models/leaderboard.dart';
 import 'package:nura/data/models/models.dart';
@@ -196,6 +197,24 @@ void main() {
       );
       expect(find.byType(NuraMascot), findsOneWidget);
     }
+  });
+
+
+  test('weekly Spanish event and ad frequency rules are deterministic', () {
+    expect(WeeklyEvent.weekKey(DateTime.utc(2026, 8, 21)), '2026-08-17');
+    final event = WeeklyEvent.current();
+    final joined = UserProfile.empty.copyWith(
+      learnLang: LearnLang.es,
+      joinedEventId: event.id,
+    );
+    expect(event.applies(joined), true);
+
+    final now = DateTime.fromMillisecondsSinceEpoch(1000 * 1000);
+    final waiting = UserProfile.empty.copyWith(lastAdEpoch: 900);
+    expect(waiting.canShowInterstitial(now), false);
+    final ready = UserProfile.empty.copyWith(lastAdEpoch: 600);
+    expect(ready.canShowInterstitial(now), true);
+    expect(UserProfile.empty.copyWith(adsWatchedToday: 5).canWatchAd, false);
   });
 
 }

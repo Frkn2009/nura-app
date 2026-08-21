@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/l10n/i18n.dart';
 import '../data/content/catalog.dart';
+import '../data/events/weekly_event.dart';
 import '../data/models/achievements.dart';
 import '../data/models/models.dart';
 import '../data/supabase/supa_service.dart';
@@ -59,6 +60,11 @@ class SessionController extends Notifier<UserProfile> {
     }
     if (rolled.xpDayKey != today) {
       rolled = rolled.copyWith(dailyXp: 0, xpDayKey: today);
+    }
+    if (rolled.lastAdEpoch == 0) {
+      rolled = rolled.copyWith(
+        lastAdEpoch: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      );
     }
     return rolled;
   }
@@ -114,9 +120,12 @@ class SessionController extends Notifier<UserProfile> {
   }
 
 
-  Future<void> awardXp(int amount, {String source = 'correct'}) async {
-    if (amount <= 0) return;
+  Future<int> awardXp(int amount, {String source = 'correct'}) async {
+    if (amount <= 0) return 0;
     final profile = _rollDay(state);
+    final effectiveAmount = WeeklyEvent.current().applies(profile) && source != 'ad'
+        ? amount * WeeklyEvent.current().multiplier
+        : amount;
     final today = _today();
     var nextStreak = profile.streak;
     if (profile.lastPracticeDayKey != today) {
@@ -125,14 +134,15 @@ class SessionController extends Notifier<UserProfile> {
           : 1;
     }
     await _save(profile.copyWith(
-      totalXp: profile.totalXp + amount,
-      dailyXp: profile.dailyXp + amount,
+      totalXp: profile.totalXp + effectiveAmount,
+      dailyXp: profile.dailyXp + effectiveAmount,
       streak: nextStreak,
       lastPracticeDayKey: today,
     ));
     if (Supa.enabled) {
-      unawaited(Supa.recordXp(amount, source).catchError((_) {}));
+      unawaited(Supa.recordXp(effectiveAmount, source).catchError((_) {}));
     }
+    return effectiveAmount;
   }
 
   /// Doğru cevap XP'si (+10) ve performans oyun bonusu (+20…100).
@@ -145,22 +155,23 @@ class SessionController extends Notifier<UserProfile> {
 
   Future<int> completeGame(int correct, int total) async {
     final earned = gameXpFor(correct, total);
-    await awardXp(earned, source: 'game');
+    final granted = await awardXp(earned, source: 'game');
     final unlocked = {...state.achievements};
     if (total > 0 && correct >= total) unlocked.add(Achievement.perfect);
     await _save(state.copyWith(
       gamesCompleted: state.gamesCompleted + 1,
       achievements: unlocked,
     ));
-    return earned;
+    return granted;
   }
 
-  Future<void> completeScene(LearnLang language) async {
-    await awardXp(50, source: 'scene');
+  Future<int> completeScene(LearnLang language) async {
+    final granted = await awardXp(50, source: 'scene');
     await _save(state.copyWith(
       completedScenes: state.completedScenes + 1,
       completedLanguages: {...state.completedLanguages, language},
     ));
+    return granted;
   }
 
   Future<void> unlockAchievement(Achievement achievement) async {
@@ -170,12 +181,39 @@ class SessionController extends Notifier<UserProfile> {
     ));
   }
 
-  Future<void> watchRewardedAd() async {
-    var p = _rollDay(state);
-    if (!p.canWatchAd) return;
-    await _save(p.copyWith(
-      bonusSpeakSeconds: p.bonusSpeakSeconds + 60,
-      adsWatchedToday: p.adsWatchedToday + 1,
+  Future<void> redeemRewardedAd({required bool xpReward}) async {
+    final profile = _rollDay(state);
+    if (!profile.canWatchAd) return;
+    final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    await _save(profile.copyWith(
+      bonusSpeakSeconds: profile.bonusSpeakSeconds + (xpReward ? 0 : 30),
+      adsWatchedToday: profile.adsWatchedToday + 1,
+      lastAdEpoch: now,
+    ));
+    if (xpReward) await awardXp(20, source: 'ad');
+  }
+
+  Future<void> recordInterstitial() async {
+    final profile = _rollDay(state);
+    if (!profile.canWatchAd) return;
+    await _save(profile.copyWith(
+      adsWatchedToday: profile.adsWatchedToday + 1,
+      lastAdEpoch: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+    ));
+  }
+
+  Future<void> joinWeeklyEvent(
+    String eventId, {
+    required bool countAd,
+  }) async {
+    final profile = _rollDay(state);
+    if (countAd && !profile.canWatchAd) return;
+    await _save(profile.copyWith(
+      joinedEventId: eventId,
+      adsWatchedToday: profile.adsWatchedToday + (countAd ? 1 : 0),
+      lastAdEpoch: countAd
+          ? DateTime.now().millisecondsSinceEpoch ~/ 1000
+          : profile.lastAdEpoch,
     ));
   }
 

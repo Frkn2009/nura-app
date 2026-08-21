@@ -56,3 +56,22 @@ supabase functions deploy translate
 ```
 
 Plus yetkisi, istemcinin değiştirebildiği profil verisinden değil, yalnızca ödeme webhook'unun service role ile yazdığı `subscriptions` tablosundan doğrulanır.
+
+## AdMob üretim kurulumu
+
+Depoda Google'ın güvenli **test** App ID ve ad unit ID'leri bulunur; geliştirme sırasında gerçek reklama tıklama riski yoktur. Mağaza sürümünden önce:
+
+1. Android `AndroidManifest.xml` ve iOS `Info.plist` içindeki test App ID'lerini AdMob App ID'leriyle değiştir.
+2. Üretim ad unit ID'lerini build sırasında ver:
+
+```bash
+flutter build appbundle \
+  --dart-define=NURA_ADMOB_REWARDED_ANDROID=ca-app-pub-XXX/REWARDED \
+  --dart-define=NURA_ADMOB_INTERSTITIAL_ANDROID=ca-app-pub-XXX/INTERSTITIAL
+
+flutter build ipa \
+  --dart-define=NURA_ADMOB_REWARDED_IOS=ca-app-pub-XXX/REWARDED \
+  --dart-define=NURA_ADMOB_INTERSTITIAL_IOS=ca-app-pub-XXX/INTERSTITIAL
+```
+
+Gelir ve eCPM, AdMob panelindeki doğrulanmış gösterimlerden hesaplanır. Free kullanıcıda 3–5 dakikalık sıklık sınırı ve günlük toplam 5 video sınırı vardır; Plus kullanıcıya reklam çağrısı yapılmaz.

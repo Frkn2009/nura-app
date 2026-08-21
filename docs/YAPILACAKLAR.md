@@ -94,13 +94,13 @@
 - [x] Telif sorunu olmayacak — tamamen özgün Canvas tasarımı
 
 ### 12. Süreli Etkinlikler + Video Reklam Gelir Kapısı
-- [ ] Haftalık etkinlik: "Bu hafta İspanyolca XP 2 katı!"
-- [ ] Etkinliğe katılmak için video reklam izle (15-30 sn)
-- [ ] Free kullanıcı: her 3-5 dk'da video reklam
-- [ ] Plus kullanıcı: video reklam YOK
-- [ ] Video reklam izle = +30 saniye konuşma VEYA +20 XP
-- [ ] Günde max 5 video reklam (aşırı rahatsız etme)
-- [ ] Gelir modeli: eCPM × izlenme = gelir
+- [x] Haftalık etkinlik: "Bu hafta İspanyolca XP 2 katı!"
+- [x] Etkinliğe katılmak için video reklam izle (15-30 sn)
+- [x] Free kullanıcı: her 3-5 dk'da video reklam
+- [x] Plus kullanıcı: video reklam YOK
+- [x] Video reklam izle = +30 saniye konuşma VEYA +20 XP
+- [x] Günde max 5 video reklam (aşırı rahatsız etme)
+- [x] Gelir modeli: AdMob eCPM × doğrulanmış gösterim
 
 ---
 

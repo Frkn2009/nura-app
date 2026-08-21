@@ -12,6 +12,9 @@
 	<string>Söylediğin cümleyi yazıya çevirmek için konuşma tanıma gerekir.</string>
 	<key>CFBundleDisplayName</key>
 	<string>NURA</string>
+	<!-- Google'ın test App ID'si. Üretimde AdMob konsolundaki App ID ile değiştir. -->
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

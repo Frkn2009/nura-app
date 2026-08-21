@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/ads/ad_service.dart';
 import '../../data/content/catalog.dart';
 import '../../data/content/language_guides.dart';
 import '../../data/models/models.dart';
@@ -258,10 +259,15 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         score = 0;
       });
     } else {
-      await ref.read(sessionProvider.notifier).completeScene(scene.lang);
+      final sceneXp = await ref.read(sessionProvider.notifier).completeScene(scene.lang);
+      final latest = ref.read(sessionProvider);
+      if (latest.canShowInterstitial() && await AdService.showInterstitial()) {
+        if (!mounted) return;
+        await ref.read(sessionProvider.notifier).recordInterstitial();
+      }
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sahne tamamlandı · +50 XP')),
+        SnackBar(content: Text('Sahne tamamlandı · +$sceneXp XP')),
       );
       context.go('/app');
     }

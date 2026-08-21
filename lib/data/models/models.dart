@@ -232,6 +232,8 @@ class UserProfile {
     required this.speakDayKey,
     required this.bonusSpeakSeconds,
     required this.adsWatchedToday,
+    required this.lastAdEpoch,
+    required this.joinedEventId,
     required this.learnedIds,
     required this.srs,
   });
@@ -259,6 +261,8 @@ class UserProfile {
   final String speakDayKey;
   final int bonusSpeakSeconds;
   final int adsWatchedToday;
+  final int lastAdEpoch;
+  final String joinedEventId;
   final Set<String> learnedIds;
   final Map<String, int> srs;
 
@@ -286,11 +290,13 @@ class UserProfile {
     speakDayKey: '',
     bonusSpeakSeconds: 0,
     adsWatchedToday: 0,
+    lastAdEpoch: 0,
+    joinedEventId: '',
     learnedIds: {},
     srs: {},
   );
 
-  static const maxRewardedAdsPerDay = 3;
+  static const maxRewardedAdsPerDay = 5;
 
   int get speakAllowance => isPlus ? 3600 : 60 + bonusSpeakSeconds;
 
@@ -300,6 +306,14 @@ class UserProfile {
   }
 
   bool get canWatchAd => !isPlus && adsWatchedToday < maxRewardedAdsPerDay;
+
+  int get nextAdCooldownSeconds => 180 + (adsWatchedToday * 31) % 121;
+
+  bool canShowInterstitial([DateTime? moment]) {
+    if (!canWatchAd) return false;
+    final now = (moment ?? DateTime.now()).millisecondsSinceEpoch ~/ 1000;
+    return now - lastAdEpoch >= nextAdCooldownSeconds;
+  }
 
   static const dailyXpGoal = 100;
 
@@ -351,6 +365,8 @@ class UserProfile {
     String? speakDayKey,
     int? bonusSpeakSeconds,
     int? adsWatchedToday,
+    int? lastAdEpoch,
+    String? joinedEventId,
     Set<String>? learnedIds,
     Map<String, int>? srs,
   }) {
@@ -378,6 +394,8 @@ class UserProfile {
       speakDayKey: speakDayKey ?? this.speakDayKey,
       bonusSpeakSeconds: bonusSpeakSeconds ?? this.bonusSpeakSeconds,
       adsWatchedToday: adsWatchedToday ?? this.adsWatchedToday,
+      lastAdEpoch: lastAdEpoch ?? this.lastAdEpoch,
+      joinedEventId: joinedEventId ?? this.joinedEventId,
       learnedIds: learnedIds ?? this.learnedIds,
       srs: srs ?? this.srs,
     );
@@ -407,6 +425,8 @@ class UserProfile {
         'speakDayKey': speakDayKey,
         'bonusSpeakSeconds': bonusSpeakSeconds,
         'adsWatchedToday': adsWatchedToday,
+        'lastAdEpoch': lastAdEpoch,
+        'joinedEventId': joinedEventId,
         'learnedIds': learnedIds.toList(),
         'srs': srs,
       };
@@ -441,7 +461,9 @@ class UserProfile {
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',
       bonusSpeakSeconds: j['bonusSpeakSeconds'] as int? ?? 0,
-      adsWatchedToday: j['adsWatchedToday'] as int? ?? 0,
+      adsWatchedToday: (j['adsWatchedToday'] as num?)?.toInt() ?? 0,
+      lastAdEpoch: (j['lastAdEpoch'] as num?)?.toInt() ?? 0,
+      joinedEventId: j['joinedEventId'] as String? ?? '',
       learnedIds: {...(j['learnedIds'] as List? ?? const []).cast<String>()},
       srs: ((j['srs'] as Map?) ?? const {}).map((k, v) => MapEntry('$k', (v as num).toInt())),
     );

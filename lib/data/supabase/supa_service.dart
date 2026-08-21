@@ -97,6 +97,8 @@ class Supa {
       'speak_day_key': p.speakDayKey,
       'bonus_speak_seconds': p.bonusSpeakSeconds,
       'ads_watched_today': p.adsWatchedToday,
+      'last_ad_epoch': p.lastAdEpoch,
+      'joined_event_id': p.joinedEventId,
       'learned_ids': p.learnedIds.toList(),
       'srs': p.srs,
       'updated_at': DateTime.now().toIso8601String(),
@@ -138,6 +140,8 @@ class Supa {
       'speakDayKey': row['speak_day_key'],
       'bonusSpeakSeconds': row['bonus_speak_seconds'],
       'adsWatchedToday': row['ads_watched_today'],
+      'lastAdEpoch': row['last_ad_epoch'],
+      'joinedEventId': row['joined_event_id'],
       'learnedIds': row['learned_ids'],
       'srs': row['srs'],
     });

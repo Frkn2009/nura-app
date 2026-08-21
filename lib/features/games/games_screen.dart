@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/ads/ad_service.dart';
 import '../../data/content/catalog.dart';
 import '../../data/models/models.dart';
 import '../../data/speech/speech_controller.dart';
@@ -18,17 +19,28 @@ class GamesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(sessionProvider);
+    Future<int> completeGame(int correct, int total) async {
+      final earned = await ref
+          .read(sessionProvider.notifier)
+          .completeGame(correct, total);
+      final latest = ref.read(sessionProvider);
+      if (latest.canShowInterstitial() && await AdService.showInterstitial()) {
+        await ref.read(sessionProvider.notifier).recordInterstitial();
+      }
+      return earned;
+    }
+
     final games = <_GameDefinition>[
       _GameDefinition('Doğru / Yanlış', 'Çeviri eşleşmesini değerlendir', Icons.rule_rounded, Nura.mint,
-          () => TrueFalseGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
+          () => TrueFalseGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
       _GameDefinition('Harf Sıralama', 'Karışık harflerden kelime kur', Icons.sort_by_alpha_rounded, Nura.sky,
-          () => LetterOrderGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
+          () => LetterOrderGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
       _GameDefinition('Ses Bulmaca', 'Dinle ve dört seçenekten bul', Icons.headphones_rounded, Nura.lavender,
-          () => AudioPuzzleScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
+          () => AudioPuzzleScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
       _GameDefinition('Boşluk Doldur', 'Eksik kelimeyi tamamla', Icons.edit_note_rounded, Nura.coral,
-          () => FillBlankGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
+          () => FillBlankGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
       _GameDefinition('Zamana Karşı', '60 saniyede en çok doğru', Icons.timer_outlined, Nura.sunflower,
-          () => TimedGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
+          () => TimedGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
     ];
 
     return SafeArea(

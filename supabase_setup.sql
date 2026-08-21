@@ -51,6 +51,8 @@ alter table public.profiles add column if not exists speak_seconds_used int not 
 alter table public.profiles add column if not exists speak_day_key text not null default '';
 alter table public.profiles add column if not exists bonus_speak_seconds int not null default 0;
 alter table public.profiles add column if not exists ads_watched_today int not null default 0;
+alter table public.profiles add column if not exists last_ad_epoch bigint not null default 0;
+alter table public.profiles add column if not exists joined_event_id text not null default '';
 alter table public.profiles add column if not exists learned_ids jsonb not null default '[]';
 alter table public.profiles add column if not exists srs jsonb not null default '{}';
 alter table public.profiles add column if not exists updated_at timestamptz not null default now();
@@ -111,12 +113,14 @@ alter table public.profiles add column if not exists display_name text;
 create table if not exists public.xp_events (
   id bigint generated always as identity primary key,
   user_id uuid not null references auth.users(id) on delete cascade,
-  amount int not null check (amount > 0 and amount <= 1000),
-  source text not null check (source in ('correct', 'scene', 'game')),
+  amount int not null check (amount > 0 and amount <= 2000),
+  source text not null check (source in ('correct', 'scene', 'game', 'ad')),
   created_at timestamptz not null default now()
 );
 alter table public.xp_events drop constraint if exists xp_events_amount_check;
-alter table public.xp_events add constraint xp_events_amount_check check (amount > 0 and amount <= 1000);
+alter table public.xp_events add constraint xp_events_amount_check check (amount > 0 and amount <= 2000);
+alter table public.xp_events drop constraint if exists xp_events_source_check;
+alter table public.xp_events add constraint xp_events_source_check check (source in ('correct', 'scene', 'game', 'ad'));
 create index if not exists xp_events_user_created_idx on public.xp_events(user_id, created_at desc);
 
 create table if not exists public.leaderboard (
@@ -142,10 +146,10 @@ declare
   v_week date := date_trunc('week', timezone('utc', now()))::date;
 begin
   if v_user is null then raise exception 'authentication_required'; end if;
-  if p_source not in ('correct', 'scene', 'game') then raise exception 'invalid_source'; end if;
-  if (p_source = 'correct' and p_amount <> 10)
-     or (p_source = 'scene' and p_amount <> 50)
-     or (p_source = 'game' and (p_amount < 20 or p_amount > 1000)) then
+  if p_source not in ('correct', 'scene', 'game', 'ad') then raise exception 'invalid_source'; end if;
+  if (p_source = 'correct' and p_amount not in (10, 20))
+     or (p_source = 'scene' and p_amount not in (50, 100))
+     or (p_source = 'game' and (p_amount < 20 or p_amount > 2000)) or (p_source = 'ad' and p_amount <> 20) then
     raise exception 'invalid_xp_amount';
   end if;
   insert into public.xp_events(user_id, amount, source) values (v_user, p_amount, p_source);

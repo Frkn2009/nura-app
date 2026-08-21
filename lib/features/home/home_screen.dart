@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/content/catalog.dart';
+import '../../data/events/weekly_event.dart';
 import '../../data/models/models.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
@@ -81,6 +82,30 @@ class HomeScreen extends ConsumerWidget {
                         style: const TextStyle(color: Nura.muted, fontSize: 12)),
                   ],
                 ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          NuraCard(
+            onTap: () => context.push('/event'),
+            color: const Color(0xFFF5E8E5),
+            child: Row(
+              children: [
+                const Icon(Icons.bolt_rounded, color: Nura.coral, size: 28),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(WeeklyEvent.current().title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                      Text(
+                        WeeklyEvent.current().isJoined(p) ? 'Katıldın · İspanyolca pratik yap' : 'Video ile katıl · bu hafta',
+                        style: const TextStyle(color: Nura.muted, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.coral),
               ],
             ),
           ),

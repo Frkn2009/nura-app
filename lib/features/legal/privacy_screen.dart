@@ -18,7 +18,8 @@ class PrivacyScreen extends StatelessWidget {
           Text(
             'Konuşma sesi, mümkün olduğunca cihazında işlenir. Ücretsiz katmanda buluta ses göndermeyiz.\n\n'
             'Saklanan: seçtiğin dil, seri, öğrendiğin kalıp kimlikleri. Bu veri telefonda SharedPreferences içindedir.\n\n'
-            'Plus ileride bulut AI kullanırsa bunu ayrı onaylarız.\n\n'
+            'Plus bulut çevirisi yalnızca giriş ve aktif abonelikle çalışır; metin çeviri sağlayıcısına gönderilir.\n\n'
+            'Free sürümde Google AdMob video reklamları kullanılabilir. Bölgen gerektiriyorsa reklam izni formu gösterilir; Plus kullanıcıya reklam isteği yapılmaz.\n\n'
             'Hesabı sil: Sen → Hesabı sil. Tüm yerel veri silinir.\n\n'
             'Çocuklara yönelik değil (13+).\n\n'
             'İletişim: gizlilik@nura.app (yer tutucu — domain bağlanınca güncellenir).',
