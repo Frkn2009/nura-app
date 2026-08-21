@@ -224,7 +224,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     Text(
                       labels[s]!,
                       style: TextStyle(
-                        color: s == step ? Nura.terrSoft : const Nura.soft,
+                        color: s == step ? Nura.terrSoft : Nura.soft,
                         fontWeight: s == step ? FontWeight.w700 : FontWeight.w400,
                         fontSize: 12,
                       ),
@@ -263,7 +263,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Nura.mintDark,
+                    color: Nura.mintDark,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Text(
@@ -343,7 +343,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   Widget _chip(String s) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(color: const Nura.mintDark, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(color: Nura.mintDark, borderRadius: BorderRadius.circular(20)),
       child: Text(s, style: const TextStyle(color: Nura.cream, fontSize: 12)),
     );
   }
