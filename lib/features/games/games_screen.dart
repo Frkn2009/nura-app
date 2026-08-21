@@ -1,345 +1,558 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:characters/characters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/content/catalog.dart';
 import '../../data/models/models.dart';
+import '../../data/speech/speech_controller.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
-/// Oyun Hub — kelime eşleştirme, hız yarışı, günlük meydan okuma
 class GamesScreen extends ConsumerWidget {
   const GamesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final i18n = ref.watch(i18nProvider);
-    final p = ref.watch(sessionProvider);
+    final profile = ref.watch(sessionProvider);
+    final games = <_GameDefinition>[
+      _GameDefinition('Doğru / Yanlış', 'Çeviri eşleşmesini değerlendir', Icons.rule_rounded, Nura.mint,
+          () => TrueFalseGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+      _GameDefinition('Harf Sıralama', 'Karışık harflerden kelime kur', Icons.sort_by_alpha_rounded, Nura.sky,
+          () => LetterOrderGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+      _GameDefinition('Ses Bulmaca', 'Dinle ve dört seçenekten bul', Icons.headphones_rounded, Nura.lavender,
+          () => AudioPuzzleScreen(lang: profile.learnLang, ui: profile.uiLang)),
+      _GameDefinition('Boşluk Doldur', 'Eksik kelimeyi tamamla', Icons.edit_note_rounded, Nura.coral,
+          () => FillBlankGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+      _GameDefinition('Zamana Karşı', '60 saniyede en çok doğru', Icons.timer_outlined, Nura.sunflower,
+          () => TimedGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+    ];
 
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
         children: [
-          Text('🎮 Oyunlar', style: Theme.of(context).textTheme.displayMedium),
-          const SizedBox(height: 6),
-          Text('${p.learnLang.label(p.uiLang)} · XP: ${p.streak * 10 + p.phrasesKnown * 5}',
-              style: const TextStyle(color: Nura.muted)),
-          const SizedBox(height: 20),
-
-          // Kelime Eşleştirme
-          _GameCard(
-            icon: '🧩',
-            title: 'Kelime Eşleştirme',
-            subtitle: 'Çeviriyi bul, eşleştir',
-            color: Nura.mint,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => MatchGameScreen(lang: p.learnLang, ui: p.uiLang)),
-            ),
-          ),
-          const SizedBox(height: 12),
-
-          // Hız Yarışı
-          _GameCard(
-            icon: '⚡',
-            title: 'Hız Yarışı',
-            subtitle: '30 saniyede kaç doğru?',
-            color: Nura.coral,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => SpeedQuizScreen(lang: p.learnLang, ui: p.uiLang)),
-            ),
-          ),
-          const SizedBox(height: 12),
-
-          // Dinle & Seç
-          _GameCard(
-            icon: '👂',
-            title: 'Dinle & Seç',
-            subtitle: 'Sesi duy, doğru cümleyi bul',
-            color: Nura.lavender,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => ListenGameScreen(lang: p.learnLang, ui: p.uiLang)),
-            ),
+          Text('Oyunlar', style: Theme.of(context).textTheme.displayMedium),
+          const SizedBox(height: 5),
+          Text(
+            '${profile.learnLang.flag()} ${profile.learnLang.label(profile.uiLang)} · 5 özgün pratik',
+            style: const TextStyle(color: Nura.muted),
           ),
           const SizedBox(height: 20),
-
-          // Günlük meydan okuma
-          NuraCard(
-            color: Nura.sunflower.withValues(alpha: 0.15),
-            child: Row(
-              children: [
-                const Text('🔥', style: TextStyle(fontSize: 28)),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Günlük Meydan Okuma', style: TextStyle(fontWeight: FontWeight.w700, color: Nura.ink)),
-                      Text('Bugün 3 oyun tamamla · +50 XP', style: const TextStyle(color: Nura.muted, fontSize: 13)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          for (final game in games) ...[
+            _GameCard(definition: game),
+            const SizedBox(height: 10),
+          ],
         ],
       ),
     );
   }
 }
 
-class _GameCard extends StatelessWidget {
-  const _GameCard({required this.icon, required this.title, required this.subtitle, required this.color, required this.onTap});
-  final String icon;
+class _GameDefinition {
+  const _GameDefinition(this.title, this.subtitle, this.icon, this.color, this.screen);
   final String title;
   final String subtitle;
+  final IconData icon;
   final Color color;
-  final VoidCallback onTap;
+  final Widget Function() screen;
+}
+
+class _GameCard extends StatelessWidget {
+  const _GameCard({required this.definition});
+  final _GameDefinition definition;
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(Nura.radius),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(Nura.radius),
-          border: Border.all(color: Nura.fog, width: 1.5),
+  Widget build(BuildContext context) => NuraCard(
+        onTap: () => Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute<void>(builder: (_) => definition.screen()),
         ),
         child: Row(
           children: [
             Container(
-              width: 52, height: 52,
-              decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(Nura.radius)),
-              child: Center(child: Text(icon, style: const TextStyle(fontSize: 26))),
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: definition.color.withValues(alpha: .12),
+                borderRadius: BorderRadius.circular(Nura.radius),
+              ),
+              child: Icon(definition.icon, color: definition.color),
             ),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Nura.ink)),
-                  const SizedBox(height: 2),
-                  Text(subtitle, style: const TextStyle(color: Nura.muted, fontSize: 13)),
+                  Text(definition.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 3),
+                  Text(definition.subtitle, style: const TextStyle(color: Nura.muted, fontSize: 13)),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: color),
+            const Icon(Icons.chevron_right, color: Nura.soft),
           ],
         ),
-      ),
-    );
-  }
+      );
 }
 
-// ==================== KELIME EŞLEŞTİRME ====================
-
-class MatchGameScreen extends StatefulWidget {
-  const MatchGameScreen({super.key, required this.lang, required this.ui});
+class TrueFalseGameScreen extends StatefulWidget {
+  const TrueFalseGameScreen({super.key, required this.lang, required this.ui});
   final LearnLang lang;
   final UiLang ui;
 
   @override
-  State<MatchGameScreen> createState() => _MatchGameScreenState();
+  State<TrueFalseGameScreen> createState() => _TrueFalseGameScreenState();
 }
 
-class _MatchGameScreenState extends State<MatchGameScreen> {
-  late List<Phrase> phrases;
-  late List<String> targets;
-  late List<String> glosses;
-  String? selectedTarget;
-  String? selectedGloss;
-  final matched = <String>{};
-  int score = 0;
+class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
+  final random = Random();
+  late final List<Phrase> deck;
+  int round = 0;
+  int correct = 0;
+  late Phrase phrase;
+  late String proposed;
+  late bool statementIsTrue;
+  bool answered = false;
 
   @override
   void initState() {
     super.initState();
-    _loadRound();
+    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    _prepare();
   }
 
-  void _loadRound() {
-    final all = Catalog.allPhrases(widget.lang);
-    all.shuffle(Random());
-    phrases = all.take(5).toList();
-    targets = phrases.map((p) => p.target).toList()..shuffle(Random());
-    glosses = phrases.map((p) => p.glossFor(widget.ui)).toList()..shuffle(Random());
-    selectedTarget = null;
-    selectedGloss = null;
-    matched.clear();
-    score = 0;
+  void _prepare() {
+    phrase = deck[round % deck.length];
+    statementIsTrue = random.nextBool();
+    proposed = statementIsTrue
+        ? phrase.glossFor(widget.ui)
+        : _differentPhrases(deck, phrase, 1, random).first.glossFor(widget.ui);
+    answered = false;
   }
 
-  void _tryMatch() {
-    if (selectedTarget == null || selectedGloss == null) return;
-    final phrase = phrases.firstWhere((p) => p.target == selectedTarget, orElse: () => phrases.first);
-    if (phrase.glossFor(widget.ui) == selectedGloss) {
-      setState(() {
-        matched.add(selectedTarget!);
-        score++;
-        selectedTarget = null;
-        selectedGloss = null;
-      });
-      if (matched.length == phrases.length) {
-        _showResult();
+  void _answer(bool choice) {
+    if (answered) return;
+    final right = choice == statementIsTrue;
+    setState(() {
+      answered = true;
+      if (right) correct++;
+    });
+    Future<void>.delayed(const Duration(milliseconds: 650), () {
+      if (!mounted) return;
+      if (round == 9) {
+        showGameResult(context, title: 'Doğru / Yanlış', correct: correct, total: 10);
+      } else {
+        setState(() {
+          round++;
+          _prepare();
+        });
       }
-    } else {
-      setState(() {
-        selectedTarget = null;
-        selectedGloss = null;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('❌ Yanlış eşleşme, tekrar dene!'), duration: Duration(seconds: 1)),
-      );
-    }
+    });
   }
 
-  void _showResult() {
-    showDialog(
-      context: context,
-      builder: (c) => AlertDialog(
-        title: const Text('🎉 Tebrikler!'),
-        content: Text('$score / ${phrases.length} doğru eşleşme!\n+${score * 10} XP'),
-        actions: [
-          TextButton(onPressed: () { Navigator.pop(c); setState(() => _loadRound()); }, child: const Text('Tekrar')),
-          TextButton(onPressed: () { Navigator.pop(c); Navigator.pop(context); }, child: const Text('Çıkış')),
+  @override
+  Widget build(BuildContext context) => _GameScaffold(
+        title: 'Doğru / Yanlış',
+        progress: (round + 1) / 10,
+        child: Column(
+          children: [
+            const Text('Bu çeviri doğru mu?', style: TextStyle(color: Nura.muted)),
+            const SizedBox(height: 24),
+            _PromptCard(primary: phrase.target, secondary: proposed),
+            const Spacer(),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: answered ? null : () => _answer(false),
+                    icon: const Icon(Icons.close_rounded),
+                    label: const Text('Yanlış'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton.icon(
+                    onPressed: answered ? null : () => _answer(true),
+                    icon: const Icon(Icons.check_rounded),
+                    label: const Text('Doğru'),
+                  ),
+                ),
+              ],
+            ),
+            if (answered) ...[
+              const SizedBox(height: 12),
+              Text(statementIsTrue ? 'Doğru eşleşme' : 'Doğrusu: ${phrase.glossFor(widget.ui)}',
+                  textAlign: TextAlign.center, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w600)),
+            ],
+          ],
+        ),
+      );
+}
+
+class LetterOrderGameScreen extends StatefulWidget {
+  const LetterOrderGameScreen({super.key, required this.lang, required this.ui});
+  final LearnLang lang;
+  final UiLang ui;
+
+  @override
+  State<LetterOrderGameScreen> createState() => _LetterOrderGameScreenState();
+}
+
+class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
+  final random = Random();
+  late final List<Phrase> deck;
+  int round = 0;
+  int correct = 0;
+  late Phrase phrase;
+  late List<_LetterTile> available;
+  final selected = <_LetterTile>[];
+
+  @override
+  void initState() {
+    super.initState();
+    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    _prepare();
+  }
+
+  void _prepare() {
+    phrase = deck[round % deck.length];
+    final word = _practiceWord(phrase.target);
+    final characters = word.characters.toList();
+    available = [
+      for (var i = 0; i < characters.length; i++) _LetterTile(i, characters[i]),
+    ]..shuffle(random);
+    selected.clear();
+  }
+
+  void _pick(_LetterTile tile) => setState(() {
+        available.remove(tile);
+        selected.add(tile);
+      });
+
+  void _undo(_LetterTile tile) => setState(() {
+        selected.remove(tile);
+        available.add(tile);
+      });
+
+  void _check() {
+    final answer = selected.map((tile) => tile.character).join();
+    final expected = _practiceWord(phrase.target);
+    final right = _norm(answer) == _norm(expected);
+    if (right) correct++;
+    if (round == 4) {
+      showGameResult(context, title: 'Harf Sıralama', correct: correct, total: 5);
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(right ? 'Doğru' : 'Doğrusu: $expected')),
+    );
+    setState(() {
+      round++;
+      _prepare();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final expectedLength = _practiceWord(phrase.target).characters.length;
+    return _GameScaffold(
+      title: 'Harf Sıralama',
+      progress: (round + 1) / 5,
+      child: Column(
+        children: [
+          Text(phrase.glossFor(widget.ui), textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted)),
+          const SizedBox(height: 26),
+          Container(
+            width: double.infinity,
+            constraints: const BoxConstraints(minHeight: 72),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Nura.mintLight,
+              borderRadius: BorderRadius.circular(Nura.radius),
+              border: Border.all(color: Nura.mint),
+            ),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 6,
+              runSpacing: 6,
+              children: [for (final tile in selected) _letter(tile, () => _undo(tile), true)],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: [for (final tile in available) _letter(tile, () => _pick(tile), false)],
+          ),
+          const Spacer(),
+          FilledButton(
+            onPressed: selected.length == expectedLength ? _check : null,
+            child: const Text('Kontrol et'),
+          ),
         ],
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('🧩 Kelime Eşleştirme')),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Sol: hedef dil
-              Expanded(
-                child: Column(
-                  children: [
-                    const Text('Hedef Dil', style: TextStyle(fontWeight: FontWeight.w600, color: Nura.mint)),
-                    const SizedBox(height: 8),
-                    for (final t in targets)
-                      if (!matched.contains(t))
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: InkWell(
-                            onTap: () { setState(() => selectedTarget = t); _tryMatch(); },
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(14),
-                              decoration: BoxDecoration(
-                                color: selectedTarget == t ? Nura.mint.withValues(alpha: 0.15) : Colors.white,
-                                borderRadius: BorderRadius.circular(Nura.radius),
-                                border: Border.all(color: selectedTarget == t ? Nura.mint : Nura.fog, width: selectedTarget == t ? 2 : 1),
-                              ),
-                              child: Text(t, style: TextStyle(fontWeight: selectedTarget == t ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),
-                            ),
-                          ),
-                        ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              // Sağ: çeviri
-              Expanded(
-                child: Column(
-                  children: [
-                    const Text('Çeviri', style: TextStyle(fontWeight: FontWeight.w600, color: Nura.coral)),
-                    const SizedBox(height: 8),
-                    for (final g in glosses)
-                      if (!matched.values.any((m) => phrases.any((p) => p.glossFor(widget.ui) == g && matched.contains(p.target))))
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: InkWell(
-                            onTap: () { setState(() => selectedGloss = g); _tryMatch(); },
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(14),
-                              decoration: BoxDecoration(
-                                color: selectedGloss == g ? Nura.coral.withValues(alpha: 0.15) : Colors.white,
-                                borderRadius: BorderRadius.circular(Nura.radius),
-                                border: Border.all(color: selectedGloss == g ? Nura.coral : Nura.fog, width: selectedGloss == g ? 2 : 1),
-                              ),
-                              child: Text(g, style: TextStyle(fontWeight: selectedGloss == g ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),
-                            ),
-                          ),
-                        ),
-                  ],
-                ),
-              ),
-            ],
+  Widget _letter(_LetterTile tile, VoidCallback tap, bool selectedTile) => Material(
+        color: selectedTile ? Nura.mintDark : Colors.white,
+        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        child: InkWell(
+          onTap: tap,
+          borderRadius: BorderRadius.circular(Nura.radiusSm),
+          child: Container(
+            constraints: const BoxConstraints(minWidth: 42, minHeight: 44),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(tile.character,
+                style: TextStyle(color: selectedTile ? Colors.white : Nura.ink, fontSize: 18, fontWeight: FontWeight.w700)),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
-// ==================== HIZ YARIŞI ====================
+class _LetterTile {
+  const _LetterTile(this.id, this.character);
+  final int id;
+  final String character;
+}
 
-class SpeedQuizScreen extends StatefulWidget {
-  const SpeedQuizScreen({super.key, required this.lang, required this.ui});
+class AudioPuzzleScreen extends StatefulWidget {
+  const AudioPuzzleScreen({super.key, required this.lang, required this.ui});
   final LearnLang lang;
   final UiLang ui;
 
   @override
-  State<SpeedQuizScreen> createState() => _SpeedQuizScreenState();
+  State<AudioPuzzleScreen> createState() => _AudioPuzzleScreenState();
 }
 
-class _SpeedQuizScreenState extends State<SpeedQuizScreen> {
-  late List<Phrase> allPhrases;
+class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
+  final random = Random();
+  final speech = SpeechController();
+  late final List<Phrase> deck;
+  int round = 0;
   int correct = 0;
-  int total = 0;
-  int timeLeft = 30;
-  Timer? timer;
-  late Phrase current;
-  late List<String> options;
-  bool finished = false;
+  late Phrase phrase;
+  late List<Phrase> options;
+  bool answered = false;
 
   @override
   void initState() {
     super.initState();
-    allPhrases = Catalog.allPhrases(widget.lang);
-    allPhrases.shuffle(Random());
-    _nextQuestion();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setState(() {
-        timeLeft--;
-        if (timeLeft <= 0) { finished = true; timer?.cancel(); }
-      });
+    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    _prepare();
+  }
+
+  void _prepare() {
+    phrase = deck[round % deck.length];
+    options = [phrase, ..._differentPhrases(deck, phrase, 3, random)]..shuffle(random);
+    answered = false;
+  }
+
+  Future<void> _play() => speech.speakTarget(phrase.target, widget.lang.code);
+
+  void _answer(Phrase choice) {
+    if (answered) return;
+    final right = choice.id == phrase.id;
+    setState(() {
+      answered = true;
+      if (right) correct++;
+    });
+    Future<void>.delayed(const Duration(milliseconds: 750), () {
+      if (!mounted) return;
+      if (round == 9) {
+        showGameResult(context, title: 'Ses Bulmaca', correct: correct, total: 10);
+      } else {
+        setState(() {
+          round++;
+          _prepare();
+        });
+      }
     });
   }
 
-  void _nextQuestion() {
-    if (allPhrases.isEmpty) return;
-    current = allPhrases[total % allPhrases.length];
-    final wrongAnswers = (allPhrases.toList()..shuffle(Random()))
-        .where((p) => p.id != current.id)
-        .take(3)
-        .map((p) => p.glossFor(widget.ui))
-        .toList();
-    options = [...wrongAnswers, current.glossFor(widget.ui)]..shuffle(Random());
+  @override
+  void dispose() {
+    speech.dispose();
+    super.dispose();
   }
 
-  void _answer(String chosen) {
-    if (finished) return;
+  @override
+  Widget build(BuildContext context) => _GameScaffold(
+        title: 'Ses Bulmaca',
+        progress: (round + 1) / 10,
+        child: Column(
+          children: [
+            const Text('Cümleyi dinle ve anlamını seç', style: TextStyle(color: Nura.muted)),
+            const SizedBox(height: 24),
+            Semantics(
+              button: true,
+              label: 'Sesi oynat',
+              child: InkWell(
+                onTap: _play,
+                borderRadius: BorderRadius.circular(Nura.radiusLg),
+                child: Container(
+                  width: 112,
+                  height: 112,
+                  decoration: const BoxDecoration(color: Nura.mintDark, shape: BoxShape.circle),
+                  child: const Icon(Icons.volume_up_rounded, color: Colors.white, size: 46),
+                ),
+              ),
+            ),
+            const Spacer(),
+            for (final option in options)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 9),
+                child: OutlinedButton(
+                  onPressed: answered ? null : () => _answer(option),
+                  child: Text(option.glossFor(widget.ui), textAlign: TextAlign.center),
+                ),
+              ),
+          ],
+        ),
+      );
+}
+
+class FillBlankGameScreen extends StatefulWidget {
+  const FillBlankGameScreen({super.key, required this.lang, required this.ui});
+  final LearnLang lang;
+  final UiLang ui;
+
+  @override
+  State<FillBlankGameScreen> createState() => _FillBlankGameScreenState();
+}
+
+class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
+  final controller = TextEditingController();
+  late final List<Phrase> deck;
+  int round = 0;
+  int correct = 0;
+  late Phrase phrase;
+  late String answer;
+  late String question;
+
+  @override
+  void initState() {
+    super.initState();
+    deck = Catalog.allPhrases(widget.lang)..shuffle(Random());
+    _prepare();
+  }
+
+  void _prepare() {
+    phrase = deck[round % deck.length];
+    final words = phrase.target.trim().split(RegExp(r'\s+'));
+    if (words.length > 1) {
+      final index = words.length ~/ 2;
+      answer = words[index].replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), '');
+      words[index] = '_____';
+      question = words.join(' ');
+    } else {
+      final characters = phrase.target.characters.toList();
+      final index = characters.length ~/ 2;
+      answer = characters[index];
+      characters[index] = '_';
+      question = characters.join();
+    }
+    controller.clear();
+  }
+
+  void _check() {
+    final right = _norm(controller.text) == _norm(answer);
+    if (right) correct++;
+    if (round == 4) {
+      showGameResult(context, title: 'Boşluk Doldur', correct: correct, total: 5);
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(right ? 'Doğru' : 'Doğrusu: $answer')),
+    );
+    setState(() {
+      round++;
+      _prepare();
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => _GameScaffold(
+        title: 'Boşluk Doldur',
+        progress: (round + 1) / 5,
+        child: Column(
+          children: [
+            Text(phrase.glossFor(widget.ui), textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted)),
+            const SizedBox(height: 26),
+            _PromptCard(primary: question),
+            const SizedBox(height: 22),
+            TextField(
+              controller: controller,
+              textAlign: TextAlign.center,
+              autocorrect: false,
+              onSubmitted: (_) => _check(),
+              decoration: const InputDecoration(hintText: 'Eksik kelime'),
+            ),
+            const Spacer(),
+            FilledButton(onPressed: _check, child: const Text('Kontrol et')),
+          ],
+        ),
+      );
+}
+
+class TimedGameScreen extends StatefulWidget {
+  const TimedGameScreen({super.key, required this.lang, required this.ui});
+  final LearnLang lang;
+  final UiLang ui;
+
+  @override
+  State<TimedGameScreen> createState() => _TimedGameScreenState();
+}
+
+class _TimedGameScreenState extends State<TimedGameScreen> {
+  final random = Random();
+  late final List<Phrase> deck;
+  Timer? timer;
+  int seconds = 60;
+  int total = 0;
+  int correct = 0;
+  late Phrase phrase;
+  late List<Phrase> options;
+
+  @override
+  void initState() {
+    super.initState();
+    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    _prepare();
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      if (seconds <= 1) {
+        timer?.cancel();
+        setState(() => seconds = 0);
+        showGameResult(context, title: 'Zamana Karşı', correct: correct, total: total);
+      } else {
+        setState(() => seconds--);
+      }
+    });
+  }
+
+  void _prepare() {
+    phrase = deck[total % deck.length];
+    options = [phrase, ..._differentPhrases(deck, phrase, 3, random)]..shuffle(random);
+  }
+
+  void _answer(Phrase choice) {
+    if (seconds == 0) return;
     setState(() {
       total++;
-      if (chosen == current.glossFor(widget.ui)) correct++;
-      _nextQuestion();
+      if (choice.id == phrase.id) correct++;
+      _prepare();
     });
   }
 
@@ -350,166 +563,140 @@ class _SpeedQuizScreenState extends State<SpeedQuizScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (finished) {
-      return Scaffold(
-        appBar: NuraAppBar(pageTitle: const Text('⚡ Sonuç')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('$correct', style: const TextStyle(fontSize: 64, fontWeight: FontWeight.w800, color: Nura.mint)),
-              Text('/ $total doğru', style: const TextStyle(fontSize: 20, color: Nura.muted)),
-              const SizedBox(height: 8),
-              Text('+${correct * 15} XP', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Nura.sunflower)),
-              const SizedBox(height: 24),
-              FilledButton(onPressed: () => Navigator.pop(context), child: const Text('Tamam')),
-            ],
+  Widget build(BuildContext context) => _GameScaffold(
+        title: 'Zamana Karşı · ${seconds}s',
+        progress: seconds / 60,
+        trailing: '$correct doğru',
+        child: Column(
+          children: [
+            const Text('Doğru çeviriyi seç', style: TextStyle(color: Nura.muted)),
+            const SizedBox(height: 24),
+            _PromptCard(primary: phrase.target),
+            const Spacer(),
+            for (final option in options)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 9),
+                child: OutlinedButton(
+                  onPressed: () => _answer(option),
+                  child: Text(option.glossFor(widget.ui), textAlign: TextAlign.center),
+                ),
+              ),
+          ],
+        ),
+      );
+}
+
+class _GameScaffold extends StatelessWidget {
+  const _GameScaffold({required this.title, required this.progress, required this.child, this.trailing});
+  final String title;
+  final double progress;
+  final String? trailing;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: NuraAppBar(
+          pageTitle: Text(title),
+          actions: trailing == null
+              ? null
+              : [Padding(padding: const EdgeInsets.only(right: 16), child: Center(child: Text(trailing!)))],
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(22, 8, 22, 22),
+            child: Column(
+              children: [
+                LinearProgressIndicator(value: progress.clamp(0, 1).toDouble()),
+                const SizedBox(height: 22),
+                Expanded(child: child),
+              ],
+            ),
           ),
         ),
       );
-    }
-    return Scaffold(
-      appBar: NuraAppBar(
-        pageTitle: Text('⚡ $timeLeft saniye'),
-        actions: [Padding(padding: const EdgeInsets.only(right: 16, top: 16), child: Text('$correct ✓', style: const TextStyle(color: Nura.mint, fontWeight: FontWeight.w700)))],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
-          child: Column(
-            children: [
-              LinearProgressIndicator(value: timeLeft / 30, color: timeLeft > 10 ? Nura.mint : Nura.coral, backgroundColor: Nura.fog),
-              const SizedBox(height: 28),
-              Text(current.target, textAlign: TextAlign.center, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Nura.ink)),
+}
+
+class _PromptCard extends StatelessWidget {
+  const _PromptCard({required this.primary, this.secondary});
+  final String primary;
+  final String? secondary;
+
+  @override
+  Widget build(BuildContext context) => NuraCard(
+        color: Nura.mintLight,
+        child: Column(
+          children: [
+            Text(primary, textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 23, height: 1.3, fontWeight: FontWeight.w700, color: Nura.ink)),
+            if (secondary != null) ...[
+              const SizedBox(height: 14),
+              const Divider(),
               const SizedBox(height: 8),
-              const Text('Doğru çeviriyi seç', style: TextStyle(color: Nura.muted)),
-              const Spacer(),
-              for (final o in options)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () => _answer(o),
-                      child: Text(o, textAlign: TextAlign.center),
-                    ),
-                  ),
-                ),
-              const SizedBox(height: 10),
+              Text(secondary!, textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 17, height: 1.35, color: Nura.muted)),
             ],
-          ),
+          ],
         ),
-      ),
-    );
-  }
+      );
 }
 
-// ==================== DİNLE & SEÇ ====================
-
-class ListenGameScreen extends StatefulWidget {
-  const ListenGameScreen({super.key, required this.lang, required this.ui});
-  final LearnLang lang;
-  final UiLang ui;
-
-  @override
-  State<ListenGameScreen> createState() => _ListenGameScreenState();
-}
-
-class _ListenGameScreenState extends State<ListenGameScreen> {
-  late List<Phrase> allPhrases;
-  int correct = 0;
-  int round = 0;
-  late Phrase current;
-  late List<String> options;
-  bool? lastCorrect;
-
-  @override
-  void initState() {
-    super.initState();
-    allPhrases = Catalog.allPhrases(widget.lang);
-    allPhrases.shuffle(Random());
-    _nextRound();
-  }
-
-  void _nextRound() {
-    current = allPhrases[round % allPhrases.length];
-    final wrong = (allPhrases.toList()..shuffle(Random()))
-        .where((p) => p.id != current.id)
-        .take(3)
-        .map((p) => p.target)
-        .toList();
-    options = [...wrong, current.target]..shuffle(Random());
-    lastCorrect = null;
-  }
-
-  void _answer(String chosen) {
-    setState(() {
-      lastCorrect = chosen == current.target;
-      if (lastCorrect!) correct++;
-      round++;
-    });
-    Future.delayed(const Duration(milliseconds: 800), () {
-      if (round >= 10) {
-        _showResult();
-      } else {
-        setState(() => _nextRound());
-      }
-    });
-  }
-
-  void _showResult() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (c) => AlertDialog(
-        title: const Text('👂 Sonuç'),
-        content: Text('$correct / 10 doğru\n+${correct * 10} XP'),
-        actions: [
-          TextButton(onPressed: () { Navigator.pop(c); Navigator.pop(context); }, child: const Text('Tamam')),
+Future<void> showGameResult(
+  BuildContext context, {
+  required String title,
+  required int correct,
+  required int total,
+}) async {
+  final safeTotal = max(total, 1);
+  final percent = (correct * 100 / safeTotal).round();
+  await showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('$percent%', style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w700, color: Nura.mintDark)),
+          const SizedBox(height: 6),
+          Text('$correct / $total doğru', style: const TextStyle(color: Nura.muted)),
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: NuraAppBar(pageTitle: Text('👂 Dinle & Seç · ${round + 1}/10')),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(22, 16, 22, 22),
-          child: Column(
-            children: [
-              LinearProgressIndicator(value: round / 10, color: Nura.lavender, backgroundColor: Nura.fog),
-              const SizedBox(height: 28),
-              Text(current.glossFor(widget.ui), textAlign: TextAlign.center, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Nura.ink)),
-              const SizedBox(height: 8),
-              const Text('Hangi cümle bu?', style: TextStyle(color: Nura.muted)),
-              const Spacer(),
-              for (final o in options)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: lastCorrect != null ? null : () => _answer(o),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: lastCorrect != null && o == current.target ? Nura.mint.withValues(alpha: 0.15) : null,
-                      ),
-                      child: Text(o, textAlign: TextAlign.center),
-                    ),
-                  ),
-                ),
-              if (lastCorrect != null)
-                Text(
-                  lastCorrect! ? '✅ Doğru!' : '❌ Yanlış — ${current.target}',
-                  style: TextStyle(color: lastCorrect! ? Nura.mint : Nura.coral, fontWeight: FontWeight.w700),
-                ),
-            ],
-          ),
+      actions: [
+        FilledButton(
+          onPressed: () {
+            Navigator.of(dialogContext).pop();
+            Navigator.of(context).pop();
+          },
+          child: const Text('Tamam'),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
 }
+
+List<Phrase> _differentPhrases(List<Phrase> source, Phrase current, int count, Random random) {
+  final candidates = source.where((phrase) => phrase.id != current.id).toList()..shuffle(random);
+  final unique = <String>{};
+  final result = <Phrase>[];
+  for (final phrase in candidates) {
+    if (unique.add(phrase.target)) result.add(phrase);
+    if (result.length == count) break;
+  }
+  return result;
+}
+
+String _practiceWord(String value) {
+  final words = value
+      .split(RegExp(r'\s+'))
+      .map((word) => word.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), ''))
+      .where((word) => word.characters.length >= 2 && word.characters.length <= 12)
+      .toList();
+  if (words.isNotEmpty) return words.first;
+  final clean = value.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), '');
+  return clean.characters.take(12).join();
+}
+
+String _norm(String value) => value
+    .toLowerCase()
+    .replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), '')
+    .trim();

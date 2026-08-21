@@ -43,11 +43,11 @@
 ## 🟡 ÖNEMLİ — BU HAFTA
 
 ### 6. Oyunlar — 4-5 FARKLI oyun (eski oyunlar değişecek)
-- [ ] 🎯 **Doğru/Yanlış**: Cümle göster → doğru mu yanlış mı?
-- [ ] 🔤 **Harf Sıralama**: Karışık harflerden kelime oluştur
-- [ ] 🎧 **Ses Bulmaca**: Sesi dinle, 4 seçenekten doğrusunu bul
-- [ ] 📝 **Boşluk Doldur**: Cümlede eksik kelimeyi yaz
-- [ ] ⏱️ **Zamana Karşı**: 60 saniyede en çok doğru cevap
+- [x] 🎯 **Doğru/Yanlış**: Cümle göster → doğru mu yanlış mı?
+- [x] 🔤 **Harf Sıralama**: Karışık harflerden kelime oluştur
+- [x] 🎧 **Ses Bulmaca**: Sesi dinle, 4 seçenekten doğrusunu bul
+- [x] 📝 **Boşluk Doldur**: Cümlede eksik kelimeyi yaz
+- [x] ⏱️ **Zamana Karşı**: 60 saniyede en çok doğru cevap
 - Telif sorunu olmayacak — oyun mekaniği genel, özgün UI
 
 ### 7. XP / Puan Sistemi
