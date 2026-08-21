@@ -20,15 +20,15 @@ class GamesScreen extends ConsumerWidget {
     final profile = ref.watch(sessionProvider);
     final games = <_GameDefinition>[
       _GameDefinition('Doğru / Yanlış', 'Çeviri eşleşmesini değerlendir', Icons.rule_rounded, Nura.mint,
-          () => TrueFalseGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+          () => TrueFalseGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
       _GameDefinition('Harf Sıralama', 'Karışık harflerden kelime kur', Icons.sort_by_alpha_rounded, Nura.sky,
-          () => LetterOrderGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+          () => LetterOrderGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
       _GameDefinition('Ses Bulmaca', 'Dinle ve dört seçenekten bul', Icons.headphones_rounded, Nura.lavender,
-          () => AudioPuzzleScreen(lang: profile.learnLang, ui: profile.uiLang)),
+          () => AudioPuzzleScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
       _GameDefinition('Boşluk Doldur', 'Eksik kelimeyi tamamla', Icons.edit_note_rounded, Nura.coral,
-          () => FillBlankGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+          () => FillBlankGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
       _GameDefinition('Zamana Karşı', '60 saniyede en çok doğru', Icons.timer_outlined, Nura.sunflower,
-          () => TimedGameScreen(lang: profile.learnLang, ui: profile.uiLang)),
+          () => TimedGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: ref.read(sessionProvider.notifier).completeGame)),
     ];
 
     return SafeArea(
@@ -99,9 +99,10 @@ class _GameCard extends StatelessWidget {
 }
 
 class TrueFalseGameScreen extends StatefulWidget {
-  const TrueFalseGameScreen({super.key, required this.lang, required this.ui});
+  const TrueFalseGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
   final LearnLang lang;
   final UiLang ui;
+  final Future<int> Function(int correct, int total) onComplete;
 
   @override
   State<TrueFalseGameScreen> createState() => _TrueFalseGameScreenState();
@@ -143,7 +144,7 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
     Future<void>.delayed(const Duration(milliseconds: 650), () {
       if (!mounted) return;
       if (round == 9) {
-        showGameResult(context, title: 'Doğru / Yanlış', correct: correct, total: 10);
+        showGameResult(context, title: 'Doğru / Yanlış', correct: correct, total: 10, onComplete: widget.onComplete);
       } else {
         setState(() {
           round++;
@@ -193,9 +194,10 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
 }
 
 class LetterOrderGameScreen extends StatefulWidget {
-  const LetterOrderGameScreen({super.key, required this.lang, required this.ui});
+  const LetterOrderGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
   final LearnLang lang;
   final UiLang ui;
+  final Future<int> Function(int correct, int total) onComplete;
 
   @override
   State<LetterOrderGameScreen> createState() => _LetterOrderGameScreenState();
@@ -243,7 +245,7 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
     final right = _norm(answer) == _norm(expected);
     if (right) correct++;
     if (round == 4) {
-      showGameResult(context, title: 'Harf Sıralama', correct: correct, total: 5);
+      showGameResult(context, title: 'Harf Sıralama', correct: correct, total: 5, onComplete: widget.onComplete);
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
@@ -322,9 +324,10 @@ class _LetterTile {
 }
 
 class AudioPuzzleScreen extends StatefulWidget {
-  const AudioPuzzleScreen({super.key, required this.lang, required this.ui});
+  const AudioPuzzleScreen({super.key, required this.lang, required this.ui, required this.onComplete});
   final LearnLang lang;
   final UiLang ui;
+  final Future<int> Function(int correct, int total) onComplete;
 
   @override
   State<AudioPuzzleScreen> createState() => _AudioPuzzleScreenState();
@@ -365,7 +368,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
     Future<void>.delayed(const Duration(milliseconds: 750), () {
       if (!mounted) return;
       if (round == 9) {
-        showGameResult(context, title: 'Ses Bulmaca', correct: correct, total: 10);
+        showGameResult(context, title: 'Ses Bulmaca', correct: correct, total: 10, onComplete: widget.onComplete);
       } else {
         setState(() {
           round++;
@@ -418,9 +421,10 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
 }
 
 class FillBlankGameScreen extends StatefulWidget {
-  const FillBlankGameScreen({super.key, required this.lang, required this.ui});
+  const FillBlankGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
   final LearnLang lang;
   final UiLang ui;
+  final Future<int> Function(int correct, int total) onComplete;
 
   @override
   State<FillBlankGameScreen> createState() => _FillBlankGameScreenState();
@@ -464,7 +468,7 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
     final right = _norm(controller.text) == _norm(answer);
     if (right) correct++;
     if (round == 4) {
-      showGameResult(context, title: 'Boşluk Doldur', correct: correct, total: 5);
+      showGameResult(context, title: 'Boşluk Doldur', correct: correct, total: 5, onComplete: widget.onComplete);
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
@@ -507,9 +511,10 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
 }
 
 class TimedGameScreen extends StatefulWidget {
-  const TimedGameScreen({super.key, required this.lang, required this.ui});
+  const TimedGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
   final LearnLang lang;
   final UiLang ui;
+  final Future<int> Function(int correct, int total) onComplete;
 
   @override
   State<TimedGameScreen> createState() => _TimedGameScreenState();
@@ -535,7 +540,7 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
       if (seconds <= 1) {
         timer?.cancel();
         setState(() => seconds = 0);
-        showGameResult(context, title: 'Zamana Karşı', correct: correct, total: total);
+        showGameResult(context, title: 'Zamana Karşı', correct: correct, total: total, onComplete: widget.onComplete);
       } else {
         setState(() => seconds--);
       }
@@ -645,7 +650,10 @@ Future<void> showGameResult(
   required String title,
   required int correct,
   required int total,
+  required Future<int> Function(int correct, int total) onComplete,
 }) async {
+  final earnedXp = await onComplete(correct, total);
+  if (!context.mounted) return;
   final safeTotal = max(total, 1);
   final percent = (correct * 100 / safeTotal).round();
   await showDialog<void>(
@@ -659,6 +667,8 @@ Future<void> showGameResult(
           Text('$percent%', style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w700, color: Nura.mintDark)),
           const SizedBox(height: 6),
           Text('$correct / $total doğru', style: const TextStyle(color: Nura.muted)),
+          const SizedBox(height: 10),
+          Text('+$earnedXp XP', style: const TextStyle(color: Nura.sunflower, fontWeight: FontWeight.w700)),
         ],
       ),
       actions: [

@@ -36,14 +36,20 @@ class SessionController extends Notifier<UserProfile> {
   }
 
   UserProfile _rollDay(UserProfile p) {
-    final t = _today();
-    if (p.speakDayKey == t) return p;
-    return p.copyWith(
-      speakSecondsUsed: 0,
-      speakDayKey: t,
-      bonusSpeakSeconds: 0,
-      adsWatchedToday: 0,
-    );
+    final today = _today();
+    var rolled = p;
+    if (rolled.speakDayKey != today) {
+      rolled = rolled.copyWith(
+        speakSecondsUsed: 0,
+        speakDayKey: today,
+        bonusSpeakSeconds: 0,
+        adsWatchedToday: 0,
+      );
+    }
+    if (rolled.xpDayKey != today) {
+      rolled = rolled.copyWith(dailyXp: 0, xpDayKey: today);
+    }
+    return rolled;
   }
 
   Future<void> _save(UserProfile p) async {
@@ -77,6 +83,32 @@ class SessionController extends Notifier<UserProfile> {
     final due = {...state.srs, id: _epochDay() + 1};
     await _save(state.copyWith(learnedIds: ids, phrasesKnown: ids.length, srs: due));
   }
+
+
+  Future<void> awardXp(int amount) async {
+    if (amount <= 0) return;
+    final profile = _rollDay(state);
+    await _save(profile.copyWith(
+      totalXp: profile.totalXp + amount,
+      dailyXp: profile.dailyXp + amount,
+    ));
+  }
+
+  /// Doğru cevap XP'si (+10) ve performans oyun bonusu (+20…100).
+  static int gameXpFor(int correct, int total) {
+    final safeTotal = total <= 0 ? 1 : total;
+    final safeCorrect = correct.clamp(0, safeTotal).toInt();
+    final performanceBonus = 20 + (80 * safeCorrect / safeTotal).round();
+    return safeCorrect * 10 + performanceBonus;
+  }
+
+  Future<int> completeGame(int correct, int total) async {
+    final earned = gameXpFor(correct, total);
+    await awardXp(earned);
+    return earned;
+  }
+
+  Future<void> completeScene() => awardXp(50);
 
   Future<void> watchRewardedAd() async {
     var p = _rollDay(state);

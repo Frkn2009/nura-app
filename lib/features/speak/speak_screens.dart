@@ -232,7 +232,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
       step = _Step.fix;
     });
     if (recognized.trim().isNotEmpty) {
-      ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
+      await ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
+      if (result >= 70) {
+        await ref.read(sessionProvider.notifier).awardXp(10);
+      }
     }
   }
 
@@ -247,7 +250,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     });
   }
 
-  void _nextTurn() {
+  Future<void> _nextTurn() async {
     if (turn < scene.turns.length - 1) {
       setState(() {
         turn++;
@@ -255,6 +258,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         score = 0;
       });
     } else {
+      await ref.read(sessionProvider.notifier).completeScene();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sahne tamamlandı · +50 XP')),
+      );
       context.go('/app');
     }
   }

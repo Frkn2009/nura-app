@@ -184,6 +184,27 @@ class Scenario {
   String title(UiLang ui) => titles[ui] ?? titles[UiLang.en] ?? id;
 }
 
+
+enum XpRank { rookie, learner, speaker, master, legend }
+
+extension XpRankX on XpRank {
+  String get label => switch (this) {
+        XpRank.rookie => 'Çaylak',
+        XpRank.learner => 'Öğrenci',
+        XpRank.speaker => 'Konuşan',
+        XpRank.master => 'Usta',
+        XpRank.legend => 'Efsane',
+      };
+
+  int get minimumXp => switch (this) {
+        XpRank.rookie => 0,
+        XpRank.learner => 500,
+        XpRank.speaker => 1500,
+        XpRank.master => 4000,
+        XpRank.legend => 10000,
+      };
+}
+
 class UserProfile {
   const UserProfile({
     required this.uiLang,
@@ -194,6 +215,9 @@ class UserProfile {
     required this.onboarded,
     required this.isPlus,
     required this.streak,
+    required this.totalXp,
+    required this.dailyXp,
+    required this.xpDayKey,
     required this.phrasesKnown,
     required this.speakSecondsUsed,
     required this.speakDayKey,
@@ -211,6 +235,9 @@ class UserProfile {
   final bool onboarded;
   final bool isPlus;
   final int streak;
+  final int totalXp;
+  final int dailyXp;
+  final String xpDayKey;
   final int phrasesKnown;
   final int speakSecondsUsed;
   final String speakDayKey;
@@ -228,6 +255,9 @@ class UserProfile {
     onboarded: false,
     isPlus: false,
     streak: 0,
+    totalXp: 0,
+    dailyXp: 0,
+    xpDayKey: '',
     phrasesKnown: 0,
     speakSecondsUsed: 0,
     speakDayKey: '',
@@ -248,6 +278,32 @@ class UserProfile {
 
   bool get canWatchAd => !isPlus && adsWatchedToday < maxRewardedAdsPerDay;
 
+  static const dailyXpGoal = 100;
+
+  XpRank get xpRank {
+    for (final rank in XpRank.values.reversed) {
+      if (totalXp >= rank.minimumXp) return rank;
+    }
+    return XpRank.rookie;
+  }
+
+  XpRank? get nextXpRank {
+    final index = XpRank.values.indexOf(xpRank);
+    return index == XpRank.values.length - 1 ? null : XpRank.values[index + 1];
+  }
+
+  double get rankProgress {
+    final next = nextXpRank;
+    if (next == null) return 1;
+    final currentMinimum = xpRank.minimumXp;
+    return ((totalXp - currentMinimum) / (next.minimumXp - currentMinimum))
+        .clamp(0, 1)
+        .toDouble();
+  }
+
+  double get dailyXpProgress =>
+      (dailyXp / dailyXpGoal).clamp(0, 1).toDouble();
+
   UserProfile copyWith({
     UiLang? uiLang,
     LearnLang? learnLang,
@@ -257,6 +313,9 @@ class UserProfile {
     bool? onboarded,
     bool? isPlus,
     int? streak,
+    int? totalXp,
+    int? dailyXp,
+    String? xpDayKey,
     int? phrasesKnown,
     int? speakSecondsUsed,
     String? speakDayKey,
@@ -274,6 +333,9 @@ class UserProfile {
       onboarded: onboarded ?? this.onboarded,
       isPlus: isPlus ?? this.isPlus,
       streak: streak ?? this.streak,
+      totalXp: totalXp ?? this.totalXp,
+      dailyXp: dailyXp ?? this.dailyXp,
+      xpDayKey: xpDayKey ?? this.xpDayKey,
       phrasesKnown: phrasesKnown ?? this.phrasesKnown,
       speakSecondsUsed: speakSecondsUsed ?? this.speakSecondsUsed,
       speakDayKey: speakDayKey ?? this.speakDayKey,
@@ -293,6 +355,9 @@ class UserProfile {
         'onboarded': onboarded,
         'isPlus': isPlus,
         'streak': streak,
+        'totalXp': totalXp,
+        'dailyXp': dailyXp,
+        'xpDayKey': xpDayKey,
         'phrasesKnown': phrasesKnown,
         'speakSecondsUsed': speakSecondsUsed,
         'speakDayKey': speakDayKey,
@@ -311,7 +376,10 @@ class UserProfile {
       dailyGoalMin: j['dailyGoalMin'] as int? ?? 12,
       onboarded: j['onboarded'] as bool? ?? false,
       isPlus: j['isPlus'] as bool? ?? false,
-      streak: j['streak'] as int? ?? 0,
+      streak: (j['streak'] as num?)?.toInt() ?? 0,
+      totalXp: (j['totalXp'] as num?)?.toInt() ?? 0,
+      dailyXp: (j['dailyXp'] as num?)?.toInt() ?? 0,
+      xpDayKey: j['xpDayKey'] as String? ?? '',
       phrasesKnown: j['phrasesKnown'] as int? ?? 0,
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',

@@ -5,6 +5,7 @@ import 'package:nura/data/content/language_guides.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/speech/speech_controller.dart';
 import 'package:nura/data/translate/offline_translate.dart';
+import 'package:nura/state/session.dart';
 
 void main() {
   test('all 30 learn languages have at least 8 scenarios', () {
@@ -108,6 +109,28 @@ void main() {
       expect(clips, isNotEmpty, reason: language.name);
       expect(clips.every((clip) => clip.scenario.lang == language), true);
     }
+  });
+
+
+  test('XP ranks, daily goal and game rewards follow the product rules', () {
+    expect(UserProfile.empty.xpRank, XpRank.rookie);
+    expect(UserProfile.empty.copyWith(totalXp: 500).xpRank, XpRank.learner);
+    expect(UserProfile.empty.copyWith(totalXp: 1500).xpRank, XpRank.speaker);
+    expect(UserProfile.empty.copyWith(totalXp: 4000).xpRank, XpRank.master);
+    expect(UserProfile.empty.copyWith(totalXp: 10000).xpRank, XpRank.legend);
+    expect(UserProfile.empty.copyWith(dailyXp: 100).dailyXpProgress, 1);
+    expect(SessionController.gameXpFor(0, 10), 20);
+    expect(SessionController.gameXpFor(10, 10), 200); // 100 cevap + 100 performans
+  });
+
+  test('legacy profiles migrate to zero XP without data loss', () {
+    final restored = UserProfile.fromJson(UserProfile.empty.toJson()
+      ..remove('totalXp')
+      ..remove('dailyXp')
+      ..remove('xpDayKey'));
+    expect(restored.totalXp, 0);
+    expect(restored.dailyXp, 0);
+    expect(restored.learnLang, UserProfile.empty.learnLang);
   });
 
 }

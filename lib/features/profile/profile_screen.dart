@@ -45,6 +45,32 @@ class ProfileScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: 12),
+          NuraCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.bolt_rounded, color: Nura.sunflower),
+                    const SizedBox(width: 8),
+                    Text('${p.totalXp} XP', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                    const Spacer(),
+                    Text(p.xpRank.label, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w700)),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                LinearProgressIndicator(value: p.rankProgress),
+                const SizedBox(height: 7),
+                Text(
+                  p.nextXpRank == null
+                      ? 'En yüksek seviye'
+                      : '${p.nextXpRank!.label} için ${p.nextXpRank!.minimumXp - p.totalXp} XP',
+                  style: const TextStyle(color: Nura.muted, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 18),
           if (cloudOn) ...[
             const Eyebrow('NURA Hesap'),

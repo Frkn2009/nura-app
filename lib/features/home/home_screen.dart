@@ -52,6 +52,34 @@ class HomeScreen extends ConsumerWidget {
               ),
             ],
           ),
+          const SizedBox(height: 14),
+          NuraCard(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.bolt_rounded, color: Nura.sunflower),
+                    const SizedBox(width: 8),
+                    Text('${p.totalXp} XP', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17)),
+                    const Spacer(),
+                    Text(p.xpRank.label, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w600)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                LinearProgressIndicator(value: p.dailyXpProgress),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Text('Bugün ${p.dailyXp} / ${UserProfile.dailyXpGoal} XP', style: const TextStyle(color: Nura.muted, fontSize: 12)),
+                    const Spacer(),
+                    Text(p.dailyXp >= UserProfile.dailyXpGoal ? 'Hedef tamamlandı' : '${UserProfile.dailyXpGoal - p.dailyXp} XP kaldı',
+                        style: const TextStyle(color: Nura.muted, fontSize: 12)),
+                  ],
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 18),
           Container(
             padding: const EdgeInsets.all(22),

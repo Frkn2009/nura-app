@@ -51,12 +51,12 @@
 - Telif sorunu olmayacak — oyun mekaniği genel, özgün UI
 
 ### 7. XP / Puan Sistemi
-- [ ] Her doğru cevap = +10 XP
-- [ ] Her sahne tamamlama = +50 XP
-- [ ] Her oyun = +20-100 XP (performansa göre)
-- [ ] Günlük hedef: 100 XP
-- [ ] Seviye sistemi: Çaylak → Öğrenci → Konuşan → Usta → Efsane
-- [ ] XP ana sayfada ve profilde görünsün
+- [x] Her doğru cevap = +10 XP
+- [x] Her sahne tamamlama = +50 XP
+- [x] Her oyun = +20-100 XP (performansa göre)
+- [x] Günlük hedef: 100 XP
+- [x] Seviye sistemi: Çaylak → Öğrenci → Konuşan → Usta → Efsane
+- [x] XP ana sayfada ve profilde görünsün
 
 ### 8. Leaderboard / Sıralama
 - [ ] Haftalık sıralama tablosu
