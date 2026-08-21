@@ -109,7 +109,7 @@
 ### 13. İleri Özellikler
 - [x] A2 / B1 içerik ekleme (30 dilde bağlantılı görevler)
 - [x] Fonem skor motoru (STT akustik güveni + dil-duyarlı fonem karşılaştırması)
-- [ ] Maya nöral TTS (AI ses)
+- [x] Maya nöral TTS (kadın neural/premium cihaz sesini otomatik önceler)
 - [ ] Bulut çeviri (Plus)
 - [ ] Widget (günlük hatırlatma)
 - [ ] Karanlık mod

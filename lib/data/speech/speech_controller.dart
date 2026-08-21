@@ -31,9 +31,11 @@ class SpeechController {
   double _confidence = -1;
   bool _ready = false;
   SpeechAvailability _availability = SpeechAvailability.unknown;
+  bool _usingNeuralVoice = false;
 
   bool get deviceSpeechAvailable => _ready;
   SpeechAvailability get availability => _availability;
+  bool get usingNeuralVoice => _usingNeuralVoice;
 
   static String localeOf(String langCode) => switch (langCode) {
         'es' => 'es-ES',
@@ -79,42 +81,62 @@ class SpeechController {
     'filiz', 'susan', 'hazel', 'zira', 'aria', 'jenny', 'sonia', 'natasha',
   ];
 
+  static int voiceQualityScore(Map voice, String langCode) {
+    final name = (voice['name'] ?? '').toString().toLowerCase();
+    final gender = (voice['gender'] ?? '').toString().toLowerCase();
+    final locale = (voice['locale'] ?? '')
+        .toString()
+        .toLowerCase()
+        .replaceAll('_', '-');
+    if (!(locale == langCode || locale.startsWith('$langCode-'))) return -1000;
+    var score = 0;
+    final female = gender == 'female' ||
+        gender == 'f' ||
+        name.contains('female') ||
+        name.contains('woman') ||
+        name.contains('f-') ||
+        _femaleVoiceHints.any(name.contains);
+    if (female) score += 100;
+    if (name.contains('neural') || name.contains('wavenet')) score += 50;
+    if (name.contains('premium') || name.contains('enhanced')) score += 35;
+    if (name.contains('natural') || name.contains('online')) score += 20;
+    if ((voice['network_required'] ?? false) == false) score += 5;
+    return score;
+  }
+
   Future<void> _setFemaleVoice(String langCode) async {
     const femalePitch = 1.12;
     await _tts.setPitch(femalePitch);
     try {
       final rawVoices = await _tts.getVoices;
       if (rawVoices is! List || rawVoices.isEmpty) return;
-
-      final locale = localeOf(langCode).toLowerCase();
-      final language = langCode.toLowerCase();
-      final voices = rawVoices
-          .whereType<Map>()
-          .where((voice) {
-            final voiceLocale = (voice['locale'] ?? '').toString().toLowerCase().replaceAll('_', '-');
-            return voiceLocale == locale || voiceLocale.startsWith('$language-') || voiceLocale == language;
-          })
+      final voices = rawVoices.whereType<Map>().toList()
+        ..sort((a, b) => voiceQualityScore(b, langCode)
+            .compareTo(voiceQualityScore(a, langCode)));
+      final matching = voices
+          .where((voice) => voiceQualityScore(voice, langCode) >= 0)
           .toList();
-      if (voices.isEmpty) return;
+      if (matching.isEmpty) return;
 
-      bool isFemale(Map voice) {
-        final name = (voice['name'] ?? '').toString().toLowerCase();
-        final gender = (voice['gender'] ?? '').toString().toLowerCase();
-        return gender == 'female' ||
-            gender == 'f' ||
-            name.contains('f-') ||
-            _femaleVoiceHints.any(name.contains);
-      }
-
-      // Açık kadın metadata/ismi olan sesi zorunlu olarak öncele.
-      final selected = voices.where(isFemale).firstOrNull ?? voices.first;
+      // Önce kadın, kadın seçenekleri içinde neural/premium/enhanced kalite.
+      final female = matching
+          .where((voice) => voiceQualityScore(voice, langCode) >= 100)
+          .toList();
+      final selected = female.firstOrNull ?? matching.first;
+      final name = selected['name'].toString();
       await _tts.setVoice({
-        'name': selected['name'].toString(),
+        'name': name,
         'locale': selected['locale'].toString(),
       });
+      final normalized = name.toLowerCase();
+      _usingNeuralVoice = normalized.contains('neural') ||
+          normalized.contains('wavenet') ||
+          normalized.contains('premium') ||
+          normalized.contains('enhanced') ||
+          normalized.contains('natural');
     } catch (_) {
-      // Bazı üretici TTS motorları ses listesini sağlamaz; sabit kadın ses
-      // profili korunarak motorun seçtiği yerel sesle devam edilir.
+      _usingNeuralVoice = false;
+      // Eski motorlarda kadın ses profili sabit pitch ile korunur.
     }
   }
 

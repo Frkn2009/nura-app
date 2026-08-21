@@ -338,7 +338,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 child: Text('M', style: TextStyle(fontSize: 28, color: Nura.forest, fontWeight: FontWeight.w700)),
               ),
               const SizedBox(height: 8),
-              const Text('Maya', style: TextStyle(color: Nura.terrSoft)),
+              Text(
+                speech.usingNeuralVoice ? 'Maya · Neural' : 'Maya · kadın cihaz sesi',
+                style: const TextStyle(color: Nura.terrSoft),
+              ),
               const SizedBox(height: 18),
               Text(
                 currentTurn.prompt,

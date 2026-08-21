@@ -251,4 +251,22 @@ void main() {
       expected: 'Merhaba', heard: '', languageCode: 'tr').overall, 0);
   });
 
+
+  test('Maya prioritises a female neural voice in the requested language', () {
+    final basic = SpeechController.voiceQualityScore(
+      {'name': 'English Female', 'locale': 'en-US', 'gender': 'female'},
+      'en',
+    );
+    final neural = SpeechController.voiceQualityScore(
+      {'name': 'English Neural Female', 'locale': 'en-US', 'gender': 'female'},
+      'en',
+    );
+    final wrongLanguage = SpeechController.voiceQualityScore(
+      {'name': 'English Neural Female', 'locale': 'en-US', 'gender': 'female'},
+      'es',
+    );
+    expect(neural, greaterThan(basic));
+    expect(wrongLanguage, -1000);
+  });
+
 }
