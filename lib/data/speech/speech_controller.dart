@@ -6,6 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import 'phoneme_scorer.dart';
+
 /// Mikrofonun uygulamadaki kullanılabilirlik durumu.
 enum SpeechAvailability {
   unknown,
@@ -26,6 +28,7 @@ class SpeechController {
   final _stt = SpeechToText();
   Timer? _tick;
   String _buffer = '';
+  double _confidence = -1;
   bool _ready = false;
   SpeechAvailability _availability = SpeechAvailability.unknown;
 
@@ -188,6 +191,7 @@ class SpeechController {
     void Function(String text)? onText,
   }) async {
     _buffer = '';
+    _confidence = -1;
     _tick?.cancel();
     if (!_ready && !await warmUp()) return false;
 
@@ -203,6 +207,7 @@ class SpeechController {
         ),
         onResult: (result) {
           _buffer = result.recognizedWords;
+          if (result.hasConfidenceRating) _confidence = result.confidence;
           onText?.call(_buffer);
         },
       );
@@ -226,52 +231,26 @@ class SpeechController {
     return _buffer;
   }
 
-  /// STT metnini beklenen cümleyle karşılaştırıp 0–100 arası şeffaf bir skor
-  /// üretir. Boş kayıt asla yapay bir geçer not almaz.
-  static int pronunciationScore(String expected, String heard) {
-    String normalize(String value) => value
-        .toLowerCase()
-        .replaceAll(RegExp(r'[^\p{L}\p{N}\s]', unicode: true), ' ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
+  PronunciationAssessment assessPronunciation({
+    required String expected,
+    required String heard,
+    required String languageCode,
+  }) =>
+      PhonemeScorer.assess(
+        expected: expected,
+        heard: heard,
+        languageCode: languageCode,
+        acousticConfidence: _confidence,
+      );
 
-    final target = normalize(expected);
-    final actual = normalize(heard);
-    if (target.isEmpty || actual.isEmpty) return 0;
-    if (target == actual) return 100;
+  /// Geriye dönük saf skor yardımcısı.
+  static int pronunciationScore(String expected, String heard) =>
+      PhonemeScorer.assess(
+        expected: expected,
+        heard: heard,
+        languageCode: 'en',
+      ).overall;
 
-    final maxLength = target.runes.length > actual.runes.length
-        ? target.runes.length
-        : actual.runes.length;
-    final characterSimilarity =
-        1 - (_levenshtein(target.runes.toList(), actual.runes.toList()) / maxLength);
-
-    final targetWords = target.split(' ').toSet();
-    final actualWords = actual.split(' ').toSet();
-    final matches = targetWords.intersection(actualWords).length;
-    final wordSimilarity = matches / targetWords.length;
-    return (100 * (characterSimilarity * .65 + wordSimilarity * .35))
-        .round()
-        .clamp(0, 100);
-  }
-
-  static int _levenshtein(List<int> a, List<int> b) {
-    var previous = List<int>.generate(b.length + 1, (index) => index);
-    for (var i = 0; i < a.length; i++) {
-      final current = List<int>.filled(b.length + 1, 0)..[0] = i + 1;
-      for (var j = 0; j < b.length; j++) {
-        final cost = a[i] == b[j] ? 0 : 1;
-        final deletion = previous[j + 1] + 1;
-        final insertion = current[j] + 1;
-        final substitution = previous[j] + cost;
-        current[j + 1] = deletion < insertion
-            ? (deletion < substitution ? deletion : substitution)
-            : (insertion < substitution ? insertion : substitution);
-      }
-      previous = current;
-    }
-    return previous.last;
-  }
 
   void dispose() {
     _tick?.cancel();

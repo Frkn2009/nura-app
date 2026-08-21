@@ -108,7 +108,7 @@
 
 ### 13. İleri Özellikler
 - [x] A2 / B1 içerik ekleme (30 dilde bağlantılı görevler)
-- [ ] Fonem skor motoru (gerçek telaffuz puanlama)
+- [x] Fonem skor motoru (STT akustik güveni + dil-duyarlı fonem karşılaştırması)
 - [ ] Maya nöral TTS (AI ses)
 - [ ] Bulut çeviri (Plus)
 - [ ] Widget (günlük hatırlatma)

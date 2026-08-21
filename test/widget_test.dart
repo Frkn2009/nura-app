@@ -9,6 +9,7 @@ import 'package:nura/data/models/achievements.dart';
 import 'package:nura/data/models/leaderboard.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/notifications/notification_service.dart';
+import 'package:nura/data/speech/phoneme_scorer.dart';
 import 'package:nura/data/speech/speech_controller.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 import 'package:nura/state/session.dart';
@@ -226,6 +227,28 @@ void main() {
       expect(scenarios.any((scenario) => scenario.cefr == Cefr.b1), true,
           reason: '${language.name} B1 missing');
     }
+  });
+
+
+  test('phoneme scorer returns real sub-scores and actionable feedback', () {
+    final exact = PhonemeScorer.assess(
+      expected: 'Thank you very much',
+      heard: 'thank you very much',
+      languageCode: 'en',
+      acousticConfidence: .95,
+    );
+    expect(exact.phonemeAccuracy, 100);
+    expect(exact.overall, greaterThanOrEqualTo(90));
+    final imperfect = PhonemeScorer.assess(
+      expected: 'Muchas gracias',
+      heard: 'mucha gracia',
+      languageCode: 'es',
+      acousticConfidence: .7,
+    );
+    expect(imperfect.overall, inInclusiveRange(40, 95));
+    expect(imperfect.feedback, isNotEmpty);
+    expect(PhonemeScorer.assess(
+      expected: 'Merhaba', heard: '', languageCode: 'tr').overall, 0);
   });
 
 }

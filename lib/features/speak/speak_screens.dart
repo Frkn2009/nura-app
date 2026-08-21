@@ -119,6 +119,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   bool _speechReady = false;
   int holdSec = 0;
   int score = 0;
+  int phonemeScore = 0;
+  int fluencyScore = 0;
+  int clarityScore = 0;
+  String pronunciationFeedback = '';
   final speech = SpeechController();
   String heard = '';
 
@@ -222,14 +226,20 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     if (!holding) return;
     final text = await speech.stopListen();
     final recognized = text.isEmpty ? heard : text;
-    final result = SpeechController.pronunciationScore(
-      currentTurn.expected,
-      recognized,
+    final assessment = speech.assessPronunciation(
+      expected: currentTurn.expected,
+      heard: recognized,
+      languageCode: scene.lang.code,
     );
+    final result = assessment.overall;
     if (!mounted) return;
     setState(() {
       holding = false;
       score = result;
+      phonemeScore = assessment.phonemeAccuracy;
+      fluencyScore = assessment.fluency;
+      clarityScore = assessment.clarity;
+      pronunciationFeedback = assessment.feedback;
       step = _Step.fix;
     });
     if (recognized.trim().isNotEmpty) {
@@ -257,6 +267,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         turn++;
         step = _Step.hear;
         score = 0;
+        phonemeScore = 0;
+        fluencyScore = 0;
+        clarityScore = 0;
+        pronunciationFeedback = '';
       });
     } else {
       final sceneXp = await ref.read(sessionProvider.notifier).completeScene(scene.lang);
@@ -372,16 +386,15 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 Wrap(
                   spacing: 8,
                   children: [
-                    _chip('Telaffuz $score'),
-                    _chip('Akıcılık ${(score - 8).clamp(0, 100)}'),
-                    _chip('Netlik ${(score + 6).clamp(0, 100)}'),
+                    _chip('Genel $score'),
+                    _chip('Fonem $phonemeScore'),
+                    _chip('Akıcılık $fluencyScore'),
+                    _chip('Netlik $clarityScore'),
                   ],
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  score == 0
-                      ? 'Ses algılanmadı. Mikrofona yakın konuşup tekrar dene.'
-                      : 'Tek düzeltme: cümleyi yavaş, kelime kelime tekrarla.',
+                  pronunciationFeedback,
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Nura.muted),
                 ),
