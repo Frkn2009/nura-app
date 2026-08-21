@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-/// Cihaz TTS + STT. Web'de veya izin yoksa sessizce süre sayacına düşer.
+/// Cihaz TTS + STT. Ses her zaman kadın.
 class SpeechController {
   final _tts = FlutterTts();
   final _stt = SpeechToText();
@@ -47,12 +48,89 @@ class SpeechController {
         _ => 'en-US',
       };
 
+  /// Kadın ses seç — iOS ve Android'de farklı yöntemle
+  Future<void> _setFemaleVoice(String langCode) async {
+    try {
+      final locale = localeOf(langCode);
+
+      if (kIsWeb) return; // Web'de voice seçimi kısıtlı
+
+      // Mevcut sesleri al
+      final voices = await _tts.getVoices as List<dynamic>?;
+      if (voices == null || voices.isEmpty) return;
+
+      // Bu dil için kadın ses bul
+      final femaleVoice = voices.cast<Map>().where((v) {
+        final name = (v['name'] ?? '').toString().toLowerCase();
+        final loc = (v['locale'] ?? '').toString().toLowerCase();
+        final langMatch = loc.startsWith(langCode.toLowerCase());
+        // Kadın ses isimleri genelde: female, woman, kadın,
+        // veya belirli isimler: Samantha, Karen, Milena, Amelie, Yelda...
+        final isFemale = name.contains('female') ||
+            name.contains('woman') ||
+            name.contains('kadın') ||
+            // iOS yaygın kadın sesleri
+            name.contains('samantha') ||
+            name.contains('karen') ||
+            name.contains('amelie') ||
+            name.contains('anna') ||
+            name.contains('milena') ||
+            name.contains('yelda') ||
+            name.contains('mei-jia') ||
+            name.contains('kyoko') ||
+            name.contains('yuna') ||
+            name.contains('paulina') ||
+            name.contains('ellen') ||
+            name.contains('alice') ||
+            name.contains('monica') ||
+            name.contains('luciana') ||
+            name.contains('nora') ||
+            name.contains('sara') ||
+            name.contains('zosia') ||
+            name.contains('ioana') ||
+            name.contains('mariam') ||
+            name.contains('tessa') ||
+            name.contains('kanya') ||
+            name.contains('linh') ||
+            name.contains('damayanti') ||
+            name.contains('lesya') ||
+            name.contains('carmit') ||
+            // Android yaygın kadın ses göstergeleri
+            name.contains('female') ||
+            name.contains('f-') ||
+            // gender alanı varsa
+            (v['gender'] ?? '').toString().toLowerCase() == 'female';
+        return langMatch && isFemale;
+      }).toList();
+
+      if (femaleVoice.isNotEmpty) {
+        await _tts.setVoice({
+          'name': femaleVoice.first['name'].toString(),
+          'locale': femaleVoice.first['locale'].toString(),
+        });
+        return;
+      }
+
+      // Kadın ses bulunamazsa, bu dildeki herhangi bir sesi kullan
+      // ama pitch'i yükselterek daha kadınsı yap
+      if (!kIsWeb) {
+        await _tts.setPitch(1.15); // biraz daha tiz = kadınsı
+      }
+    } catch (_) {
+      // Ses seçimi başarısız olursa varsayılanla devam et
+      try {
+        await _tts.setPitch(1.15);
+      } catch (_) {}
+    }
+  }
+
   Future<void> warmUp() async {
     try {
       await Permission.microphone.request();
       _ready = await _stt.initialize();
       await _tts.setSpeechRate(0.42);
       await _tts.setVolume(1);
+      await _tts.setPitch(1.1); // varsayılan: hafif kadınsı ton
     } catch (_) {
       _ready = false;
     }
@@ -61,6 +139,7 @@ class SpeechController {
   Future<void> speakTarget(String text, String langCode) async {
     try {
       await _tts.setLanguage(localeOf(langCode));
+      await _setFemaleVoice(langCode);
       await _tts.stop();
       await _tts.speak(text);
     } catch (_) {}

@@ -224,7 +224,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     Text(
                       labels[s]!,
                       style: TextStyle(
-                        color: s == step ? Nura.terrSoft : const Color(0xFF6A8A7E),
+                        color: s == step ? Nura.terrSoft : const Nura.soft,
                         fontWeight: s == step ? FontWeight.w700 : FontWeight.w400,
                         fontSize: 12,
                       ),
@@ -243,7 +243,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Text(
                 currentTurn.prompt,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 15),
+                style: const TextStyle(color: Nura.muted, fontSize: 15),
               ),
               const SizedBox(height: 12),
               Text(
@@ -255,7 +255,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Text(
                 currentPhrase.glossFor(p.uiLang),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFFB8C8C0)),
+                style: const TextStyle(color: Nura.muted),
               ),
               if (LanguageGuide.of(scene.lang).tipFor(currentTurn.expected) != null) ...[
                 const SizedBox(height: 14),
@@ -263,7 +263,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1A4A3A),
+                    color: const Nura.mintDark,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Text(
@@ -290,7 +290,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 const Text(
                   'Tek düzeltme: cümleyi yavaş, kelime kelime tekrarla.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Color(0xFFB8C8C0)),
+                  style: TextStyle(color: Nura.muted),
                 ),
                 const SizedBox(height: 18),
                 FilledButton(
@@ -316,11 +316,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(holding ? '${holdSec}s' : i18n.holdToSpeak, style: const TextStyle(color: Color(0xFFB8C8C0))),
+                Text(holding ? '${holdSec}s' : i18n.holdToSpeak, style: const TextStyle(color: Nura.muted)),
                 if (heard.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(heard, textAlign: TextAlign.center, style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 13)),
+                    child: Text(heard, textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted, fontSize: 13)),
                   ),
               ] else
                 FilledButton(
@@ -343,7 +343,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   Widget _chip(String s) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(color: const Color(0xFF1A4A3A), borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(color: const Nura.mintDark, borderRadius: BorderRadius.circular(20)),
       child: Text(s, style: const TextStyle(color: Nura.cream, fontSize: 12)),
     );
   }
