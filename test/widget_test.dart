@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:nura/data/content/catalog.dart';
 import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
@@ -9,6 +11,7 @@ import 'package:nura/data/notifications/notification_service.dart';
 import 'package:nura/data/speech/speech_controller.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 import 'package:nura/state/session.dart';
+import 'package:nura/ui/widgets.dart';
 
 void main() {
   test('all 30 learn languages have at least 8 scenarios', () {
@@ -183,6 +186,16 @@ void main() {
     );
     expect(restored.notificationsEnabled, false);
     expect(restored.reminderHour, 10);
+  });
+
+
+  testWidgets('original Luma mascot renders every expression', (tester) async {
+    for (final mood in MascotMood.values) {
+      await tester.pumpWidget(
+        MaterialApp(home: Scaffold(body: NuraMascot(mood: mood, animate: false))),
+      );
+      expect(find.byType(NuraMascot), findsOneWidget);
+    }
   });
 
 }

@@ -34,6 +34,10 @@ class HomeScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
+              if (p.streak >= 2) ...[
+                const NuraMascot(size: 48, mood: MascotMood.streak),
+                const SizedBox(width: 6),
+              ],
               SizedBox(
                 width: 64,
                 height: 64,

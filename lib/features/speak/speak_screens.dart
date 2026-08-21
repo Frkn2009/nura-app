@@ -358,6 +358,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               ],
               const Spacer(),
               if (step == _Step.fix) ...[
+                NuraMascot(
+                  size: 64,
+                  mood: score >= 70 ? MascotMood.celebrate : MascotMood.encourage,
+                ),
+                const SizedBox(height: 8),
                 Wrap(
                   spacing: 8,
                   children: [

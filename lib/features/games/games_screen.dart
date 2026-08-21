@@ -117,6 +117,7 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
   late String proposed;
   late bool statementIsTrue;
   bool answered = false;
+  bool lastRight = false;
 
   @override
   void initState() {
@@ -139,6 +140,7 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
     final right = choice == statementIsTrue;
     setState(() {
       answered = true;
+      lastRight = right;
       if (right) correct++;
     });
     Future<void>.delayed(const Duration(milliseconds: 650), () {
@@ -185,8 +187,12 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
             ),
             if (answered) ...[
               const SizedBox(height: 12),
-              Text(statementIsTrue ? 'Doğru eşleşme' : 'Doğrusu: ${phrase.glossFor(widget.ui)}',
-                  textAlign: TextAlign.center, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w600)),
+              MascotFeedback(
+                correct: lastRight,
+                message: lastRight
+                    ? 'Doğru karar!'
+                    : 'Doğrusu: ${phrase.glossFor(widget.ui)}',
+              ),
             ],
           ],
         ),
@@ -249,7 +255,7 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(right ? 'Doğru' : 'Doğrusu: $expected')),
+      SnackBar(content: MascotFeedback(correct: right, message: right ? 'Doğru!' : 'Tekrar dene · $expected')),
     );
     setState(() {
       round++;
@@ -342,6 +348,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
   late Phrase phrase;
   late List<Phrase> options;
   bool answered = false;
+  bool lastRight = false;
 
   @override
   void initState() {
@@ -363,6 +370,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
     final right = choice.id == phrase.id;
     setState(() {
       answered = true;
+      lastRight = right;
       if (right) correct++;
     });
     Future<void>.delayed(const Duration(milliseconds: 750), () {
@@ -414,6 +422,13 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
                   onPressed: answered ? null : () => _answer(option),
                   child: Text(option.glossFor(widget.ui), textAlign: TextAlign.center),
                 ),
+              ),
+            if (answered)
+              MascotFeedback(
+                correct: lastRight,
+                message: lastRight
+                    ? 'Harika dinledin!'
+                    : 'Luma: dinledikçe daha net olacak.',
               ),
           ],
         ),
@@ -472,7 +487,7 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(right ? 'Doğru' : 'Doğrusu: $answer')),
+      SnackBar(content: MascotFeedback(correct: right, message: right ? 'Doğru!' : 'Tekrar dene · $answer')),
     );
     setState(() {
       round++;
@@ -664,6 +679,11 @@ Future<void> showGameResult(
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          NuraMascot(
+            size: 76,
+            mood: percent >= 70 ? MascotMood.celebrate : MascotMood.encourage,
+          ),
+          const SizedBox(height: 6),
           Text('$percent%', style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w700, color: Nura.mintDark)),
           const SizedBox(height: 6),
           Text('$correct / $total doğru', style: const TextStyle(color: Nura.muted)),

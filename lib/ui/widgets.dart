@@ -1,4 +1,5 @@
 export 'brand.dart';
+export 'mascot.dart';
 
 import 'package:flutter/material.dart';
 import '../core/theme/tokens.dart';

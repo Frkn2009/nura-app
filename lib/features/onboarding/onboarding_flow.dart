@@ -52,7 +52,19 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 color: Nura.terr,
                 backgroundColor: Nura.line,
               ),
-              const SizedBox(height: 28),
+              SizedBox(height: step == 0 ? 14 : 28),
+              if (step == 0) ...[
+                const Center(child: NuraMascot(size: 96, mood: MascotMood.wave)),
+                const SizedBox(height: 8),
+                const Center(
+                  child: Text(
+                    'Merhaba, ben Luma. Konuşma yolculuğunda yanındayım.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Nura.muted, fontSize: 13),
+                  ),
+                ),
+                const SizedBox(height: 14),
+              ],
               Expanded(child: pages[step]),
               ForestButton(
                 label: step == pages.length - 1 ? i18n.startSpeak : i18n.continueCta,

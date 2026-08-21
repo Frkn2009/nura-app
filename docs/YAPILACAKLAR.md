@@ -86,12 +86,12 @@
 - [x] Bildirim kapatma seçeneği profilde
 
 ### 11. Maskot / Karakter
-- [ ] NURA'nın maskotu: sevimli bir karakter (baykuş/kedi/robot?)
-- [ ] Onboarding'de karşılama
-- [ ] Doğru cevaplarda kutlama animasyonu
-- [ ] Yanlış cevaplarda teşvik
-- [ ] Streak günlerinde özel animasyon
-- [ ] Telif sorunu olmayacak — tamamen özgün tasarım
+- [x] NURA'nın maskotu: özgün konuşma rehberi robot “Luma”
+- [x] Onboarding'de karşılama
+- [x] Doğru cevaplarda kutlama animasyonu
+- [x] Yanlış cevaplarda teşvik
+- [x] Streak günlerinde özel animasyon
+- [x] Telif sorunu olmayacak — tamamen özgün Canvas tasarımı
 
 ### 12. Süreli Etkinlikler + Video Reklam Gelir Kapısı
 - [ ] Haftalık etkinlik: "Bu hafta İspanyolca XP 2 katı!"
