@@ -15,15 +15,15 @@ import 'package:nura/state/session.dart';
 import 'package:nura/ui/widgets.dart';
 
 void main() {
-  test('all 30 learn languages have at least 8 scenarios', () {
+  test('all 30 learn languages have A1 plus A2/B1 scenarios', () {
     for (final lang in LearnLang.values) {
       final n = Catalog.forLang(lang).length;
-      expect(n, greaterThanOrEqualTo(8), reason: '${lang.name} has $n scenarios');
+      expect(n, greaterThanOrEqualTo(10), reason: '${lang.name} has $n scenarios');
     }
   });
 
-  test('Spanish has 10 scenarios (8 base + NIE + contrato)', () {
-    expect(Catalog.forLang(LearnLang.es).length, 10);
+  test('Spanish has 12 scenarios including A2/B1 and bonus packs', () {
+    expect(Catalog.forLang(LearnLang.es).length, 12);
   });
 
   test('Arabic A1 pack exists', () {
@@ -62,12 +62,12 @@ void main() {
     }
   });
 
-  test('total scenario count is 242', () {
+  test('total scenario count is 302', () {
     var total = 0;
     for (final lang in LearnLang.values) {
       total += Catalog.forLang(lang).length;
     }
-    expect(total, 242);
+    expect(total, 302);
   });
 
   test('pronunciation scoring is honest and deterministic', () {
@@ -215,6 +215,17 @@ void main() {
     final ready = UserProfile.empty.copyWith(lastAdEpoch: 600);
     expect(ready.canShowInterstitial(now), true);
     expect(UserProfile.empty.copyWith(adsWatchedToday: 5).canWatchAd, false);
+  });
+
+
+  test('every language has connected A2 and B1 practice', () {
+    for (final language in LearnLang.values) {
+      final scenarios = Catalog.forLang(language);
+      expect(scenarios.any((scenario) => scenario.cefr == Cefr.a2), true,
+          reason: '${language.name} A2 missing');
+      expect(scenarios.any((scenario) => scenario.cefr == Cefr.b1), true,
+          reason: '${language.name} B1 missing');
+    }
   });
 
 }

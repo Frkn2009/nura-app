@@ -2,19 +2,30 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import '../models/models.dart';
+import 'intermediate_catalog.dart';
 
 class Catalog {
-  static List<Scenario> forLang(LearnLang lang) =>
-      _all.where((s) => s.lang == lang).toList();
+  static List<Scenario> forLang(LearnLang lang) {
+    final foundation = _all.where((scenario) => scenario.lang == lang).toList();
+    return [...foundation, ...IntermediateCatalog.build(lang, foundation)];
+  }
 
   static Scenario? byId(String id) {
-    for (final s in _all) { if (s.id == id) return s; }
+    for (final language in LearnLang.values) {
+      for (final scenario in forLang(language)) {
+        if (scenario.id == id) return scenario;
+      }
+    }
     return null;
   }
 
   static Phrase? phraseById(String id) {
-    for (final s in _all) {
-      for (final p in s.phrases) { if (p.id == id) return p; }
+    for (final language in LearnLang.values) {
+      for (final scenario in forLang(language)) {
+        for (final phrase in scenario.phrases) {
+          if (phrase.id == id) return phrase;
+        }
+      }
     }
     return null;
   }

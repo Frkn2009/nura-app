@@ -30,8 +30,8 @@ flutter run
 
 ## İçerik
 
-- **242 sahne** (30 dil × 8 + İspanyolca NIE/contrato bonusları)
-- **726 kalıp cümle**
+- **302 sahne** (30 dilde A1 + bağlantılı A2/B1 görevleri, İspanyolca bonus paketleri)
+- **996 kalıp cümle**
 - **30 dil rehberi** (telaffuz kuralları + tuzaklar)
 - **30 dilli arayüz**
 - **5 mağaza ekran görüntüsü + feature graphic**

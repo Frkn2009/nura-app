@@ -107,7 +107,7 @@
 ## 🟢 SONRA — AY 2-3
 
 ### 13. İleri Özellikler
-- [ ] A2 / B1 içerik ekleme
+- [x] A2 / B1 içerik ekleme (30 dilde bağlantılı görevler)
 - [ ] Fonem skor motoru (gerçek telaffuz puanlama)
 - [ ] Maya nöral TTS (AI ses)
 - [ ] Bulut çeviri (Plus)
@@ -129,7 +129,7 @@ lib/
 │   ├── supabase_config.dart     # Bağlantı
 │   └── theme/ (tokens + nura_theme)
 ├── data/
-│   ├── content/catalog.dart     # 242 sahne
+│   ├── content/catalog.dart     # 302 sahne
 │   ├── content/language_guides  # 30 rehber
 │   ├── models/models.dart       # 30 enum + UserProfile
 │   ├── speech/speech_controller # 30 locale TTS/STT
