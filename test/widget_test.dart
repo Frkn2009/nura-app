@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nura/data/content/catalog.dart';
 import 'package:nura/data/content/clips.dart';
 import 'package:nura/data/content/language_guides.dart';
+import 'package:nura/data/models/leaderboard.dart';
 import 'package:nura/data/models/models.dart';
 import 'package:nura/data/speech/speech_controller.dart';
 import 'package:nura/data/translate/offline_translate.dart';
@@ -131,6 +132,20 @@ void main() {
     expect(restored.totalXp, 0);
     expect(restored.dailyXp, 0);
     expect(restored.learnLang, UserProfile.empty.learnLang);
+  });
+
+
+  test('leaderboard rows parse rank, XP and own-position marker', () {
+    final entry = LeaderboardEntry.fromJson({
+      'rank': 12,
+      'user_id': 'user-1',
+      'player_name': 'NURA A1B2',
+      'xp': 340,
+      'is_me': true,
+    });
+    expect(entry.rank, 12);
+    expect(entry.xp, 340);
+    expect(entry.isMe, true);
   });
 
 }

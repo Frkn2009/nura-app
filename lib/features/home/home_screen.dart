@@ -162,6 +162,18 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           NuraCard(
+            onTap: () => context.push('/leaderboard'),
+            child: const Row(
+              children: [
+                Icon(Icons.leaderboard_outlined, color: Nura.mintDark),
+                SizedBox(width: 12),
+                Expanded(child: Text('Haftalık sıralama', style: TextStyle(fontWeight: FontWeight.w600))),
+                Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          NuraCard(
             onTap: () => context.push('/guide'),
             child: Row(
               children: [

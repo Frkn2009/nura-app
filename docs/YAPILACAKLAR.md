@@ -59,11 +59,11 @@
 - [x] XP ana sayfada ve profilde görünsün
 
 ### 8. Leaderboard / Sıralama
-- [ ] Haftalık sıralama tablosu
+- [x] Haftalık sıralama tablosu
 - [ ] Clan/Takım sistemi (ileride)
-- [ ] Supabase'de `leaderboard` tablosu
-- [ ] Top 10 gösterimi
-- [ ] Kendi sıranı gör
+- [x] Supabase'de `leaderboard` tablosu
+- [x] Top 10 gösterimi
+- [x] Kendi sıranı gör
 
 ### 9. Başarım / Rozet Sistemi
 - [ ] 🏅 İlk Adım — İlk sahneyi tamamla

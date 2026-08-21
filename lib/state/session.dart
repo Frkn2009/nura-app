@@ -85,13 +85,16 @@ class SessionController extends Notifier<UserProfile> {
   }
 
 
-  Future<void> awardXp(int amount) async {
+  Future<void> awardXp(int amount, {String source = 'correct'}) async {
     if (amount <= 0) return;
     final profile = _rollDay(state);
     await _save(profile.copyWith(
       totalXp: profile.totalXp + amount,
       dailyXp: profile.dailyXp + amount,
     ));
+    if (Supa.enabled) {
+      unawaited(Supa.recordXp(amount, source).catchError((_) {}));
+    }
   }
 
   /// Doğru cevap XP'si (+10) ve performans oyun bonusu (+20…100).
@@ -104,11 +107,11 @@ class SessionController extends Notifier<UserProfile> {
 
   Future<int> completeGame(int correct, int total) async {
     final earned = gameXpFor(correct, total);
-    await awardXp(earned);
+    await awardXp(earned, source: 'game');
     return earned;
   }
 
-  Future<void> completeScene() => awardXp(50);
+  Future<void> completeScene() => awardXp(50, source: 'scene');
 
   Future<void> watchRewardedAd() async {
     var p = _rollDay(state);

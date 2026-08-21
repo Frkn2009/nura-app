@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/supabase_config.dart';
+import '../models/leaderboard.dart';
 import '../models/models.dart';
 
 /// NURA — Supabase ile tek konuşan katman.
@@ -30,6 +31,31 @@ class Supa {
 
   static Future<void> signOut() async {
     await _c.auth.signOut();
+  }
+
+
+  // ---------- XP / HAFTALIK SIRALAMA ----------
+
+  static Future<void> recordXp(int amount, String source) async {
+    if (!enabled || _c.auth.currentUser == null || amount <= 0) return;
+    await _c.rpc('record_xp', params: {
+      'p_amount': amount,
+      'p_source': source,
+    });
+  }
+
+  /// Haftanın ilk 10'unu ve kullanıcı ilk 10 dışında olsa da kendi satırını alır.
+  static Future<List<LeaderboardEntry>> weeklyLeaderboard() async {
+    if (!enabled || _c.auth.currentUser == null) return const [];
+    final response = await _c.rpc(
+      'get_weekly_leaderboard',
+      params: {'p_limit': 10},
+    );
+    final rows = response as List<dynamic>;
+    return rows
+        .cast<Map<String, dynamic>>()
+        .map(LeaderboardEntry.fromJson)
+        .toList(growable: false);
   }
 
   /// Sunucudaki hesabı komple siler (profiles satırı + auth kaydı).
