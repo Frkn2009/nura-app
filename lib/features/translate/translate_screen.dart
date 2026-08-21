@@ -18,6 +18,15 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
   final ctrl = TextEditingController();
   TranslationHit? hit;
   bool searched = false;
+  late LearnLang fromLang;
+  late LearnLang toLang;
+
+  @override
+  void initState() {
+    super.initState();
+    fromLang = LearnLang.tr;
+    toLang = LearnLang.en;
+  }
 
   @override
   void dispose() {
@@ -25,11 +34,33 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
     super.dispose();
   }
 
+  void _swap() {
+    setState(() {
+      final temp = fromLang;
+      fromLang = toLang;
+      toLang = temp;
+      if (ctrl.text.isNotEmpty) _go();
+    });
+  }
+
   void _go() {
     final p = ref.read(sessionProvider);
     setState(() {
       searched = true;
-      hit = OfflineTranslate.lookup(input: ctrl.text, learn: p.learnLang, ui: p.uiLang);
+      // Hedef dilde ara
+      hit = OfflineTranslate.lookup(
+        input: ctrl.text,
+        learn: toLang,
+        ui: UiLang.values.firstWhere((u) => u.name == fromLang.name, orElse: () => p.uiLang),
+      );
+      // Bulunamadıysa kaynak dilde de ara
+      if (hit == null) {
+        hit = OfflineTranslate.lookup(
+          input: ctrl.text,
+          learn: fromLang,
+          ui: UiLang.values.firstWhere((u) => u.name == toLang.name, orElse: () => UiLang.en),
+        );
+      }
     });
   }
 
@@ -43,12 +74,56 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
         padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
         children: [
           Text(i18n.translate, style: Theme.of(context).textTheme.displayMedium),
-          const SizedBox(height: 6),
-          Text(
-            '${p.uiLang.nativeName()}  →  ${p.learnLang.label(p.uiLang)}',
-            style: const TextStyle(color: Nura.muted),
+          const SizedBox(height: 16),
+
+          // Dil seçici (Google Translate tarzı)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Nura.fog),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<LearnLang>(
+                      value: fromLang,
+                      isExpanded: true,
+                      style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink, fontSize: 14),
+                      items: LearnLang.values.map((l) => DropdownMenuItem(
+                        value: l,
+                        child: Text('${l.flag()} ${l.label(p.uiLang)}'),
+                      )).toList(),
+                      onChanged: (v) { if (v != null) setState(() => fromLang = v); },
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: _swap,
+                  icon: const Icon(Icons.swap_horiz, color: Nura.mint, size: 28),
+                ),
+                Expanded(
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<LearnLang>(
+                      value: toLang,
+                      isExpanded: true,
+                      style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink, fontSize: 14),
+                      items: LearnLang.values.map((l) => DropdownMenuItem(
+                        value: l,
+                        child: Text('${l.flag()} ${l.label(p.uiLang)}'),
+                      )).toList(),
+                      onChanged: (v) { if (v != null) setState(() => toLang = v); },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
+
+          // Metin girişi
           TextField(
             controller: ctrl,
             minLines: 3,
@@ -57,27 +132,35 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             onSubmitted: (_) => _go(),
             decoration: InputDecoration(
               hintText: i18n.typeToTranslate,
-              suffixIcon: IconButton(onPressed: _go, icon: const Icon(Icons.arrow_forward)),
+              suffixIcon: IconButton(onPressed: _go, icon: const Icon(Icons.arrow_forward, color: Nura.mint)),
             ),
           ),
           const SizedBox(height: 12),
           ForestButton(label: i18n.translate, onPressed: _go),
           const SizedBox(height: 18),
+
+          // Sonuç
           if (searched && hit == null)
             NuraCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Eyebrow('Müfredat dışı'),
+                  Row(
+                    children: [
+                      Icon(Icons.info_outline, color: Nura.muted, size: 20),
+                      const SizedBox(width: 8),
+                      const Eyebrow('Müfredat dışı'),
+                    ],
+                  ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Bu cümle henüz NURA sözlüğünde yok. Uydurma çeviri göstermiyoruz — yanlış kalıp öğretmektense boş bırakırız.',
+                    'Bu cümle NURA sözlüğünde yok. Uydurma çeviri göstermiyoruz — yanlış kalıp öğretmektense boş bırakırız.',
                     style: TextStyle(color: Nura.ink, height: 1.4),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     p.isPlus
-                        ? 'Plus bulut çeviri (ML Kit / Cloud) bir sonraki build’de bağlanır.'
+                        ? 'Plus bulut çeviri bir sonraki sürümde.'
                         : 'Plus ile genişletilmiş çeviri ve kaydetme.',
                     style: const TextStyle(color: Nura.muted, fontSize: 13),
                   ),
@@ -86,17 +169,20 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             ),
           if (hit != null) ...[
             NuraCard(
-              color: Nura.forest,
+              color: Nura.mint,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('HEDEF DİL', style: TextStyle(color: Nura.terrSoft, fontSize: 11, letterSpacing: 1)),
+                  Text('${toLang.flag()} ${toLang.label(p.uiLang).toUpperCase()}',
+                      style: const TextStyle(color: Colors.white70, fontSize: 11, letterSpacing: 1)),
                   const SizedBox(height: 8),
-                  Text(hit!.target, style: const TextStyle(color: Nura.cream, fontSize: 24, fontWeight: FontWeight.w600, height: 1.3)),
+                  Text(hit!.target,
+                      style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700, height: 1.3)),
                   const SizedBox(height: 10),
-                  Text(hit!.gloss, style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 16)),
+                  Text(hit!.gloss, style: const TextStyle(color: Colors.white70, fontSize: 16)),
                   const SizedBox(height: 8),
-                  Text('güven ${(hit!.confidence * 100).round()}%', style: const TextStyle(color: Nura.terrSoft, fontSize: 12)),
+                  Text('güven ${(hit!.confidence * 100).round()}%',
+                      style: const TextStyle(color: Colors.white60, fontSize: 12)),
                 ],
               ),
             ),
@@ -104,20 +190,23 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             ForestButton(
               label: i18n.savePhrase,
               onPressed: () {
-                final id = 'tr_${p.learnLang.name}_${hit!.target.hashCode}';
+                final id = 'tr_${toLang.name}_${hit!.target.hashCode}';
                 ref.read(sessionProvider.notifier).learnPhrase(id);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('SRS’e eklendi · yarın tekrar')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('SRS\'e eklendi · yarın tekrar')));
               },
             ),
           ],
           const SizedBox(height: 22),
+
+          // Hızlı kalıplar
           const Eyebrow('Hızlı kalıplar'),
           const SizedBox(height: 10),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              for (final q in ['teşekkürler', 'lütfen', 'ne kadar', 'tuvalet', 'anlamıyorum', 'kira'])
+              for (final q in ['merhaba', 'teşekkürler', 'lütfen', 'ne kadar', 'tuvalet', 'anlamıyorum', 'yardım', 'istasyon', 'kira'])
                 ActionChip(
                   label: Text(q),
                   onPressed: () {

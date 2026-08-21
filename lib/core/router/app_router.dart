@@ -6,7 +6,7 @@ import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/legal/privacy_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
-import '../../features/clips/clips_screen.dart';
+import '../../features/games/games_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/onboarding/onboarding_flow.dart';
 import '../../features/paywall/paywall_screen.dart';
@@ -42,7 +42,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(path: '/app', builder: (_, __) => const HomeScreen()),
           GoRoute(path: '/app/speak', builder: (_, __) => const SpeakHubScreen()),
-          GoRoute(path: '/app/clips', builder: (_, __) => const ClipsScreen()),
+          GoRoute(path: '/app/games', builder: (_, __) => const GamesScreen()),
           GoRoute(path: '/app/translate', builder: (_, __) => const TranslateScreen()),
           GoRoute(path: '/app/you', builder: (_, __) => const ProfileScreen()),
         ],
