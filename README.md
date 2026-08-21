@@ -39,3 +39,20 @@ flutter run
 ## GitHub
 
 https://github.com/Frkn2009/nura-app
+
+
+## Plus bulut çevirisi
+
+Plus serbest metin çevirisi bir Supabase Edge Function üzerinden sunulur; sağlayıcı anahtarı uygulamaya gömülmez. Kurulum:
+
+1. `supabase_setup.sql` dosyasını Supabase SQL Editor'da çalıştır.
+2. Google Cloud Translation API anahtarını sunucu secret'ı olarak ekle.
+3. Edge Function'ı deploy et:
+
+```bash
+supabase link --project-ref qkhmtmwfwyscvtveiwui
+supabase secrets set GOOGLE_TRANSLATE_API_KEY=YOUR_SERVER_SIDE_KEY
+supabase functions deploy translate
+```
+
+Plus yetkisi, istemcinin değiştirebildiği profil verisinden değil, yalnızca ödeme webhook'unun service role ile yazdığı `subscriptions` tablosundan doğrulanır.

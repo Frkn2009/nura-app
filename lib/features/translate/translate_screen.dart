@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
+import '../../data/translate/cloud_translate.dart';
 import '../../data/translate/offline_translate.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
@@ -18,6 +19,9 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
   final ctrl = TextEditingController();
   TranslationHit? hit;
   bool searched = false;
+  bool translating = false;
+  String? cloudError;
+  int _translationRequest = 0;
   late LearnLang fromLang;
   late LearnLang toLang;
 
@@ -35,6 +39,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
   }
 
   void _swap() {
+    _translationRequest++;
     final previousTranslation = hit?.target;
     setState(() {
       final previousFrom = fromLang;
@@ -43,46 +48,96 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
       if (previousTranslation != null) ctrl.text = previousTranslation;
       hit = null;
       searched = false;
+      cloudError = null;
+      translating = false;
     });
     if (ctrl.text.trim().isNotEmpty) _go();
   }
 
   void _setFrom(LearnLang language) {
+    _translationRequest++;
     setState(() {
       if (language == toLang) toLang = fromLang;
       fromLang = language;
       hit = null;
       searched = false;
+      cloudError = null;
+      translating = false;
     });
   }
 
   void _setTo(LearnLang language) {
+    _translationRequest++;
     setState(() {
       if (language == fromLang) fromLang = toLang;
       toLang = language;
       hit = null;
       searched = false;
+      cloudError = null;
+      translating = false;
     });
   }
 
-  void _go() {
+  Future<void> _go() async {
     FocusManager.instance.primaryFocus?.unfocus();
+    final request = ++_translationRequest;
     final input = ctrl.text.trim();
     if (input.isEmpty) {
       setState(() {
         searched = false;
         hit = null;
+        cloudError = null;
+        translating = false;
       });
       return;
     }
+
+    final localHit = OfflineTranslate.translate(
+      input: input,
+      from: fromLang,
+      to: toLang,
+    );
+    final plus = ref.read(sessionProvider).isPlus;
     setState(() {
       searched = true;
-      hit = OfflineTranslate.translate(
+      hit = localHit;
+      cloudError = null;
+      translating = localHit == null && plus;
+    });
+    if (localHit != null || !plus) return;
+
+    try {
+      final cloudHit = await CloudTranslate.translate(
         input: input,
         from: fromLang,
         to: toLang,
       );
-    });
+      if (mounted && request == _translationRequest) {
+        setState(() => hit = cloudHit);
+      }
+    } catch (error) {
+      if (mounted && request == _translationRequest) {
+        setState(() => cloudError = _cloudErrorMessage(error));
+      }
+    } finally {
+      if (mounted && request == _translationRequest) {
+        setState(() => translating = false);
+      }
+    }
+  }
+
+  String _cloudErrorMessage(Object error) {
+    final code = error.toString();
+    if (code.contains('authentication_required') || code.contains('invalid_session')) {
+      return 'Plus bulut çevirisi için profilinden NURA hesabına giriş yap.';
+    }
+    if (code.contains('plus_required')) {
+      return 'Bulut Plus hakkın henüz doğrulanmadı.';
+    }
+    if (code.contains('service_not_configured')) {
+      return 'Bulut çeviri sunucusu henüz yapılandırılmadı.';
+    }
+    return 'Bulut çeviriye şu an ulaşılamıyor. Daha sonra tekrar dene.';
   }
 
   @override
@@ -157,11 +212,19 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          ForestButton(label: i18n.translate, onPressed: _go),
+          ForestButton(
+            label: translating ? 'Çevriliyor…' : i18n.translate,
+            onPressed: translating ? null : _go,
+          ),
           const SizedBox(height: 18),
 
           // Sonuç
-          if (searched && hit == null)
+          if (translating)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 28),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          if (searched && hit == null && !translating)
             NuraCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,9 +243,10 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    p.isPlus
-                        ? 'Plus bulut çeviri bir sonraki sürümde.'
-                        : 'Plus ile genişletilmiş çeviri ve kaydetme.',
+                    cloudError ??
+                        (p.isPlus
+                            ? 'Plus bulut çevirisi için hesap ve aktif abonelik gerekir.'
+                            : 'Plus ile genişletilmiş bulut çeviri ve kaydetme.'),
                     style: const TextStyle(color: Nura.muted, fontSize: 13),
                   ),
                 ],
@@ -201,9 +265,11 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                       style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700, height: 1.3)),
                   const SizedBox(height: 10),
                   Text(
-                    hit!.origin == TranslationOrigin.curriculum
-                        ? 'NURA müfredatından doğrulandı'
-                        : 'NURA sözlüğünden doğrulandı',
+                    switch (hit!.origin) {
+                      TranslationOrigin.curriculum => 'NURA müfredatından doğrulandı',
+                      TranslationOrigin.dictionary => 'NURA sözlüğünden doğrulandı',
+                      TranslationOrigin.cloud => 'Plus · güvenli bulut çevirisi',
+                    },
                     style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   const SizedBox(height: 8),

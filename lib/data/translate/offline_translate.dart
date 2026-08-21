@@ -1,7 +1,7 @@
 import '../content/catalog.dart';
 import '../models/models.dart';
 
-enum TranslationOrigin { curriculum, dictionary }
+enum TranslationOrigin { curriculum, dictionary, cloud }
 
 class TranslationHit {
   const TranslationHit({

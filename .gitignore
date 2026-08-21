@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Server-side Supabase/translation secrets
+/supabase/.env
+/supabase/functions/.env

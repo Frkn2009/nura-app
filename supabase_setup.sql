@@ -72,3 +72,24 @@ as $$
 $$;
 
 grant execute on function public.delete_my_account() to authenticated;
+
+-- 4) Plus yetkisi — yalnızca ödeme webhook'u / service role yazabilir.
+-- İstemcideki profiles.is_plus görsel yerel durumu korur; ücretli sunucu
+-- özelliklerinin güvenlik kararı bu tablodan verilir.
+create table if not exists public.subscriptions (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  provider text not null,
+  provider_customer_id text,
+  status text not null check (status in ('trialing', 'active', 'past_due', 'canceled', 'expired')),
+  current_period_end timestamptz not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.subscriptions enable row level security;
+
+drop policy if exists "subscriptions_select_own" on public.subscriptions;
+create policy "subscriptions_select_own" on public.subscriptions
+  for select using (auth.uid() = user_id);
+
+-- Bilerek INSERT/UPDATE/DELETE policy yoktur. Bu işlemler ödeme webhook'u
+-- tarafından SUPABASE_SERVICE_ROLE_KEY ile yapılmalıdır.

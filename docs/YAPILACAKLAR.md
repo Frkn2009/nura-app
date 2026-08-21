@@ -24,7 +24,7 @@
 - [x] 30 dil arası çeviri (dropdown ile dil seçimi)
 - [x] Swap butonu (dil değiştir)
 - [x] Müfredat + sözlük tabanlı (uydurma çeviri yok)
-- [ ] Plus ile genişletilmiş bulut çeviri (ileride)
+- [x] Plus ile genişletilmiş bulut çeviri (Supabase Edge Function altyapısı hazır; provider secret/deploy ileride)
 
 ### 4. Klipler — Dolu içerik
 - [ ] Her dilde kısa video/ses klipleri gibi kartlar
