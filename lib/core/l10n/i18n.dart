@@ -16,6 +16,7 @@ class I18n {
         'de': 'Sprechend lernen',
         'fr': 'Apprendre en parlant',
         'nl': 'Leren door te spreken',
+        'ar': 'تعلم بالتحدث',
       });
 
   String get continueCta => t({
@@ -25,6 +26,7 @@ class I18n {
         'de': 'Weiter',
         'fr': 'Continuer',
         'nl': 'Doorgaan',
+        'ar': 'استمر',
       });
 
   String get startSpeak => t({
@@ -34,6 +36,7 @@ class I18n {
         'de': 'Gespräch starten',
         'fr': 'Commencer',
         'nl': 'Start gesprek',
+        'ar': 'ابدأ المحادثة',
       });
 
   String get todaySpeak => t({
@@ -45,11 +48,11 @@ class I18n {
         'nl': 'Vandaag spreken',
       });
 
-  String get home => t({'tr': 'Ana sayfa', 'en': 'Home', 'es': 'Inicio', 'de': 'Start', 'fr': 'Accueil', 'nl': 'Home'});
-  String get speak => t({'tr': 'Konuş', 'en': 'Speak', 'es': 'Hablar', 'de': 'Sprechen', 'fr': 'Parler', 'nl': 'Spreken'});
-  String get clips => t({'tr': 'Klipler', 'en': 'Clips', 'es': 'Clips', 'de': 'Clips', 'fr': 'Extraits', 'nl': 'Clips'});
-  String get translate => t({'tr': 'Çevir', 'en': 'Translate', 'es': 'Traducir', 'de': 'Übersetzen', 'fr': 'Traduire', 'nl': 'Vertalen'});
-  String get you => t({'tr': 'Sen', 'en': 'You', 'es': 'Tú', 'de': 'Du', 'fr': 'Toi', 'nl': 'Jij'});
+  String get home => t({'tr': 'Ana sayfa', 'en': 'Home', 'es': 'Inicio', 'de': 'Start', 'fr': 'Accueil', 'nl': 'Home', 'ar': 'الرئيسية'});
+  String get speak => t({'tr': 'Konuş', 'en': 'Speak', 'es': 'Hablar', 'de': 'Sprechen', 'fr': 'Parler', 'nl': 'Spreken', 'ar': 'تحدث'});
+  String get clips => t({'tr': 'Klipler', 'en': 'Clips', 'es': 'Clips', 'de': 'Clips', 'fr': 'Extraits', 'nl': 'Clips', 'ar': 'مقاطع'});
+  String get translate => t({'tr': 'Çevir', 'en': 'Translate', 'es': 'Traducir', 'de': 'Übersetzen', 'fr': 'Traduire', 'nl': 'Vertalen', 'ar': 'ترجم'});
+  String get you => t({'tr': 'Sen', 'en': 'You', 'es': 'Tú', 'de': 'Du', 'fr': 'Toi', 'nl': 'Jij', 'ar': 'أنت'});
 
   String get whyTitle => t({
         'tr': 'Neden konuşmak istiyorsun?',
@@ -160,14 +163,43 @@ class I18n {
   String get phrases => t({'tr': 'Kalıp', 'en': 'Phrases', 'es': 'Frases', 'de': 'Phrasen', 'fr': 'Phrases', 'nl': 'Zinnen'});
   String get shadow => t({'tr': 'Gölgele', 'en': 'Shadow', 'es': 'Sombra', 'de': 'Schatten', 'fr': 'Ombre', 'nl': 'Schaduw'});
   String get slow => t({'tr': 'Yavaş', 'en': 'Slow', 'es': 'Lento', 'de': 'Langsam', 'fr': 'Lent', 'nl': 'Langzaam'});
-  String get goodEvening => t({
+  String get goodGreeting {
+    final h = DateTime.now().hour;
+    if (h < 12) {
+      return t({
+        'tr': 'Günaydın',
+        'en': 'Good morning',
+        'es': 'Buenos días',
+        'de': 'Guten Morgen',
+        'fr': 'Bonjour',
+        'nl': 'Goedemorgen',
+        'ar': 'صباح الخير',
+      });
+    } else if (h < 18) {
+      return t({
+        'tr': 'İyi günler',
+        'en': 'Good afternoon',
+        'es': 'Buenas tardes',
+        'de': 'Guten Tag',
+        'fr': 'Bon après-midi',
+        'nl': 'Goedemiddag',
+        'ar': 'مساء الخير',
+      });
+    } else {
+      return t({
         'tr': 'İyi akşamlar',
         'en': 'Good evening',
         'es': 'Buenas tardes',
         'de': 'Guten Abend',
         'fr': 'Bonsoir',
         'nl': 'Goedenavond',
+        'ar': 'مساء الخير',
       });
+    }
+  }
+
+  // Backwards compat alias
+  String get goodEvening => goodGreeting;
 
   String minutesLeft(int m) => t({
         'tr': '$m dk kaldı',
@@ -176,5 +208,36 @@ class I18n {
         'de': 'noch $m Min',
         'fr': '$m min restantes',
         'nl': 'nog $m min',
+        'ar': 'بقي $m دقيقة',
+      });
+
+  String get progress => t({
+        'tr': 'İlerleme',
+        'en': 'Progress',
+        'es': 'Progreso',
+        'de': 'Fortschritt',
+        'fr': 'Progrès',
+        'nl': 'Voortgang',
+        'ar': 'التقدم',
+      });
+
+  String pronunciationGuide(String langName) => t({
+        'tr': '$langName nasıl okunur',
+        'en': 'How to pronounce $langName',
+        'es': 'Cómo pronunciar $langName',
+        'de': '$langName Aussprache',
+        'fr': 'Prononciation $langName',
+        'nl': '$langName uitspraak',
+        'ar': 'كيف تنطق $langName',
+      });
+
+  String reviewReady(int n) => t({
+        'tr': '$n kart hazır',
+        'en': '$n cards ready',
+        'es': '$n tarjetas listas',
+        'de': '$n Karten bereit',
+        'fr': '$n cartes prêtes',
+        'nl': '$n kaarten klaar',
+        'ar': '$n بطاقات جاهزة',
       });
 }

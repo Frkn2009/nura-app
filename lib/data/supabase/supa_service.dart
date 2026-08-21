@@ -105,7 +105,7 @@ class AuthEmail extends Notifier<String?> {
   @override
   String? build() {
     if (!Supa.enabled) return null;
-    final sub = Supa._c.auth.onAuthStateChange((data) {
+    final sub = Supa._c.auth.onAuthStateChange.listen((data) {
       state = data.session?.user.email;
     });
     ref.onDispose(sub.cancel);

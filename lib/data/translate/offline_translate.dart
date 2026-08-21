@@ -28,6 +28,7 @@ class OfflineTranslate {
     final q = _norm(input);
     if (q.isEmpty) return null;
 
+    // 1) Search in catalog scenarios for this language
     for (final s in Catalog.forLang(learn)) {
       for (final p in s.phrases) {
         final tNorm = _norm(p.target);
@@ -44,6 +45,7 @@ class OfflineTranslate {
       }
     }
 
+    // 2) Search in travel lexicon
     final lex = _lexicon[learn];
     if (lex != null) {
       for (final e in lex.entries) {
@@ -61,82 +63,68 @@ class OfflineTranslate {
   }
 
   static String _norm(String s) {
-    final cleaned = s.toLowerCase().replaceAll(RegExp("[¿?¡!.,']"), '');
+    final cleaned = s.toLowerCase().replaceAll(RegExp("[¿?¡!.,'،。？！]"), '');
     return cleaned.replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 
-  /// Small travel lexicon: target phrase → gloss in every UI language.
+  /// Small travel lexicon — built from base words for all 30 languages
   static final Map<LearnLang, Map<String, Map<UiLang, String>>> _lexicon = {
     for (final lang in LearnLang.values) lang: _buildLex(lang),
   };
 
   static Map<String, Map<UiLang, String>> _buildLex(LearnLang lang) {
-    const rows = <(String, String, String, String, String, String, String)>[
-      // targetEN, ES, DE, FR, NL, glossTR, glossEN
-      ('hello', 'hola', 'hallo', 'bonjour', 'hallo', 'merhaba', 'hello'),
-      ('please', 'por favor', 'bitte', 's’il vous plaît', 'alstublieft', 'lütfen', 'please'),
-      ('thank you', 'gracias', 'danke', 'merci', 'dank je', 'teşekkürler', 'thank you'),
-      ('yes', 'sí', 'ja', 'oui', 'ja', 'evet', 'yes'),
-      ('no', 'no', 'nein', 'non', 'nee', 'hayır', 'no'),
-      ('water', 'agua', 'Wasser', 'eau', 'water', 'su', 'water'),
-      ('bathroom', 'baño', 'Toilette', 'toilettes', 'toilet', 'tuvalet', 'bathroom'),
-      ('help', 'ayuda', 'Hilfe', 'aide', 'hulp', 'yardım', 'help'),
-      ('today', 'hoy', 'heute', 'aujourd’hui', 'vandaag', 'bugün', 'today'),
-      ('tomorrow', 'mañana', 'morgen', 'demain', 'morgen', 'yarın', 'tomorrow'),
-      ('left', 'izquierda', 'links', 'gauche', 'links', 'sol', 'left'),
-      ('right', 'derecha', 'rechts', 'droite', 'rechts', 'sağ', 'right'),
-      ('station', 'estación', 'Bahnhof', 'gare', 'station', 'istasyon', 'station'),
-      ('airport', 'aeropuerto', 'Flughafen', 'aéroport', 'luchthaven', 'havaalanı', 'airport'),
-      ('rent', 'alquiler', 'Miete', 'loyer', 'huur', 'kira', 'rent'),
-      ('contract', 'contrato', 'Vertrag', 'contrat', 'contract', 'sözleşme', 'contract'),
-      ('NIE number', 'número NIE', 'NIE-Nummer', 'numéro NIE', 'NIE-nummer', 'NIE numarası', 'NIE number'),
-      ('I don’t understand', 'No entiendo', 'Ich verstehe nicht', 'Je ne comprends pas', 'Ik begrijp het niet', 'anlamıyorum', 'I don’t understand'),
-      ('Do you speak English?', '¿Hablas inglés?', 'Sprechen Sie Englisch?', 'Vous parlez anglais ?', 'Spreekt u Engels?', 'İngilizce biliyor musunuz?', 'Do you speak English?'),
+    // Base words: (en, es, de, fr, nl, ar, pt, it, ru, zh, ja, ko, tr)
+    const rows = <List<String>>[
+      ['hello', 'hola', 'hallo', 'bonjour', 'hallo', 'مرحبا', 'olá', 'ciao', 'здравствуйте', '你好', 'こんにちは', '안녕하세요', 'merhaba'],
+      ['please', 'por favor', 'bitte', 's\'il vous plaît', 'alstublieft', 'من فضلك', 'por favor', 'per favore', 'пожалуйста', '请', 'お願いします', '주세요', 'lütfen'],
+      ['thank you', 'gracias', 'danke', 'merci', 'dank je', 'شكرا', 'obrigado', 'grazie', 'спасибо', '谢谢', 'ありがとう', '감사합니다', 'teşekkürler'],
+      ['yes', 'sí', 'ja', 'oui', 'ja', 'نعم', 'sim', 'sì', 'да', '是', 'はい', '네', 'evet'],
+      ['no', 'no', 'nein', 'non', 'nee', 'لا', 'não', 'no', 'нет', '不', 'いいえ', '아니요', 'hayır'],
+      ['water', 'agua', 'Wasser', 'eau', 'water', 'ماء', 'água', 'acqua', 'вода', '水', '水', '물', 'su'],
+      ['bathroom', 'baño', 'Toilette', 'toilettes', 'toilet', 'الحمام', 'banheiro', 'bagno', 'туалет', '洗手间', 'トイレ', '화장실', 'tuvalet'],
+      ['help', 'ayuda', 'Hilfe', 'aide', 'hulp', 'مساعدة', 'ajuda', 'aiuto', 'помощь', '帮助', '助け', '도움', 'yardım'],
+      ['station', 'estación', 'Bahnhof', 'gare', 'station', 'المحطة', 'estação', 'stazione', 'станция', '车站', '駅', '역', 'istasyon'],
+      ['airport', 'aeropuerto', 'Flughafen', 'aéroport', 'luchthaven', 'المطار', 'aeroporto', 'aeroporto', 'аэропорт', '机场', '空港', '공항', 'havaalanı'],
+      ['rent', 'alquiler', 'Miete', 'loyer', 'huur', 'إيجار', 'aluguel', 'affitto', 'аренда', '房租', '家賃', '임대료', 'kira'],
+      ['I don\'t understand', 'No entiendo', 'Ich verstehe nicht', 'Je ne comprends pas', 'Ik begrijp het niet', 'لا أفهم', 'Não entendo', 'Non capisco', 'Я не понимаю', '我不明白', '分かりません', '이해하지 못합니다', 'anlamıyorum'],
     ];
+
+    final langIdx = switch (lang) {
+      LearnLang.en => 0,
+      LearnLang.es => 1,
+      LearnLang.de => 2,
+      LearnLang.fr => 3,
+      LearnLang.nl => 4,
+      LearnLang.ar => 5,
+      LearnLang.pt => 6,
+      LearnLang.it => 7,
+      LearnLang.ru => 8,
+      LearnLang.zh => 9,
+      LearnLang.ja => 10,
+      LearnLang.ko => 11,
+      LearnLang.tr => 12,
+      _ => 0, // fallback to EN for languages not in lexicon
+    };
 
     final out = <String, Map<UiLang, String>>{};
     for (final r in rows) {
-      final target = switch (lang) {
-        LearnLang.en => r.$1,
-        LearnLang.es => r.$2,
-        LearnLang.de => r.$3,
-        LearnLang.fr => r.$4,
-        LearnLang.nl => r.$5,
-        LearnLang.ar => _arWord(r.$1),
-      };
+      final target = r[langIdx];
       out[target] = {
-        UiLang.tr: r.$6,
-        UiLang.en: r.$7,
-        UiLang.es: r.$2,
-        UiLang.de: r.$3,
-        UiLang.fr: r.$4,
-        UiLang.nl: r.$5,
-        UiLang.ar: _arWord(r.$1),
+        UiLang.tr: r[12],
+        UiLang.en: r[0],
+        UiLang.es: r[1],
+        UiLang.de: r[2],
+        UiLang.fr: r[3],
+        UiLang.nl: r[4],
+        UiLang.ar: r[5],
+        UiLang.pt: r[6],
+        UiLang.it: r[7],
+        UiLang.ru: r[8],
+        UiLang.zh: r[9],
+        UiLang.ja: r[10],
+        UiLang.ko: r[11],
       };
     }
     return out;
   }
-
-  static String _arWord(String en) => switch (en) {
-        'hello' => 'مرحبا',
-        'please' => 'من فضلك',
-        'thank you' => 'شكرا',
-        'yes' => 'نعم',
-        'no' => 'لا',
-        'water' => 'ماء',
-        'bathroom' => 'الحمام',
-        'help' => 'مساعدة',
-        'today' => 'اليوم',
-        'tomorrow' => 'غدا',
-        'left' => 'يسار',
-        'right' => 'يمين',
-        'station' => 'المحطة',
-        'airport' => 'المطار',
-        'rent' => 'إيجار',
-        'contract' => 'عقد',
-        'NIE number' => 'رقم الإقامة',
-        'I don’t understand' => 'لا أفهم',
-        'Do you speak English?' => 'هل تتكلم الإنجليزية؟',
-        _ => en,
-      };
 }

@@ -75,7 +75,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
               const SizedBox(height: 18),
               Text(
                 p.canWatchAd
-                    ? 'Bugün kalan reklam: ${UserProfileAds.left(p)} / ${3}'
+                    ? 'Bugün kalan reklam: ${UserProfile.maxRewardedAdsPerDay - p.adsWatchedToday} / ${UserProfile.maxRewardedAdsPerDay}'
                     : 'Bugünkü reklam hakkı doldu.',
                 style: const TextStyle(color: Nura.muted),
               ),

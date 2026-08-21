@@ -13,7 +13,10 @@ Future<void> main() async {
   // Anahtarlar girildiyse bulut senkronu açılır.
   // Girilmediyse uygulama eskisi gibi tamamen yerel çalışır.
   if (SupaConfig.isSet) {
-    await Supabase.initialize(url: SupaConfig.url, anonKey: SupaConfig.anonKey);
+    await Supabase.initialize(
+      url: SupaConfig.url,
+      publishableKey: SupaConfig.publishableKey,
+    );
   }
 
   final prefs = await SharedPreferences.getInstance();

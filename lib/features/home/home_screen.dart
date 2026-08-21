@@ -23,7 +23,7 @@ class HomeScreen extends ConsumerWidget {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
         children: [
-          Text(i18n.goodEvening, style: const TextStyle(color: Nura.forest, fontWeight: FontWeight.w500)),
+          Text(i18n.goodGreeting, style: const TextStyle(color: Nura.forest, fontWeight: FontWeight.w500)),
           const SizedBox(height: 4),
           Row(
             children: [
@@ -122,7 +122,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text('İlerleme', style: Theme.of(context).textTheme.titleLarge),
+          Text(i18n.progress, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -140,7 +140,7 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    '${p.learnLang.label(p.uiLang)} nasıl okunur',
+                    i18n.pronunciationGuide(p.learnLang.label(p.uiLang)),
                     style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
                   ),
                 ),
@@ -157,7 +157,7 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    '${i18n.review} · ${ref.read(sessionProvider.notifier).duePhrases().length} kart hazır',
+                    '${i18n.review} · ${i18n.reviewReady(ref.read(sessionProvider.notifier).duePhrases().length)}',
                     style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
                   ),
                 ),

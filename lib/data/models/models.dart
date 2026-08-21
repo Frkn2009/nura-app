@@ -1,6 +1,20 @@
-enum LearnLang { en, es, de, fr, nl, ar }
+/// 30 öğrenme dili
+enum LearnLang {
+  en, es, de, fr, nl, ar, // mevcut 6
+  pt, it, ru, zh, ja, ko, // yaygın 6
+  tr, pl, sv, da, no, fi, // Avrupa 6
+  el, cs, ro, hu, hi, th, // karma 6
+  vi, id, uk, he, fa, sw, // global 6
+}
 
-enum UiLang { tr, en, es, de, fr, nl, ar }
+/// 30 arayüz dili (aynı set)
+enum UiLang {
+  tr, en, es, de, fr, nl, ar,
+  pt, it, ru, zh, ja, ko,
+  pl, sv, da, no, fi,
+  el, cs, ro, hu, hi, th,
+  vi, id, uk, he, fa, sw,
+}
 
 enum Motive { work, travel, exam, life }
 
@@ -8,95 +22,117 @@ enum Cefr { a1, a2, b1, b2 }
 
 extension LearnLangX on LearnLang {
   String get code => name;
-  String flag() {
-    switch (this) {
-      case LearnLang.en:
-        return '🇬🇧';
-      case LearnLang.es:
-        return '🇪🇸';
-      case LearnLang.de:
-        return '🇩🇪';
-      case LearnLang.fr:
-        return '🇫🇷';
-      case LearnLang.nl:
-        return '🇳🇱';
-      case LearnLang.ar:
-        return '🇸🇦';
-    }
-  }
 
+  String flag() => switch (this) {
+        LearnLang.en => '🇬🇧',
+        LearnLang.es => '🇪🇸',
+        LearnLang.de => '🇩🇪',
+        LearnLang.fr => '🇫🇷',
+        LearnLang.nl => '🇳🇱',
+        LearnLang.ar => '🇸🇦',
+        LearnLang.pt => '🇵🇹',
+        LearnLang.it => '🇮🇹',
+        LearnLang.ru => '🇷🇺',
+        LearnLang.zh => '🇨🇳',
+        LearnLang.ja => '🇯🇵',
+        LearnLang.ko => '🇰🇷',
+        LearnLang.tr => '🇹🇷',
+        LearnLang.pl => '🇵🇱',
+        LearnLang.sv => '🇸🇪',
+        LearnLang.da => '🇩🇰',
+        LearnLang.no => '🇳🇴',
+        LearnLang.fi => '🇫🇮',
+        LearnLang.el => '🇬🇷',
+        LearnLang.cs => '🇨🇿',
+        LearnLang.ro => '🇷🇴',
+        LearnLang.hu => '🇭🇺',
+        LearnLang.hi => '🇮🇳',
+        LearnLang.th => '🇹🇭',
+        LearnLang.vi => '🇻🇳',
+        LearnLang.id => '🇮🇩',
+        LearnLang.uk => '🇺🇦',
+        LearnLang.he => '🇮🇱',
+        LearnLang.fa => '🇮🇷',
+        LearnLang.sw => '🇰🇪',
+      };
+
+  /// Tüm 30 UI dilinde etiket
   String label(UiLang ui) {
-    const map = {
-      LearnLang.en: {
-        UiLang.tr: 'İngilizce',
-        UiLang.en: 'English',
-        UiLang.es: 'Inglés',
-        UiLang.de: 'Englisch',
-        UiLang.fr: 'Anglais',
-        UiLang.nl: 'Engels',
-        UiLang.ar: 'الإنجليزية',
-      },
-      LearnLang.es: {
-        UiLang.tr: 'İspanyolca',
-        UiLang.en: 'Spanish',
-        UiLang.es: 'Español',
-        UiLang.de: 'Spanisch',
-        UiLang.fr: 'Espagnol',
-        UiLang.nl: 'Spaans',
-        UiLang.ar: 'الإسبانية',
-      },
-      LearnLang.de: {
-        UiLang.tr: 'Almanca',
-        UiLang.en: 'German',
-        UiLang.es: 'Alemán',
-        UiLang.de: 'Deutsch',
-        UiLang.fr: 'Allemand',
-        UiLang.nl: 'Duits',
-        UiLang.ar: 'الألمانية',
-      },
-      LearnLang.fr: {
-        UiLang.tr: 'Fransızca',
-        UiLang.en: 'French',
-        UiLang.es: 'Francés',
-        UiLang.de: 'Französisch',
-        UiLang.fr: 'Français',
-        UiLang.nl: 'Frans',
-        UiLang.ar: 'الفرنسية',
-      },
-      LearnLang.nl: {
-        UiLang.tr: 'Flemenkçe',
-        UiLang.en: 'Dutch',
-        UiLang.es: 'Neerlandés',
-        UiLang.de: 'Niederländisch',
-        UiLang.fr: 'Néerlandais',
-        UiLang.nl: 'Nederlands',
-      },
-    };
-    return map[this]![ui]!;
+    final map = _langLabels[this];
+    if (map == null) return name.toUpperCase();
+    return map[ui] ?? map[UiLang.en] ?? name;
   }
 }
 
 extension UiLangX on UiLang {
   String get code => name;
-  String nativeName() {
-    switch (this) {
-      case UiLang.tr:
-        return 'Türkçe';
-      case UiLang.en:
-        return 'English';
-      case UiLang.es:
-        return 'Español';
-      case UiLang.de:
-        return 'Deutsch';
-      case UiLang.fr:
-        return 'Français';
-      case UiLang.nl:
-        return 'Nederlands';
-      case UiLang.ar:
-        return 'العربية';
-    }
-  }
+  String nativeName() => switch (this) {
+        UiLang.tr => 'Türkçe',
+        UiLang.en => 'English',
+        UiLang.es => 'Español',
+        UiLang.de => 'Deutsch',
+        UiLang.fr => 'Français',
+        UiLang.nl => 'Nederlands',
+        UiLang.ar => 'العربية',
+        UiLang.pt => 'Português',
+        UiLang.it => 'Italiano',
+        UiLang.ru => 'Русский',
+        UiLang.zh => '中文',
+        UiLang.ja => '日本語',
+        UiLang.ko => '한국어',
+        UiLang.pl => 'Polski',
+        UiLang.sv => 'Svenska',
+        UiLang.da => 'Dansk',
+        UiLang.no => 'Norsk',
+        UiLang.fi => 'Suomi',
+        UiLang.el => 'Ελληνικά',
+        UiLang.cs => 'Čeština',
+        UiLang.ro => 'Română',
+        UiLang.hu => 'Magyar',
+        UiLang.hi => 'हिन्दी',
+        UiLang.th => 'ไทย',
+        UiLang.vi => 'Tiếng Việt',
+        UiLang.id => 'Bahasa',
+        UiLang.uk => 'Українська',
+        UiLang.he => 'עברית',
+        UiLang.fa => 'فارسی',
+        UiLang.sw => 'Kiswahili',
+      };
 }
+
+/// Dil etiketleri — TR ve EN her dil için sağlanır, diğerleri varsa eklenir
+final Map<LearnLang, Map<UiLang, String>> _langLabels = {
+  LearnLang.en: {UiLang.tr: 'İngilizce', UiLang.en: 'English', UiLang.es: 'Inglés', UiLang.de: 'Englisch', UiLang.fr: 'Anglais', UiLang.nl: 'Engels', UiLang.ar: 'الإنجليزية', UiLang.pt: 'Inglês', UiLang.it: 'Inglese', UiLang.ru: 'Английский', UiLang.zh: '英语', UiLang.ja: '英語', UiLang.ko: '영어'},
+  LearnLang.es: {UiLang.tr: 'İspanyolca', UiLang.en: 'Spanish', UiLang.es: 'Español', UiLang.de: 'Spanisch', UiLang.fr: 'Espagnol', UiLang.nl: 'Spaans', UiLang.ar: 'الإسبانية', UiLang.pt: 'Espanhol', UiLang.it: 'Spagnolo', UiLang.ru: 'Испанский', UiLang.zh: '西班牙语', UiLang.ja: 'スペイン語', UiLang.ko: '스페인어'},
+  LearnLang.de: {UiLang.tr: 'Almanca', UiLang.en: 'German', UiLang.es: 'Alemán', UiLang.de: 'Deutsch', UiLang.fr: 'Allemand', UiLang.nl: 'Duits', UiLang.ar: 'الألمانية', UiLang.pt: 'Alemão', UiLang.it: 'Tedesco', UiLang.ru: 'Немецкий', UiLang.zh: '德语', UiLang.ja: 'ドイツ語', UiLang.ko: '독일어'},
+  LearnLang.fr: {UiLang.tr: 'Fransızca', UiLang.en: 'French', UiLang.es: 'Francés', UiLang.de: 'Französisch', UiLang.fr: 'Français', UiLang.nl: 'Frans', UiLang.ar: 'الفرنسية', UiLang.pt: 'Francês', UiLang.it: 'Francese', UiLang.ru: 'Французский', UiLang.zh: '法语', UiLang.ja: 'フランス語', UiLang.ko: '프랑스어'},
+  LearnLang.nl: {UiLang.tr: 'Flemenkçe', UiLang.en: 'Dutch', UiLang.es: 'Neerlandés', UiLang.de: 'Niederländisch', UiLang.fr: 'Néerlandais', UiLang.nl: 'Nederlands', UiLang.ar: 'الهولندية'},
+  LearnLang.ar: {UiLang.tr: 'Arapça', UiLang.en: 'Arabic', UiLang.es: 'Árabe', UiLang.de: 'Arabisch', UiLang.fr: 'Arabe', UiLang.nl: 'Arabisch', UiLang.ar: 'العربية'},
+  LearnLang.pt: {UiLang.tr: 'Portekizce', UiLang.en: 'Portuguese', UiLang.es: 'Portugués', UiLang.de: 'Portugiesisch', UiLang.fr: 'Portugais', UiLang.pt: 'Português'},
+  LearnLang.it: {UiLang.tr: 'İtalyanca', UiLang.en: 'Italian', UiLang.es: 'Italiano', UiLang.de: 'Italienisch', UiLang.fr: 'Italien', UiLang.it: 'Italiano'},
+  LearnLang.ru: {UiLang.tr: 'Rusça', UiLang.en: 'Russian', UiLang.es: 'Ruso', UiLang.de: 'Russisch', UiLang.fr: 'Russe', UiLang.ru: 'Русский'},
+  LearnLang.zh: {UiLang.tr: 'Çince', UiLang.en: 'Chinese', UiLang.es: 'Chino', UiLang.de: 'Chinesisch', UiLang.fr: 'Chinois', UiLang.zh: '中文'},
+  LearnLang.ja: {UiLang.tr: 'Japonca', UiLang.en: 'Japanese', UiLang.es: 'Japonés', UiLang.de: 'Japanisch', UiLang.fr: 'Japonais', UiLang.ja: '日本語'},
+  LearnLang.ko: {UiLang.tr: 'Korece', UiLang.en: 'Korean', UiLang.es: 'Coreano', UiLang.de: 'Koreanisch', UiLang.fr: 'Coréen', UiLang.ko: '한국어'},
+  LearnLang.tr: {UiLang.tr: 'Türkçe', UiLang.en: 'Turkish', UiLang.es: 'Turco', UiLang.de: 'Türkisch', UiLang.fr: 'Turc'},
+  LearnLang.pl: {UiLang.tr: 'Lehçe', UiLang.en: 'Polish', UiLang.es: 'Polaco', UiLang.de: 'Polnisch', UiLang.fr: 'Polonais', UiLang.pl: 'Polski'},
+  LearnLang.sv: {UiLang.tr: 'İsveççe', UiLang.en: 'Swedish', UiLang.es: 'Sueco', UiLang.de: 'Schwedisch', UiLang.fr: 'Suédois', UiLang.sv: 'Svenska'},
+  LearnLang.da: {UiLang.tr: 'Danca', UiLang.en: 'Danish', UiLang.es: 'Danés', UiLang.de: 'Dänisch', UiLang.fr: 'Danois', UiLang.da: 'Dansk'},
+  LearnLang.no: {UiLang.tr: 'Norveççe', UiLang.en: 'Norwegian', UiLang.es: 'Noruego', UiLang.de: 'Norwegisch', UiLang.fr: 'Norvégien', UiLang.no: 'Norsk'},
+  LearnLang.fi: {UiLang.tr: 'Fince', UiLang.en: 'Finnish', UiLang.es: 'Finlandés', UiLang.de: 'Finnisch', UiLang.fr: 'Finnois', UiLang.fi: 'Suomi'},
+  LearnLang.el: {UiLang.tr: 'Yunanca', UiLang.en: 'Greek', UiLang.es: 'Griego', UiLang.de: 'Griechisch', UiLang.fr: 'Grec', UiLang.el: 'Ελληνικά'},
+  LearnLang.cs: {UiLang.tr: 'Çekçe', UiLang.en: 'Czech', UiLang.es: 'Checo', UiLang.de: 'Tschechisch', UiLang.fr: 'Tchèque', UiLang.cs: 'Čeština'},
+  LearnLang.ro: {UiLang.tr: 'Romence', UiLang.en: 'Romanian', UiLang.es: 'Rumano', UiLang.de: 'Rumänisch', UiLang.fr: 'Roumain', UiLang.ro: 'Română'},
+  LearnLang.hu: {UiLang.tr: 'Macarca', UiLang.en: 'Hungarian', UiLang.es: 'Húngaro', UiLang.de: 'Ungarisch', UiLang.fr: 'Hongrois', UiLang.hu: 'Magyar'},
+  LearnLang.hi: {UiLang.tr: 'Hintçe', UiLang.en: 'Hindi', UiLang.es: 'Hindi', UiLang.de: 'Hindi', UiLang.fr: 'Hindi', UiLang.hi: 'हिन्दी'},
+  LearnLang.th: {UiLang.tr: 'Tayca', UiLang.en: 'Thai', UiLang.es: 'Tailandés', UiLang.de: 'Thailändisch', UiLang.fr: 'Thaï', UiLang.th: 'ไทย'},
+  LearnLang.vi: {UiLang.tr: 'Vietnamca', UiLang.en: 'Vietnamese', UiLang.es: 'Vietnamita', UiLang.de: 'Vietnamesisch', UiLang.fr: 'Vietnamien', UiLang.vi: 'Tiếng Việt'},
+  LearnLang.id: {UiLang.tr: 'Endonezce', UiLang.en: 'Indonesian', UiLang.es: 'Indonesio', UiLang.de: 'Indonesisch', UiLang.fr: 'Indonésien', UiLang.id: 'Bahasa Indonesia'},
+  LearnLang.uk: {UiLang.tr: 'Ukraynaca', UiLang.en: 'Ukrainian', UiLang.es: 'Ucraniano', UiLang.de: 'Ukrainisch', UiLang.fr: 'Ukrainien', UiLang.uk: 'Українська'},
+  LearnLang.he: {UiLang.tr: 'İbranice', UiLang.en: 'Hebrew', UiLang.es: 'Hebreo', UiLang.de: 'Hebräisch', UiLang.fr: 'Hébreu', UiLang.he: 'עברית'},
+  LearnLang.fa: {UiLang.tr: 'Farsça', UiLang.en: 'Persian', UiLang.es: 'Persa', UiLang.de: 'Persisch', UiLang.fr: 'Persan', UiLang.fa: 'فارسی'},
+  LearnLang.sw: {UiLang.tr: 'Svahili', UiLang.en: 'Swahili', UiLang.es: 'Suajili', UiLang.de: 'Swahili', UiLang.fr: 'Swahili', UiLang.sw: 'Kiswahili'},
+};
 
 class Phrase {
   const Phrase({
@@ -181,7 +217,7 @@ class UserProfile {
   final int bonusSpeakSeconds;
   final int adsWatchedToday;
   final Set<String> learnedIds;
-  final Map<String, int> srs; // phraseId -> due epoch days
+  final Map<String, int> srs;
 
   static const empty = UserProfile(
     uiLang: UiLang.tr,
@@ -268,10 +304,10 @@ class UserProfile {
 
   factory UserProfile.fromJson(Map<String, dynamic> j) {
     return UserProfile(
-      uiLang: UiLang.values.byName(j['uiLang'] as String? ?? 'tr'),
-      learnLang: LearnLang.values.byName(j['learnLang'] as String? ?? 'es'),
-      motive: Motive.values.byName(j['motive'] as String? ?? 'travel'),
-      cefr: Cefr.values.byName(j['cefr'] as String? ?? 'a1'),
+      uiLang: UiLang.values.asNameMap()[j['uiLang'] as String? ?? 'tr'] ?? UiLang.tr,
+      learnLang: LearnLang.values.asNameMap()[j['learnLang'] as String? ?? 'es'] ?? LearnLang.es,
+      motive: Motive.values.asNameMap()[j['motive'] as String? ?? 'travel'] ?? Motive.travel,
+      cefr: Cefr.values.asNameMap()[j['cefr'] as String? ?? 'a1'] ?? Cefr.a1,
       dailyGoalMin: j['dailyGoalMin'] as int? ?? 12,
       onboarded: j['onboarded'] as bool? ?? false,
       isPlus: j['isPlus'] as bool? ?? false,
