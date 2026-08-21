@@ -1,42 +1,48 @@
 import 'package:flutter/material.dart';
 
-/// NURA renk paleti — Drops + Duolingo ilhamı
-/// Sevimli, sıcak, güven veren ama oyunsu
+/// NURA marka token'ları — sakin, güvenilir ve profesyonel öğrenme ürünü.
+/// Renkler ve ölçüler doğrudan ekranlarda yeniden tanımlanmaz.
 class Nura {
-  // Ana renkler
-  static const mint = Color(0xFF2EC4B6);       // Ana yeşil-turkuaz (taze, enerjik)
-  static const mintDark = Color(0xFF1A9E92);    // Koyu mint (appbar, vurgu)
-  static const mintLight = Color(0xFFD4F5F0);   // Açık mint (arka plan kartlar)
+  // Marka: ciddi petrol yeşili + kontrollü sıcak vurgu.
+  static const mint = Color(0xFF147D76);
+  static const mintDark = Color(0xFF0D5955);
+  static const mintLight = Color(0xFFE1F1EF);
 
-  // Sıcak vurgular
-  static const coral = Color(0xFFFF6B6B);       // Mercan kırmızı (dikkat, hata)
-  static const peach = Color(0xFFFFBE76);       // Şeftali (ödül, başarı)
-  static const sunflower = Color(0xFFF9CA24);   // Sarı (yıldız, streak)
+  static const coral = Color(0xFFB95443);
+  static const peach = Color(0xFFF0B38E);
+  static const sunflower = Color(0xFFC99A2E);
 
-  // Mor / mavi aksan
-  static const lavender = Color(0xFF9B72CF);    // Lavanta (Plus, premium)
-  static const sky = Color(0xFF74B9FF);          // Gökyüzü mavi (link, bilgi)
+  static const lavender = Color(0xFF6E628F);
+  static const sky = Color(0xFF397C9E);
 
-  // Nötr tonlar
-  static const snow = Color(0xFFFAFAFA);         // Arka plan (beyaza yakın)
-  static const cloud = Color(0xFFF0F0F3);        // Kart arka plan
-  static const fog = Color(0xFFE8E8ED);          // Çizgi, ayraç
-  static const ink = Color(0xFF2D3436);          // Ana metin
-  static const muted = Color(0xFF636E72);        // İkincil metin
-  static const soft = Color(0xFFB2BEC3);         // Pasif metin
+  // Soğuk nötrler, uzun öğrenme oturumlarında gözü yormaz.
+  static const snow = Color(0xFFF7F8F8);
+  static const cloud = Color(0xFFEEF1F2);
+  static const fog = Color(0xFFDDE3E4);
+  static const ink = Color(0xFF172528);
+  static const muted = Color(0xFF596A6E);
+  static const soft = Color(0xFF8B999C);
+  static const white = Color(0xFFFFFFFF);
 
-  // Eski isimlerin uyumluluğu (kademeli geçiş)
+  // Anlamsal adlar ve geriye dönük uyumluluk.
   static const cream = snow;
   static const cream2 = cloud;
   static const forest = mintDark;
-  static const forestMid = Color(0xFF1A9E92);
+  static const forestMid = mint;
   static const terr = coral;
   static const terrSoft = peach;
   static const line = fog;
   static const pale = mintLight;
-  static const card = Color(0xFFFFFFFF);
-  static const white = Color(0xFFFFFFFF);
+  static const card = white;
 
-  static const radius = 20.0;
-  static const radiusLg = 28.0;
+  // Tek ölçü sistemi: küçük kontrol, standart kart, geniş yüzey.
+  static const radiusSm = 12.0;
+  static const radius = 16.0;
+  static const radiusLg = 24.0;
+
+  static const spaceXs = 4.0;
+  static const spaceSm = 8.0;
+  static const spaceMd = 16.0;
+  static const spaceLg = 24.0;
+  static const spaceXl = 32.0;
 }

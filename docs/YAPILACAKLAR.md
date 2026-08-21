@@ -33,9 +33,9 @@
 - [x] Senaryolardaki cümlelerden otomatik klip üretimi
 
 ### 5. Tema — Profesyonel ve ciddi
-- [ ] Renk paleti: modern, temiz, mağaza kalitesinde
-- [ ] Tutarlı border-radius, spacing, tipografi
-- [ ] Duolingo sevimli ama NURA daha ciddi-profesyonel
+- [x] Renk paleti: modern, temiz, mağaza kalitesinde
+- [x] Tutarlı border-radius, spacing, tipografi
+- [x] Duolingo sevimli ama NURA daha ciddi-profesyonel
 - [ ] Karanlık mod desteği (ileride)
 
 ---

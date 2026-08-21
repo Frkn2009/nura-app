@@ -157,7 +157,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(Nura.radius),
               border: Border.all(color: Nura.fog),
             ),
             child: Row(

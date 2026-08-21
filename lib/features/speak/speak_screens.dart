@@ -41,7 +41,7 @@ class SpeakHubScreen extends ConsumerWidget {
                   height: 48,
                   decoration: BoxDecoration(
                     color: Nura.mintDark,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(Nura.radius),
                   ),
                   child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 30),
                 ),
@@ -336,7 +336,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: Nura.mintDark,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(Nura.radius),
                   ),
                   child: Text(
                     () {
@@ -426,7 +426,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   Widget _chip(String s) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(color: Nura.mintDark, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(color: Nura.mintDark, borderRadius: BorderRadius.circular(Nura.radius)),
       child: Text(s, style: const TextStyle(color: Nura.cream, fontSize: 12)),
     );
   }

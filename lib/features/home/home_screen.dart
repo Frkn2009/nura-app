@@ -57,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               color: Nura.forest,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(Nura.radiusLg),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

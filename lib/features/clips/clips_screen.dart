@@ -178,7 +178,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                         _play(clip, slow: false);
                       }
                     },
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(Nura.radius)),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 240),
                       height: 200,
@@ -188,7 +188,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                           end: Alignment.bottomRight,
                           colors: gradient,
                         ),
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(Nura.radius)),
                       ),
                       child: Stack(
                         children: [
@@ -317,10 +317,10 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
     return Expanded(
       child: Material(
         color: background,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(Nura.radius),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(Nura.radius),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 4),
             child: Column(

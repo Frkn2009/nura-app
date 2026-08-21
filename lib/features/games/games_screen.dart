@@ -117,7 +117,7 @@ class _GameCard extends StatelessWidget {
           children: [
             Container(
               width: 52, height: 52,
-              decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(16)),
+              decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(Nura.radius)),
               child: Center(child: Text(icon, style: const TextStyle(fontSize: 26))),
             ),
             const SizedBox(width: 14),
@@ -242,7 +242,7 @@ class _MatchGameScreenState extends State<MatchGameScreen> {
                               padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
                                 color: selectedTarget == t ? Nura.mint.withValues(alpha: 0.15) : Colors.white,
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(Nura.radius),
                                 border: Border.all(color: selectedTarget == t ? Nura.mint : Nura.fog, width: selectedTarget == t ? 2 : 1),
                               ),
                               child: Text(t, style: TextStyle(fontWeight: selectedTarget == t ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),
@@ -270,7 +270,7 @@ class _MatchGameScreenState extends State<MatchGameScreen> {
                               padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
                                 color: selectedGloss == g ? Nura.coral.withValues(alpha: 0.15) : Colors.white,
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(Nura.radius),
                                 border: Border.all(color: selectedGloss == g ? Nura.coral : Nura.fog, width: selectedGloss == g ? 2 : 1),
                               ),
                               child: Text(g, style: TextStyle(fontWeight: selectedGloss == g ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),

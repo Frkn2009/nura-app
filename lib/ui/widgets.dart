@@ -75,13 +75,13 @@ class ChoiceTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(Nura.radius),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: selected ? Nura.cream2 : Nura.card,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(Nura.radius),
             border: Border.all(color: selected ? Nura.forest : Nura.line, width: selected ? 1.6 : 1),
           ),
           child: Row(
