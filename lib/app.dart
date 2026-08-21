@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/nura_theme.dart';
 import 'data/notifications/notification_service.dart';
+import 'data/widgets/home_widget_service.dart';
 import 'state/session.dart';
 
 class NuraApp extends ConsumerWidget {
@@ -18,6 +19,7 @@ class NuraApp extends ConsumerWidget {
       sessionProvider,
       (_, profile) {
         unawaited(NotificationService.sync(profile).catchError((_) {}));
+        unawaited(NuraHomeWidgetService.sync(profile).catchError((_) {}));
       },
       fireImmediately: true,
     );
