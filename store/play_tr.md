@@ -1,24 +1,26 @@
 # Google Play — Türkiye
 
-**Title (30):** NURA: İngilizce Konuşma  
+**Title (30):** NURA: 30 Dilde Konuş
 
-**Short (80):**  
-Günde 1 dk konuş. İspanyolca, Almanca, Fransızca. NIE ve kira sahneleri.
+**Short (80):**
+Günde 1 dk konuş. 30 dil: İngilizce, İspanyolca, Almanca, Japonca, Korece, Arapça.
 
-**Long (doğal 3–5 tekrar, tıkamak yok):**
+**Long:**
 
-NURA ile İngilizce konuşma pratiği yap. Uygulama seni her gün 12 dakikalık bir ritüele sokar: dinle, gölgele, konuş, düzelt.
+NURA ile 30 dilde konuşma pratiği yap. Uygulama seni her gün 12 dakikalık bir ritüele sokar: dinle, gölgele, konuş, düzelt.
 
-İspanyolca öğrenmek isteyenler için İspanya sahneleri var: NIE, empadronamiento, kira sözleşmesi. Almanca, Fransızca ve Flemenkçe de aynı yöntemle.
+30 dil: İngilizce, İspanyolca, Almanca, Fransızca, Flemenkçe, Arapça, Portekizce, İtalyanca, Rusça, Çince, Japonca, Korece, Türkçe, Lehçe, İsveççe, Danca, Norveççe, Fince, Yunanca, Çekçe, Romence, Macarca, Hintçe, Tayca, Vietnamca, Endonezce, Ukraynaca, İbranice, Farsça, Svahili.
+
+İspanyolca öğrenmek isteyenler için İspanya sahneleri var: NIE, empadronamiento, kira sözleşmesi.
+
+242 gerçek hayat sahnesi. 8 sahne her dilde: kafe, otel, yol sorma, tanışma, ev bakma, alışveriş, hesap isteme, havaalanı.
 
 Ücretsiz planda günde 1 dakika konuşma. İstersen kısa reklamla +60 saniye açılır. NURA Plus sınırsız konuşma ve reklamsız deneyim sunar.
 
-Neden NURA?  
-Çünkü tap-tap oyun İngilizce konuşturma. NURA ağzını açtırır.
+Neden NURA?
+Çünkü tap-tap oyun konuşturmuyor. NURA ağzını açtırır.
 
-Kelimeler doğal geçer: İngilizce konuşma, İspanyolca öğren, Almanca konuşma, AI öğretmen.
+**Kategori:** Eğitim
+**Etiketler:** Dil öğrenme, İngilizce, İspanyolca, Japonca
 
-**Kategori:** Eğitim  
-**Etiketler:** Dil öğrenme, İngilizce, İspanyolca  
-
-**Grafik:** orman yeşili + krem, yazı: KONUŞARAK ÖĞREN
+**Grafik:** orman yeşili + krem, yazı: 30 DİLDE KONUŞ

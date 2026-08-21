@@ -30,10 +30,11 @@ flutter run
 
 ## İçerik
 
-- **152 sahne** (30 dil × 5 + İspanyolca bonuslar)
-- **450+ kalıp cümle**
+- **242 sahne** (30 dil × 8 + İspanyolca NIE/contrato bonusları)
+- **726 kalıp cümle**
 - **30 dil rehberi** (telaffuz kuralları + tuzaklar)
-- **7 dilli arayüz** (TR EN ES DE FR NL AR + diğerleri)
+- **30 dilli arayüz**
+- **5 mağaza ekran görüntüsü + feature graphic**
 
 ## GitHub
 

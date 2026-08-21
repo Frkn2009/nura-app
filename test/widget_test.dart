@@ -5,15 +5,15 @@ import 'package:nura/data/models/models.dart';
 import 'package:nura/data/translate/offline_translate.dart';
 
 void main() {
-  test('all 30 learn languages have at least 5 scenarios', () {
+  test('all 30 learn languages have at least 8 scenarios', () {
     for (final lang in LearnLang.values) {
       final n = Catalog.forLang(lang).length;
-      expect(n, greaterThanOrEqualTo(5), reason: '${lang.name} has $n scenarios');
+      expect(n, greaterThanOrEqualTo(8), reason: '${lang.name} has $n scenarios');
     }
   });
 
-  test('Spanish has 7 scenarios (5 base + NIE + contrato)', () {
-    expect(Catalog.forLang(LearnLang.es).length, 7);
+  test('Spanish has 10 scenarios (8 base + NIE + contrato)', () {
+    expect(Catalog.forLang(LearnLang.es).length, 10);
   });
 
   test('Arabic A1 pack exists', () {
@@ -52,11 +52,11 @@ void main() {
     }
   });
 
-  test('total scenario count is 152', () {
+  test('total scenario count is 242', () {
     var total = 0;
     for (final lang in LearnLang.values) {
       total += Catalog.forLang(lang).length;
     }
-    expect(total, 152);
+    expect(total, 242);
   });
 }
