@@ -4139,4 +4139,5 @@ class Catalog {
         SpeakTurn(prompt: 'Window or aisle?', expected: 'Kiti karibu na dirisha.'),
       ],
     ),
-];
+  ];
+}
