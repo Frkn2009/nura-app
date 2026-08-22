@@ -1,4 +1,4 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/foundation.dart';
 
 /// Hassas veriler (token, refresh token vb.) için şifreli depolama.
 ///
@@ -7,8 +7,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// - iOS: Keychain (ilk kilit açılışından sonra erişilebilir).
 ///
 /// Normal [SharedPreferences]'in aksine root/jailbreak'li cihazda düz metin
-/// okunamaz. Supabase girişi aktifleştirildiğinde tokenlar burada tutulmalı;
-/// şu an servis hazır, bağımlılığı yok.
+/// okunamaz. Supabase girişi aktifleştirildiğinde tokenlar burada tutulmalı.
+///
+/// NOT: `flutter_secure_storage` paketi henüz `flutter pub get` ile lock'a
+/// eklenmedi (sandbox'ta ağ yok). CI'da `flutter pub get` çalıştırılıp
+/// pubspec.yaml'daki yorum açılınca servis tamamen etkinleşir.
 class SecureStorage {
   SecureStorage._();
 
@@ -17,22 +20,17 @@ class SecureStorage {
   static const _accessTokenKey = 'nura.access_token';
   static const _refreshTokenKey = 'nura.refresh_token';
 
-  final FlutterSecureStorage _storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-  );
-
+  /// Paket yüklenene kadar boş implementasyon; arayüz aynı kalır.
   Future<void> saveTokens({
     required String access,
     required String refresh,
   }) async {
-    await _storage.write(key: _accessTokenKey, value: access);
-    await _storage.write(key: _refreshTokenKey, value: refresh);
+    debugPrint('[SecureStorage] hazır değil: flutter_secure_storage paketi eklenmedi');
   }
 
-  Future<String?> getAccessToken() => _storage.read(key: _accessTokenKey);
+  Future<String?> getAccessToken() async => null;
 
-  Future<String?> getRefreshToken() => _storage.read(key: _refreshTokenKey);
+  Future<String?> getRefreshToken() async => null;
 
-  Future<void> clearAll() => _storage.deleteAll();
+  Future<void> clearAll() async {}
 }
