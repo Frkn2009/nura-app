@@ -386,3 +386,47 @@ flutter test           # ⚠️ beklenen: 25 passed, 1 failed (bulunmalı)
 
 ---
 *Ek belgeler: `docs/V13_HARMAN_RAPORU.md` (danışmanlara iletilen karşılaştırma + özet), `docs/V13_DOGRULAMA_RAPORU.md` (v1.3 iddialarının repoda olmadığını tespit eden ilk rapor), `docs/YAPILACAKLAR.md` (genel plan).*
+
+---
+
+## v1.4 Devir Eki (2026-08-22 — harmanlanmış uygulama)
+
+### Durum
+- Sürüm: **0.3.0+5** (pubspec). Baz: 0.2.2+4.
+- İki danışman dokümanı (V1.4 GLOBAL HANDOFF PACKET + V1.4 KOD PAKETİ) harmanlandı.
+- FSRS-esinli SRS motoru + FSRS-5 NuraBrain referans motoru eklendi.
+- Clock provider + FakeClock hazır (sözleşme: testlerde DateTime.now() yasak).
+- Billing soyutlaması kuruldu (Fake servis; RevenueCat/Play Billing sonra takılır).
+- CognitiveTracker + SwipeReviewCard eklendi (review akışı yükseltme hazır).
+- flutter_secure_storage **açıldı** (pubspec yorum kaldırıldı) — SecureStorage gerçek implementasyon.
+- Store/release kontrol listesi + build betiği üretildi.
+- `NURA_CODING_CONTRACT.md` repo köküne eklendi.
+- CI durumu: analyze ✅ (0 issue — son doğrulama) | test ⚠️ 25/26 (1 fail, adı CI log kısıtından tespit edilemedi — yeni workflow annotation'ı ile bulunacak).
+
+### Yeni dosyalar (v1.4)
+- lib/core/utils/clock.dart (Clock, SystemClock, FakeClock, clockProvider)
+- lib/core/algorithm/fsrs5_engine.dart (NuraBrain — FSRS-5, 19 parametre)
+- lib/core/algorithm/cognitive_tracker.dart (Reflex/Recall/Guess/Lapse)
+- lib/data/srs/srs_state.dart (SrsCard + SrsCardState + AnswerQuality — phrase YOK)
+- lib/data/srs/srs_machine.dart (SrsMachine — FSRS-esinli, Clock tabanlı)
+- lib/ui/review/swipe_review_card.dart (Tinder tarzı kaydırma)
+- lib/features/plus/domain/entitlement.dart
+- lib/features/plus/data/billing_service.dart
+- lib/features/plus/data/fake_billing_service.dart
+- lib/features/plus/state/plus_controller.dart
+- test/00_smoke_test.dart
+- test/srs_machine_test.dart
+- test/fsrs5_engine_test.dart
+- test/plus_controller_test.dart
+- docs/STORE_CHECKLIST.md
+- scripts/build_release.sh
+- NURA_CODING_CONTRACT.md
+
+### Kritik notlar
+- SrsMachine, doc-2'nin FSRS-esinli matematiğini kullanır (testleri garantili);
+  tam FSRS-5 (NuraBrain) `lib/core/algorithm/fsrs5_engine.dart` içinde hazır —
+  istenirse `SrsMachine` içindeki `_nextStability/_nextDifficulty` yerine
+  NuraBrain'e geçilebilir (o zaman srs_machine_test beklentileri güncellenmeli).
+- Gerçek Play Billing servisi kodlanmadı (FakeBillingService etkin).
+  Play Console ürün tanımı + tester hesabı gereklidir.
+- Smoke test, uygulama açılışını `prefsProvider` override'ı ile doğrular.

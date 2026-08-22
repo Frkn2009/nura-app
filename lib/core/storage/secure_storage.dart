@@ -1,17 +1,13 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Hassas veriler (token, refresh token vb.) için şifreli depolama.
 ///
 /// - Android: EncryptedSharedPreferences (minSdk 23 → `android/app/build.gradle.kts`
-///   ile uyumlu; dolap Android 6.0+ cihazlarda şifreli çalışır).
+///   ile uyumlu; Android 6.0+ cihazlarda şifreli çalışır).
 /// - iOS: Keychain (ilk kilit açılışından sonra erişilebilir).
 ///
-/// Normal [SharedPreferences]'in aksine root/jailbreak'li cihazda düz metin
-/// okunamaz. Supabase girişi aktifleştirildiğinde tokenlar burada tutulmalı.
-///
-/// NOT: `flutter_secure_storage` paketi henüz `flutter pub get` ile lock'a
-/// eklenmedi (sandbox'ta ağ yok). CI'da `flutter pub get` çalıştırılıp
-/// pubspec.yaml'daki yorum açılınca servis tamamen etkinleşir.
+/// Normal `SharedPreferences`'in aksine root/jailbreak'li cihazda düz metin
+/// okunamaz. Supabase girişi aktifleştirildiğinde tokenlar burada tutulur.
 class SecureStorage {
   SecureStorage._();
 
@@ -20,20 +16,22 @@ class SecureStorage {
   static const _accessTokenKey = 'nura.access_token';
   static const _refreshTokenKey = 'nura.refresh_token';
 
-  /// Paket yüklenene kadar boş implementasyon; arayüz aynı kalır.
+  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+  );
+
   Future<void> saveTokens({
     required String access,
     required String refresh,
   }) async {
-    debugPrint(
-      '[SecureStorage] hazır değil: flutter_secure_storage paketi eklenmedi '
-      '($_accessTokenKey/$_refreshTokenKey)',
-    );
+    await _storage.write(key: _accessTokenKey, value: access);
+    await _storage.write(key: _refreshTokenKey, value: refresh);
   }
 
-  Future<String?> getAccessToken() async => null;
+  Future<String?> getAccessToken() => _storage.read(key: _accessTokenKey);
 
-  Future<String?> getRefreshToken() async => null;
+  Future<String?> getRefreshToken() => _storage.read(key: _refreshTokenKey);
 
-  Future<void> clearAll() async {}
+  Future<void> clearAll() => _storage.deleteAll();
 }
