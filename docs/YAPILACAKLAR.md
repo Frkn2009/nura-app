@@ -13,18 +13,26 @@
 - [x] AppBar'da her sayfada görünsün
 - [x] Profesyonel, temiz, telif sorunsuz özel tasarım
 - [x] Uygulama ikonu (app icon) da bu logo olsun
+- [x] Tüm ikonlar tek kaynaktan üretildi: `scripts/generate_brand_assets.py` (Android mipmap, iOS AppIcon, web, favicon)
+- [x] Android adaptive icon (mipmap-anydpi-v26) + roundIcon
+- [x] Android launch splash + iOS LaunchScreen NURA renkli/logo'lu (beyaz ekran yok)
+- [x] Web index.html title/description/theme-color + manifest arka plan rengi marka renkli
 
 ### 2. Konuş Butonu — Mikrofon aktif olsun
 - [x] Mikrofon izni düzgün isteniyor mu kontrol
 - [x] Web'de kısıtlı — telefonda tam çalışmalı
 - [x] Basılı tut → konuş → bırak → skor göster
 - [x] Ses her zaman kadın
+- [x] Bluetooth kulaklık mikrofonu için `BLUETOOTH_CONNECT` izni eklendi
+- [x] Testler: 30 dil locale, kadın ses önceliği, fonem skoru (test/first_three_test.dart)
 
 ### 3. Çeviri — Google Translate tarzı genel çeviri
 - [x] 30 dil arası çeviri (dropdown ile dil seçimi)
 - [x] Swap butonu (dil değiştir)
 - [x] Müfredat + sözlük tabanlı (uydurma çeviri yok)
 - [x] Plus ile genişletilmiş bulut çeviri (Supabase Edge Function altyapısı hazır; provider secret/deploy ileride)
+- [x] Doğrulanmış sözlük 6 → 12 kelime (evet/hayır/kahve/çay/tuvalet/nerede) — 30 dilde
+- [x] Testler: 30 dil kapsamı, 30×30 yön, swap, bilinmeyen metin → null (test/first_three_test.dart)
 
 ### 4. Klipler — Dolu içerik
 - [x] Her dilde kısa video/ses klipleri gibi kartlar
