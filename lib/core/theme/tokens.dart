@@ -71,6 +71,10 @@ class NuraTokens {
   static const forestMid = primaryDark;
   static const white = Colors.white;
   static const radius = radiusMedium;
+
+  // Yeni ekranların (AuthGate/Login/Onboarding/Hikaye) kullandığı isimler
+  static const bg = background;
+  static const textDark = textPrimary;
 }
 
 // Nura alias — eski kodla uyum

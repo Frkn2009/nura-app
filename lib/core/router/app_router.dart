@@ -4,7 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/achievements/achievements_screen.dart';
 import '../../features/alphabet/alphabet_screen.dart';
+import '../../features/alphabet/letter_practice_screen.dart';
+import '../../features/auth/presentation/login_screen.dart';
 import '../../features/games/daily_wheel_screen.dart';
+import '../../features/games/treasure_chest.dart';
+import '../../features/learn/learning_path_screen.dart';
+import '../../features/stories/ebook_library_screen.dart';
+import '../../features/stories/story_reader_screen.dart';
 import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/clips/clips_screen.dart';
@@ -45,6 +51,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/clan', parentNavigatorKey: _root, builder: (_, __) => const ClanScreen()),
       GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, __) => const AchievementsScreen()),
       GoRoute(path: '/alphabet', parentNavigatorKey: _root, builder: (_, s) => AlphabetScreen(languageCode: s.uri.queryParameters['lang'] ?? 'en')),
+      GoRoute(path: '/alphabet/:lang', parentNavigatorKey: _root, builder: (_, s) => AlphabetScreen(languageCode: s.pathParameters['lang'] ?? 'en')),
+      GoRoute(path: '/practice/:lang/:word', parentNavigatorKey: _root, builder: (_, s) => LetterPracticeScreen(langCode: s.pathParameters['lang'] ?? 'en', word: s.pathParameters['word'] ?? '')),
+      GoRoute(path: '/path', parentNavigatorKey: _root, builder: (_, __) => const LearningPathScreen()),
+      GoRoute(path: '/chest', parentNavigatorKey: _root, builder: (_, __) => const TreasureChestScreen()),
+      GoRoute(path: '/stories', parentNavigatorKey: _root, builder: (_, __) => const EbookLibraryScreen()),
+      GoRoute(path: '/story/:id', parentNavigatorKey: _root, builder: (_, s) => StoryReaderScreen(storyId: s.pathParameters['id'] ?? '')),
+      GoRoute(path: '/login', parentNavigatorKey: _root, builder: (_, __) => const LoginScreen()),
       GoRoute(path: '/wheel', parentNavigatorKey: _root, builder: (_, __) => const DailyWheelScreen()),
       GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
       GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),
