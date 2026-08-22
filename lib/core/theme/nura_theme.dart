@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'accents.dart';
 import 'tokens.dart';
 
-ThemeData buildNuraTheme() {
-  const text = TextTheme(
+ThemeData buildNuraTheme({NuraAccent accent = NuraAccent.mint}) {
+  final primary = accent.primary;
+  final primaryDark = accent.primaryDark;
+  final primaryLight = accent.primaryLight;
+  final text = TextTheme(
     displayLarge: TextStyle(
       fontFamily: 'Inter', fontWeight: FontWeight.w700, fontSize: 34,
       height: 1.12, letterSpacing: -1, color: Nura.ink,
@@ -39,15 +43,15 @@ ThemeData buildNuraTheme() {
     ),
     labelSmall: TextStyle(
       fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 11,
-      letterSpacing: .7, color: Nura.mintDark,
+      letterSpacing: .7, color: primaryDark,
     ),
   );
 
-  const scheme = ColorScheme.light(
-    primary: Nura.mint,
+  final scheme = ColorScheme.light(
+    primary: primary,
     onPrimary: Colors.white,
-    primaryContainer: Nura.mintLight,
-    onPrimaryContainer: Nura.mintDark,
+    primaryContainer: primaryLight,
+    onPrimaryContainer: primaryDark,
     secondary: Nura.coral,
     onSecondary: Colors.white,
     tertiary: Nura.lavender,
@@ -92,12 +96,12 @@ ThemeData buildNuraTheme() {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
-        side: const BorderSide(color: Nura.fog),
+        side: BorderSide(color: Nura.fog),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: Nura.mintDark,
+        backgroundColor: primaryDark,
         foregroundColor: Colors.white,
         disabledBackgroundColor: Nura.fog,
         disabledForegroundColor: Nura.soft,
@@ -110,17 +114,17 @@ ThemeData buildNuraTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Nura.mintDark,
+        foregroundColor: primaryDark,
         minimumSize: const Size.fromHeight(52),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        side: const BorderSide(color: Nura.fog),
+        side: BorderSide(color: Nura.fog),
         shape: controlShape,
-        textStyle: text.labelLarge?.copyWith(color: Nura.mintDark),
+        textStyle: text.labelLarge?.copyWith(color: primaryDark),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Nura.mintDark,
+        foregroundColor: primaryDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Nura.radiusSm),
         ),
@@ -143,7 +147,7 @@ ThemeData buildNuraTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: Nura.mint, width: 1.5),
+        borderSide: BorderSide(color: primary, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
@@ -155,7 +159,7 @@ ThemeData buildNuraTheme() {
       elevation: 0,
       backgroundColor: Nura.white,
       surfaceTintColor: Colors.transparent,
-      indicatorColor: Nura.mintLight,
+      indicatorColor: primaryLight,
       indicatorShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Nura.radiusSm),
       ),
@@ -179,8 +183,8 @@ ThemeData buildNuraTheme() {
     dividerTheme: const DividerThemeData(color: Nura.fog, thickness: 1),
     chipTheme: ChipThemeData(
       backgroundColor: Nura.white,
-      selectedColor: Nura.mintLight,
-      side: const BorderSide(color: Nura.fog),
+      selectedColor: primaryLight,
+      side: BorderSide(color: Nura.fog),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       labelStyle: const TextStyle(
         fontFamily: 'Inter', color: Nura.ink,
@@ -199,8 +203,8 @@ ThemeData buildNuraTheme() {
       behavior: SnackBarBehavior.floating,
       elevation: 0,
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: Nura.mint,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: primary,
       linearTrackColor: Nura.fog,
       circularTrackColor: Nura.fog,
     ),

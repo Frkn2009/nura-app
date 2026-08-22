@@ -240,4 +240,150 @@ class I18n {
         'nl': '$n kaarten klaar',
         'ar': '$n بطاقات جاهزة',
       });
+
+  // ── Hukuki ekranlar ────────────────────────────────────────────────
+  String get privacyPolicy => t({
+        'tr': 'Gizlilik Politikası',
+        'en': 'Privacy Policy',
+        'es': 'Política de privacidad',
+        'de': 'Datenschutzerklärung',
+        'fr': 'Politique de confidentialité',
+        'nl': 'Privacybeleid',
+        'ar': 'سياسة الخصوصية',
+      });
+
+  String get termsOfService => t({
+        'tr': 'Kullanım Şartları',
+        'en': 'Terms of Service',
+        'es': 'Términos del servicio',
+        'de': 'Nutzungsbedingungen',
+        'fr': 'Conditions d’utilisation',
+        'nl': 'Gebruiksvoorwaarden',
+        'ar': 'شروط الاستخدام',
+      });
+
+  String get privacyBody => t({
+        'tr': '1. Toplanan Bilgiler\n'
+            'NURA, dil tercihlerini, öğrenme istatistiklerini, başarımları ve tekrar verilerini cihazında saklar. Konuşma sesi mümkün olduğunca cihazında işlenir. İsteğe bağlı senkron açıksa veriler NURA sunucularına iletilebilir.\n\n'
+            '2. Verilerin Kullanımı\n'
+            'Verilerin yalnızca öğrenme deneyimini sağlamak için kullanılır. Kişisel veriler satılmaz veya alakasız reklamcılıkta kullanılmaz.\n\n'
+            '3. Saklama ve Silme\n'
+            'Hesabını ve yerel verilerini profil menüsünden dilediğin zaman silebilirsin. Silinen veriler geri getirilemez.\n\n'
+            '4. İletişim\n'
+            'Gizlilik talepleri için gizlilik@nura.app adresine yazabilirsin. Talepler makul sürede yanıtlanır.',
+        'en': '1. Information We Collect\n'
+            'NURA stores your language preferences, learning statistics, achievements and review data on your device. Speech audio is processed on-device whenever possible. If optional sync is enabled, this data may be transmitted to NURA servers.\n\n'
+            '2. How We Use Data\n'
+            'Your data is used only to provide the learning experience. We do not sell personal data or use it for unrelated advertising.\n\n'
+            '3. Data Retention and Deletion\n'
+            'You can delete your account and local data at any time from the profile menu. Deleted data cannot be recovered.\n\n'
+            '4. Contact\n'
+            'For privacy requests, contact privacy@nura.app. We respond within a reasonable time.',
+        'es': '1. Información que recopilamos\n'
+            'NURA guarda tus preferencias de idioma, estadísticas, logros y datos de repaso en tu dispositivo. Si activas la sincronización opcional, estos datos pueden enviarse a los servidores de NURA.\n\n'
+            '2. Uso de los datos\n'
+            'Tus datos solo se usan para ofrecer la experiencia de aprendizaje. No vendemos datos personales ni los usamos para publicidad no relacionada.\n\n'
+            '3. Conservación y eliminación\n'
+            'Puedes eliminar tu cuenta y tus datos locales en cualquier momento desde el menú de perfil.\n\n'
+            '4. Contacto\n'
+            'Para solicitudes de privacidad: privacy@nura.app.',
+        'de': '1. Erhobene Daten\n'
+            'NURA speichert Sprachpräferenzen, Lernstatistiken, Erfolge und Wiederholungsdaten auf deinem Gerät. Wenn die optionale Synchronisierung aktiv ist, können Daten an NURA-Server übertragen werden.\n\n'
+            '2. Verwendung der Daten\n'
+            'Deine Daten werden nur zur Bereitstellung des Lernerlebnisses verwendet. Wir verkaufen keine personenbezogenen Daten.\n\n'
+            '3. Speicherung und Löschung\n'
+            'Du kannst dein Konto und lokale Daten jederzeit im Profilmenü löschen.\n\n'
+            '4. Kontakt\n'
+            'Datenschutzanfragen: privacy@nura.app.',
+        'fr': '1. Informations collectées\n'
+            'NURA stocke vos préférences, statistiques, succès et données de révision sur votre appareil. Si la synchronisation facultative est activée, ces données peuvent être transmises aux serveurs NURA.\n\n'
+            '2. Utilisation des données\n'
+            'Vos données servent uniquement à fournir l’expérience d’apprentissage. Nous ne vendons pas de données personnelles.\n\n'
+            '3. Conservation et suppression\n'
+            'Vous pouvez supprimer votre compte et vos données locales à tout moment depuis le menu profil.\n\n'
+            '4. Contact\n'
+            'Demandes de confidentialité : privacy@nura.app.',
+        'nl': '1. Verzamelde gegevens\n'
+            'NURA bewaart je taalvoorkeuren, leerstatistieken, prestaties en herhaalgegevens op je apparaat. Als optionele synchronisatie aan staat, kunnen gegevens naar NURA-servers worden verzonden.\n\n'
+            '2. Gebruik van gegevens\n'
+            'Je gegevens worden alleen gebruikt om de leerervaring te bieden. We verkopen geen persoonlijke gegevens.\n\n'
+            '3. Bewaring en verwijdering\n'
+            'Je kunt je account en lokale gegevens altijd verwijderen via het profielmenu.\n\n'
+            '4. Contact\n'
+            'Privacyverzoeken: privacy@nura.app.',
+        'ar': '1. المعلومات التي نجمعها\n'
+            'تخزن NURA تفضيلاتك اللغوية وإحصاءات التعلم والإنجازات وبيانات المراجعة على جهازك. إذا كانت المزامنة الاختيارية مفعلة، فقد تُرسل هذه البيانات إلى خوادم NURA.\n\n'
+            '2. استخدام البيانات\n'
+            'تُستخدم بياناتك فقط لتقديم تجربة التعلم. لا نبيع البيانات الشخصية.\n\n'
+            '3. الاحتفاظ بالبيانات وحذفها\n'
+            'يمكنك حذف حسابك وبياناتك المحلية في أي وقت من قائمة الملف الشخصي.\n\n'
+            '4. التواصل\n'
+            'لطلبات الخصوصية: privacy@nura.app.',
+      });
+
+  String get termsBody => t({
+        'tr': '1. Şartların Kabulü\n'
+            'NURA’yı kullanarak bu şartları kabul etmiş olursun. Kabul etmiyorsan lütfen uygulamayı kullanmayı bırak.\n\n'
+            '2. Uygulama Kullanımı\n'
+            'NURA kişisel dil öğrenimi için sunulur. Uygulamayı tersine mühendislik, yeniden satma veya kötüye kullanma hakkın yoktur.\n\n'
+            '3. Değişiklikler\n'
+            'Bu şartlar gelecek sürümlerde güncellenebilir. Değişiklikten sonra kullanıma devam etmen, yeni şartları kabul ettiğin anlamına gelir.',
+        'en': '1. Acceptance of Terms\n'
+            'By using NURA, you accept these terms. If you do not agree, please stop using the application.\n\n'
+            '2. Use of the App\n'
+            'NURA is provided for personal language learning. You may not reverse engineer, resell or misuse the application.\n\n'
+            '3. Changes\n'
+            'These terms may be updated in future versions. Continued use after changes means acceptance of the new terms.',
+        'es': '1. Aceptación de los términos\n'
+            'Al usar NURA aceptas estos términos. Si no estás de acuerdo, deja de usar la aplicación.\n\n'
+            '2. Uso de la aplicación\n'
+            'NURA se ofrece para el aprendizaje personal de idiomas. No puedes realizar ingeniería inversa, revender ni hacer mal uso de la aplicación.\n\n'
+            '3. Cambios\n'
+            'Estos términos pueden actualizarse en futuras versiones.',
+        'de': '1. Annahme der Bedingungen\n'
+            'Mit der Nutzung von NURA akzeptierst du diese Bedingungen. Wenn du nicht einverstanden bist, beende die Nutzung.\n\n'
+            '2. Nutzung der App\n'
+            'NURA dient dem persönlichen Sprachenlernen. Reverse Engineering, Weiterverkauf oder Missbrauch sind untersagt.\n\n'
+            '3. Änderungen\n'
+            'Diese Bedingungen können in zukünftigen Versionen aktualisiert werden.',
+        'fr': '1. Acceptation des conditions\n'
+            'En utilisant NURA, vous acceptez ces conditions. Si vous n’êtes pas d’accord, cessez d’utiliser l’application.\n\n'
+            '2. Utilisation de l’application\n'
+            'NURA est destinée à l’apprentissage personnel des langues. Toute ingénierie inverse, revente ou utilisation abusive est interdite.\n\n'
+            '3. Modifications\n'
+            'Ces conditions peuvent être mises à jour dans les versions futures.',
+        'nl': '1. Aanvaarding van voorwaarden\n'
+            'Door NURA te gebruiken aanvaardt u deze voorwaarden. Als u het niet eens bent, stop dan met de app.\n\n'
+            '2. Gebruik van de app\n'
+            'NURA is bedoeld voor persoonlijk taalonderwijs. Reverse-engineering, doorverkoop of misbruik is niet toegestaan.\n\n'
+            '3. Wijzigingen\n'
+            'Deze voorwaarden kunnen in toekomstige versies worden bijgewerkt.',
+        'ar': '1. قبول الشروط\n'
+            'باستخدام NURA فإنك تقبل هذه الشروط. إذا لم توافق، يرجى التوقف عن استخدام التطبيق.\n\n'
+            '2. استخدام التطبيق\n'
+            'NURA مخصصة للتعلم الشخصي للغات. لا يحق لك إجراء هندسة عكسية أو إعادة بيع التطبيق أو إساءة استخدامه.\n\n'
+            '3. التغييرات\n'
+            'قد يتم تحديث هذه الشروط في الإصدارات المستقبلية.',
+      });
+
+  // ── Durum widget'ları ──────────────────────────────────────────────
+  String get retry => t({
+        'tr': 'Tekrar dene',
+        'en': 'Retry',
+        'es': 'Reintentar',
+        'de': 'Erneut versuchen',
+        'fr': 'Réessayer',
+        'nl': 'Opnieuw proberen',
+        'ar': 'إعادة المحاولة',
+      });
+
+  String get offline => t({
+        'tr': 'İnternet bağlantın yok.',
+        'en': 'You are offline.',
+        'es': 'Estás sin conexión.',
+        'de': 'Du bist offline.',
+        'fr': 'Vous êtes hors ligne.',
+        'nl': 'Je bent offline.',
+        'ar': 'أنت غير متصل بالإنترنت.',
+      });
 }

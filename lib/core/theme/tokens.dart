@@ -8,6 +8,11 @@ class Nura {
   static const mintDark = Color(0xFF0D5955);
   static const mintLight = Color(0xFFE1F1EF);
 
+  // İkinci marka aksanı (danışman spec'i): deep indigo.
+  static const indigo = Color(0xFF4F46E5);
+  static const indigoDark = Color(0xFF3730A3);
+  static const indigoLight = Color(0xFFE0E7FF);
+
   static const coral = Color(0xFFB95443);
   static const peach = Color(0xFFF0B38E);
   static const sunflower = Color(0xFFC99A2E);

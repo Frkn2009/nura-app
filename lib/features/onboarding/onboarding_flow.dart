@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +18,16 @@ class OnboardingFlow extends ConsumerStatefulWidget {
 }
 
 class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
-  int step = 0;
+  static const _lastStep = 4; // 5 adım: 0..4
+
+  late int step;
+
+  @override
+  void initState() {
+    super.initState();
+    // Yarım kalan onboarding kaldığı adımdan devam eder.
+    step = ref.read(sessionProvider).onboardingStep.clamp(0, _lastStep).toInt();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +82,9 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 onPressed: () async {
                   if (step < pages.length - 1) {
                     setState(() => step++);
+                    unawaited(
+                      ref.read(sessionProvider.notifier).setOnboardingStep(step),
+                    );
                   } else {
                     await ref.read(sessionProvider.notifier).finishOnboarding();
                     if (context.mounted) context.go('/app');

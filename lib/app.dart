@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
+import 'core/theme/accents.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/nura_theme.dart';
 import 'data/models/models.dart';
@@ -20,6 +21,11 @@ class NuraApp extends ConsumerWidget {
     final themePreference = ref.watch(
       sessionProvider.select((profile) => profile.themePreference),
     );
+    final accent = switch (
+      ref.watch(sessionProvider.select((profile) => profile.themeAccent))) {
+      ThemeAccent.mint => NuraAccent.mint,
+      ThemeAccent.indigo => NuraAccent.indigo,
+    };
     ref.listen(
       sessionProvider,
       (_, profile) {
@@ -31,8 +37,8 @@ class NuraApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'NURA',
       debugShowCheckedModeBanner: false,
-      theme: buildNuraTheme(),
-      darkTheme: buildNuraDarkTheme(),
+      theme: buildNuraTheme(accent: accent),
+      darkTheme: buildNuraDarkTheme(accent: accent),
       themeMode: switch (themePreference) {
         AppThemePreference.system => ThemeMode.system,
         AppThemePreference.light => ThemeMode.light,

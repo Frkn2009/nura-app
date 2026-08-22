@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'accents.dart';
 import 'nura_theme.dart';
 import 'tokens.dart';
 
-ThemeData buildNuraDarkTheme() {
-  const scheme = ColorScheme.dark(
-    primary: Color(0xFF67C9C0),
-    onPrimary: Color(0xFF062F2D),
-    primaryContainer: Color(0xFF164542),
-    onPrimaryContainer: Color(0xFFD5F5F1),
+ThemeData buildNuraDarkTheme({NuraAccent accent = NuraAccent.mint}) {
+  final scheme = ColorScheme.dark(
+    primary: accent.darkPrimary,
+    onPrimary: accent.darkOnPrimary,
+    primaryContainer: accent.darkPrimaryContainer,
+    onPrimaryContainer: accent.darkOnPrimaryContainer,
     secondary: Color(0xFFF08D78),
     onSecondary: Color(0xFF3D0D05),
     tertiary: Color(0xFFC7B8EF),
@@ -21,7 +22,7 @@ ThemeData buildNuraDarkTheme() {
     outlineVariant: Color(0xFF36474A),
     error: Color(0xFFFFB4A9),
   );
-  final base = buildNuraTheme();
+  final base = buildNuraTheme(accent: accent);
   final text = base.textTheme.apply(
     bodyColor: scheme.onSurface,
     displayColor: scheme.onSurface,

@@ -127,3 +127,96 @@ class ForestButton extends StatelessWidget {
     return FilledButton(onPressed: onPressed, child: Text(label));
   }
 }
+
+/// Yükleme durumu — merkezde spinner, isteğe bağlı açıklama metni.
+class LoadingState extends StatelessWidget {
+  const LoadingState({super.key, this.message});
+
+  final String? message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircularProgressIndicator(),
+            if (message != null) ...[
+              const SizedBox(height: 16),
+              Text(
+                message!,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Hata durumu — mesaj + isteğe bağlı tekrar butonu.
+class ErrorState extends StatelessWidget {
+  const ErrorState({super.key, required this.message, this.onRetry, this.retryLabel});
+
+  final String message;
+  final VoidCallback? onRetry;
+  final String? retryLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error_outline, size: 40, color: Theme.of(context).colorScheme.error),
+            const SizedBox(height: 12),
+            Text(message, textAlign: TextAlign.center),
+            if (onRetry != null) ...[
+              const SizedBox(height: 16),
+              FilledButton(onPressed: onRetry, child: Text(retryLabel ?? 'Tekrar dene')),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Çevrimdışı durumu — bağlantı yoksa gösterilir.
+class OfflineState extends StatelessWidget {
+  const OfflineState({super.key, this.onRetry, this.retryLabel});
+
+  final VoidCallback? onRetry;
+  final String? retryLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.cloud_off, size: 40, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            const SizedBox(height: 12),
+            Text(
+              'İnternet bağlantın yok.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+            if (onRetry != null) ...[
+              const SizedBox(height: 16),
+              FilledButton(onPressed: onRetry, child: Text(retryLabel ?? 'Tekrar dene')),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}

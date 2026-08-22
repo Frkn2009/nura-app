@@ -204,6 +204,27 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
+          const Eyebrow('Tema rengi'),
+          const SizedBox(height: 6),
+          SegmentedButton<ThemeAccent>(
+            segments: const [
+              ButtonSegment(
+                value: ThemeAccent.mint,
+                label: Text('Yeşil'),
+                icon: Icon(Icons.circle, color: Color(0xFF147D76), size: 16),
+              ),
+              ButtonSegment(
+                value: ThemeAccent.indigo,
+                label: Text('İndigo'),
+                icon: Icon(Icons.circle, color: Color(0xFF4F46E5), size: 16),
+              ),
+            ],
+            selected: {p.themeAccent},
+            onSelectionChanged: (value) => ref
+                .read(sessionProvider.notifier)
+                .setThemeAccent(value.first),
+          ),
+          const SizedBox(height: 16),
           const Eyebrow('Hatırlatmalar'),
           const SizedBox(height: 6),
           SwitchListTile(
@@ -244,6 +265,11 @@ class ProfileScreen extends ConsumerWidget {
             title: const Text('Gizlilik politikası'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/privacy'),
+          ),
+          ListTile(
+            title: const Text('Kullanım şartları'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/terms'),
           ),
           ListTile(
             title: const Text('Hesabı sil', style: TextStyle(color: Nura.terr)),

@@ -24,6 +24,9 @@ enum Cefr { a1, a2, b1, b2 }
 
 enum AppThemePreference { system, light, dark }
 
+/// Marka aksanı: yeşil (mint, mevcut) veya indigo (#4F46E5, danışman spec'i).
+enum ThemeAccent { mint, indigo }
+
 extension LearnLangX on LearnLang {
   String get code => name;
 
@@ -232,6 +235,8 @@ class UserProfile {
     required this.notificationsEnabled,
     required this.reminderHour,
     required this.themePreference,
+    required this.themeAccent,
+    required this.onboardingStep,
     required this.phrasesKnown,
     required this.speakSecondsUsed,
     required this.speakDayKey,
@@ -264,6 +269,10 @@ class UserProfile {
   final bool notificationsEnabled;
   final int reminderHour;
   final AppThemePreference themePreference;
+  final ThemeAccent themeAccent;
+
+  /// Onboarding akışında kalınan adım (yarım kalırsa kaldığı yerden devam).
+  final int onboardingStep;
   final int phrasesKnown;
   final int speakSecondsUsed;
   final String speakDayKey;
@@ -296,6 +305,8 @@ class UserProfile {
     notificationsEnabled: true,
     reminderHour: 19,
     themePreference: AppThemePreference.system,
+    themeAccent: ThemeAccent.mint,
+    onboardingStep: 0,
     phrasesKnown: 0,
     speakSecondsUsed: 0,
     speakDayKey: '',
@@ -374,6 +385,8 @@ class UserProfile {
     bool? notificationsEnabled,
     int? reminderHour,
     AppThemePreference? themePreference,
+    ThemeAccent? themeAccent,
+    int? onboardingStep,
     int? phrasesKnown,
     int? speakSecondsUsed,
     String? speakDayKey,
@@ -406,6 +419,8 @@ class UserProfile {
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       reminderHour: reminderHour ?? this.reminderHour,
       themePreference: themePreference ?? this.themePreference,
+      themeAccent: themeAccent ?? this.themeAccent,
+      onboardingStep: onboardingStep ?? this.onboardingStep,
       phrasesKnown: phrasesKnown ?? this.phrasesKnown,
       speakSecondsUsed: speakSecondsUsed ?? this.speakSecondsUsed,
       speakDayKey: speakDayKey ?? this.speakDayKey,
@@ -440,6 +455,8 @@ class UserProfile {
         'notificationsEnabled': notificationsEnabled,
         'reminderHour': reminderHour,
         'themePreference': themePreference.name,
+        'themeAccent': themeAccent.name,
+        'onboardingStep': onboardingStep,
         'phrasesKnown': phrasesKnown,
         'speakSecondsUsed': speakSecondsUsed,
         'speakDayKey': speakDayKey,
@@ -482,6 +499,10 @@ class UserProfile {
       themePreference: AppThemePreference.values.asNameMap()[
               j['themePreference'] as String? ?? 'system'] ??
           AppThemePreference.system,
+      themeAccent:
+          ThemeAccent.values.asNameMap()[j['themeAccent'] as String? ?? 'mint'] ??
+              ThemeAccent.mint,
+      onboardingStep: (j['onboardingStep'] as num?)?.toInt() ?? 0,
       phrasesKnown: j['phrasesKnown'] as int? ?? 0,
       speakSecondsUsed: j['speakSecondsUsed'] as int? ?? 0,
       speakDayKey: j['speakDayKey'] as String? ?? '',

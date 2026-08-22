@@ -9,7 +9,7 @@ import '../../features/clips/clips_screen.dart';
 import '../../features/clan/clan_screen.dart';
 import '../../features/events/weekly_event_screen.dart';
 import '../../features/family/family_profiles_screen.dart';
-import '../../features/legal/privacy_screen.dart';
+import '../../features/legal/legal_screen.dart';
 import '../../features/leaderboard/leaderboard_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
 import '../../features/games/games_screen.dart';
@@ -22,6 +22,7 @@ import '../../features/shell/app_shell.dart';
 import '../../features/speak/speak_screens.dart';
 import '../../features/translate/translate_screen.dart';
 import '../../state/session.dart';
+import '../../ui/widgets.dart';
 
 final _root = GlobalKey<NavigatorState>();
 
@@ -42,23 +43,48 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/family', parentNavigatorKey: _root, builder: (_, __) => const FamilyProfilesScreen()),
       GoRoute(path: '/clan', parentNavigatorKey: _root, builder: (_, __) => const ClanScreen()),
       GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, __) => const AchievementsScreen()),
-      GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
+      GoRoute(
+        path: '/privacy',
+        parentNavigatorKey: _root,
+        builder: (_, __) => const LegalScreen(type: LegalType.privacy),
+      ),
+      GoRoute(
+        path: '/terms',
+        parentNavigatorKey: _root,
+        builder: (_, __) => const LegalScreen(type: LegalType.terms),
+      ),
       GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),
       GoRoute(
         path: '/session',
         parentNavigatorKey: _root,
         builder: (_, s) => SpeakSessionScreen(scenarioId: s.uri.queryParameters['id'] ?? ''),
       ),
-      ShellRoute(
-        builder: (_, __, child) => AppShell(child: child),
-        routes: [
-          GoRoute(path: '/app', builder: (_, __) => const HomeScreen()),
-          GoRoute(path: '/app/speak', builder: (_, __) => const SpeakHubScreen()),
-          GoRoute(path: '/app/games', builder: (_, __) => const GamesScreen()),
-          GoRoute(path: '/app/translate', builder: (_, __) => const TranslateScreen()),
-          GoRoute(path: '/app/you', builder: (_, __) => const ProfileScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (_, __, navigationShell) =>
+            AppShell(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [GoRoute(path: '/app', builder: (_, __) => const HomeScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/app/speak', builder: (_, __) => const SpeakHubScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [GoRoute(path: '/app/games', builder: (_, __) => const GamesScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/app/translate', builder: (_, __) => const TranslateScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [GoRoute(path: '/app/you', builder: (_, __) => const ProfileScreen())],
+          ),
         ],
       ),
     ],
+    errorBuilder: (context, state) => const ErrorState(message: 'Sayfa bulunamadı'),
   );
 });

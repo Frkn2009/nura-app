@@ -112,7 +112,8 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> setLearn(LearnLang l) => _save(state.copyWith(learnLang: l));
   Future<void> setMotive(Motive m) => _save(state.copyWith(motive: m));
   Future<void> setCefr(Cefr c) => _save(state.copyWith(cefr: c));
-  Future<void> finishOnboarding() => _save(state.copyWith(onboarded: true, streak: 1));
+  Future<void> finishOnboarding() =>
+      _save(state.copyWith(onboarded: true, streak: 1, onboardingStep: 0));
   Future<void> setPlus(bool v) => _save(state.copyWith(isPlus: v));
   Future<void> setNotificationsEnabled(bool value) =>
       _save(state.copyWith(notificationsEnabled: value));
@@ -120,6 +121,12 @@ class SessionController extends Notifier<UserProfile> {
       _save(state.copyWith(reminderHour: hour == 10 ? 10 : 19));
   Future<void> setThemePreference(AppThemePreference value) =>
       _save(state.copyWith(themePreference: value));
+  Future<void> setThemeAccent(ThemeAccent value) =>
+      _save(state.copyWith(themeAccent: value));
+
+  /// Onboarding akışının adımını kalıcı kaydet — yarım kalırsa kaldığı yerden aç.
+  Future<void> setOnboardingStep(int step) =>
+      _save(state.copyWith(onboardingStep: step));
 
   List<UserProfile> familyProfiles() {
     final profiles = <String, UserProfile>{state.profileId: state};
@@ -155,6 +162,8 @@ class SessionController extends Notifier<UserProfile> {
       isPlus: true,
       onboarded: true,
       themePreference: state.themePreference,
+      themeAccent: state.themeAccent,
+      onboardingStep: 0,
       notificationsEnabled: false,
     );
     await _save(profile);
