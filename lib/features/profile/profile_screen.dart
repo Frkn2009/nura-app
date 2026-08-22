@@ -134,7 +134,7 @@ class ProfileScreen extends ConsumerWidget {
                         const Icon(Icons.cloud_done, color: Nura.forest),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: Text(email!,
+                          child: Text(email,
                               style: const TextStyle(fontWeight: FontWeight.w600)),
                         ),
                       ],
