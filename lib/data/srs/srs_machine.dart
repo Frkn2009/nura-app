@@ -75,7 +75,9 @@ class SrsMachine {
     required SrsCardState currentState,
     required AnswerQuality quality,
   }) {
-    if (quality == AnswerQuality.again) return SrsCardState.relearning;
+    if (quality == AnswerQuality.again) {
+      return SrsCardState.relearning;
+    }
     return switch (currentState) {
       SrsCardState.newCard ||
       SrsCardState.learning ||

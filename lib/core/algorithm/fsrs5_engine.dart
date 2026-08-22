@@ -46,7 +46,9 @@ class NuraBrain {
 
   /// Anlık hatırlama olasılığı R(t) = (1 + t·19/(81·S))⁻¹
   double retrievability(FSRSCard card) {
-    if (card.stability <= 0) return 0;
+    if (card.stability <= 0) {
+      return 0;
+    }
     return math
         .pow(1 + (card.elapsedDays * 19) / (81 * card.stability), -1.0)
         .toDouble();
@@ -56,9 +58,15 @@ class NuraBrain {
       params.w[0] - params.w[1] * (r.index - 3) + 0.1;
 
   double _initStability(Rating r) {
-    if (r == Rating.again) return params.w[2];
-    if (r == Rating.hard) return params.w[2] * params.w[4];
-    if (r == Rating.good) return params.w[2];
+    if (r == Rating.again) {
+      return params.w[2];
+    }
+    if (r == Rating.hard) {
+      return params.w[2] * params.w[4];
+    }
+    if (r == Rating.good) {
+      return params.w[2];
+    }
     return params.w[3];
   }
 
