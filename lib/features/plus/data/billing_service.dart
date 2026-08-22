@@ -1,4 +1,4 @@
-import 'entitlement.dart';
+import '../domain/entitlement.dart';
 
 /// Ödeme servisi soyutlaması.
 ///
