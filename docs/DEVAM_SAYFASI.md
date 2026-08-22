@@ -45,10 +45,13 @@
 ### AI Modülleri (YENİ)
 - ✅ `AiService` abstract interface
 - ✅ `FakeAiService` — offline AI (API olmadan çalışır)
+- ✅ `SupabaseAiService` — gerçek LLM (Supabase Edge Function `ai`)
+- ✅ `supabase/functions/ai` — feedback / scenario / summary uçları
+- ✅ Otomatik düşüş: ağ/anahtar hatasında offline AI'a geçer, asla boş ekran
 - ✅ `AiFeedbackScreen` — skor + ipuçları + teşvik
 - ✅ `AiScenario` — seviyeye göre senaryo üretimi
 - ✅ `LessonSummary` — günlük hafıza raporu
-- ✅ `aiServiceProvider` + `dailySummaryProvider` (Riverpod)
+- ✅ `aiServiceProvider` + `dailySummaryProvider` + `aiOfflineProvider` (Riverpod)
 
 ### Dokümantasyon
 - NURA_CODING_CONTRACT.md (10 kural)
@@ -71,7 +74,7 @@
 | 6 | Bildirimler (öğretmen gibi) | 🟡 |
 | 7 | Maskot / karakter | 🟡 |
 | 8 | Süreli etkinlik + video reklam | 🟡 |
-| 9 | Gerçek AI API bağlantısı (Supabase Edge Function) | 🟢 |
+| 9 | ~~Gerçek AI API bağlantısı (Supabase Edge Function)~~ ✅ | 🟢 |
 | 10 | RevenueCat gerçek ödeme | 🟢 |
 | 11 | AdMob gerçek reklam | 🟢 |
 | 12 | A2/B1 içerik | 🟢 |

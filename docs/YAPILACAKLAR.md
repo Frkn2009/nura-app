@@ -75,9 +75,11 @@
 ### 15. AI Modülleri ✅
 - [x] `lib/features/ai/data/ai_service.dart` — abstract interface
 - [x] `lib/features/ai/data/fake_ai_service.dart` — offline AI
+- [x] `lib/features/ai/data/supabase_ai_service.dart` — gerçek LLM Edge Function (düşüşlü)
+- [x] `supabase/functions/ai/index.ts` — feedback / scenario / summary Edge Function
 - [x] `lib/features/ai/domain/ai_feedback.dart` — domain modelleri
 - [x] `lib/features/ai/screen/ai_feedback_screen.dart` — geri bildirim ekranı
-- [x] `lib/features/ai/state/ai_controller.dart` — Riverpod state
+- [x] `lib/features/ai/state/ai_controller.dart` — Riverpod state (+ `aiOfflineProvider`)
 
 ### 16. SRS / Tekrar Motoru ✅
 - [x] `lib/core/algorithm/fsrs5_engine.dart` — FSRS-5 tam parametreli
