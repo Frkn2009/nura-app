@@ -1,9 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../data/models/models.dart';
 import 'tokens.dart';
 
-ThemeData buildNuraTheme() {
+/// V1.4 tema seçicisi: Mint (varsayılan marka) | Indigo (#4F46E5).
+///
+/// Kapsam notu: indigo, Material tema yüzeylerini (renk şeması, butonlar,
+/// giriş, navigasyon, ilerleme) değiştirir. Token seviyesindeki Nura.mint
+/// referansları (ekran içi ikonlar, vurgular) P2'de tam çift-token temasına
+/// taşınana kadar mint kalır — bkz. docs/DEVIR_DOSYASI.md.
+class _NuraAccent {
+  const _NuraAccent({
+    required this.primary,
+    required this.onPrimary,
+    required this.primaryContainer,
+    required this.onPrimaryContainer,
+    required this.button,
+    required this.accentFg,
+    required this.focus,
+    required this.navIndicator,
+  });
+
+  final Color primary;
+  final Color onPrimary;
+  final Color primaryContainer;
+  final Color onPrimaryContainer;
+  final Color button;
+  final Color accentFg;
+  final Color focus;
+  final Color navIndicator;
+}
+
+_NuraAccent _lightAccent(NuraThemeStyle style) => switch (style) {
+      NuraThemeStyle.mint => const _NuraAccent(
+            primary: Nura.mint,
+            onPrimary: Colors.white,
+            primaryContainer: Nura.mintLight,
+            onPrimaryContainer: Nura.mintDark,
+            button: Nura.mintDark,
+            accentFg: Nura.mintDark,
+            focus: Nura.mint,
+            navIndicator: Nura.mintLight,
+          ),
+      NuraThemeStyle.indigo => const _NuraAccent(
+            primary: Nura.indigo,
+            onPrimary: Colors.white,
+            primaryContainer: Nura.indigoLight,
+            onPrimaryContainer: Nura.indigoDeep,
+            button: Nura.indigoDark,
+            accentFg: Nura.indigoDark,
+            focus: Nura.indigo,
+            navIndicator: Nura.indigoLight,
+          ),
+    };
+
+ThemeData buildNuraTheme({NuraThemeStyle style = NuraThemeStyle.mint}) {
   const text = TextTheme(
     displayLarge: TextStyle(
       fontFamily: 'Inter', fontWeight: FontWeight.w700, fontSize: 34,
@@ -43,7 +95,8 @@ ThemeData buildNuraTheme() {
     ),
   );
 
-  const scheme = ColorScheme.light(
+  final accent = _lightAccent(style);
+  const schemeBase = ColorScheme.light(
     primary: Nura.mint,
     onPrimary: Colors.white,
     primaryContainer: Nura.mintLight,
@@ -58,6 +111,12 @@ ThemeData buildNuraTheme() {
     outline: Nura.fog,
     outlineVariant: Nura.fog,
     error: Color(0xFFB4453C),
+  );
+  final scheme = schemeBase.copyWith(
+    primary: accent.primary,
+    onPrimary: accent.onPrimary,
+    primaryContainer: accent.primaryContainer,
+    onPrimaryContainer: accent.onPrimaryContainer,
   );
 
   final controlShape = RoundedRectangleBorder(
@@ -97,8 +156,8 @@ ThemeData buildNuraTheme() {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: Nura.mintDark,
-        foregroundColor: Colors.white,
+        backgroundColor: accent.button,
+        foregroundColor: accent.onPrimary,
         disabledBackgroundColor: Nura.fog,
         disabledForegroundColor: Nura.soft,
         minimumSize: const Size.fromHeight(52),
@@ -110,17 +169,17 @@ ThemeData buildNuraTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Nura.mintDark,
+        foregroundColor: accent.accentFg,
         minimumSize: const Size.fromHeight(52),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         side: const BorderSide(color: Nura.fog),
         shape: controlShape,
-        textStyle: text.labelLarge?.copyWith(color: Nura.mintDark),
+        textStyle: text.labelLarge?.copyWith(color: accent.accentFg),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Nura.mintDark,
+        foregroundColor: accent.accentFg,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Nura.radiusSm),
         ),
@@ -143,7 +202,7 @@ ThemeData buildNuraTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: Nura.mint, width: 1.5),
+        borderSide: BorderSide(color: accent.focus, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
@@ -155,7 +214,7 @@ ThemeData buildNuraTheme() {
       elevation: 0,
       backgroundColor: Nura.white,
       surfaceTintColor: Colors.transparent,
-      indicatorColor: Nura.mintLight,
+      indicatorColor: accent.navIndicator,
       indicatorShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Nura.radiusSm),
       ),
@@ -179,7 +238,7 @@ ThemeData buildNuraTheme() {
     dividerTheme: const DividerThemeData(color: Nura.fog, thickness: 1),
     chipTheme: ChipThemeData(
       backgroundColor: Nura.white,
-      selectedColor: Nura.mintLight,
+      selectedColor: accent.primaryContainer,
       side: const BorderSide(color: Nura.fog),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       labelStyle: const TextStyle(
@@ -199,8 +258,8 @@ ThemeData buildNuraTheme() {
       behavior: SnackBarBehavior.floating,
       elevation: 0,
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: Nura.mint,
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: accent.focus,
       linearTrackColor: Nura.fog,
       circularTrackColor: Nura.fog,
     ),

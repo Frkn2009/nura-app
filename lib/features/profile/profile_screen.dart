@@ -203,6 +203,22 @@ class ProfileScreen extends ConsumerWidget {
                   .setThemePreference(value.first),
             ),
           ),
+          const SizedBox(height: 12),
+          Eyebrow(i18n.accent),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: SegmentedButton<NuraThemeStyle>(
+              segments: const [
+                ButtonSegment(value: NuraThemeStyle.mint, icon: Icon(Icons.palette_outlined), label: Text('Mint')),
+                ButtonSegment(value: NuraThemeStyle.indigo, icon: Icon(Icons.style_outlined), label: Text('Indigo')),
+              ],
+              selected: {p.themeStyle},
+              onSelectionChanged: (value) => ref
+                  .read(sessionProvider.notifier)
+                  .setThemeStyle(value.first),
+            ),
+          ),
           const SizedBox(height: 16),
           const Eyebrow('Hatırlatmalar'),
           const SizedBox(height: 6),

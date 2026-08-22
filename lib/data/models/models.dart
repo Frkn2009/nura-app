@@ -1,4 +1,5 @@
 import 'achievements.dart';
+import '../srs/srs_state.dart';
 
 /// 30 öğrenme dili
 enum LearnLang {
@@ -23,6 +24,10 @@ enum Motive { work, travel, exam, life }
 enum Cefr { a1, a2, b1, b2 }
 
 enum AppThemePreference { system, light, dark }
+
+/// v1.4 tema seçici: marka vurgu rengi (Mint = mevcut petrol yeşili,
+/// Indigo = #4F46E5 alternatifi). Token tabanlı; ekranlar Nura.* kullanır.
+enum NuraThemeStyle { mint, indigo }
 
 extension LearnLangX on LearnLang {
   String get code => name;
@@ -241,6 +246,9 @@ class UserProfile {
     required this.joinedEventId,
     required this.learnedIds,
     required this.srs,
+    required this.themeStyle,
+    required this.onboardingStep,
+    required this.srsCards,
   });
 
   final String profileId;
@@ -272,7 +280,19 @@ class UserProfile {
   final int lastAdEpoch;
   final String joinedEventId;
   final Set<String> learnedIds;
+
+  /// v1.3 öncesi epoch-gün vade haritası. Cloud/geriye uyum köprüsü olarak
+  /// korunur; yeni tekrarlar `srsCards`'a yazılır ve buraya da yansır.
   final Map<String, int> srs;
+
+  /// v1.4 tema seçici (Mint | Indigo).
+  final NuraThemeStyle themeStyle;
+
+  /// Onboarding adım kalıcılığı (v1.3 devir notundan gelen eksik).
+  final int onboardingStep;
+
+  /// FSRS kart deposu: kalıp id → SrsCard. Tekrar motorunun tek kaynağı.
+  final Map<String, SrsCard> srsCards;
 
   static const empty = UserProfile(
     profileId: 'main',
@@ -305,6 +325,9 @@ class UserProfile {
     joinedEventId: '',
     learnedIds: {},
     srs: {},
+    themeStyle: NuraThemeStyle.mint,
+    onboardingStep: 0,
+    srsCards: {},
   );
 
   static const maxRewardedAdsPerDay = 5;
@@ -383,6 +406,9 @@ class UserProfile {
     String? joinedEventId,
     Set<String>? learnedIds,
     Map<String, int>? srs,
+    NuraThemeStyle? themeStyle,
+    int? onboardingStep,
+    Map<String, SrsCard>? srsCards,
   }) {
     return UserProfile(
       profileId: profileId ?? this.profileId,
@@ -415,6 +441,9 @@ class UserProfile {
       joinedEventId: joinedEventId ?? this.joinedEventId,
       learnedIds: learnedIds ?? this.learnedIds,
       srs: srs ?? this.srs,
+      themeStyle: themeStyle ?? this.themeStyle,
+      onboardingStep: onboardingStep ?? this.onboardingStep,
+      srsCards: srsCards ?? this.srsCards,
     );
   }
 
@@ -449,9 +478,16 @@ class UserProfile {
         'joinedEventId': joinedEventId,
         'learnedIds': learnedIds.toList(),
         'srs': srs,
+        'themeStyle': themeStyle.name,
+        'onboardingStep': onboardingStep,
+        'srsCards': {
+          for (final e in srsCards.entries) e.key: e.value.toJson(),
+        },
       };
 
   factory UserProfile.fromJson(Map<String, dynamic> j) {
+    final legacy = ((j['srs'] as Map?) ?? const {})
+        .map((k, v) => MapEntry('$k', (v as num).toInt()));
     return UserProfile(
       profileId: j['profileId'] as String? ?? 'main',
       profileName: j['profileName'] as String? ?? 'Ana Profil',
@@ -490,7 +526,30 @@ class UserProfile {
       lastAdEpoch: (j['lastAdEpoch'] as num?)?.toInt() ?? 0,
       joinedEventId: j['joinedEventId'] as String? ?? '',
       learnedIds: {...(j['learnedIds'] as List? ?? const []).cast<String>()},
-      srs: ((j['srs'] as Map?) ?? const {}).map((k, v) => MapEntry('$k', (v as num).toInt())),
+      srs: legacy,
+      themeStyle: NuraThemeStyle.values.asNameMap()[
+              j['themeStyle'] as String? ?? 'mint'] ??
+          NuraThemeStyle.mint,
+      onboardingStep: (j['onboardingStep'] as num?)?.toInt() ?? 0,
+      srsCards: _decodeSrsCards(legacy, (j['srsCards'] as Map?) ?? const {}),
     );
+  }
+
+  /// v1.3 öncesi epoch-gün `srs` verisini FSRS kartlarına yükseltir;
+  /// `srsCards` zaten varken legacy haritaya dokunulmaz.
+  static Map<String, SrsCard> _decodeSrsCards(
+    Map<String, int> legacy,
+    Map raw,
+  ) {
+    final cards = <String, SrsCard>{
+      for (final e in raw.entries)
+        e.key: SrsCard.fromJson(Map<String, dynamic>.from(e.value as Map)),
+    };
+    if (cards.isEmpty) {
+      legacy.forEach((key, day) {
+        cards[key] = SrsCard.migratedFromEpochDay(key, day);
+      });
+    }
+    return cards;
   }
 }

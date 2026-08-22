@@ -5,11 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
+import '../core/algorithm/cognitive_tracker.dart';
 import '../core/l10n/i18n.dart';
+import '../core/utils/clock.dart';
 import '../data/content/catalog.dart';
 import '../data/events/weekly_event.dart';
 import '../data/models/achievements.dart';
 import '../data/models/models.dart';
+import '../data/srs/srs_machine.dart';
+import '../data/srs/srs_state.dart';
 import '../data/supabase/supa_service.dart';
 
 final prefsProvider = Provider<SharedPreferences>((ref) {
@@ -26,6 +30,10 @@ class SessionController extends Notifier<UserProfile> {
   static const _activeProfileKey = 'nura.family.active';
 
   SharedPreferences get _prefs => ref.read(prefsProvider);
+
+  /// Contract madde 5: tekrar planlaması Clock'tan zaman alır;
+  /// testler FakeClock ile deterministik çalışır.
+  Clock get _clock => ref.read(clockProvider);
 
   @override
   UserProfile build() {
@@ -120,6 +128,10 @@ class SessionController extends Notifier<UserProfile> {
       _save(state.copyWith(reminderHour: hour == 10 ? 10 : 19));
   Future<void> setThemePreference(AppThemePreference value) =>
       _save(state.copyWith(themePreference: value));
+  Future<void> setThemeStyle(NuraThemeStyle value) =>
+      _save(state.copyWith(themeStyle: value));
+  Future<void> setOnboardingStep(int step) =>
+      _save(state.copyWith(onboardingStep: step.clamp(0, 4)));
 
   List<UserProfile> familyProfiles() {
     final profiles = <String, UserProfile>{state.profileId: state};
@@ -193,8 +205,21 @@ class SessionController extends Notifier<UserProfile> {
 
   Future<void> learnPhrase(String id) async {
     final ids = {...state.learnedIds, id};
+    final now = _clock.nowUtc();
     final due = {...state.srs, id: _epochDay() + 1};
-    await _save(state.copyWith(learnedIds: ids, phrasesKnown: ids.length, srs: due));
+    // v1.4: yeni öğrenilen kalıp aynı zamanda bir FSRS kartı olarak açılır;
+    // ilk tekrar bugünkü tekrar oturumunda gelir.
+    final cards = state.srsCards.containsKey(id)
+        ? state.srsCards
+        : {...state.srsCards, id: SrsCard.newCard(id, now)};
+    await _save(
+      state.copyWith(
+        learnedIds: ids,
+        phrasesKnown: ids.length,
+        srs: due,
+        srsCards: cards,
+      ),
+    );
   }
 
 
@@ -295,29 +320,57 @@ class SessionController extends Notifier<UserProfile> {
     ));
   }
 
+  /// Bugün tekrar kuyruğuna giren kalıplar (FSRS kart deposundan).
   List<Phrase> duePhrases() {
-    final today = _epochDay();
     final out = <Phrase>[];
-    for (final e in state.srs.entries) {
-      if (e.value > today) continue;
-      final p = Catalog.phraseById(e.key);
+    final cards = state.srsCards;
+    if (cards.isEmpty) {
+      // v1.3 öncesi verinin son çare yolu: epoch-gün haritası.
+      // Normal akışta fromJson migrasyonu srsCards'ı zaten doldurur.
+      final today = _epochDay();
+      for (final e in state.srs.entries) {
+        if (e.value > today) continue;
+        final p = Catalog.phraseById(e.key);
+        if (p != null) out.add(p);
+      }
+      return out;
+    }
+    final now = _clock.nowUtc();
+    for (final card in cards.values) {
+      if (card.state == SrsCardState.suspended) continue;
+      if (card.state == SrsCardState.buried) continue;
+      if (card.dueAtUtc.isAfter(now)) continue;
+      final p = Catalog.phraseById(card.id);
       if (p != null) out.add(p);
     }
     return out;
   }
 
-  Future<void> grade(String id, int quality) async {
-    // quality: 0 again, 3 good, 5 easy
-    final add = switch (quality) {
-      >= 5 => 7,
-      >= 3 => 3,
-      _ => 0,
-    };
-    final due = {...state.srs, id: _epochDay() + add};
-    await _save(state.copyWith(srs: due));
+  /// v1.4 tekrar adımı: SM-2 `grade()` kaldırıldı (Contract madde 2).
+  /// FSRS-5 inspired motor + isteğe bağlı bilişsel mikro-sürtünme.
+  Future<SrsResult?> reviewPhrase(
+    String id,
+    AnswerQuality quality, {
+    CognitiveState? cognitive,
+  }) async {
+    final card = state.srsCards[id];
+    if (card == null) return null;
+    final machine = SrsMachine(_clock);
+    final result =
+        machine.review(card: card, quality: quality, cognitive: cognitive);
+    // Cloud/legacy köprüsü: epoch-gün haritası da yeni vadeye güncellenir.
+    final due = {...state.srs, id: _epochDay() + result.intervalDays};
+    await _save(
+      state.copyWith(
+        srsCards: {...state.srsCards, id: result.card},
+        srs: due,
+      ),
+    );
+    return result;
   }
 
-  int _epochDay() => DateTime.now().millisecondsSinceEpoch ~/ 86400000;
+  int _epochDay() =>
+      _clock.nowUtc().millisecondsSinceEpoch ~/ 86400000;
 
   /// Girişten sonra buluttan gelen profili kabul et.
   Future<void> importRemote(UserProfile remote) async {

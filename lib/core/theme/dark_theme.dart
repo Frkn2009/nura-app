@@ -1,27 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../data/models/models.dart';
 import 'nura_theme.dart';
 import 'tokens.dart';
 
-ThemeData buildNuraDarkTheme() {
-  const scheme = ColorScheme.dark(
-    primary: Color(0xFF67C9C0),
-    onPrimary: Color(0xFF062F2D),
-    primaryContainer: Color(0xFF164542),
-    onPrimaryContainer: Color(0xFFD5F5F1),
-    secondary: Color(0xFFF08D78),
-    onSecondary: Color(0xFF3D0D05),
-    tertiary: Color(0xFFC7B8EF),
-    surface: Color(0xFF182326),
-    onSurface: Color(0xFFEAF1F0),
-    surfaceContainerLow: Color(0xFF141E20),
-    surfaceContainer: Color(0xFF202D30),
-    outline: Color(0xFF718184),
-    outlineVariant: Color(0xFF36474A),
-    error: Color(0xFFFFB4A9),
+ColorScheme _darkScheme(NuraThemeStyle style) {
+  final accent = switch (style) {
+    NuraThemeStyle.mint => const (
+        Color(0xFF67C9C0),
+        Color(0xFF062F2D),
+        Color(0xFF164542),
+        Color(0xFFD5F5F1),
+      ),
+    NuraThemeStyle.indigo => const (
+        Nura.indigoGlow,
+        Nura.indigoDeep,
+        Color(0xFF312E81),
+        Nura.indigoLight,
+      ),
+  };
+  return ColorScheme.dark(
+    primary: accent.$1,
+    onPrimary: accent.$2,
+    primaryContainer: accent.$3,
+    onPrimaryContainer: accent.$4,
+    secondary: const Color(0xFFF08D78),
+    onSecondary: const Color(0xFF3D0D05),
+    tertiary: const Color(0xFFC7B8EF),
+    surface: const Color(0xFF182326),
+    onSurface: const Color(0xFFEAF1F0),
+    surfaceContainerLow: const Color(0xFF141E20),
+    surfaceContainer: const Color(0xFF202D30),
+    outline: const Color(0xFF718184),
+    outlineVariant: const Color(0xFF36474A),
+    error: const Color(0xFFFFB4A9),
   );
-  final base = buildNuraTheme();
+}
+
+ThemeData buildNuraDarkTheme({NuraThemeStyle style = NuraThemeStyle.mint}) {
+  final scheme = _darkScheme(style);
+  final base = buildNuraTheme(style: style);
   final text = base.textTheme.apply(
     bodyColor: scheme.onSurface,
     displayColor: scheme.onSurface,

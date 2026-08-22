@@ -16,7 +16,8 @@ class OnboardingFlow extends ConsumerStatefulWidget {
 }
 
 class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
-  int step = 0;
+  /// v1.3 devir notundan: onboarding adımı kalıcı. `null` = profilden oku.
+  int? _step;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
       _why(i18n, p),
       _level(i18n, p),
     ];
+    final step = (_step ?? p.onboardingStep).clamp(0, pages.length - 1);
 
     return Scaffold(
       body: SafeArea(
@@ -70,7 +72,11 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 label: step == pages.length - 1 ? i18n.startSpeak : i18n.continueCta,
                 onPressed: () async {
                   if (step < pages.length - 1) {
-                    setState(() => step++);
+                    final next = step + 1;
+                    setState(() => _step = next);
+                    await ref
+                        .read(sessionProvider.notifier)
+                        .setOnboardingStep(next);
                   } else {
                     await ref.read(sessionProvider.notifier).finishOnboarding();
                     if (context.mounted) context.go('/app');

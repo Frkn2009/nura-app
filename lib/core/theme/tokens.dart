@@ -15,6 +15,13 @@ class Nura {
   static const lavender = Color(0xFF6E628F);
   static const sky = Color(0xFF397C9E);
 
+  // v1.4 tema seçicisi alternatifi: indigo marka (#4F46E5).
+  static const indigo = Color(0xFF4F46E5);
+  static const indigoDark = Color(0xFF4338CA);
+  static const indigoDeep = Color(0xFF312E81);
+  static const indigoLight = Color(0xFFE0E7FF);
+  static const indigoGlow = Color(0xFFA5B4FC);
+
   // Soğuk nötrler, uzun öğrenme oturumlarında gözü yormaz.
   static const snow = Color(0xFFF7F8F8);
   static const cloud = Color(0xFFEEF1F2);

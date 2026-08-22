@@ -20,6 +20,9 @@ class NuraApp extends ConsumerWidget {
     final themePreference = ref.watch(
       sessionProvider.select((profile) => profile.themePreference),
     );
+    final themeStyle = ref.watch(
+      sessionProvider.select((profile) => profile.themeStyle),
+    );
     ref.listen(
       sessionProvider,
       (_, profile) {
@@ -31,8 +34,8 @@ class NuraApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'NURA',
       debugShowCheckedModeBanner: false,
-      theme: buildNuraTheme(),
-      darkTheme: buildNuraDarkTheme(),
+      theme: buildNuraTheme(style: themeStyle),
+      darkTheme: buildNuraDarkTheme(style: themeStyle),
       themeMode: switch (themePreference) {
         AppThemePreference.system => ThemeMode.system,
         AppThemePreference.light => ThemeMode.light,

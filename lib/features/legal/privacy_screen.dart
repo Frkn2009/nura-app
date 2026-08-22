@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
-class PrivacyScreen extends StatelessWidget {
+/// Gizlilik ekranı — v1.3 devir notundaki "LegalScreen (7 dil)" maddesinin
+/// bu repo hattındaki karşılığı: metin i18n.dart üzerinden 7 dilde gelir.
+class PrivacyScreen extends ConsumerWidget {
   const PrivacyScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final i18n = ref.watch(i18nProvider);
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Gizlilik')),
+      appBar: NuraAppBar(pageTitle: Text(i18n.privacyTitle)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(22, 12, 22, 32),
-        children: const [
-          Text('NURA gizlilik özeti', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
-          SizedBox(height: 12),
+        children: [
+          Text(i18n.privacyTitle,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 12),
           Text(
-            'Konuşma sesi, mümkün olduğunca cihazında işlenir. Ücretsiz katmanda buluta ses göndermeyiz.\n\n'
-            'Saklanan: seçtiğin dil, seri, öğrendiğin kalıp kimlikleri. Bu veri telefonda SharedPreferences içindedir.\n\n'
-            'Plus bulut çevirisi yalnızca giriş ve aktif abonelikle çalışır; metin çeviri sağlayıcısına gönderilir.\n\n'
-            'Free sürümde Google AdMob video reklamları kullanılabilir. Bölgen gerektiriyorsa reklam izni formu gösterilir; Plus kullanıcıya reklam isteği yapılmaz.\n\n'
-            'Hesabı sil: Sen → Hesabı sil. Tüm yerel veri silinir.\n\n'
-            'Çocuklara yönelik değil (13+).\n\n'
-            'İletişim: gizlilik@nura.app (yer tutucu — domain bağlanınca güncellenir).',
-            style: TextStyle(height: 1.5, color: Nura.ink, fontSize: 15),
+            i18n.privacyBody,
+            style: const TextStyle(height: 1.5, color: Nura.ink, fontSize: 15),
           ),
         ],
       ),

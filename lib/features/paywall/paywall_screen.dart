@@ -3,8 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../features/plus/domain/entitlement.dart';
+import '../../features/plus/state/plus_controller.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
+
+/// Plan → ürün eşlemesi (tile sırasıyla hizalı).
+const _planProducts = [
+  nuraPlusMonthlyProduct,
+  nuraPlusYearlyProduct,
+  nuraPlusFamilyProduct,
+];
 
 class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({super.key});
@@ -56,11 +65,33 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             ForestButton(
               label: i18n.plusCta,
               onPressed: () async {
-                await ref.read(sessionProvider.notifier).setPlus(true);
+                // Contract madde 6: Plus YALNIZCA BillingService entitlement'ı
+                // sonucuyla açılır; lokal isPlus, çevrimdışı kapı için aynadır.
+                final controller = ref.read(plusControllerProvider.notifier);
+                await controller.loadEntitlement();
+                await controller.purchase(_planProducts[plan]);
+                final plus =
+                    ref.read(plusControllerProvider) == NuraEntitlement.plus;
+                if (plus) {
+                  await ref.read(sessionProvider.notifier).setPlus(true);
+                }
                 if (context.mounted) context.pop();
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 6),
+            TextButton(
+              onPressed: () async {
+                final controller = ref.read(plusControllerProvider.notifier);
+                await controller.restore();
+                final plus =
+                    ref.read(plusControllerProvider) == NuraEntitlement.plus;
+                if (plus) {
+                  await ref.read(sessionProvider.notifier).setPlus(true);
+                }
+              },
+              child: Text(i18n.restorePurchases),
+            ),
+            const SizedBox(height: 4),
             const Text('İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
                 textAlign: TextAlign.center, style: TextStyle(color: Nura.soft, fontSize: 12)),
           ],
