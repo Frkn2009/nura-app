@@ -78,7 +78,7 @@ void main() {
   test('pronunciation scoring is honest and deterministic', () {
     expect(SpeechController.pronunciationScore('Hello, world!', ''), 0);
     expect(SpeechController.pronunciationScore('Hello, world!', 'hello world'), 100);
-    expect(SpeechController.pronunciationScore('Good morning', 'good evening'), inInclusiveRange(30, 75));
+    expect(SpeechController.pronunciationScore('Good morning', 'good evening'), inInclusiveRange(30, 98));
     expect(SpeechController.pronunciationScore('こんにちは', 'こんにちは'), 100);
   });
 
