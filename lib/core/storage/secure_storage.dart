@@ -16,7 +16,7 @@ class SecureStorage {
   static const _accessTokenKey = 'nura.access_token';
   static const _refreshTokenKey = 'nura.refresh_token';
 
-  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+  final FlutterSecureStorage _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
     iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
   );

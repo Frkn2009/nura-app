@@ -46,7 +46,9 @@ class CognitiveTracker {
 
   CognitiveState onAnswered(bool isCorrect) {
     final now = _clock.now();
-    final elapsed = _revealedAt != null ? now.difference(_revealedAt!) : Duration.zero;
+    final revealedAt = _revealedAt;
+    final elapsed =
+        revealedAt != null ? now.difference(revealedAt) : Duration.zero;
     return CognitiveState(elapsed, isCorrect);
   }
 }
