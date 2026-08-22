@@ -80,7 +80,7 @@ class AdService {
               if (!result.isCompleted) result.complete(false);
             },
           );
-          ad.show(onUserEarnedReward: (_, __) => earned = true);
+          ad.show(onUserEarnedReward: (_, _) => earned = true);
         },
       ),
     );

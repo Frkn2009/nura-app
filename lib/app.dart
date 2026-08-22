@@ -32,7 +32,6 @@ class NuraApp extends ConsumerWidget {
         unawaited(NotificationService.sync(profile).catchError((_) {}));
         unawaited(NuraHomeWidgetService.sync(profile).catchError((_) {}));
       },
-      fireImmediately: true,
     );
     return MaterialApp.router(
       title: 'NURA',

@@ -32,28 +32,28 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _root,
     initialLocation: onboarded ? '/app' : '/onboarding',
     routes: [
-      GoRoute(path: '/onboarding', builder: (_, __) => const OnboardingFlow()),
-      GoRoute(path: '/paywall', parentNavigatorKey: _root, builder: (_, __) => const PaywallScreen()),
-      GoRoute(path: '/ad', parentNavigatorKey: _root, builder: (_, __) => const AdGateScreen()),
-      GoRoute(path: '/review', parentNavigatorKey: _root, builder: (_, __) => const ReviewScreen()),
-      GoRoute(path: '/clips', parentNavigatorKey: _root, builder: (_, __) => const ClipsScreen()),
-      GoRoute(path: '/guide', parentNavigatorKey: _root, builder: (_, __) => const LanguageGuideScreen()),
-      GoRoute(path: '/leaderboard', parentNavigatorKey: _root, builder: (_, __) => const LeaderboardScreen()),
-      GoRoute(path: '/event', parentNavigatorKey: _root, builder: (_, __) => const WeeklyEventScreen()),
-      GoRoute(path: '/family', parentNavigatorKey: _root, builder: (_, __) => const FamilyProfilesScreen()),
-      GoRoute(path: '/clan', parentNavigatorKey: _root, builder: (_, __) => const ClanScreen()),
-      GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, __) => const AchievementsScreen()),
+      GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingFlow()),
+      GoRoute(path: '/paywall', parentNavigatorKey: _root, builder: (_, _) => const PaywallScreen()),
+      GoRoute(path: '/ad', parentNavigatorKey: _root, builder: (_, _) => const AdGateScreen()),
+      GoRoute(path: '/review', parentNavigatorKey: _root, builder: (_, _) => const ReviewScreen()),
+      GoRoute(path: '/clips', parentNavigatorKey: _root, builder: (_, _) => const ClipsScreen()),
+      GoRoute(path: '/guide', parentNavigatorKey: _root, builder: (_, _) => const LanguageGuideScreen()),
+      GoRoute(path: '/leaderboard', parentNavigatorKey: _root, builder: (_, _) => const LeaderboardScreen()),
+      GoRoute(path: '/event', parentNavigatorKey: _root, builder: (_, _) => const WeeklyEventScreen()),
+      GoRoute(path: '/family', parentNavigatorKey: _root, builder: (_, _) => const FamilyProfilesScreen()),
+      GoRoute(path: '/clan', parentNavigatorKey: _root, builder: (_, _) => const ClanScreen()),
+      GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, _) => const AchievementsScreen()),
       GoRoute(
         path: '/privacy',
         parentNavigatorKey: _root,
-        builder: (_, __) => const LegalScreen(type: LegalType.privacy),
+        builder: (_, _) => const LegalScreen(type: LegalType.privacy),
       ),
       GoRoute(
         path: '/terms',
         parentNavigatorKey: _root,
-        builder: (_, __) => const LegalScreen(type: LegalType.terms),
+        builder: (_, _) => const LegalScreen(type: LegalType.terms),
       ),
-      GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),
+      GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, _) => const AuthScreen()),
       GoRoute(
         path: '/session',
         parentNavigatorKey: _root,
@@ -64,23 +64,23 @@ final routerProvider = Provider<GoRouter>((ref) {
             AppShell(navigationShell: navigationShell),
         branches: [
           StatefulShellBranch(
-            routes: [GoRoute(path: '/app', builder: (_, __) => const HomeScreen())],
+            routes: [GoRoute(path: '/app', builder: (_, _) => const HomeScreen())],
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(path: '/app/speak', builder: (_, __) => const SpeakHubScreen()),
+              GoRoute(path: '/app/speak', builder: (_, _) => const SpeakHubScreen()),
             ],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: '/app/games', builder: (_, __) => const GamesScreen())],
+            routes: [GoRoute(path: '/app/games', builder: (_, _) => const GamesScreen())],
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(path: '/app/translate', builder: (_, __) => const TranslateScreen()),
+              GoRoute(path: '/app/translate', builder: (_, _) => const TranslateScreen()),
             ],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: '/app/you', builder: (_, __) => const ProfileScreen())],
+            routes: [GoRoute(path: '/app/you', builder: (_, _) => const ProfileScreen())],
           ),
         ],
       ),
