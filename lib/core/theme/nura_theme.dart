@@ -147,7 +147,7 @@ ThemeData buildNuraTheme() {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: scheme.error),
+        borderSide: const BorderSide(color: Nura.coral),
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
