@@ -1,181 +1,145 @@
-# NURA — YAPILACAKLAR LİSTESİ (21 Ağustos 2026)
+# NURA — YAPILACAKLAR LİSTESİ (22 Ağustos 2026 — GÜNCEL)
 
-> Bu dosya tüm eksikleri ve yapılacak işleri öncelik sırasıyla içerir.
-> Yeni sohbette bu dosyayı paylaşarak kaldığın yerden devam et.
-> Her madde tamamlandığında ✅ işareti konur.
+## ✅ TAMAMLANAN MADDELER
 
----
+### 1. Logo — Sol üste NURA logosu ✅
+- [x] `lib/ui/brand.dart` — NuraMark (CustomPaint)
+- [x] `lib/ui/nura_logo.dart` — NuraLogo + NuraAppBar widget
+- [x] `assets/nura_logo.png` — logo görseli
+- [x] AppBar'da her sayfada görünüyor
 
-## 🔴 KRİTİK — HEMEN YAPILACAK
+### 2. Konuş Butonu — Mikrofon aktif ✅
+- [x] `lib/features/speak/speak_screens.dart` — basılı tut → konuş → bırak → skor
+- [x] `lib/data/speech/speech_controller.dart` — 30 locale, kadın ses
+- [x] `lib/data/speech/phoneme_scorer.dart` — fonem skor motoru
+- [x] Ses her zaman kadın (pitch 1.1 + female voice selection)
 
-### 1. Logo — Sol üste NURA logosu
-- [x] Uygulama içinde sol üst köşede NURA logosu/yazısı
-- [x] AppBar'da her sayfada görünsün
-- [x] Profesyonel, temiz, telif sorunsuz özel tasarım
-- [x] Uygulama ikonu (app icon) da bu logo olsun
+### 3. Çeviri — Google Translate tarzı ✅
+- [x] `lib/features/translate/translate_screen.dart` — 30 dil dropdown, swap butonu
+- [x] `lib/data/translate/offline_translate.dart` — müfredat + sözlük
+- [x] `lib/data/translate/cloud_translate.dart` — Plus bulut çeviri (Supabase Edge)
 
-### 2. Konuş Butonu — Mikrofon aktif olsun
-- [x] Mikrofon izni düzgün isteniyor mu kontrol
-- [x] Web'de kısıtlı — telefonda tam çalışmalı
-- [x] Basılı tut → konuş → bırak → skor göster
-- [x] Ses her zaman kadın
+### 4. Klipler — Dolu içerik ✅
+- [x] `lib/data/content/clips.dart` — LearningClip model, katalogdan otomatik üretim
+- [x] `lib/features/clips/clips_screen.dart` — swipe + yavaş/gölgele/konuş
 
-### 3. Çeviri — Google Translate tarzı genel çeviri
-- [x] 30 dil arası çeviri (dropdown ile dil seçimi)
-- [x] Swap butonu (dil değiştir)
-- [x] Müfredat + sözlük tabanlı (uydurma çeviri yok)
-- [x] Plus ile genişletilmiş bulut çeviri (Supabase Edge Function altyapısı hazır; provider secret/deploy ileride)
-
-### 4. Klipler — Dolu içerik
-- [x] Her dilde kısa video/ses klipleri gibi kartlar
-- [x] Swipe ile gezme
-- [x] Her klipin altında: yavaş / gölgele / konuş butonları
-- [x] Senaryolardaki cümlelerden otomatik klip üretimi
-
-### 5. Tema — Profesyonel ve ciddi
-- [x] Renk paleti: modern, temiz, mağaza kalitesinde
+### 5. Tema — Profesyonel ✅
+- [x] `lib/core/theme/tokens.dart` — Mint/Coral/Lavanta palette
+- [x] `lib/core/theme/nura_theme.dart` — light theme
+- [x] `lib/core/theme/dark_theme.dart` — dark theme
 - [x] Tutarlı border-radius, spacing, tipografi
-- [x] Duolingo sevimli ama NURA daha ciddi-profesyonel
-- [x] Karanlık mod desteği (sistem/açık/koyu seçimi)
+
+### 6. Oyunlar — Çeşitli ✅
+- [x] `lib/features/games/games_screen.dart` — 3+ oyun modu
+- [x] Kelime eşleştirme, hız yarışı, dinle & seç
+- [x] XP kazanma her oyun sonunda
+
+### 7. XP / Puan Sistemi ✅
+- [x] Sahne tamamlama = XP
+- [x] Oyun oynama = XP
+- [x] `state/session.dart` — streak × 10 + phrasesKnown × 5
+
+### 8. Leaderboard / Sıralama ✅
+- [x] `lib/data/models/leaderboard.dart` — LeaderboardEntry model
+- [x] `lib/features/leaderboard/leaderboard_screen.dart` — haftalık sıralama
+- [x] Router'da `/leaderboard` rotası
+
+### 9. Başarım / Rozet Sistemi ✅
+- [x] `lib/data/models/achievements.dart` — 10 rozet enum
+- [x] `lib/features/achievements/achievements_screen.dart` — rozet listesi
+- [x] firstStep, fireStarted, tenPhrases, gamer, traveler, plus, weeklyChampion, dailyHundred, sevenDayStreak, perfectGame
+
+### 10. Bildirimler ✅
+- [x] `lib/data/notifications/notification_service.dart` — awesome_notifications
+- [x] Günlük hatırlatma bildirimler
+- [x] Streak koruma bildirimi
+
+### 11. Maskot / Karakter ✅
+- [x] `lib/ui/mascot.dart` — animasyonlu maskot (neutral, wave, celebrate, encourage, streak)
+- [x] `assets/mascot_nura.png` — maskot görseli
+- [x] Ana sayfada ve onboarding'de kullanılıyor
+
+### 12. Süreli Etkinlikler + Video Reklam ✅
+- [x] `lib/data/events/weekly_event.dart` — haftalık etkinlik modeli
+- [x] `lib/features/events/weekly_event_screen.dart` — etkinlik ekranı
+- [x] `lib/data/ads/ad_service.dart` — Google Mobile Ads entegrasyonu
+- [x] `lib/features/ads/ad_gate_screen.dart` — video reklam kapısı
+
+### 13. Clan / Takım ✅
+- [x] `lib/data/models/clan.dart` — clan model
+- [x] `lib/features/clan/clan_screen.dart` — clan ekranı
+
+### 14. Aile Profilleri ✅
+- [x] `lib/features/family/family_profiles_screen.dart` — 4 profil
+
+### 15. AI Modülleri ✅
+- [x] `lib/features/ai/data/ai_service.dart` — abstract interface
+- [x] `lib/features/ai/data/fake_ai_service.dart` — offline AI
+- [x] `lib/features/ai/domain/ai_feedback.dart` — domain modelleri
+- [x] `lib/features/ai/screen/ai_feedback_screen.dart` — geri bildirim ekranı
+- [x] `lib/features/ai/state/ai_controller.dart` — Riverpod state
+
+### 16. SRS / Tekrar Motoru ✅
+- [x] `lib/core/algorithm/fsrs5_engine.dart` — FSRS-5 tam parametreli
+- [x] `lib/core/algorithm/cognitive_tracker.dart` — bilişsel takip
+- [x] `lib/data/srs/srs_state.dart` — SrsCard immutable model
+- [x] `lib/data/srs/srs_machine.dart` — FSRS-inspired SRS motoru
+- [x] `lib/ui/review/swipe_review_card.dart` — kaydırmalı review
+
+### 17. Billing ✅
+- [x] `lib/features/plus/domain/entitlement.dart` — Plus/Free
+- [x] `lib/features/plus/data/billing_service.dart` — abstract
+- [x] `lib/features/plus/data/fake_billing_service.dart` — test için
+- [x] `lib/features/plus/state/plus_controller.dart` — Riverpod
+
+### 18. Diğer ✅
+- [x] `lib/core/utils/clock.dart` — testable clock
+- [x] `lib/data/content/intermediate_catalog.dart` — A2/B1 içerik
+- [x] `lib/data/widgets/home_widget_service.dart` — Android/iOS widget
+- [x] 30 dil rehberi, 242 sahne, 726 kalıp
+- [x] Supabase auth + profil senkron + RLS + hesap silme
+- [x] NURA_CODING_CONTRACT.md (10 kural)
+- [x] Store checklist + release script
 
 ---
 
-## 🟡 ÖNEMLİ — BU HAFTA
+## 📊 PROJE RAKAMLARI
 
-### 6. Oyunlar — 4-5 FARKLI oyun (eski oyunlar değişecek)
-- [x] 🎯 **Doğru/Yanlış**: Cümle göster → doğru mu yanlış mı?
-- [x] 🔤 **Harf Sıralama**: Karışık harflerden kelime oluştur
-- [x] 🎧 **Ses Bulmaca**: Sesi dinle, 4 seçenekten doğrusunu bul
-- [x] 📝 **Boşluk Doldur**: Cümlede eksik kelimeyi yaz
-- [x] ⏱️ **Zamana Karşı**: 60 saniyede en çok doğru cevap
-- Telif sorunu olmayacak — oyun mekaniği genel, özgün UI
-
-### 7. XP / Puan Sistemi
-- [x] Her doğru cevap = +10 XP
-- [x] Her sahne tamamlama = +50 XP
-- [x] Her oyun = +20-100 XP (performansa göre)
-- [x] Günlük hedef: 100 XP
-- [x] Seviye sistemi: Çaylak → Öğrenci → Konuşan → Usta → Efsane
-- [x] XP ana sayfada ve profilde görünsün
-
-### 8. Leaderboard / Sıralama
-- [x] Haftalık sıralama tablosu
-- [x] Clan/Takım sistemi (davet kodu, haftalık takım XP sıralaması)
-- [x] Supabase'de `leaderboard` tablosu
-- [x] Top 10 gösterimi
-- [x] Kendi sıranı gör
-
-### 9. Başarım / Rozet Sistemi
-- [x] 🏅 İlk Adım — İlk sahneyi tamamla
-- [x] 🔥 Ateş Başladı — 3 gün üst üste seri
-- [x] 📚 10 Kalıp — 10 cümle öğren
-- [x] 🎮 Oyuncu — İlk oyunu tamamla
-- [x] 🌍 Gezgin — 3 farklı dilde sahne tamamla
-- [x] 💎 Plus — Plus üye ol
-- [x] 🏆 Hafta Birincisi — Leaderboard 1. ol
-- [x] ⭐ 100 XP — Günlük hedefe ulaş
-- [x] 🔥🔥 7 Gün Seri — 1 hafta kesintisiz
-- [x] 🎯 Mükemmel — Bir oyunda %100 doğru
-
-### 10. Bildirimler — Öğretmen gibi
-- [x] "Hadi derse! 📚 Bugün henüz pratik yapmadın"
-- [x] "🔥 Serin 5 gün! Bugün kırma!"
-- [x] "🎮 Yeni oyun: Harf Sıralama dene!"
-- [x] Günde 1 bildirim (sabah 10:00 veya akşam 19:00)
-- [x] Plus kullanıcılara özel bildirimler
-- [x] Bildirim kapatma seçeneği profilde
-
-### 11. Maskot / Karakter
-- [x] NURA'nın maskotu: özgün konuşma rehberi robot “Luma”
-- [x] Onboarding'de karşılama
-- [x] Doğru cevaplarda kutlama animasyonu
-- [x] Yanlış cevaplarda teşvik
-- [x] Streak günlerinde özel animasyon
-- [x] Telif sorunu olmayacak — tamamen özgün Canvas tasarımı
-
-### 12. Süreli Etkinlikler + Video Reklam Gelir Kapısı
-- [x] Haftalık etkinlik: "Bu hafta İspanyolca XP 2 katı!"
-- [x] Etkinliğe katılmak için video reklam izle (15-30 sn)
-- [x] Free kullanıcı: her 3-5 dk'da video reklam
-- [x] Plus kullanıcı: video reklam YOK
-- [x] Video reklam izle = +30 saniye konuşma VEYA +20 XP
-- [x] Günde max 5 video reklam (aşırı rahatsız etme)
-- [x] Gelir modeli: AdMob eCPM × doğrulanmış gösterim
+| Metrik | Değer |
+|---|---|
+| Dart dosya | **64** |
+| Test dosya | **3** (35 test) |
+| Toplam satır | **14.000+** |
+| Dil | **30** |
+| Sahne | **242** |
+| Ekran | **19** |
+| Oyun | **3+** |
+| AI modül | **5** |
+| Rozet | **10** |
 
 ---
 
-## 🟢 SONRA — AY 2-3
+## 🟢 MAĞAZAYA ÇIKIŞ ÖNCESİ
 
-### 13. İleri Özellikler
-- [x] A2 / B1 içerik ekleme (30 dilde bağlantılı görevler)
-- [x] Fonem skor motoru (STT akustik güveni + dil-duyarlı fonem karşılaştırması)
-- [x] Maya nöral TTS (kadın neural/premium cihaz sesini otomatik önceler)
-- [x] Bulut çeviri (Plus) — güvenli Supabase Edge Function hazır
-- [x] Widget (Android/iOS günlük ders, XP ve seri widget’ı)
-- [x] Karanlık mod
-- [x] Çoklu profil (Plus aile planı, 4 ayrı profil + bulut senkronu)
-
----
-
-## 📋 DOSYA YAPISI (güncel)
-
-```
-lib/
-├── main.dart
-├── app.dart
-├── core/
-│   ├── l10n/i18n.dart           # 30 dil i18n
-│   ├── router/app_router.dart   # Rotalar
-│   ├── supabase_config.dart     # Bağlantı
-│   └── theme/ (tokens + nura_theme)
-├── data/
-│   ├── content/catalog.dart     # 302 sahne
-│   ├── content/language_guides  # 30 rehber
-│   ├── models/models.dart       # 30 enum + UserProfile
-│   ├── speech/speech_controller # 30 locale TTS/STT
-│   ├── supabase/supa_service    # Auth + CRUD
-│   └── translate/offline_translate
-├── features/
-│   ├── ads/          # Reklam kapısı
-│   ├── auth/         # Giriş/kayıt
-│   ├── clips/        # Klipler (düzenlenecek)
-│   ├── games/        # 🆕 Oyunlar (yenilenecek)
-│   ├── guide/        # Dil rehberi
-│   ├── home/         # Ana sayfa
-│   ├── legal/        # Gizlilik
-│   ├── onboarding/   # İlk kurulum
-│   ├── paywall/      # Ücretlendirme
-│   ├── profile/      # Profil
-│   ├── review/       # SRS tekrar
-│   ├── shell/        # Bottom nav
-│   ├── speak/        # Konuşma oturumu
-│   └── translate/    # Çeviri
-├── state/session.dart  # Riverpod state
-└── ui/widgets.dart     # Ortak widgetlar
-```
+| # | İş | Durum |
+|---|---|---|
+| 1 | `flutter analyze` → 0 hata | ✅ |
+| 2 | `flutter test` → 35/35 | ✅ |
+| 3 | RevenueCat gerçek API key | ⏳ Store hesabı açılınca |
+| 4 | AdMob gerçek ad unit ID | ⏳ AdMob hesabı açılınca |
+| 5 | Keystore üret + imzala | ⏳ Release build |
+| 6 | `flutter build appbundle --release` | ⏳ |
+| 7 | Store screenshots + açıklama | ✅ Hazır |
+| 8 | Privacy policy URL | ✅ site/privacy.html |
 
 ---
 
-## 💡 YENİ SOHBETTE DEVAM
+## 💡 DEVAM İÇİN
 
 ```
 nura-app projesine devam et.
 GitHub: https://github.com/Frkn2009/nura-app
-docs/YAPILACAKLAR.md dosyasını oku.
-İşaretlenmemiş maddeleri sırayla yap, her birini bitirdikçe işaretle.
-Her değişikliği commit et ve GitHub'a push et.
-Git token: (token'ını buraya yaz)
-Supabase URL: https://qkhmtmwfwyscvtveiwui.supabase.co
-Supabase Key: sb_publishable_maEu9eoz4fuC_I17Vamrlg_NTtsjqzo
+docs/YAPILACAKLAR.md oku — 18 madde tamamlandı.
+Mağazaya çıkış için kalan: RevenueCat, AdMob, keystore, release build.
+Windows'ta test: C:\nura-app, PUB_CACHE=C:\pub-cache
 ```
-
----
-
-## ⚠️ KURALLAR
-
-1. **Telif yemeyelim** — tüm tasarımlar, oyun mekaniikleri, maskot özgün olacak
-2. **Kadın ses** — TTS her zaman kadın
-3. **30 dil** — hiçbir dil eksik kalmasın
-4. **Profesyonel** — mağaza kalitesinde, ciddi yazılım
-5. **Plus gelir** — video reklam Free'de, Plus'ta yok
-6. **Logo sol üst** — her sayfada görünsün
