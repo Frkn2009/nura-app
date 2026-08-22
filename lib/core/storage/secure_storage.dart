@@ -25,7 +25,10 @@ class SecureStorage {
     required String access,
     required String refresh,
   }) async {
-    debugPrint('[SecureStorage] hazır değil: flutter_secure_storage paketi eklenmedi');
+    debugPrint(
+      '[SecureStorage] hazır değil: flutter_secure_storage paketi eklenmedi '
+      '($_accessTokenKey/$_refreshTokenKey)',
+    );
   }
 
   Future<String?> getAccessToken() async => null;
