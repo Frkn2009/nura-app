@@ -1,48 +1,77 @@
 import 'package:flutter/material.dart';
 
-/// NURA marka token'ları — sakin, güvenilir ve profesyonel öğrenme ürünü.
-/// Renkler ve ölçüler doğrudan ekranlarda yeniden tanımlanmaz.
-class Nura {
-  // Marka: ciddi petrol yeşili + kontrollü sıcak vurgu.
-  static const mint = Color(0xFF147D76);
-  static const mintDark = Color(0xFF0D5955);
-  static const mintLight = Color(0xFFE1F1EF);
+/// NURA Tema Tokenleri — Duolingo/Drops tarzı canlı, oyunsu, samimi
+class NuraTokens {
+  NuraTokens._();
 
-  static const coral = Color(0xFFB95443);
-  static const peach = Color(0xFFF0B38E);
-  static const sunflower = Color(0xFFC99A2E);
+  // Arka plan
+  static const background = Color(0xFFF7F7F7);
+  static const surface = Colors.white;
 
-  static const lavender = Color(0xFF6E628F);
-  static const sky = Color(0xFF397C9E);
+  // Ana renkler
+  static const primary = Color(0xFF58CC02);     // Yeşil — başarı, devam
+  static const primaryDark = Color(0xFF46A302);
+  static const accent = Color(0xFF1CB0F6);       // Mavi — bilgi, AI
+  static const accentDark = Color(0xFF158DD0);
+  static const danger = Color(0xFFFF4B4B);       // Kırmızı — hata, kalp
+  static const gold = Color(0xFFFFC800);         // Altın — ödül, streak, çark
+  static const goldDark = Color(0xFFDBA800);
+  static const purple = Color(0xFF9B72CF);       // Mor — premium
 
-  // Soğuk nötrler, uzun öğrenme oturumlarında gözü yormaz.
-  static const snow = Color(0xFFF7F8F8);
-  static const cloud = Color(0xFFEEF1F2);
-  static const fog = Color(0xFFDDE3E4);
-  static const ink = Color(0xFF172528);
-  static const muted = Color(0xFF596A6E);
-  static const soft = Color(0xFF8B999C);
-  static const white = Color(0xFFFFFFFF);
+  // Metin
+  static const textPrimary = Color(0xFF3C3C3C);
+  static const textSecondary = Color(0xFF777777);
+  static const textOnPrimary = Colors.white;
 
-  // Anlamsal adlar ve geriye dönük uyumluluk.
-  static const cream = snow;
-  static const cream2 = cloud;
-  static const forest = mintDark;
-  static const forestMid = mint;
-  static const terr = coral;
-  static const terrSoft = peach;
+  // Gradient
+  static const heroGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF1CB0F6), Color(0xFF58CC02)],
+  );
+
+  // Radius
+  static const radiusSmall = 12.0;
+  static const radiusMedium = 20.0;
+  static const radiusLarge = 28.0;
+
+  // Spacing
+  static const padSmall = 8.0;
+  static const pad = 16.0;
+  static const padLarge = 24.0;
+
+  // Shadow
+  static List<BoxShadow> get softShadow => [
+    BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 14, offset: const Offset(0, 6)),
+  ];
+
+  // Eski isimlerin uyumluluğu — mevcut kod kırılmasın
+  static const mint = primary;
+  static const mintDark = primaryDark;
+  static const mintLight = Color(0xFFD4F5D0);
+  static const coral = danger;
+  static const peach = gold;
+  static const sunflower = gold;
+  static const lavender = purple;
+  static const sky = accent;
+  static const snow = background;
+  static const cloud = Color(0xFFF0F0F3);
+  static const fog = Color(0xFFE8E8ED);
+  static const ink = textPrimary;
+  static const muted = textSecondary;
+  static const soft = Color(0xFFB2BEC3);
+  static const terr = danger;
+  static const terrSoft = gold;
   static const line = fog;
   static const pale = mintLight;
-  static const card = white;
-
-  // Tek ölçü sistemi: küçük kontrol, standart kart, geniş yüzey.
-  static const radiusSm = 12.0;
-  static const radius = 16.0;
-  static const radiusLg = 24.0;
-
-  static const spaceXs = 4.0;
-  static const spaceSm = 8.0;
-  static const spaceMd = 16.0;
-  static const spaceLg = 24.0;
-  static const spaceXl = 32.0;
+  static const card = surface;
+  static const cream = background;
+  static const cream2 = cloud;
+  static const forest = primaryDark;
+  static const forestMid = primaryDark;
+  static const white = Colors.white;
+  static const radius = radiusMedium;
 }
+
+// Nura alias — eski kodla uyum
+typedef Nura = NuraTokens;
