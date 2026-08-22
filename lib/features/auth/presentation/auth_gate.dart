@@ -4,8 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/supabase_config.dart';
 import '../../../core/theme/tokens.dart';
 
+/// Misafir kullanım: 2 dakika inceleme süresi.
+/// Süre bitince oturum açma zorunlu; o cihazda bir daha
+/// misafir girişi açılmaz (SharedPreferences kilidi).
 class AuthGate extends StatefulWidget {
   final Widget child;
   const AuthGate({super.key, required this.child});
@@ -32,7 +36,9 @@ class _AuthGateState extends State<AuthGate> {
     final locked = prefs.getBool(_lockKey) ?? false;
     if (!mounted) return;
     setState(() => _locked = locked);
-    if (Supabase.instance.client.auth.currentUser != null) return;
+
+    // Oturum açmış kullanıcı her zaman içeri girer.
+    if (_hasUser) return;
     if (locked) {
       _goLogin();
       return;
@@ -45,6 +51,15 @@ class _AuthGateState extends State<AuthGate> {
         _goLogin();
       }
     });
+  }
+
+  bool get _hasUser {
+    if (!SupaConfig.isSet) return false;
+    try {
+      return Supabase.instance.client.auth.currentUser != null;
+    } catch (_) {
+      return false;
+    }
   }
 
   void _goLogin() {
@@ -61,8 +76,7 @@ class _AuthGateState extends State<AuthGate> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user != null) return widget.child;
+    if (_hasUser) return widget.child;
     if (_locked) return const SizedBox.shrink();
 
     return Stack(

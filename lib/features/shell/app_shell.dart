@@ -4,11 +4,21 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../state/session.dart';
+import '../../ui/mascot/nura_companion.dart';
 import '../../ui/widgets.dart';
 
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.child});
   final Widget child;
+
+  static const _mascotMessages = [
+    'Bugün de harika iş çıkarıyorsun! 💪',
+    'Çarkı çevirmeyi unutma! 🎡',
+    'Azimle öğrenen her şeyi başarır 🌟',
+    'Konuşma pratiği yapmayı unutma! 🎙️',
+    'Her gün 5 kelime, bir yılda binlerce! 📚',
+    'Nura seninle gurur duyuyor 🦊',
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,9 +30,17 @@ class AppShell extends ConsumerWidget {
     if (loc.startsWith('/app/translate')) index = 3;
     if (loc.startsWith('/app/you')) index = 4;
 
+    final mascotMsg = _mascotMessages[DateTime.now().day % _mascotMessages.length];
+
     return Scaffold(
       appBar: NuraAppBar(),
-      body: child,
+      body: Column(
+        children: [
+          Expanded(child: child),
+          // Maskot — her ekranda görünür, teşvik eder.
+          NuraCompanion(message: mascotMsg, compact: true),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,

@@ -13,6 +13,22 @@ class AlphabetScreen extends StatefulWidget {
   State<AlphabetScreen> createState() => _AlphabetScreenState();
 }
 
+const _langNames = <String, String>{
+  'ar': 'Arapça',
+  'ru': 'Rusça',
+  'ja': 'Japonca',
+  'ko': 'Korece',
+  'el': 'Yunanca',
+  'he': 'İbranice',
+  'hi': 'Hintçe',
+  'th': 'Tayca',
+  'en': 'İngilizce',
+  'es': 'İspanyolca',
+  'de': 'Almanca',
+  'fr': 'Fransızca',
+  'tr': 'Türkçe',
+};
+
 class _AlphabetScreenState extends State<AlphabetScreen> {
   final _learned = <String>{};
 
@@ -41,8 +57,10 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
   Widget build(BuildContext context) {
     final letters = AlphabetEngine.letters(widget.langCode);
     final progress = letters.isEmpty ? 0.0 : _learned.length / letters.length;
+    final langName = _langNames[widget.langCode] ?? widget.langCode.toUpperCase();
+    final isRtl = AlphabetData.isRtl(widget.langCode);
     return Scaffold(
-      appBar: AppBar(title: const Text('Alfabe')),
+      appBar: AppBar(title: Text('$langName Alfabesi')),
       body: Column(
         children: [
           NuraCompanion(
@@ -68,7 +86,11 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                 final done = _learned.contains(l.char);
                 return Card(
                   child: ListTile(
-                    leading: Text(l.char, style: const TextStyle(fontSize: 32)),
+                    leading: Text(
+                      l.char,
+                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
+                      textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                    ),
                     title: Text(l.name, style: GoogleFonts.nunito(fontWeight: FontWeight.w800)),
                     subtitle: Text('${l.soundLike} · ${l.example}'),
                     trailing: Row(

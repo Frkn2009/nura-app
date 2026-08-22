@@ -52,7 +52,7 @@ final GoRouter appRouter = GoRouter(
             GoRoute(path: 'alphabet/:langCode', builder: (_, state) => AlphabetScreen(langCode: state.pathParameters['langCode']!)),
             GoRoute(path: 'alphabet/:langCode/practice', builder: (_, state) => LetterPracticeScreen(word: 'ماء', langCode: state.pathParameters['langCode']!)),
             GoRoute(path: 'phrasebook', builder: (_, __) => const PhrasebookScreen()),
-            GoRoute(path: 'stories', builder: (_, __) => StoryReaderScreen(title: 'İlk Hikayem', words: ['Merhaba', 'Dünya'], langCode: 'tr')),
+            GoRoute(path: 'stories', builder: (_, __) => const EbookLibraryScreen()),
           ],
         ),
         
