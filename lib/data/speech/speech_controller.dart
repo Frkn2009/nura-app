@@ -219,13 +219,13 @@ class SpeechController {
 
     try {
       await _stt.listen(
-        localeId: localeOf(langCode),
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 3),
         listenOptions: SpeechListenOptions(
           partialResults: true,
           cancelOnError: true,
           listenMode: ListenMode.confirmation,
+          localeId: localeOf(langCode),
+          listenFor: const Duration(seconds: 30),
+          pauseFor: const Duration(seconds: 3),
         ),
         onResult: (result) {
           _buffer = result.recognizedWords;

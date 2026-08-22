@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/models/clan.dart';
 import '../../data/supabase/supa_service.dart';
-import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
 class ClanScreen extends ConsumerStatefulWidget {
@@ -105,9 +104,11 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         InkWell(
           onTap: () async {
             await Clipboard.setData(ClipboardData(text: clan.joinCode));
-            if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Davet kodu kopyalandı')),
-            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Davet kodu kopyalandı')),
+              );
+            }
           },
           child: Row(
             children: [
