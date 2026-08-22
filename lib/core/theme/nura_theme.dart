@@ -151,7 +151,7 @@ ThemeData buildNuraTheme({NuraAccent accent = NuraAccent.mint}) {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: scheme.error),
+        borderSide: BorderSide(color: scheme.error),
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
