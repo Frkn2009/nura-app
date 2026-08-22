@@ -2,17 +2,20 @@
 # `dart run flutter_native_splash:create` çalıştır.
 #
 # Bu dosya splash screen ayarlarını tanımlar.
+# Not: Android/iOS splash varlıkları scripts/generate_brand_assets.py ile
+# elle üretildiği için bu paket şu an gerekli değildir; ayarlar kaynak
+# olarak tutulur.
 
 flutter_native_splash:
-  color: "#0F3D32"
+  color: "#0D5955"
   image: assets/splash_logo.png
   android: true
   ios: true
   web: true
 
   android_12:
-    color: "#0F3D32"
+    color: "#0D5955"
     image: assets/splash_logo.png
 
-  color_dark: "#0F3D32"
+  color_dark: "#0D5955"
   image_dark: assets/splash_logo.png

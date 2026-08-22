@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- NURA marka rengi: lib/core/theme/tokens.dart Nura.mintDark -->
+    <color name="nura_brand">#0D5955</color>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NURA işareti: beyaz N çizgisi + coral nokta (brand.dart NuraMark ile aynı). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M40.1,70.5 L40.1,37.5 L67.9,70.5 L67.9,37.5"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="6.9"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M72.5,34.2 m-3.6,0 a3.6,3.6 0 1,1 7.2,0 a3.6,3.6 0 1,1 -7.2,0"
+        android:fillColor="#B95443" />
+</vector>

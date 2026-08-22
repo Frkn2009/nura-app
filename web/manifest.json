@@ -3,7 +3,7 @@
   "short_name": "NURA",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#FAFAFA",
+  "background_color": "#0D5955",
   "theme_color": "#0D5955",
   "description": "NURA — konuşarak dil öğren.",
   "orientation": "portrait-primary",
