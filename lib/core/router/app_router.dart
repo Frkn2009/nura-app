@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/achievements/achievements_screen.dart';
+import '../../features/alphabet/alphabet_screen.dart';
+import '../../features/games/daily_wheel_screen.dart';
 import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/clips/clips_screen.dart';
@@ -42,6 +44,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/family', parentNavigatorKey: _root, builder: (_, __) => const FamilyProfilesScreen()),
       GoRoute(path: '/clan', parentNavigatorKey: _root, builder: (_, __) => const ClanScreen()),
       GoRoute(path: '/achievements', parentNavigatorKey: _root, builder: (_, __) => const AchievementsScreen()),
+      GoRoute(path: '/alphabet', parentNavigatorKey: _root, builder: (_, s) => AlphabetScreen(languageCode: s.uri.queryParameters['lang'] ?? 'en')),
+      GoRoute(path: '/wheel', parentNavigatorKey: _root, builder: (_, __) => const DailyWheelScreen()),
       GoRoute(path: '/privacy', parentNavigatorKey: _root, builder: (_, __) => const PrivacyScreen()),
       GoRoute(path: '/auth', parentNavigatorKey: _root, builder: (_, __) => const AuthScreen()),
       GoRoute(
