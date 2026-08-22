@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/i18n.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
 import '../../features/guide/language_guide_screen.dart';
@@ -98,7 +99,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _native(i18n, UserProfile p) {
+  Widget _native(I18n i18n, UserProfile p) {
     return ListView(
       children: [
         Text(i18n.nativeTitle, style: Theme.of(context).textTheme.displayMedium),
@@ -115,7 +116,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _learn(i18n, UserProfile p) {
+  Widget _learn(I18n i18n, UserProfile p) {
     return ListView(
       children: [
         Text(i18n.learnTitle, style: Theme.of(context).textTheme.displayMedium),
@@ -133,7 +134,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _why(i18n, UserProfile p) {
+  Widget _why(I18n i18n, UserProfile p) {
     return ListView(
       children: [
         Text(i18n.whyTitle, style: Theme.of(context).textTheme.displayMedium),
@@ -148,7 +149,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _level(i18n, UserProfile p) {
+  Widget _level(I18n i18n, UserProfile p) {
     const labels = {
       Cefr.a1: 'A1 · sıfır / temel',
       Cefr.a2: 'A2 · günlük cümleler',

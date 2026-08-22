@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/l10n/i18n.dart';
 import '../../core/theme/tokens.dart';
+import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
 enum LegalType { privacy, terms }
