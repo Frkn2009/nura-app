@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'nura_theme.dart';
 import 'tokens.dart';
 
 ThemeData buildNuraDarkTheme() {
@@ -27,7 +26,7 @@ ThemeData buildNuraDarkTheme() {
     displayColor: scheme.onSurface,
   );
   final shape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Nura.radius),
+    borderRadius: BorderRadius.circular(20),
   );
   return base.copyWith(
     brightness: Brightness.dark,
@@ -48,18 +47,18 @@ ThemeData buildNuraDarkTheme() {
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(20),
         side: BorderSide(color: scheme.outlineVariant),
       ),
     ),
     inputDecorationTheme: base.inputDecorationTheme.copyWith(
       fillColor: scheme.surface,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: scheme.outlineVariant),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: scheme.primary, width: 1.5),
       ),
     ),
@@ -77,7 +76,7 @@ ThemeData buildNuraDarkTheme() {
       backgroundColor: scheme.surface,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radiusLg),
+        borderRadius: BorderRadius.circular(24),
       ),
     ),
     bottomSheetTheme: BottomSheetThemeData(

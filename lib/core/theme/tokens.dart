@@ -34,7 +34,44 @@ class NuraTokens {
   static const Color softGold = Color(0xFFFFF6D6);
   static const Color softCoral = Color(0xFFFFEBEB);
   static const Color softPurple = Color(0xFFF0E9FA);
+
+  // ── ESKİ EKRAN UYUMLULUĞU (eski `Nura` paleti) ───────────
+  // Mevcut ekranlar (başarım, reklam, klan, oyun vb.) hâlâ eski
+  // isimleri kullanıyor; derleme kırılmasın diye korunuyor.
+  // Yeni kod NuraTokens üzerinden yazılır; eski ekranlar
+  // zamanla yeni isimlere geçirilir.
+  static const mint = primary;
+  static const mintDark = primaryDark;
+  static const mintLight = Color(0xFFD4F5D0);
+  static const coral = danger;
+  static const peach = gold;
+  static const sunflower = gold;
+  static const lavender = purple;
+  static const sky = accent;
+  static const snow = background;
+  static const cloud = Color(0xFFF0F0F3);
+  static const fog = Color(0xFFE8E8ED);
+  static const ink = textPrimary;
+  static const soft = Color(0xFFB2BEC3);
+  static const terr = danger;
+  static const terrSoft = gold;
+  static const line = fog;
+  static const pale = mintLight;
+  static const card = surface;
+  static const cream = background;
+  static const cream2 = cloud;
+  static const forest = primaryDark;
+  static const forestMid = primaryDark;
+  static const white = Colors.white;
+
+  // Radius — eski isimler
+  static const radiusSm = 12.0;
+  static const radius = 20.0;
+  static const radiusLg = 28.0;
 }
+
+/// Eski kod uyumu — mevcut ekranlar `Nura.` ile erişir.
+typedef Nura = NuraTokens;
 
 /// Gradyanlar — kutlama, ödül ve vurgu anları için.
 class NuraGradients {
