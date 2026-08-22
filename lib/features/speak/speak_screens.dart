@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/ads/ad_service.dart';
@@ -159,10 +162,29 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
           'Mikrofon izni kapalı. Telefon ayarlarından NURA için mikrofonu aç.',
         SpeechAvailability.permissionDenied =>
           'Konuşabilmek için mikrofon izni vermen gerekiyor.',
-        SpeechAvailability.unavailable =>
-          'Bu cihazda konuşma tanıma kullanılamıyor. Telefonda tekrar dene.',
+        SpeechAvailability.unavailable => kIsWeb
+            ? 'Web tarayıcında mikrofon kısıtlı olabilir. Chrome’da ve telefonda tam çalışır.'
+            : 'Bu cihazda konuşma tanıma kullanılamıyor. Telefonda tekrar dene.',
         _ => 'Mikrofon başlatılamadı. Lütfen tekrar dene.',
       };
+
+  Future<void> _showMicDeniedSheet() async {
+    if (!mounted) return;
+    final isPermanentlyDenied =
+        speech.availability == SpeechAvailability.permissionPermanentlyDenied;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(_microphoneMessage()),
+        action: isPermanentlyDenied && !kIsWeb
+            ? SnackBarAction(
+                label: 'Ayarları aç',
+                onPressed: () => openAppSettings(),
+              )
+            : null,
+        duration: const Duration(seconds: 4),
+      ),
+    );
+  }
 
   Future<void> _down() async {
     final p = ref.read(sessionProvider);
@@ -178,6 +200,14 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         heard = '';
       });
     }
+
+    // Titreşim — basılı tut hissi, profesyonel geri bildirim.
+    try {
+      await HapticFeedback.lightImpact();
+    } catch (_) {}
+
+    // Dinlemeden önce TTS’i durdur, kadın ses çakışmasın.
+    await speech.stopSpeak();
 
     final started = await speech.startListen(
       langCode: scene.lang.code,
@@ -208,9 +238,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         holding = false;
         _speechReady = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(_microphoneMessage())),
-      );
+      await _showMicDeniedSheet();
+      // İzin reddedildiyse bir kez daha warmUp dene (kullanıcı ayar değiştirmiş olabilir).
+      if (speech.availability == SpeechAvailability.permissionDenied) {
+        await _prepareSpeech();
+      }
       return;
     }
     if (mounted) {
@@ -224,6 +256,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   Future<void> _up() async {
     _pressActive = false;
     if (!holding) return;
+    try {
+      await HapticFeedback.mediumImpact();
+    } catch (_) {}
     final text = await speech.stopListen();
     final recognized = text.isEmpty ? heard : text;
     final assessment = speech.assessPronunciation(
@@ -246,6 +281,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
       await ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
       if (result >= 70) {
         await ref.read(sessionProvider.notifier).awardXp(10);
+      }
+    } else {
+      // Boş tanıma — kullanıcıya tekrar dene ipucu.
+      if (mounted) {
+        setState(() => pronunciationFeedback = 'Ses algılanamadı. Biraz daha yüksek sesle, mikrofonu yakın tutarak tekrar dene.');
       }
     }
   }
@@ -412,33 +452,110 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       : (turn < scene.turns.length - 1 ? i18n.continueCta : 'Bitir')),
                 ),
               ] else if (step == _Step.speak) ...[
-                GestureDetector(
-                  onLongPressStart: (_) => _down(),
-                  onLongPressEnd: (_) => _up(),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 160),
-                    width: holding ? 96 : 84,
-                    height: holding ? 96 : 84,
-                    decoration: BoxDecoration(
-                      color: Nura.cream,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Nura.terr, width: 4),
-                      boxShadow: holding ? [BoxShadow(color: Nura.terr.withValues(alpha: 0.45), blurRadius: 24)] : null,
+                // Profesyonel konuş butonu: basılı tut → konuş → bırak → skor.
+                // Kadın ses her zaman, izin akışı net, haptik geri bildirim var.
+                Semantics(
+                  button: true,
+                  label: i18n.holdToSpeak,
+                  hint: 'Mikrofonu açmak için basılı tut',
+                  child: GestureDetector(
+                    onLongPressStart: (_) => _down(),
+                    onLongPressEnd: (_) => _up(),
+                    onLongPressCancel: () => _up(),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Nabız animasyonu — kayıt sırasında.
+                        if (holding)
+                          ...List.generate(2, (i) {
+                            return AnimatedContainer(
+                              duration: Duration(milliseconds: 600 + i * 200),
+                              width: 84 + (holdSec % 3) * 12 + i * 18,
+                              height: 84 + (holdSec % 3) * 12 + i * 18,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Nura.terr.withValues(alpha: .22 - i * .08),
+                                  width: 2,
+                                ),
+                              ),
+                            );
+                          }),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 160),
+                          width: holding ? 96 : 84,
+                          height: holding ? 96 : 84,
+                          decoration: BoxDecoration(
+                            color: Nura.cream,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Nura.terr, width: 4),
+                            boxShadow: holding
+                                ? [
+                                    BoxShadow(
+                                      color: Nura.terr.withValues(alpha: 0.45),
+                                      blurRadius: 24,
+                                      spreadRadius: 2,
+                                    )
+                                  ]
+                                : [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: .12),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 4),
+                                    )
+                                  ],
+                          ),
+                          child: Icon(
+                            holding ? Icons.mic_rounded : Icons.mic_none_rounded,
+                            color: Nura.terr,
+                            size: holding ? 38 : 32,
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Icon(Icons.mic, color: Nura.terr, size: holding ? 38 : 32),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  holding
-                      ? '${holdSec}s · dinliyorum'
-                      : (_speechReady ? i18n.holdToSpeak : 'Basılı tut · mikrofon izni istenecek'),
-                  style: const TextStyle(color: Nura.muted),
+                const SizedBox(height: 14),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: Text(
+                    holding
+                        ? '${holdSec}s · dinliyorum · bırakınca skor'
+                        : (_speechReady
+                            ? i18n.holdToSpeak
+                            : 'Basılı tut · mikrofon izni istenecek'),
+                    key: ValueKey(holding),
+                    style: TextStyle(
+                      color: holding ? Nura.terrSoft : Nura.muted,
+                      fontWeight: holding ? FontWeight.w600 : FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 if (heard.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(heard, textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted, fontSize: 13)),
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Nura.mintDark,
+                        borderRadius: BorderRadius.circular(Nura.radius),
+                      ),
+                      child: Text(
+                        heard,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Nura.cream, fontSize: 13, height: 1.35),
+                      ),
+                    ),
+                  ),
+                if (!kIsWeb && speech.availability == SpeechAvailability.permissionPermanentlyDenied)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: OutlinedButton.icon(
+                      onPressed: () => openAppSettings(),
+                      icon: const Icon(Icons.settings_outlined, size: 18),
+                      label: const Text('Mikrofon iznini aç'),
+                    ),
                   ),
               ] else
                 FilledButton(

@@ -38,11 +38,13 @@ class _NuraMarkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    final radius = Radius.circular(size.width * .30);
+    // %30 radius — iOS/Android adaptive icon uyumlu, telif bağımsız özgün form.
+    final radius = Radius.circular(size.width * .28);
     final background = Paint()..color = onDark ? Colors.white : Nura.mintDark;
     canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), background);
 
-    final stroke = size.width * .105;
+    // N harfi: yuvarlatılmış kalın çizgi, profesyonel ve okunaklı.
+    final stroke = size.width * .13;
     final line = Paint()
       ..color = onDark ? Nura.mintDark : Colors.white
       ..style = PaintingStyle.stroke
@@ -50,10 +52,10 @@ class _NuraMarkPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
-    final leftX = size.width * .29;
-    final rightX = size.width * .71;
-    final top = size.height * .25;
-    final bottom = size.height * .75;
+    final leftX = size.width * .28;
+    final rightX = size.width * .72;
+    final top = size.height * .24;
+    final bottom = size.height * .76;
     final n = Path()
       ..moveTo(leftX, bottom)
       ..lineTo(leftX, top)
@@ -61,9 +63,10 @@ class _NuraMarkPainter extends CustomPainter {
       ..lineTo(rightX, top);
     canvas.drawPath(n, line);
 
+    // Turuncu vurgu noktası — konuşma balonu / kayıt iması, telifsiz.
     canvas.drawCircle(
       Offset(size.width * .78, size.height * .20),
-      size.width * .055,
+      size.width * .065,
       Paint()..color = Nura.coral,
     );
   }
@@ -111,6 +114,8 @@ class NuraWordmark extends StatelessWidget {
 }
 
 /// Tüm sayfalarda marka görünürlüğünü ve başlık düzenini standartlaştırır.
+/// Sol üstte her zaman NURA logosu bulunur — geri butonu varsa bile logo
+/// başlık alanında korunur.
 class NuraAppBar extends AppBar {
   NuraAppBar({
     super.key,
@@ -120,12 +125,14 @@ class NuraAppBar extends AppBar {
     super.backgroundColor,
     super.foregroundColor,
     super.automaticallyImplyLeading,
+    super.centerTitle,
   }) : super(
           titleSpacing: 16,
           title: _NuraAppBarTitle(
             pageTitle: pageTitle,
             onDark: backgroundColor == Nura.forest ||
-                backgroundColor == Nura.mintDark,
+                backgroundColor == Nura.mintDark ||
+                backgroundColor == const Color(0xFF0F3D32),
           ),
         );
 }
@@ -138,9 +145,11 @@ class _NuraAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final useDarkMark = onDark || Theme.of(context).brightness == Brightness.dark;
+    final useDarkMark =
+        onDark || Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
+        // Sol üstte sabit NURA logosu — profesyonel mağaza standardı.
         NuraWordmark(onDark: useDarkMark, compact: true),
         if (pageTitle != null) ...[
           Container(
@@ -162,4 +171,14 @@ class _NuraAppBarTitle extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Uygulama ikonu için kullanılabilecek büyük logo kartı (splash/onboarding).
+class NuraLogoCard extends StatelessWidget {
+  const NuraLogoCard({super.key, this.size = 96, this.onDark = false});
+  final double size;
+  final bool onDark;
+
+  @override
+  Widget build(BuildContext context) => NuraMark(size: size, onDark: onDark);
 }
