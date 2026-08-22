@@ -14,4 +14,12 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: flutter analyze
-      - run: flutter test
+      - name: Test
+        run: |
+          set -o pipefail
+          flutter test 2>&1 | tee test-output.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-output
+          path: test-output.log
