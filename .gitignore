@@ -50,3 +50,4 @@ app.*.map.json
 # Server-side Supabase/translation secrets
 /supabase/.env
 /supabase/functions/.env
+.github/workflows/
