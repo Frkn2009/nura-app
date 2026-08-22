@@ -1,77 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-/// NURA Tema Tokenleri — Duolingo/Drops tarzı canlı, oyunsu, samimi
 class NuraTokens {
-  NuraTokens._();
-
-  // Arka plan
-  static const background = Color(0xFFF7F7F7);
-  static const surface = Colors.white;
-
-  // Ana renkler
-  static const primary = Color(0xFF58CC02);     // Yeşil — başarı, devam
-  static const primaryDark = Color(0xFF46A302);
-  static const accent = Color(0xFF1CB0F6);       // Mavi — bilgi, AI
-  static const accentDark = Color(0xFF158DD0);
-  static const danger = Color(0xFFFF4B4B);       // Kırmızı — hata, kalp
-  static const gold = Color(0xFFFFC800);         // Altın — ödül, streak, çark
-  static const goldDark = Color(0xFFDBA800);
-  static const purple = Color(0xFF9B72CF);       // Mor — premium
-
-  // Metin
-  static const textPrimary = Color(0xFF3C3C3C);
-  static const textSecondary = Color(0xFF777777);
-  static const textOnPrimary = Colors.white;
-
-  // Gradient
-  static const heroGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0xFF1CB0F6), Color(0xFF58CC02)],
-  );
-
-  // Radius
-  static const radiusSmall = 12.0;
-  static const radiusMedium = 20.0;
-  static const radiusLarge = 28.0;
-
-  // Spacing
-  static const padSmall = 8.0;
-  static const pad = 16.0;
-  static const padLarge = 24.0;
-
-  // Shadow
-  static List<BoxShadow> get softShadow => [
-    BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 14, offset: const Offset(0, 6)),
-  ];
-
-  // Eski isimlerin uyumluluğu — mevcut kod kırılmasın
-  static const mint = primary;
-  static const mintDark = primaryDark;
-  static const mintLight = Color(0xFFD4F5D0);
-  static const coral = danger;
-  static const peach = gold;
-  static const sunflower = gold;
-  static const lavender = purple;
-  static const sky = accent;
-  static const snow = background;
-  static const cloud = Color(0xFFF0F0F3);
-  static const fog = Color(0xFFE8E8ED);
-  static const ink = textPrimary;
-  static const muted = textSecondary;
-  static const soft = Color(0xFFB2BEC3);
-  static const terr = danger;
-  static const terrSoft = gold;
-  static const line = fog;
-  static const pale = mintLight;
-  static const card = surface;
-  static const cream = background;
-  static const cream2 = cloud;
-  static const forest = primaryDark;
-  static const forestMid = primaryDark;
-  static const white = Colors.white;
-  static const radius = radiusMedium;
+  static const Color bg = Color(0xFFF7F7F7);
+  static const Color primary = Color(0xFF58CC02);
+  static const Color accent = Color(0xFF1CB0F6);
+  static const Color danger = Color(0xFFFF4B4B);
+  static const Color gold = Color(0xFFFFC800);
+  static const Color textDark = Color(0xFF3C3C3C);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color muted = Color(0xFF777777);
 }
 
-// Nura alias — eski kodla uyum
-typedef Nura = NuraTokens;
+ThemeData buildNuraTheme() {
+  final base = GoogleFonts.nunitoTextTheme().apply(
+    bodyColor: NuraTokens.textDark,
+    displayColor: NuraTokens.textDark,
+  );
+  return ThemeData(
+    useMaterial3: true,
+    scaffoldBackgroundColor: NuraTokens.bg,
+    colorScheme: const ColorScheme.light(
+      primary: NuraTokens.primary,
+      secondary: NuraTokens.accent,
+      error: NuraTokens.danger,
+      surface: NuraTokens.surface,
+    ),
+    textTheme: base,
+    appBarTheme: AppBarTheme(
+      backgroundColor: NuraTokens.bg,
+      elevation: 0,
+      centerTitle: true,
+      titleTextStyle: GoogleFonts.nunito(
+        fontSize: 20,
+        fontWeight: FontWeight.w800,
+        color: NuraTokens.textDark,
+      ),
+      iconTheme: const IconThemeData(color: NuraTokens.textDark),
+    ),
+    cardTheme: CardThemeData(
+      color: NuraTokens.surface,
+      elevation: 3,
+      shadowColor: Colors.black.withValues(alpha: 0.08),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: NuraTokens.primary,
+        foregroundColor: Colors.white,
+        minimumSize: const Size.fromHeight(56),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        textStyle: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.w800),
+      ),
+    ),
+  );
+}

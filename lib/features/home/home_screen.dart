@@ -1,269 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/tokens.dart';
-import '../../data/content/catalog.dart';
-import '../../data/events/weekly_event.dart';
-import '../../data/models/models.dart';
-import '../../state/session.dart';
-import '../../ui/widgets.dart';
+import '../../ui/mascot/nura_companion.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final i18n = ref.watch(i18nProvider);
-    final p = ref.watch(sessionProvider);
-    final scene = ref.read(sessionProvider.notifier).todayScenario();
-    final remain = p.remainingSpeakSeconds();
-    final list = Catalog.forLang(p.learnLang);
-    final idx = list.indexWhere((s) => s.id == scene.id);
-
-    return SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
-        children: [
-          Text(i18n.goodGreeting, style: const TextStyle(color: Nura.forest, fontWeight: FontWeight.w500)),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Day ${p.streak.clamp(1, 999)} · ${i18n.minutesLeft((p.dailyGoalMin).clamp(1, 60))}',
-                  style: Theme.of(context).textTheme.displayMedium,
-                ),
-              ),
-              if (p.streak >= 2) ...[
-                const NuraMascot(size: 48, mood: MascotMood.streak),
-                const SizedBox(width: 6),
-              ],
-              SizedBox(
-                width: 64,
-                height: 64,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      value: p.isPlus ? 1 : (p.speakAllowance == 0 ? 0 : remain / p.speakAllowance),
-                      color: Nura.terr,
-                      backgroundColor: Nura.line,
-                      strokeWidth: 5,
-                    ),
-                    Text(p.isPlus ? '∞' : '${remain}s', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          NuraCard(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.bolt_rounded, color: Nura.sunflower),
-                    const SizedBox(width: 8),
-                    Text('${p.totalXp} XP', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17)),
-                    const Spacer(),
-                    Text(p.xpRank.label, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w600)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                LinearProgressIndicator(value: p.dailyXpProgress),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    Text('Bugün ${p.dailyXp} / ${UserProfile.dailyXpGoal} XP', style: const TextStyle(color: Nura.muted, fontSize: 12)),
-                    const Spacer(),
-                    Text(p.dailyXp >= UserProfile.dailyXpGoal ? 'Hedef tamamlandı' : '${UserProfile.dailyXpGoal - p.dailyXp} XP kaldı',
-                        style: const TextStyle(color: Nura.muted, fontSize: 12)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          NuraCard(
-            onTap: () => context.push('/event'),
-            color: const Color(0xFFF5E8E5),
-            child: Row(
-              children: [
-                const Icon(Icons.bolt_rounded, color: Nura.coral, size: 28),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(WeeklyEvent.current().title, style: const TextStyle(fontWeight: FontWeight.w700)),
-                      Text(
-                        WeeklyEvent.current().isJoined(p) ? 'Katıldın · İspanyolca pratik yap' : 'Video ile katıl · bu hafta',
-                        style: const TextStyle(color: Nura.muted, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(Icons.chevron_right, color: Nura.coral),
-              ],
-            ),
-          ),
-          const SizedBox(height: 18),
-          Container(
-            padding: const EdgeInsets.all(22),
-            decoration: BoxDecoration(
-              color: Nura.forest,
-              borderRadius: BorderRadius.circular(Nura.radiusLg),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(i18n.todaySpeak, style: const TextStyle(color: Nura.cream, fontSize: 22, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 8),
-                Text(
-                  '${scene.minutes} dk · ${scene.title(p.uiLang)}',
-                  style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 15),
-                ),
-                const SizedBox(height: 18),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Nura.terr,
-                      foregroundColor: Nura.cream,
-                      minimumSize: const Size(160, 44),
-                    ),
-                    onPressed: () => context.push('/session?id=${scene.id}'),
-                    child: Text(i18n.startSpeak),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 22),
-          SizedBox(
-            height: 92,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: list.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 14),
-              itemBuilder: (_, i) {
-                final s = list[i];
-                final current = s.id == scene.id;
-                return Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: i < idx
-                          ? Nura.forest
-                          : current
-                              ? Nura.terr
-                              : Nura.line,
-                      child: i < idx
-                          ? const Icon(Icons.check, size: 16, color: Nura.cream)
-                          : Text('${i + 1}', style: TextStyle(color: current ? Nura.cream : Nura.ink, fontSize: 12)),
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: 72,
-                      child: Text(
-                        s.title(p.uiLang),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 11, color: current ? Nura.terr : Nura.muted),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(i18n.progress, style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              _stat(Icons.local_fire_department, '${p.streak}', i18n.streak, Nura.terr),
-              _stat(Icons.public, p.cefr.name.toUpperCase(), 'CEFR', Nura.forest),
-              _stat(Icons.menu_book_outlined, '${p.phrasesKnown}', i18n.phrases, Nura.forest),
-            ],
-          ),
-          const SizedBox(height: 16),
-          NuraCard(
-            onTap: () => context.push('/leaderboard'),
-            child: const Row(
-              children: [
-                Icon(Icons.leaderboard_outlined, color: Nura.mintDark),
-                SizedBox(width: 12),
-                Expanded(child: Text('Haftalık sıralama', style: TextStyle(fontWeight: FontWeight.w600))),
-                Icon(Icons.chevron_right, color: Nura.soft),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          NuraCard(
-            onTap: () => context.push('/guide'),
-            child: Row(
-              children: [
-                Text(p.learnLang.flag(), style: const TextStyle(fontSize: 22)),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    i18n.pronunciationGuide(p.learnLang.label(p.uiLang)),
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
-                  ),
-                ),
-                const Icon(Icons.chevron_right, color: Nura.soft),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          NuraCard(
-            onTap: () => context.push('/review'),
-            child: Row(
-              children: [
-                const Icon(Icons.replay, color: Nura.forest),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    '${i18n.review} · ${i18n.reviewReady(ref.read(sessionProvider.notifier).duePhrases().length)}',
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
-                  ),
-                ),
-                const Icon(Icons.chevron_right, color: Nura.soft),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          NuraCard(
-            child: Row(
-              children: [
-                const Icon(Icons.campaign_outlined, color: Nura.terr),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    p.isPlus ? 'Plus · reklamsız, sınırsız konuşma' : i18n.freeMinute,
-                    style: const TextStyle(fontWeight: FontWeight.w500, color: Nura.ink),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _stat(IconData ic, String v, String l, Color c) {
-    return Expanded(
-      child: NuraCard(
-        child: Column(
+  Widget build(BuildContext context) {
+    final hour = DateTime.now().hour;
+    final hi = hour < 12 ? 'Günaydın' : hour < 18 ? 'İyi günler' : 'İyi akşamlar';
+    return Scaffold(
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(20),
           children: [
-            Icon(ic, color: c, size: 20),
-            const SizedBox(height: 6),
-            Text(v, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: c)),
-            Text(l, style: const TextStyle(fontSize: 12, color: Nura.muted)),
+            Text('NURA', style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.w900, color: NuraTokens.primary)),
+            Text('$hi 🌟', style: GoogleFonts.nunito(fontSize: 30, fontWeight: FontWeight.w900)),
+            const NuraCompanion(message: 'Önce alfabeyi bitir, sonra çarkı çevir.', state: MascotState.encourage),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.local_fire_department, color: NuraTokens.danger, size: 36),
+                title: Text('Günlük hedef', style: GoogleFonts.nunito(fontWeight: FontWeight.w800)),
+                subtitle: const LinearProgressIndicator(value: 0.4, color: NuraTokens.primary),
+              ),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(onPressed: () => context.push('/path'), child: const Text('Yol haritası')),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: NuraTokens.gold, foregroundColor: NuraTokens.textDark),
+              onPressed: () => context.push('/wheel'),
+              child: const Text('Günlük çark'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton(onPressed: () => context.push('/stories'), child: const Text('Hikayeler')),
+            const SizedBox(height: 8),
+            OutlinedButton(onPressed: () => context.push('/chest'), child: const Text('Hazine')),
           ],
         ),
       ),
