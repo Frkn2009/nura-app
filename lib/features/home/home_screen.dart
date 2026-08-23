@@ -302,7 +302,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           NuraCard(
-            onTap: () => context.push('/chat'),
+            onTap: () => context.go('/app/chat'),
             child: Row(
               children: [
                 const Icon(Icons.forum_outlined, color: Nura.forest),

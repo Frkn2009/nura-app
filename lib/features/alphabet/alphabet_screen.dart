@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/tokens.dart';
+import '../../ui/widgets.dart';
 import 'alphabet_engine.dart';
 
 class AlphabetScreen extends StatefulWidget {
@@ -47,8 +48,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
         : _learned.length / _alphabet.letters.length;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
+      appBar: NuraAppBar(
+        pageTitle: Text(
           _alphabet.name,
           style: const TextStyle(fontWeight: FontWeight.w800),
         ),

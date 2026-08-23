@@ -17,8 +17,9 @@ class AppShell extends ConsumerWidget {
     int index = 0;
     if (loc.startsWith('/app/speak')) index = 1;
     if (loc.startsWith('/app/games')) index = 2;
-    if (loc.startsWith('/app/translate')) index = 3;
-    if (loc.startsWith('/app/you')) index = 4;
+    if (loc.startsWith('/app/chat')) index = 3;
+    if (loc.startsWith('/app/translate')) index = 4;
+    if (loc.startsWith('/app/you')) index = 5;
 
     return Scaffold(
       appBar: NuraAppBar(),
@@ -33,6 +34,7 @@ class AppShell extends ConsumerWidget {
             '/app',
             '/app/speak',
             '/app/games',
+            '/app/chat',
             '/app/translate',
             '/app/you',
           ];
@@ -53,6 +55,11 @@ class AppShell extends ConsumerWidget {
             icon: Icon(Icons.sports_esports_outlined),
             selectedIcon: Icon(Icons.sports_esports, color: Nura.coral),
             label: 'Oyun',
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.forum_outlined),
+            selectedIcon: Icon(Icons.forum, color: Nura.coral),
+            label: 'Sohbet',
           ),
           NavigationDestination(
             icon: const Icon(Icons.translate_outlined),

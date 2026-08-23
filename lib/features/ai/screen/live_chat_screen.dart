@@ -130,138 +130,132 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   Widget build(BuildContext context) {
     final p = ref.watch(sessionProvider);
     if (!p.isPlus) {
-      return Scaffold(
-        appBar: NuraAppBar(pageTitle: const Text('Serbest Sohbet')),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(28),
-            child: NuraCard(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.forum_outlined,
-                    size: 48,
-                    color: Nura.mintDark,
-                  ),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Nura ile serbest konuş',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Script yok, kural yok — gerçek zamanlı serbest sohbet Plus üyelere özel.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Nura.muted),
-                  ),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: () => context.push('/paywall'),
-                    child: const Text('Plus\'a geç'),
-                  ),
-                ],
-              ),
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(28),
+          child: NuraCard(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.forum_outlined,
+                  size: 48,
+                  color: Nura.mintDark,
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Nura ile serbest konuş',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Script yok, kural yok — gerçek zamanlı serbest sohbet Plus üyelere özel.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Nura.muted),
+                ),
+                const SizedBox(height: 16),
+                FilledButton(
+                  onPressed: () => context.push('/paywall'),
+                  child: const Text('Plus\'a geç'),
+                ),
+              ],
             ),
           ),
         ),
       );
     }
 
-    return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Serbest Sohbet')),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _messages.isEmpty
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(28),
-                        child: Text(
-                          '${p.learnLang.label(p.uiLang)} pratiği için bir şeyler yaz veya mikrofona konuş.',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Nura.muted),
-                        ),
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: _messages.isEmpty
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(28),
+                      child: Text(
+                        '${p.learnLang.label(p.uiLang)} pratiği için bir şeyler yaz veya mikrofona konuş.',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Nura.muted),
                       ),
-                    )
-                  : ListView.builder(
-                      controller: _scroll,
-                      padding: const EdgeInsets.all(16),
-                      itemCount: _messages.length,
-                      itemBuilder: (_, i) {
-                        final m = _messages[i];
-                        return Align(
-                          alignment: m.fromUser
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          child: Container(
-                            constraints: const BoxConstraints(maxWidth: 280),
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: m.fromUser ? Nura.mintDark : Nura.cloud,
-                              borderRadius: BorderRadius.circular(Nura.radius),
-                            ),
-                            child: Text(
-                              m.text,
-                              style: TextStyle(
-                                color: m.fromUser ? Colors.white : Nura.ink,
-                              ),
+                    ),
+                  )
+                : ListView.builder(
+                    controller: _scroll,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _messages.length,
+                    itemBuilder: (_, i) {
+                      final m = _messages[i];
+                      return Align(
+                        alignment: m.fromUser
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 280),
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: m.fromUser ? Nura.mintDark : Nura.cloud,
+                            borderRadius: BorderRadius.circular(Nura.radius),
+                          ),
+                          child: Text(
+                            m.text,
+                            style: TextStyle(
+                              color: m.fromUser ? Colors.white : Nura.ink,
                             ),
                           ),
-                        );
-                      },
-                    ),
-            ),
-            if (_error != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(_error!, style: const TextStyle(color: Nura.coral)),
-              ),
-            SafeArea(
-              top: false,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => _toggleMic(p.learnLang.code),
-                      icon: Icon(
-                        _listening ? Icons.mic : Icons.mic_none,
-                        color: _listening ? Nura.coral : Nura.mintDark,
-                      ),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: _input,
-                        decoration: const InputDecoration(
-                          hintText: 'Bir şey yaz...',
                         ),
-                        onSubmitted: (_) => _send(),
+                      );
+                    },
+                  ),
+          ),
+          if (_error != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(_error!, style: const TextStyle(color: Nura.coral)),
+            ),
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => _toggleMic(p.learnLang.code),
+                    icon: Icon(
+                      _listening ? Icons.mic : Icons.mic_none,
+                      color: _listening ? Nura.coral : Nura.mintDark,
+                    ),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _input,
+                      decoration: const InputDecoration(
+                        hintText: 'Bir şey yaz...',
                       ),
+                      onSubmitted: (_) => _send(),
                     ),
-                    const SizedBox(width: 8),
-                    IconButton.filled(
-                      onPressed: _sending ? null : _send,
-                      icon: _sending
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.send),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton.filled(
+                    onPressed: _sending ? null : _send,
+                    icon: _sending
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.send),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

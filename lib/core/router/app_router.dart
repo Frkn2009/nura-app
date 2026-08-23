@@ -97,11 +97,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const DailyWheelScreen(),
       ),
       GoRoute(
-        path: '/chat',
-        parentNavigatorKey: _root,
-        builder: (_, _) => const LiveChatScreen(),
-      ),
-      GoRoute(
         path: '/privacy',
         parentNavigatorKey: _root,
         builder: (_, _) => const PrivacyScreen(),
@@ -126,6 +121,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, _) => const SpeakHubScreen(),
           ),
           GoRoute(path: '/app/games', builder: (_, _) => const GamesScreen()),
+          GoRoute(path: '/app/chat', builder: (_, _) => const LiveChatScreen()),
           GoRoute(
             path: '/app/translate',
             builder: (_, _) => const TranslateScreen(),
