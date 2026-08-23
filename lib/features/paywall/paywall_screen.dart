@@ -5,6 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/tokens.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
+import '../plus/domain/entitlement.dart';
+import '../plus/state/plus_controller.dart';
+
+const _plusPlans = [nuraPlusMonthly, nuraPlusYearly, nuraPlusFamily];
 
 class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({super.key});
@@ -64,7 +68,8 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             for (final f in [
               'Sınırsız konuşma',
               'CEFR yolu A1–B2',
-              '5 dil: EN · ES · DE · FR · NL',
+              '30 dilin tamamı',
+              'Nura ile canlı sohbet',
               'Çevir + SRS kaydet',
               'Reklamsız',
             ])
@@ -86,7 +91,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             ForestButton(
               label: i18n.plusCta,
               onPressed: () async {
-                await ref.read(sessionProvider.notifier).setPlus(true);
+                await ref
+                    .read(plusControllerProvider.notifier)
+                    .purchase(_plusPlans[plan]);
                 if (context.mounted) context.pop();
               },
             ),
