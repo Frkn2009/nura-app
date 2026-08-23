@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/content/library.dart';
 import '../../data/models/models.dart';
+import '../../data/speech/premium_tts_service.dart';
 import '../../data/speech/speech_controller.dart';
 import '../../ui/widgets.dart';
 
@@ -33,21 +34,27 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     super.dispose();
   }
 
-  Future<void> _speakOne(int index) async {
-    if (_playingAll) return;
-    setState(() => _playingIndex = index);
-    await _speech.speakTarget(
-      widget.story.sentences[index].target,
-      widget.story.lang.code,
-    );
+  /// Önce ElevenLabs (Plus + sunucu yapılandırılmışsa) dener; başarısız
+  /// olursa (ücretsiz kullanıcı, servis kapalı, ağ hatası) cihazın kendi
+  /// TTS'ine düşer. Kullanıcı için tek fark ses kalitesi — akış aynı.
+  Future<void> _speakSentence(String text) async {
+    final usedPremium = await PremiumTtsService.speak(text);
+    if (usedPremium) {
+      await PremiumTtsService.waitUntilDone();
+      return;
+    }
+    await _speech.speakTarget(text, widget.story.lang.code);
     // flutter_tts'in tamamlanma bildirimini beklemek yerine ortalama bir
     // okuma süresi kadar bekliyoruz -- SpeechController şu an bir
     // "bitti" callback'i sunmuyor.
-    final ms = (widget.story.sentences[index].target.length * 65).clamp(
-      900,
-      6000,
-    );
+    final ms = (text.length * 65).clamp(900, 6000);
     await Future.delayed(Duration(milliseconds: ms));
+  }
+
+  Future<void> _speakOne(int index) async {
+    if (_playingAll) return;
+    setState(() => _playingIndex = index);
+    await _speakSentence(widget.story.sentences[index].target);
     if (mounted) setState(() => _playingIndex = null);
   }
 
@@ -57,15 +64,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     for (var i = 0; i < widget.story.sentences.length; i++) {
       if (!mounted || !_playingAll) break;
       setState(() => _playingIndex = i);
-      await _speech.speakTarget(
-        widget.story.sentences[i].target,
-        widget.story.lang.code,
-      );
-      final ms = (widget.story.sentences[i].target.length * 65).clamp(
-        900,
-        6000,
-      );
-      await Future.delayed(Duration(milliseconds: ms));
+      await _speakSentence(widget.story.sentences[i].target);
     }
     if (mounted) {
       setState(() {
@@ -81,6 +80,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       _playingIndex = null;
     });
     _speech.stopSpeak();
+    PremiumTtsService.stop();
   }
 
   @override
