@@ -26,6 +26,10 @@ class NuraMark extends StatelessWidget {
   }
 }
 
+/// Marka işareti: bir "N" harf gövdesi, köşegeni konuşma dalgasına
+/// dönüştürülmüş. NURA'nın "konuşarak öğren" konumlandırmasını tek bir
+/// tanınabilir sembolde taşır — jenerik yuvarlatılmış-kare monogramların
+/// ötesine geçmek için diyagonal düz çizgi yerine yumuşak bir ses dalgası.
 class _NuraMarkPainter extends CustomPainter {
   const _NuraMarkPainter({required this.onDark});
 
@@ -34,11 +38,11 @@ class _NuraMarkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    final radius = Radius.circular(size.width * .30);
+    final radius = Radius.circular(size.width * .24);
     final background = Paint()..color = onDark ? Colors.white : Nura.mintDark;
     canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), background);
 
-    final stroke = size.width * .105;
+    final stroke = size.width * .12;
     final line = Paint()
       ..color = onDark ? Nura.mintDark : Colors.white
       ..style = PaintingStyle.stroke
@@ -46,20 +50,28 @@ class _NuraMarkPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
-    final leftX = size.width * .29;
-    final rightX = size.width * .71;
-    final top = size.height * .25;
-    final bottom = size.height * .75;
+    final leftX = size.width * .30;
+    final rightX = size.width * .70;
+    final top = size.height * .23;
+    final bottom = size.height * .77;
+    final midY = (top + bottom) / 2;
     final n = Path()
       ..moveTo(leftX, bottom)
       ..lineTo(leftX, top)
-      ..lineTo(rightX, bottom)
+      ..cubicTo(
+        leftX + (rightX - leftX) * .55,
+        top + (midY - top) * .25,
+        rightX - (rightX - leftX) * .55,
+        bottom - (bottom - midY) * .25,
+        rightX,
+        bottom,
+      )
       ..lineTo(rightX, top);
     canvas.drawPath(n, line);
 
     canvas.drawCircle(
-      Offset(size.width * .78, size.height * .20),
-      size.width * .055,
+      Offset(rightX, top),
+      size.width * .075,
       Paint()..color = Nura.coral,
     );
   }
