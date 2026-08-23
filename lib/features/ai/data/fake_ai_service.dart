@@ -20,7 +20,8 @@ class FakeAiService implements AiService {
     final answerWords = answer.split(RegExp(r'\s+'));
     int matches = 0;
     for (final w in sourceWords) {
-      if (w.length > 2 && answerWords.any((a) => a.contains(w) || w.contains(a))) {
+      if (w.length > 2 &&
+          answerWords.any((a) => a.contains(w) || w.contains(a))) {
         matches++;
       }
     }
@@ -42,8 +43,8 @@ class FakeAiService implements AiService {
     final encouragement = score >= 80
         ? '🌟 Muhteşem! Devam et!'
         : score >= 60
-            ? '💪 İyi çalışıyorsun, biraz daha pratik!'
-            : '🎯 Endişelenme, tekrar güçlendirir!';
+        ? '💪 İyi çalışıyorsun, biraz daha pratik!'
+        : '🎯 Endişelenme, tekrar güçlendirir!';
 
     return AiFeedback(
       userAnswer: userAnswer,
@@ -67,12 +68,28 @@ class FakeAiService implements AiService {
       topic: topic,
       level: level,
       dialogue: [
-        AiDialogueLine(speaker: 'Maya', text: 'Merhaba! Bugün $topic hakkında konuşalım.', translation: 'Hello! Let\'s talk about $topic today.'),
-        AiDialogueLine(speaker: 'Sen', text: '...', translation: '(Senin cevabın)'),
-        AiDialogueLine(speaker: 'Maya', text: 'Harika! Şimdi bir cümle kur.', translation: 'Great! Now build a sentence.'),
+        AiDialogueLine(
+          speaker: 'Maya',
+          text: 'Merhaba! Bugün $topic hakkında konuşalım.',
+          translation: 'Hello! Let\'s talk about $topic today.',
+        ),
+        AiDialogueLine(
+          speaker: 'Sen',
+          text: '...',
+          translation: '(Senin cevabın)',
+        ),
+        AiDialogueLine(
+          speaker: 'Maya',
+          text: 'Harika! Şimdi bir cümle kur.',
+          translation: 'Great! Now build a sentence.',
+        ),
       ],
       vocabulary: [
-        AiVocabItem(word: topic, translation: topic, example: '$topic ile ilgili örnek cümle'),
+        AiVocabItem(
+          word: topic,
+          translation: topic,
+          example: '$topic ile ilgili örnek cümle',
+        ),
       ],
     );
   }
@@ -94,9 +111,11 @@ class FakeAiService implements AiService {
 
     String message;
     if (streakDays >= 7) {
-      message = '🔥 $streakDays gün seri! Muhteşem disiplin. $masteredCount kelime artık senin.';
+      message =
+          '🔥 $streakDays gün seri! Muhteşem disiplin. $masteredCount kelime artık senin.';
     } else if (reviewedCount > 10) {
-      message = '📚 Bugün $reviewedCount tekrar yaptın. $masteredCount kelime güçlendi.';
+      message =
+          '📚 Bugün $reviewedCount tekrar yaptın. $masteredCount kelime güçlendi.';
     } else if (reviewedCount > 0) {
       message = '✨ Güzel başlangıç! Her gün biraz daha.';
     } else {

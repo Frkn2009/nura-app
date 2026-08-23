@@ -53,27 +53,30 @@ class _NuraMascotState extends State<NuraMascot>
 
   @override
   Widget build(BuildContext context) => Semantics(
-        label: 'Luma, NURA rehberi',
-        image: true,
-        child: AnimatedBuilder(
-          animation: controller,
-          builder: (context, child) {
-            final phase = widget.animate ? controller.value * math.pi * 2 : 0.0;
-            final lift = math.sin(phase) * (widget.mood == MascotMood.celebrate ? 4 : 2);
-            final tilt = widget.mood == MascotMood.wave ? math.sin(phase) * .035 : 0.0;
-            return Transform.translate(
-              offset: Offset(0, lift),
-              child: Transform.rotate(
-                angle: tilt,
-                child: CustomPaint(
-                  size: Size.square(widget.size),
-                  painter: _LumaPainter(mood: widget.mood, phase: phase),
-                ),
-              ),
-            );
-          },
-        ),
-      );
+    label: 'Luma, NURA rehberi',
+    image: true,
+    child: AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        final phase = widget.animate ? controller.value * math.pi * 2 : 0.0;
+        final lift =
+            math.sin(phase) * (widget.mood == MascotMood.celebrate ? 4 : 2);
+        final tilt = widget.mood == MascotMood.wave
+            ? math.sin(phase) * .035
+            : 0.0;
+        return Transform.translate(
+          offset: Offset(0, lift),
+          child: Transform.rotate(
+            angle: tilt,
+            child: CustomPaint(
+              size: Size.square(widget.size),
+              painter: _LumaPainter(mood: widget.mood, phase: phase),
+            ),
+          ),
+        );
+      },
+    ),
+  );
 }
 
 class _LumaPainter extends CustomPainter {
@@ -137,8 +140,20 @@ class _LumaPainter extends CustomPainter {
       ..strokeWidth = 3.3 * unit
       ..strokeCap = StrokeCap.round;
     if (mood == MascotMood.celebrate) {
-      canvas.drawArc(Rect.fromCenter(center: p(40, 45), width: 10 * unit, height: 8 * unit), math.pi, math.pi, false, eye);
-      canvas.drawArc(Rect.fromCenter(center: p(60, 45), width: 10 * unit, height: 8 * unit), math.pi, math.pi, false, eye);
+      canvas.drawArc(
+        Rect.fromCenter(center: p(40, 45), width: 10 * unit, height: 8 * unit),
+        math.pi,
+        math.pi,
+        false,
+        eye,
+      );
+      canvas.drawArc(
+        Rect.fromCenter(center: p(60, 45), width: 10 * unit, height: 8 * unit),
+        math.pi,
+        math.pi,
+        false,
+        eye,
+      );
     } else {
       canvas.drawCircle(p(40, 45), 2.2 * unit, Paint()..color = Nura.ink);
       canvas.drawCircle(p(60, 45), 2.2 * unit, Paint()..color = Nura.ink);
@@ -161,11 +176,14 @@ class _LumaPainter extends CustomPainter {
       ..lineTo(48 * unit, 69 * unit)
       ..lineTo(54 * unit, 75 * unit)
       ..lineTo(60 * unit, 69 * unit);
-    canvas.drawPath(spark, Paint()
-      ..color = Nura.peach
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3 * unit
-      ..strokeCap = StrokeCap.round);
+    canvas.drawPath(
+      spark,
+      Paint()
+        ..color = Nura.peach
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3 * unit
+        ..strokeCap = StrokeCap.round,
+    );
 
     // Ayaklar ve selam kolu.
     canvas.drawLine(p(37, 86), p(34, 94), stroke);
@@ -173,9 +191,15 @@ class _LumaPainter extends CustomPainter {
     canvas.drawLine(p(30, 94), p(38, 94), stroke);
     canvas.drawLine(p(62, 94), p(70, 94), stroke);
     if (mood == MascotMood.wave || mood == MascotMood.celebrate) {
-      final handY = mood == MascotMood.celebrate ? 24.0 : 31.0 + math.sin(phase) * 3;
+      final handY = mood == MascotMood.celebrate
+          ? 24.0
+          : 31.0 + math.sin(phase) * 3;
       canvas.drawLine(p(79, 62), p(91, handY), stroke);
-      canvas.drawCircle(p(92, handY - 2), 3 * unit, Paint()..color = Nura.coral);
+      canvas.drawCircle(
+        p(92, handY - 2),
+        3 * unit,
+        Paint()..color = Nura.coral,
+      );
     } else {
       canvas.drawLine(p(79, 60), p(88, 69), stroke);
     }
@@ -187,28 +211,32 @@ class _LumaPainter extends CustomPainter {
 }
 
 class MascotFeedback extends StatelessWidget {
-  const MascotFeedback({super.key, required this.correct, required this.message});
+  const MascotFeedback({
+    super.key,
+    required this.correct,
+    required this.message,
+  });
   final bool correct;
   final String message;
 
   @override
   Widget build(BuildContext context) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          NuraMascot(
-            size: 46,
-            mood: correct ? MascotMood.celebrate : MascotMood.encourage,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      NuraMascot(
+        size: 46,
+        mood: correct ? MascotMood.celebrate : MascotMood.encourage,
+      ),
+      const SizedBox(width: 8),
+      Flexible(
+        child: Text(
+          message,
+          style: TextStyle(
+            color: correct ? Nura.mintDark : Nura.coral,
+            fontWeight: FontWeight.w600,
           ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              message,
-              style: TextStyle(
-                color: correct ? Nura.mintDark : Nura.coral,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 }

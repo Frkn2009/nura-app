@@ -23,7 +23,11 @@ void main() {
   test('all 30 learn languages have A1 plus A2/B1 scenarios', () {
     for (final lang in LearnLang.values) {
       final n = Catalog.forLang(lang).length;
-      expect(n, greaterThanOrEqualTo(10), reason: '${lang.name} has $n scenarios');
+      expect(
+        n,
+        greaterThanOrEqualTo(10),
+        reason: '${lang.name} has $n scenarios',
+      );
     }
   });
 
@@ -46,7 +50,11 @@ void main() {
     for (final lang in LearnLang.values) {
       final g = LanguageGuide.of(lang);
       expect(g.lang, lang);
-      expect(g.headline.isNotEmpty, true, reason: '${lang.name} guide headline empty');
+      expect(
+        g.headline.isNotEmpty,
+        true,
+        reason: '${lang.name} guide headline empty',
+      );
     }
   });
 
@@ -77,23 +85,35 @@ void main() {
 
   test('pronunciation scoring is honest and deterministic', () {
     expect(SpeechController.pronunciationScore('Hello, world!', ''), 0);
-    expect(SpeechController.pronunciationScore('Hello, world!', 'hello world'), 100);
-    expect(SpeechController.pronunciationScore('Good morning', 'good evening'), inInclusiveRange(30, 98));
+    expect(
+      SpeechController.pronunciationScore('Hello, world!', 'hello world'),
+      100,
+    );
+    expect(
+      SpeechController.pronunciationScore('Good morning', 'good evening'),
+      inInclusiveRange(30, 98),
+    );
     expect(SpeechController.pronunciationScore('こんにちは', 'こんにちは'), 100);
   });
 
-
-  test('curriculum translation supports every one of the 30 x 30 directions', () {
-    for (final from in LearnLang.values) {
-      final source = Catalog.forLang(from).first.phrases.first.target;
-      for (final to in LearnLang.values) {
-        final hit = OfflineTranslate.translate(input: source, from: from, to: to);
-        expect(hit, isNotNull, reason: '${from.name} → ${to.name}');
-        expect(hit!.target, isNotEmpty);
-        expect(hit.origin, TranslationOrigin.curriculum);
+  test(
+    'curriculum translation supports every one of the 30 x 30 directions',
+    () {
+      for (final from in LearnLang.values) {
+        final source = Catalog.forLang(from).first.phrases.first.target;
+        for (final to in LearnLang.values) {
+          final hit = OfflineTranslate.translate(
+            input: source,
+            from: from,
+            to: to,
+          );
+          expect(hit, isNotNull, reason: '${from.name} → ${to.name}');
+          expect(hit!.target, isNotEmpty);
+          expect(hit.origin, TranslationOrigin.curriculum);
+        }
       }
-    }
-  });
+    },
+  );
 
   test('verified dictionary has six entries in all 30 languages', () {
     for (final from in LearnLang.values) {
@@ -111,18 +131,20 @@ void main() {
     }
   });
 
-
-  test('clips are generated from every curriculum phrase in all 30 languages', () {
-    for (final language in LearnLang.values) {
-      final clips = ClipCatalog.forLang(language);
-      final phraseCount = Catalog.forLang(language)
-          .fold<int>(0, (total, scenario) => total + scenario.phrases.length);
-      expect(clips.length, phraseCount, reason: language.name);
-      expect(clips, isNotEmpty, reason: language.name);
-      expect(clips.every((clip) => clip.scenario.lang == language), true);
-    }
-  });
-
+  test(
+    'clips are generated from every curriculum phrase in all 30 languages',
+    () {
+      for (final language in LearnLang.values) {
+        final clips = ClipCatalog.forLang(language);
+        final phraseCount = Catalog.forLang(
+          language,
+        ).fold<int>(0, (total, scenario) => total + scenario.phrases.length);
+        expect(clips.length, phraseCount, reason: language.name);
+        expect(clips, isNotEmpty, reason: language.name);
+        expect(clips.every((clip) => clip.scenario.lang == language), true);
+      }
+    },
+  );
 
   test('XP ranks, daily goal and game rewards follow the product rules', () {
     expect(UserProfile.empty.xpRank, XpRank.rookie);
@@ -132,19 +154,23 @@ void main() {
     expect(UserProfile.empty.copyWith(totalXp: 10000).xpRank, XpRank.legend);
     expect(UserProfile.empty.copyWith(dailyXp: 100).dailyXpProgress, 1);
     expect(SessionController.gameXpFor(0, 10), 20);
-    expect(SessionController.gameXpFor(10, 10), 200); // 100 cevap + 100 performans
+    expect(
+      SessionController.gameXpFor(10, 10),
+      200,
+    ); // 100 cevap + 100 performans
   });
 
   test('legacy profiles migrate to zero XP without data loss', () {
-    final restored = UserProfile.fromJson(UserProfile.empty.toJson()
-      ..remove('totalXp')
-      ..remove('dailyXp')
-      ..remove('xpDayKey'));
+    final restored = UserProfile.fromJson(
+      UserProfile.empty.toJson()
+        ..remove('totalXp')
+        ..remove('dailyXp')
+        ..remove('xpDayKey'),
+    );
     expect(restored.totalXp, 0);
     expect(restored.dailyXp, 0);
     expect(restored.learnLang, UserProfile.empty.learnLang);
   });
-
 
   test('leaderboard rows parse rank, XP and own-position marker', () {
     final entry = LeaderboardEntry.fromJson({
@@ -158,7 +184,6 @@ void main() {
     expect(entry.xp, 340);
     expect(entry.isMe, true);
   });
-
 
   test('all ten achievements have metadata and persist in profiles', () {
     expect(Achievement.values.length, 10);
@@ -177,33 +202,43 @@ void main() {
     expect(restored.achievements, containsAll(profile.achievements));
   });
 
-
   test('daily notification copy covers lesson, streak, game and Plus', () {
     final base = UserProfile.empty;
     expect(NotificationService.contentFor(base, 0).$1, contains('Hadi derse!'));
-    expect(NotificationService.contentFor(base.copyWith(streak: 5), 1).$2, contains('5 gün'));
-    expect(NotificationService.contentFor(base, 2).$2, contains('Harf Sıralama'));
-    expect(NotificationService.contentFor(base.copyWith(isPlus: true), 0).$1, 'NURA Plus');
+    expect(
+      NotificationService.contentFor(base.copyWith(streak: 5), 1).$2,
+      contains('5 gün'),
+    );
+    expect(
+      NotificationService.contentFor(base, 2).$2,
+      contains('Harf Sıralama'),
+    );
+    expect(
+      NotificationService.contentFor(base.copyWith(isPlus: true), 0).$1,
+      'NURA Plus',
+    );
   });
 
   test('notification preference and hour persist', () {
     final restored = UserProfile.fromJson(
-      UserProfile.empty.copyWith(notificationsEnabled: false, reminderHour: 10).toJson(),
+      UserProfile.empty
+          .copyWith(notificationsEnabled: false, reminderHour: 10)
+          .toJson(),
     );
     expect(restored.notificationsEnabled, false);
     expect(restored.reminderHour, 10);
   });
 
-
   testWidgets('original Luma mascot renders every expression', (tester) async {
     for (final mood in MascotMood.values) {
       await tester.pumpWidget(
-        MaterialApp(home: Scaffold(body: NuraMascot(mood: mood, animate: false))),
+        MaterialApp(
+          home: Scaffold(body: NuraMascot(mood: mood, animate: false)),
+        ),
       );
       expect(find.byType(NuraMascot), findsOneWidget);
     }
   });
-
 
   test('weekly Spanish event and ad frequency rules are deterministic', () {
     expect(WeeklyEvent.weekKey(DateTime.utc(2026, 8, 21)), '2026-08-17');
@@ -222,17 +257,21 @@ void main() {
     expect(UserProfile.empty.copyWith(adsWatchedToday: 5).canWatchAd, false);
   });
 
-
   test('every language has connected A2 and B1 practice', () {
     for (final language in LearnLang.values) {
       final scenarios = Catalog.forLang(language);
-      expect(scenarios.any((scenario) => scenario.cefr == Cefr.a2), true,
-          reason: '${language.name} A2 missing');
-      expect(scenarios.any((scenario) => scenario.cefr == Cefr.b1), true,
-          reason: '${language.name} B1 missing');
+      expect(
+        scenarios.any((scenario) => scenario.cefr == Cefr.a2),
+        true,
+        reason: '${language.name} A2 missing',
+      );
+      expect(
+        scenarios.any((scenario) => scenario.cefr == Cefr.b1),
+        true,
+        reason: '${language.name} B1 missing',
+      );
     }
   });
-
 
   test('phoneme scorer returns real sub-scores and actionable feedback', () {
     final exact = PhonemeScorer.assess(
@@ -251,39 +290,47 @@ void main() {
     );
     expect(imperfect.overall, inInclusiveRange(40, 95));
     expect(imperfect.feedback, isNotEmpty);
-    expect(PhonemeScorer.assess(
-      expected: 'Merhaba', heard: '', languageCode: 'tr').overall, 0);
+    expect(
+      PhonemeScorer.assess(
+        expected: 'Merhaba',
+        heard: '',
+        languageCode: 'tr',
+      ).overall,
+      0,
+    );
   });
 
-
   test('Maya prioritises a female neural voice in the requested language', () {
-    final basic = SpeechController.voiceQualityScore(
-      {'name': 'English Female', 'locale': 'en-US', 'gender': 'female'},
-      'en',
-    );
-    final neural = SpeechController.voiceQualityScore(
-      {'name': 'English Neural Female', 'locale': 'en-US', 'gender': 'female'},
-      'en',
-    );
-    final wrongLanguage = SpeechController.voiceQualityScore(
-      {'name': 'English Neural Female', 'locale': 'en-US', 'gender': 'female'},
-      'es',
-    );
+    final basic = SpeechController.voiceQualityScore({
+      'name': 'English Female',
+      'locale': 'en-US',
+      'gender': 'female',
+    }, 'en');
+    final neural = SpeechController.voiceQualityScore({
+      'name': 'English Neural Female',
+      'locale': 'en-US',
+      'gender': 'female',
+    }, 'en');
+    final wrongLanguage = SpeechController.voiceQualityScore({
+      'name': 'English Neural Female',
+      'locale': 'en-US',
+      'gender': 'female',
+    }, 'es');
     expect(neural, greaterThan(basic));
     expect(wrongLanguage, -1000);
   });
-
 
   test('dark theme and user preference are persisted', () {
     final dark = buildNuraDarkTheme();
     expect(dark.brightness, Brightness.dark);
     expect(dark.colorScheme.surface.computeLuminance(), lessThan(.1));
     final restored = UserProfile.fromJson(
-      UserProfile.empty.copyWith(themePreference: AppThemePreference.dark).toJson(),
+      UserProfile.empty
+          .copyWith(themePreference: AppThemePreference.dark)
+          .toJson(),
     );
     expect(restored.themePreference, AppThemePreference.dark);
   });
-
 
   test('Plus family plan keeps four isolated local profiles', () async {
     SharedPreferences.setMockInitialValues({});
@@ -300,11 +347,12 @@ void main() {
     expect(controller.familyProfiles().length, 4);
     expect(await controller.addFamilyProfile('Beşinci'), false);
     final profiles = controller.familyProfiles();
-    expect(profiles.map((profile) => profile.profileName),
-        containsAll(['Ana Profil', 'Deniz', 'Ada', 'Mert']));
+    expect(
+      profiles.map((profile) => profile.profileName),
+      containsAll(['Ana Profil', 'Deniz', 'Ada', 'Mert']),
+    );
     expect(profiles.map((profile) => profile.profileId).toSet().length, 4);
   });
-
 
   test('clan member rows preserve team rank and ownership', () {
     final member = ClanMemberEntry.fromJson({
@@ -322,5 +370,4 @@ void main() {
     expect(member.joinCode, 'A1B2C3');
     expect(member.isOwner, true);
   });
-
 }

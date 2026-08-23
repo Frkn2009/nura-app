@@ -25,7 +25,13 @@ class HomeScreen extends ConsumerWidget {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
         children: [
-          Text(i18n.goodGreeting, style: const TextStyle(color: Nura.forest, fontWeight: FontWeight.w500)),
+          Text(
+            i18n.goodGreeting,
+            style: const TextStyle(
+              color: Nura.forest,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           const SizedBox(height: 4),
           Row(
             children: [
@@ -46,12 +52,22 @@ class HomeScreen extends ConsumerWidget {
                   alignment: Alignment.center,
                   children: [
                     CircularProgressIndicator(
-                      value: p.isPlus ? 1 : (p.speakAllowance == 0 ? 0 : remain / p.speakAllowance),
+                      value: p.isPlus
+                          ? 1
+                          : (p.speakAllowance == 0
+                                ? 0
+                                : remain / p.speakAllowance),
                       color: Nura.terr,
                       backgroundColor: Nura.line,
                       strokeWidth: 5,
                     ),
-                    Text(p.isPlus ? '∞' : '${remain}s', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+                    Text(
+                      p.isPlus ? '∞' : '${remain}s',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -66,9 +82,21 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     const Icon(Icons.bolt_rounded, color: Nura.sunflower),
                     const SizedBox(width: 8),
-                    Text('${p.totalXp} XP', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17)),
+                    Text(
+                      '${p.totalXp} XP',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17,
+                      ),
+                    ),
                     const Spacer(),
-                    Text(p.xpRank.label, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w600)),
+                    Text(
+                      p.xpRank.label,
+                      style: const TextStyle(
+                        color: Nura.mintDark,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -76,10 +104,17 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    Text('Bugün ${p.dailyXp} / ${UserProfile.dailyXpGoal} XP', style: const TextStyle(color: Nura.muted, fontSize: 12)),
+                    Text(
+                      'Bugün ${p.dailyXp} / ${UserProfile.dailyXpGoal} XP',
+                      style: const TextStyle(color: Nura.muted, fontSize: 12),
+                    ),
                     const Spacer(),
-                    Text(p.dailyXp >= UserProfile.dailyXpGoal ? 'Hedef tamamlandı' : '${UserProfile.dailyXpGoal - p.dailyXp} XP kaldı',
-                        style: const TextStyle(color: Nura.muted, fontSize: 12)),
+                    Text(
+                      p.dailyXp >= UserProfile.dailyXpGoal
+                          ? 'Hedef tamamlandı'
+                          : '${UserProfile.dailyXpGoal - p.dailyXp} XP kaldı',
+                      style: const TextStyle(color: Nura.muted, fontSize: 12),
+                    ),
                   ],
                 ),
               ],
@@ -97,9 +132,14 @@ class HomeScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(WeeklyEvent.current().title, style: const TextStyle(fontWeight: FontWeight.w700)),
                       Text(
-                        WeeklyEvent.current().isJoined(p) ? 'Katıldın · İspanyolca pratik yap' : 'Video ile katıl · bu hafta',
+                        WeeklyEvent.current().title,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        WeeklyEvent.current().isJoined(p)
+                            ? 'Katıldın · İspanyolca pratik yap'
+                            : 'Video ile katıl · bu hafta',
                         style: const TextStyle(color: Nura.muted, fontSize: 12),
                       ),
                     ],
@@ -119,11 +159,21 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(i18n.todaySpeak, style: const TextStyle(color: Nura.cream, fontSize: 22, fontWeight: FontWeight.w600)),
+                Text(
+                  i18n.todaySpeak,
+                  style: const TextStyle(
+                    color: Nura.cream,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Text(
                   '${scene.minutes} dk · ${scene.title(p.uiLang)}',
-                  style: const TextStyle(color: Color(0xFFB8C8C0), fontSize: 15),
+                  style: const TextStyle(
+                    color: Color(0xFFB8C8C0),
+                    fontSize: 15,
+                  ),
                 ),
                 const SizedBox(height: 18),
                 Align(
@@ -147,7 +197,7 @@ class HomeScreen extends ConsumerWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: list.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 14),
+              separatorBuilder: (_, _) => const SizedBox(width: 14),
               itemBuilder: (_, i) {
                 final s = list[i];
                 final current = s.id == scene.id;
@@ -158,11 +208,17 @@ class HomeScreen extends ConsumerWidget {
                       backgroundColor: i < idx
                           ? Nura.forest
                           : current
-                              ? Nura.terr
-                              : Nura.line,
+                          ? Nura.terr
+                          : Nura.line,
                       child: i < idx
                           ? const Icon(Icons.check, size: 16, color: Nura.cream)
-                          : Text('${i + 1}', style: TextStyle(color: current ? Nura.cream : Nura.ink, fontSize: 12)),
+                          : Text(
+                              '${i + 1}',
+                              style: TextStyle(
+                                color: current ? Nura.cream : Nura.ink,
+                                fontSize: 12,
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 8),
                     SizedBox(
@@ -171,7 +227,10 @@ class HomeScreen extends ConsumerWidget {
                         s.title(p.uiLang),
                         maxLines: 2,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 11, color: current ? Nura.terr : Nura.muted),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: current ? Nura.terr : Nura.muted,
+                        ),
                       ),
                     ),
                   ],
@@ -184,9 +243,24 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              _stat(Icons.local_fire_department, '${p.streak}', i18n.streak, Nura.terr),
-              _stat(Icons.public, p.cefr.name.toUpperCase(), 'CEFR', Nura.forest),
-              _stat(Icons.menu_book_outlined, '${p.phrasesKnown}', i18n.phrases, Nura.forest),
+              _stat(
+                Icons.local_fire_department,
+                '${p.streak}',
+                i18n.streak,
+                Nura.terr,
+              ),
+              _stat(
+                Icons.public,
+                p.cefr.name.toUpperCase(),
+                'CEFR',
+                Nura.forest,
+              ),
+              _stat(
+                Icons.menu_book_outlined,
+                '${p.phrasesKnown}',
+                i18n.phrases,
+                Nura.forest,
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -196,7 +270,12 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 Icon(Icons.leaderboard_outlined, color: Nura.mintDark),
                 SizedBox(width: 12),
-                Expanded(child: Text('Haftalık sıralama', style: TextStyle(fontWeight: FontWeight.w600))),
+                Expanded(
+                  child: Text(
+                    'Haftalık sıralama',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
                 Icon(Icons.chevron_right, color: Nura.soft),
               ],
             ),
@@ -211,7 +290,10 @@ class HomeScreen extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     'Alfabe · ${p.learnLang.flag()} harfleri öğren',
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Nura.ink,
+                    ),
                   ),
                 ),
                 const Icon(Icons.chevron_right, color: Nura.soft),
@@ -228,7 +310,10 @@ class HomeScreen extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     i18n.pronunciationGuide(p.learnLang.label(p.uiLang)),
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Nura.ink,
+                    ),
                   ),
                 ),
                 const Icon(Icons.chevron_right, color: Nura.soft),
@@ -245,7 +330,10 @@ class HomeScreen extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     '${i18n.review} · ${i18n.reviewReady(ref.read(sessionProvider.notifier).duePhrases().length)}',
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Nura.ink,
+                    ),
                   ),
                 ),
                 const Icon(Icons.chevron_right, color: Nura.soft),
@@ -260,8 +348,13 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    p.isPlus ? 'Plus · reklamsız, sınırsız konuşma' : i18n.freeMinute,
-                    style: const TextStyle(fontWeight: FontWeight.w500, color: Nura.ink),
+                    p.isPlus
+                        ? 'Plus · reklamsız, sınırsız konuşma'
+                        : i18n.freeMinute,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Nura.ink,
+                    ),
                   ),
                 ),
               ],
@@ -279,7 +372,14 @@ class HomeScreen extends ConsumerWidget {
           children: [
             Icon(ic, color: c, size: 20),
             const SizedBox(height: 6),
-            Text(v, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: c)),
+            Text(
+              v,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+                color: c,
+              ),
+            ),
             Text(l, style: const TextStyle(fontSize: 12, color: Nura.muted)),
           ],
         ),

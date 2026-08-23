@@ -38,37 +38,37 @@ class SpeechController {
   bool get usingNeuralVoice => _usingNeuralVoice;
 
   static String localeOf(String langCode) => switch (langCode) {
-        'es' => 'es-ES',
-        'de' => 'de-DE',
-        'fr' => 'fr-FR',
-        'nl' => 'nl-NL',
-        'ar' => 'ar-SA',
-        'pt' => 'pt-PT',
-        'it' => 'it-IT',
-        'ru' => 'ru-RU',
-        'zh' => 'zh-CN',
-        'ja' => 'ja-JP',
-        'ko' => 'ko-KR',
-        'tr' => 'tr-TR',
-        'pl' => 'pl-PL',
-        'sv' => 'sv-SE',
-        'da' => 'da-DK',
-        'no' => 'nb-NO',
-        'fi' => 'fi-FI',
-        'el' => 'el-GR',
-        'cs' => 'cs-CZ',
-        'ro' => 'ro-RO',
-        'hu' => 'hu-HU',
-        'hi' => 'hi-IN',
-        'th' => 'th-TH',
-        'vi' => 'vi-VN',
-        'id' => 'id-ID',
-        'uk' => 'uk-UA',
-        'he' => 'he-IL',
-        'fa' => 'fa-IR',
-        'sw' => 'sw-KE',
-        _ => 'en-US',
-      };
+    'es' => 'es-ES',
+    'de' => 'de-DE',
+    'fr' => 'fr-FR',
+    'nl' => 'nl-NL',
+    'ar' => 'ar-SA',
+    'pt' => 'pt-PT',
+    'it' => 'it-IT',
+    'ru' => 'ru-RU',
+    'zh' => 'zh-CN',
+    'ja' => 'ja-JP',
+    'ko' => 'ko-KR',
+    'tr' => 'tr-TR',
+    'pl' => 'pl-PL',
+    'sv' => 'sv-SE',
+    'da' => 'da-DK',
+    'no' => 'nb-NO',
+    'fi' => 'fi-FI',
+    'el' => 'el-GR',
+    'cs' => 'cs-CZ',
+    'ro' => 'ro-RO',
+    'hu' => 'hu-HU',
+    'hi' => 'hi-IN',
+    'th' => 'th-TH',
+    'vi' => 'vi-VN',
+    'id' => 'id-ID',
+    'uk' => 'uk-UA',
+    'he' => 'he-IL',
+    'fa' => 'fa-IR',
+    'sw' => 'sw-KE',
+    _ => 'en-US',
+  };
 
   static const _femaleVoiceHints = <String>[
     'female', 'woman', 'kadın',
@@ -84,13 +84,14 @@ class SpeechController {
   static int voiceQualityScore(Map voice, String langCode) {
     final name = (voice['name'] ?? '').toString().toLowerCase();
     final gender = (voice['gender'] ?? '').toString().toLowerCase();
-    final locale = (voice['locale'] ?? '')
-        .toString()
-        .toLowerCase()
-        .replaceAll('_', '-');
+    final locale = (voice['locale'] ?? '').toString().toLowerCase().replaceAll(
+      '_',
+      '-',
+    );
     if (!(locale == langCode || locale.startsWith('$langCode-'))) return -1000;
     var score = 0;
-    final female = gender == 'female' ||
+    final female =
+        gender == 'female' ||
         gender == 'f' ||
         name.contains('female') ||
         name.contains('woman') ||
@@ -111,8 +112,12 @@ class SpeechController {
       final rawVoices = await _tts.getVoices;
       if (rawVoices is! List || rawVoices.isEmpty) return;
       final voices = rawVoices.whereType<Map>().toList()
-        ..sort((a, b) => voiceQualityScore(b, langCode)
-            .compareTo(voiceQualityScore(a, langCode)));
+        ..sort(
+          (a, b) => voiceQualityScore(
+            b,
+            langCode,
+          ).compareTo(voiceQualityScore(a, langCode)),
+        );
       final matching = voices
           .where((voice) => voiceQualityScore(voice, langCode) >= 0)
           .toList();
@@ -129,7 +134,8 @@ class SpeechController {
         'locale': selected['locale'].toString(),
       });
       final normalized = name.toLowerCase();
-      _usingNeuralVoice = normalized.contains('neural') ||
+      _usingNeuralVoice =
+          normalized.contains('neural') ||
           normalized.contains('wavenet') ||
           normalized.contains('premium') ||
           normalized.contains('enhanced') ||
@@ -142,9 +148,7 @@ class SpeechController {
 
   Future<bool> _initializeRecognition() async {
     try {
-      _ready = await _stt.initialize(
-        onError: (SpeechRecognitionError _) {},
-      );
+      _ready = await _stt.initialize(onError: (SpeechRecognitionError _) {});
     } catch (_) {
       _ready = false;
     }
@@ -219,13 +223,13 @@ class SpeechController {
 
     try {
       await _stt.listen(
-        localeId: localeOf(langCode),
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 3),
         listenOptions: SpeechListenOptions(
           partialResults: true,
           cancelOnError: true,
           listenMode: ListenMode.confirmation,
+          localeId: localeOf(langCode),
+          listenFor: const Duration(seconds: 30),
+          pauseFor: const Duration(seconds: 3),
         ),
         onResult: (result) {
           _buffer = result.recognizedWords;
@@ -257,13 +261,12 @@ class SpeechController {
     required String expected,
     required String heard,
     required String languageCode,
-  }) =>
-      PhonemeScorer.assess(
-        expected: expected,
-        heard: heard,
-        languageCode: languageCode,
-        acousticConfidence: _confidence,
-      );
+  }) => PhonemeScorer.assess(
+    expected: expected,
+    heard: heard,
+    languageCode: languageCode,
+    acousticConfidence: _confidence,
+  );
 
   /// Geriye dönük saf skor yardımcısı.
   static int pronunciationScore(String expected, String heard) =>
@@ -272,7 +275,6 @@ class SpeechController {
         heard: heard,
         languageCode: 'en',
       ).overall;
-
 
   void dispose() {
     _tick?.cancel();

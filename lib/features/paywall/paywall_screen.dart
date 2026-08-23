@@ -20,19 +20,45 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
     return Scaffold(
-      appBar: NuraAppBar(leading: IconButton(icon: const Icon(Icons.close), onPressed: () => context.pop())),
+      appBar: NuraAppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () => context.pop(),
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
           children: [
-            Text('NURA', textAlign: TextAlign.center, style: const TextStyle(color: Nura.forest, fontWeight: FontWeight.w700, letterSpacing: 2)),
+            Text(
+              'NURA',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Nura.forest,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 2,
+              ),
+            ),
             const SizedBox(height: 8),
-            Text(i18n.paywallTitle, textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayMedium),
+            Text(
+              i18n.paywallTitle,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
             const SizedBox(height: 8),
-            const Text('Sınırsız AI konuşma, telaffuz, çevrimdışı klip.', textAlign: TextAlign.center, style: TextStyle(color: Nura.muted)),
+            const Text(
+              'Sınırsız AI konuşma, telaffuz, çevrimdışı klip.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Nura.muted),
+            ),
             const SizedBox(height: 22),
             _plan(0, 'Aylık', '249 TL / ay', '≈ \$6.20 USD'),
-            _plan(1, 'Yıllık · en iyi değer', '1.490 TL / yıl', '≈ \$3.10 USD / ay · 4 ay bedava'),
+            _plan(
+              1,
+              'Yıllık · en iyi değer',
+              '1.490 TL / yıl',
+              '≈ \$3.10 USD / ay · 4 ay bedava',
+            ),
             _plan(2, 'Aile', '2.290 TL / yıl', '4 profil · ≈ \$4.75 USD / ay'),
             const SizedBox(height: 12),
             for (final f in [
@@ -46,7 +72,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Row(
                   children: [
-                    const Icon(Icons.check_circle, color: Nura.forest, size: 20),
+                    const Icon(
+                      Icons.check_circle,
+                      color: Nura.forest,
+                      size: 20,
+                    ),
                     const SizedBox(width: 8),
                     Text(f),
                   ],
@@ -61,8 +91,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               },
             ),
             const SizedBox(height: 10),
-            const Text('İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
-                textAlign: TextAlign.center, style: TextStyle(color: Nura.soft, fontSize: 12)),
+            const Text(
+              'İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Nura.soft, fontSize: 12),
+            ),
           ],
         ),
       ),
@@ -82,8 +115,17 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(t, style: TextStyle(fontWeight: FontWeight.w600, color: sel ? Nura.forest : Nura.ink)),
-                  Text(sub, style: const TextStyle(color: Nura.muted, fontSize: 12)),
+                  Text(
+                    t,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: sel ? Nura.forest : Nura.ink,
+                    ),
+                  ),
+                  Text(
+                    sub,
+                    style: const TextStyle(color: Nura.muted, fontSize: 12),
+                  ),
                 ],
               ),
             ),

@@ -28,11 +28,25 @@ class LanguageGuideScreen extends ConsumerWidget {
         children: [
           Text(g.headline, style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 10),
-          Text(g.intro, style: const TextStyle(color: Nura.muted, height: 1.45, fontSize: 15)),
+          Text(
+            g.intro,
+            style: const TextStyle(
+              color: Nura.muted,
+              height: 1.45,
+              fontSize: 15,
+            ),
+          ),
           const SizedBox(height: 18),
           NuraCard(
             color: Nura.forest,
-            child: Text(g.firstWeek, style: const TextStyle(color: Nura.cream, height: 1.4, fontSize: 15)),
+            child: Text(
+              g.firstWeek,
+              style: const TextStyle(
+                color: Nura.cream,
+                height: 1.4,
+                fontSize: 15,
+              ),
+            ),
           ),
           const SizedBox(height: 22),
           const Eyebrow('Yazıldı  →  okundu'),
@@ -49,16 +63,44 @@ class LanguageGuideScreen extends ConsumerWidget {
                         _pill(r.written, Nura.forest, Nura.cream),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Icon(Icons.arrow_forward, size: 16, color: Nura.terr),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            size: 16,
+                            color: Nura.terr,
+                          ),
                         ),
-                        Flexible(child: Text(r.heard, style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink))),
+                        Flexible(
+                          child: Text(
+                            r.heard,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Nura.ink,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Text(r.example, style: const TextStyle(color: Nura.forest, fontWeight: FontWeight.w600)),
-                    Text('≈  ${r.exampleSaid}', style: const TextStyle(color: Nura.muted)),
+                    Text(
+                      r.example,
+                      style: const TextStyle(
+                        color: Nura.forest,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      '≈  ${r.exampleSaid}',
+                      style: const TextStyle(color: Nura.muted),
+                    ),
                     const SizedBox(height: 8),
-                    Text(r.why, style: const TextStyle(height: 1.4, color: Nura.ink, fontSize: 14)),
+                    Text(
+                      r.why,
+                      style: const TextStyle(
+                        height: 1.4,
+                        color: Nura.ink,
+                        fontSize: 14,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -74,7 +116,13 @@ class LanguageGuideScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(t.title, style: const TextStyle(fontWeight: FontWeight.w700, color: Nura.forest)),
+                    Text(
+                      t.title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Nura.forest,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     Text(t.body, style: const TextStyle(height: 1.4)),
                   ],
@@ -89,8 +137,14 @@ class LanguageGuideScreen extends ConsumerWidget {
   Widget _pill(String s, Color bg, Color fg) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(8)),
-      child: Text(s, style: TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 13)),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        s,
+        style: TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 13),
+      ),
     );
   }
 }
@@ -107,11 +161,17 @@ class LanguageGuideBody extends StatelessWidget {
       children: [
         Text(g.headline, style: Theme.of(context).textTheme.displayMedium),
         const SizedBox(height: 8),
-        Text('Konuşmadan önce 2 dakika. Yazıldığı gibi okunmaz.', style: const TextStyle(color: Nura.muted)),
+        Text(
+          'Konuşmadan önce 2 dakika. Yazıldığı gibi okunmaz.',
+          style: const TextStyle(color: Nura.muted),
+        ),
         const SizedBox(height: 14),
         NuraCard(
           color: Nura.forest,
-          child: Text(g.firstWeek, style: const TextStyle(color: Nura.cream, height: 1.4)),
+          child: Text(
+            g.firstWeek,
+            style: const TextStyle(color: Nura.cream, height: 1.4),
+          ),
         ),
         const SizedBox(height: 14),
         for (final r in g.rules.take(4))
@@ -121,17 +181,31 @@ class LanguageGuideBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${r.written}  →  ${r.heard}', style: const TextStyle(fontWeight: FontWeight.w700, color: Nura.forest)),
+                  Text(
+                    '${r.written}  →  ${r.heard}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Nura.forest,
+                    ),
+                  ),
                   const SizedBox(height: 4),
-                  Text('${r.example}   ≈   ${r.exampleSaid}', style: const TextStyle(color: Nura.muted, fontSize: 13)),
+                  Text(
+                    '${r.example}   ≈   ${r.exampleSaid}',
+                    style: const TextStyle(color: Nura.muted, fontSize: 13),
+                  ),
                   const SizedBox(height: 6),
-                  Text(r.why, style: const TextStyle(height: 1.35, fontSize: 13)),
+                  Text(
+                    r.why,
+                    style: const TextStyle(height: 1.35, fontSize: 13),
+                  ),
                 ],
               ),
             ),
           ),
-        const Text('Kalan kurallar ve tuzaklar uygulama içinde. Dil rehberi her zaman Sen sekmesinde.',
-            style: TextStyle(color: Nura.soft, fontSize: 12)),
+        const Text(
+          'Kalan kurallar ve tuzaklar uygulama içinde. Dil rehberi her zaman Sen sekmesinde.',
+          style: TextStyle(color: Nura.soft, fontSize: 12),
+        ),
       ],
     );
   }

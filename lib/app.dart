@@ -20,13 +20,10 @@ class NuraApp extends ConsumerWidget {
     final themePreference = ref.watch(
       sessionProvider.select((profile) => profile.themePreference),
     );
-    ref.listen(
-      sessionProvider,
-      (_, profile) {
-        unawaited(NotificationService.sync(profile).catchError((_) {}));
-        unawaited(NuraHomeWidgetService.sync(profile).catchError((_) {}));
-      },
-    );
+    ref.listen(sessionProvider, (_, profile) {
+      unawaited(NotificationService.sync(profile).catchError((_) {}));
+      unawaited(NuraHomeWidgetService.sync(profile).catchError((_) {}));
+    });
     return MaterialApp.router(
       title: 'NURA',
       debugShowCheckedModeBanner: false,

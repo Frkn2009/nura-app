@@ -13,7 +13,10 @@ class PrivacyScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(22, 12, 22, 32),
         children: const [
-          Text('NURA gizlilik özeti', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+          Text(
+            'NURA gizlilik özeti',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+          ),
           SizedBox(height: 12),
           Text(
             'Konuşma sesi, mümkün olduğunca cihazında işlenir. Ücretsiz katmanda buluta ses göndermeyiz.\n\n'

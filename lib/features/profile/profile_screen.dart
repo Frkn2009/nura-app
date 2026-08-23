@@ -29,7 +29,14 @@ class ProfileScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(p.isPlus ? 'NURA Plus' : 'NURA Free', style: const TextStyle(color: Nura.cream, fontSize: 22, fontWeight: FontWeight.w600)),
+                Text(
+                  p.isPlus ? 'NURA Plus' : 'NURA Free',
+                  style: const TextStyle(
+                    color: Nura.cream,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 const SizedBox(height: 6),
                 Text(
                   p.isPlus ? 'Sınırsız konuşma · reklamsız' : i18n.freeMinute,
@@ -54,9 +61,21 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     const Icon(Icons.bolt_rounded, color: Nura.sunflower),
                     const SizedBox(width: 8),
-                    Text('${p.totalXp} XP', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                    Text(
+                      '${p.totalXp} XP',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                     const Spacer(),
-                    Text(p.xpRank.label, style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w700)),
+                    Text(
+                      p.xpRank.label,
+                      style: const TextStyle(
+                        color: Nura.mintDark,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -76,7 +95,10 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/family'),
             child: Row(
               children: [
-                const Icon(Icons.family_restroom_outlined, color: Nura.mintDark),
+                const Icon(
+                  Icons.family_restroom_outlined,
+                  color: Nura.mintDark,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -117,8 +139,10 @@ class ProfileScreen extends ConsumerWidget {
                     Icon(Icons.cloud_outlined, color: Nura.forest),
                     SizedBox(width: 12),
                     Expanded(
-                      child: Text('Hesap oluştur / giriş yap',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      child: Text(
+                        'Hesap oluştur / giriş yap',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
                     Icon(Icons.chevron_right, color: Nura.soft),
                   ],
@@ -134,8 +158,10 @@ class ProfileScreen extends ConsumerWidget {
                         const Icon(Icons.cloud_done, color: Nura.forest),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: Text(email!,
-                              style: const TextStyle(fontWeight: FontWeight.w600)),
+                          child: Text(
+                            email,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ],
                     ),
@@ -146,7 +172,8 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 10),
                     TextButton(
-                      onPressed: () => ref.read(authEmailProvider.notifier).logout(),
+                      onPressed: () =>
+                          ref.read(authEmailProvider.notifier).logout(),
                       child: const Text('Çıkış yap'),
                     ),
                   ],
@@ -171,7 +198,10 @@ class ProfileScreen extends ConsumerWidget {
                 Text(p.learnLang.flag(), style: const TextStyle(fontSize: 22)),
                 const SizedBox(width: 12),
                 const Expanded(
-                  child: Text('Yazım ve okunuş rehberi', style: TextStyle(fontWeight: FontWeight.w600)),
+                  child: Text(
+                    'Yazım ve okunuş rehberi',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
                 ),
                 const Icon(Icons.chevron_right, color: Nura.soft),
               ],
@@ -193,9 +223,21 @@ class ProfileScreen extends ConsumerWidget {
             width: double.infinity,
             child: SegmentedButton<AppThemePreference>(
               segments: const [
-                ButtonSegment(value: AppThemePreference.system, icon: Icon(Icons.brightness_auto_outlined), label: Text('Sistem')),
-                ButtonSegment(value: AppThemePreference.light, icon: Icon(Icons.light_mode_outlined), label: Text('Açık')),
-                ButtonSegment(value: AppThemePreference.dark, icon: Icon(Icons.dark_mode_outlined), label: Text('Koyu')),
+                ButtonSegment(
+                  value: AppThemePreference.system,
+                  icon: Icon(Icons.brightness_auto_outlined),
+                  label: Text('Sistem'),
+                ),
+                ButtonSegment(
+                  value: AppThemePreference.light,
+                  icon: Icon(Icons.light_mode_outlined),
+                  label: Text('Açık'),
+                ),
+                ButtonSegment(
+                  value: AppThemePreference.dark,
+                  icon: Icon(Icons.dark_mode_outlined),
+                  label: Text('Koyu'),
+                ),
               ],
               selected: {p.themePreference},
               onSelectionChanged: (value) => ref
@@ -222,8 +264,16 @@ class ProfileScreen extends ConsumerWidget {
               width: double.infinity,
               child: SegmentedButton<int>(
                 segments: const [
-                  ButtonSegment(value: 10, label: Text('Sabah 10.00'), icon: Icon(Icons.light_mode_outlined)),
-                  ButtonSegment(value: 19, label: Text('Akşam 19.00'), icon: Icon(Icons.nightlight_outlined)),
+                  ButtonSegment(
+                    value: 10,
+                    label: Text('Sabah 10.00'),
+                    icon: Icon(Icons.light_mode_outlined),
+                  ),
+                  ButtonSegment(
+                    value: 19,
+                    label: Text('Akşam 19.00'),
+                    icon: Icon(Icons.nightlight_outlined),
+                  ),
                 ],
                 selected: {p.reminderHour},
                 onSelectionChanged: (hours) => ref
@@ -257,12 +307,20 @@ class ProfileScreen extends ConsumerWidget {
                 context: context,
                 builder: (c) => AlertDialog(
                   title: const Text('Hesabı sil?'),
-                  content: Text(email != null
-                      ? 'Hesabın sunucudan, dil ve kalıplar bu cihazdan silinir. Geri alınmaz.'
-                      : 'Dil, seri ve kalıplar bu cihazdan gider. Geri alınmaz.'),
+                  content: Text(
+                    email != null
+                        ? 'Hesabın sunucudan, dil ve kalıplar bu cihazdan silinir. Geri alınmaz.'
+                        : 'Dil, seri ve kalıplar bu cihazdan gider. Geri alınmaz.',
+                  ),
                   actions: [
-                    TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Vazgeç')),
-                    TextButton(onPressed: () => Navigator.pop(c, true), child: const Text('Sil')),
+                    TextButton(
+                      onPressed: () => Navigator.pop(c, false),
+                      child: const Text('Vazgeç'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(c, true),
+                      child: const Text('Sil'),
+                    ),
                   ],
                 ),
               );
@@ -285,7 +343,11 @@ class ProfileScreen extends ConsumerWidget {
             cloudOn
                 ? 'Ekonomi USD kilitli. Ses mümkün olduğunca cihazda.'
                 : 'Bulut senkron kapalı: lib/core/supabase_config.dart içine anahtarları girince açılır.',
-            style: const TextStyle(color: Nura.muted, fontSize: 13, height: 1.4),
+            style: const TextStyle(
+              color: Nura.muted,
+              fontSize: 13,
+              height: 1.4,
+            ),
           ),
         ],
       ),

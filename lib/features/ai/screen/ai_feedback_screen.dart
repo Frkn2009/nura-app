@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/tokens.dart';
 import '../../../ui/widgets.dart';
-import '../data/fake_ai_service.dart';
 import '../domain/ai_feedback.dart';
 import '../state/ai_controller.dart';
 
@@ -69,8 +68,13 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _scoreColor(feedback!.score).withValues(alpha: 0.15),
-                        border: Border.all(color: _scoreColor(feedback!.score), width: 3),
+                        color: _scoreColor(
+                          feedback!.score,
+                        ).withValues(alpha: 0.15),
+                        border: Border.all(
+                          color: _scoreColor(feedback!.score),
+                          width: 3,
+                        ),
                       ),
                       child: Center(
                         child: Text(
@@ -88,7 +92,10 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   Text(
                     feedback!.encouragement,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   const SizedBox(height: 24),
 
@@ -99,7 +106,11 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                     color: Nura.mint.withValues(alpha: 0.1),
                     child: Text(
                       feedback!.correctedAnswer,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Nura.ink),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Nura.ink,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -107,7 +118,9 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   const SizedBox(height: 8),
                   NuraCard(
                     child: Text(
-                      feedback!.userAnswer.isEmpty ? '(ses algılanamadı)' : feedback!.userAnswer,
+                      feedback!.userAnswer.isEmpty
+                          ? '(ses algılanamadı)'
+                          : feedback!.userAnswer,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -127,8 +140,19 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('→ ', style: TextStyle(color: Nura.mint, fontWeight: FontWeight.w700)),
-                            Expanded(child: Text(tip, style: const TextStyle(height: 1.4))),
+                            const Text(
+                              '→ ',
+                              style: TextStyle(
+                                color: Nura.mint,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                tip,
+                                style: const TextStyle(height: 1.4),
+                              ),
+                            ),
                           ],
                         ),
                       ),

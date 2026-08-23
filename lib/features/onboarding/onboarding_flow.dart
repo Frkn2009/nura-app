@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/i18n.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
 import '../../features/guide/language_guide_screen.dart';
@@ -41,7 +42,10 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 children: [
                   const NuraWordmark(),
                   const Spacer(),
-                  Text('${step + 1} / ${pages.length}', style: const TextStyle(color: Nura.soft, fontSize: 13)),
+                  Text(
+                    '${step + 1} / ${pages.length}',
+                    style: const TextStyle(color: Nura.soft, fontSize: 13),
+                  ),
                 ],
               ),
               const SizedBox(height: 10),
@@ -54,7 +58,9 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
               ),
               SizedBox(height: step == 0 ? 14 : 28),
               if (step == 0) ...[
-                const Center(child: NuraMascot(size: 96, mood: MascotMood.wave)),
+                const Center(
+                  child: NuraMascot(size: 96, mood: MascotMood.wave),
+                ),
                 const SizedBox(height: 8),
                 const Center(
                   child: Text(
@@ -67,7 +73,9 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
               ],
               Expanded(child: pages[step]),
               ForestButton(
-                label: step == pages.length - 1 ? i18n.startSpeak : i18n.continueCta,
+                label: step == pages.length - 1
+                    ? i18n.startSpeak
+                    : i18n.continueCta,
                 onPressed: () async {
                   if (step < pages.length - 1) {
                     setState(() => step++);
@@ -84,12 +92,18 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _native(i18n, UserProfile p) {
+  Widget _native(I18n i18n, UserProfile p) {
     return ListView(
       children: [
-        Text(i18n.nativeTitle, style: Theme.of(context).textTheme.displayMedium),
+        Text(
+          i18n.nativeTitle,
+          style: Theme.of(context).textTheme.displayMedium,
+        ),
         const SizedBox(height: 8),
-        const Text('Açıklamalar ve hatalar bu dilde gelir.', style: TextStyle(color: Nura.muted)),
+        const Text(
+          'Açıklamalar ve hatalar bu dilde gelir.',
+          style: TextStyle(color: Nura.muted),
+        ),
         const SizedBox(height: 20),
         for (final u in UiLang.values)
           ChoiceTile(
@@ -101,12 +115,15 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _learn(i18n, UserProfile p) {
+  Widget _learn(I18n i18n, UserProfile p) {
     return ListView(
       children: [
         Text(i18n.learnTitle, style: Theme.of(context).textTheme.displayMedium),
         const SizedBox(height: 8),
-        const Text('İlk dili seç. Sonra profilinden ekleyebilirsin.', style: TextStyle(color: Nura.muted)),
+        const Text(
+          'İlk dili seç. Sonra profilinden ekleyebilirsin.',
+          style: TextStyle(color: Nura.muted),
+        ),
         const SizedBox(height: 20),
         for (final l in LearnLang.values)
           ChoiceTile(
@@ -119,7 +136,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _why(i18n, UserProfile p) {
+  Widget _why(I18n i18n, UserProfile p) {
     return ListView(
       children: [
         Text(i18n.whyTitle, style: Theme.of(context).textTheme.displayMedium),
@@ -134,7 +151,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     );
   }
 
-  Widget _level(i18n, UserProfile p) {
+  Widget _level(I18n i18n, UserProfile p) {
     const labels = {
       Cefr.a1: 'A1 · sıfır / temel',
       Cefr.a2: 'A2 · günlük cümleler',
@@ -145,7 +162,10 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
       children: [
         Text(i18n.levelTitle, style: Theme.of(context).textTheme.displayMedium),
         const SizedBox(height: 8),
-        Text(i18n.freeMinute, style: const TextStyle(color: Nura.terr, fontWeight: FontWeight.w500)),
+        Text(
+          i18n.freeMinute,
+          style: const TextStyle(color: Nura.terr, fontWeight: FontWeight.w500),
+        ),
         const SizedBox(height: 20),
         for (final c in Cefr.values)
           ChoiceTile(

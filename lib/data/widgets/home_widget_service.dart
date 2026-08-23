@@ -11,13 +11,21 @@ class NuraHomeWidgetService {
     if (kIsWeb) return;
     await HomeWidget.setAppGroupId(appGroupId);
     final scenarios = Catalog.forLang(profile.learnLang);
-    final scenario = scenarios.isEmpty ? null : scenarios[DateTime.now().day % scenarios.length];
+    final scenario = scenarios.isEmpty
+        ? null
+        : scenarios[DateTime.now().day % scenarios.length];
     await Future.wait([
-      HomeWidget.saveWidgetData('language', profile.learnLang.label(profile.uiLang)),
+      HomeWidget.saveWidgetData(
+        'language',
+        profile.learnLang.label(profile.uiLang),
+      ),
       HomeWidget.saveWidgetData('daily_xp', profile.dailyXp),
       HomeWidget.saveWidgetData('total_xp', profile.totalXp),
       HomeWidget.saveWidgetData('streak', profile.streak),
-      HomeWidget.saveWidgetData('lesson', scenario?.title(profile.uiLang) ?? 'Bugünün pratiği'),
+      HomeWidget.saveWidgetData(
+        'lesson',
+        scenario?.title(profile.uiLang) ?? 'Bugünün pratiği',
+      ),
       HomeWidget.saveWidgetData('goal', UserProfile.dailyXpGoal),
     ]);
     await HomeWidget.updateWidget(

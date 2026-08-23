@@ -128,7 +128,8 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
 
   String _cloudErrorMessage(Object error) {
     final code = error.toString();
-    if (code.contains('authentication_required') || code.contains('invalid_session')) {
+    if (code.contains('authentication_required') ||
+        code.contains('invalid_session')) {
       return 'Plus bulut çevirisi için profilinden NURA hesabına giriş yap.';
     }
     if (code.contains('plus_required')) {
@@ -149,7 +150,10 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
         children: [
-          Text(i18n.translate, style: Theme.of(context).textTheme.displayMedium),
+          Text(
+            i18n.translate,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
           const SizedBox(height: 16),
 
           // Dil seçici (Google Translate tarzı)
@@ -167,30 +171,54 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                     child: DropdownButton<LearnLang>(
                       value: fromLang,
                       isExpanded: true,
-                      style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink, fontSize: 14),
-                      items: LearnLang.values.map((l) => DropdownMenuItem(
-                        value: l,
-                        child: Text('${l.flag()} ${l.label(p.uiLang)}'),
-                      )).toList(),
-                      onChanged: (value) { if (value != null) _setFrom(value); },
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Nura.ink,
+                        fontSize: 14,
+                      ),
+                      items: LearnLang.values
+                          .map(
+                            (l) => DropdownMenuItem(
+                              value: l,
+                              child: Text('${l.flag()} ${l.label(p.uiLang)}'),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) _setFrom(value);
+                      },
                     ),
                   ),
                 ),
                 IconButton(
                   onPressed: _swap,
-                  icon: const Icon(Icons.swap_horiz, color: Nura.mint, size: 28),
+                  icon: const Icon(
+                    Icons.swap_horiz,
+                    color: Nura.mint,
+                    size: 28,
+                  ),
                 ),
                 Expanded(
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<LearnLang>(
                       value: toLang,
                       isExpanded: true,
-                      style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink, fontSize: 14),
-                      items: LearnLang.values.map((l) => DropdownMenuItem(
-                        value: l,
-                        child: Text('${l.flag()} ${l.label(p.uiLang)}'),
-                      )).toList(),
-                      onChanged: (value) { if (value != null) _setTo(value); },
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Nura.ink,
+                        fontSize: 14,
+                      ),
+                      items: LearnLang.values
+                          .map(
+                            (l) => DropdownMenuItem(
+                              value: l,
+                              child: Text('${l.flag()} ${l.label(p.uiLang)}'),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) _setTo(value);
+                      },
                     ),
                   ),
                 ),
@@ -208,7 +236,10 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             onSubmitted: (_) => _go(),
             decoration: InputDecoration(
               hintText: i18n.typeToTranslate,
-              suffixIcon: IconButton(onPressed: _go, icon: const Icon(Icons.arrow_forward, color: Nura.mint)),
+              suffixIcon: IconButton(
+                onPressed: _go,
+                icon: const Icon(Icons.arrow_forward, color: Nura.mint),
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -258,23 +289,41 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${toLang.flag()} ${toLang.label(p.uiLang).toUpperCase()}',
-                      style: const TextStyle(color: Colors.white70, fontSize: 11, letterSpacing: 1)),
+                  Text(
+                    '${toLang.flag()} ${toLang.label(p.uiLang).toUpperCase()}',
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 11,
+                      letterSpacing: 1,
+                    ),
+                  ),
                   const SizedBox(height: 8),
-                  Text(hit!.target,
-                      style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700, height: 1.3)),
+                  Text(
+                    hit!.target,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      height: 1.3,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   Text(
                     switch (hit!.origin) {
-                      TranslationOrigin.curriculum => 'NURA müfredatından doğrulandı',
-                      TranslationOrigin.dictionary => 'NURA sözlüğünden doğrulandı',
-                      TranslationOrigin.cloud => 'Plus · güvenli bulut çevirisi',
+                      TranslationOrigin.curriculum =>
+                        'NURA müfredatından doğrulandı',
+                      TranslationOrigin.dictionary =>
+                        'NURA sözlüğünden doğrulandı',
+                      TranslationOrigin.cloud =>
+                        'Plus · güvenli bulut çevirisi',
                     },
                     style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   const SizedBox(height: 8),
-                  Text('güven ${(hit!.confidence * 100).round()}% · ${hit!.gloss}',
-                      style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                  Text(
+                    'güven ${(hit!.confidence * 100).round()}% · ${hit!.gloss}',
+                    style: const TextStyle(color: Colors.white60, fontSize: 12),
+                  ),
                 ],
               ),
             ),
@@ -285,7 +334,10 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                 final id = 'tr_${toLang.name}_${hit!.target.hashCode}';
                 ref.read(sessionProvider.notifier).learnPhrase(id);
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('SRS\'e eklendi · yarın tekrar')));
+                  const SnackBar(
+                    content: Text('SRS\'e eklendi · yarın tekrar'),
+                  ),
+                );
               },
             ),
           ],

@@ -28,9 +28,9 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   Future<List<LeaderboardEntry>> _load() async {
     final entries = await Supa.weeklyLeaderboard();
     if (mounted && entries.any((entry) => entry.isMe && entry.rank == 1)) {
-      await ref.read(sessionProvider.notifier).unlockAchievement(
-            Achievement.weeklyChampion,
-          );
+      await ref
+          .read(sessionProvider.notifier)
+          .unlockAchievement(Achievement.weeklyChampion);
     }
     return entries;
   }
@@ -61,43 +61,61 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   }
 
   Widget _signedOut(BuildContext context, int localXp) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: NuraCard(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.leaderboard_outlined, size: 44, color: Nura.mintDark),
-                const SizedBox(height: 14),
-                const Text('Sıralamaya katıl', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-                const SizedBox(height: 8),
-                Text('Bu cihazda bugün $localXp XP kazandın. Haftalık Top 10 ve kendi sıran için hesabına giriş yap.',
-                    textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted, height: 1.45)),
-                const SizedBox(height: 18),
-                FilledButton(onPressed: () => context.push('/auth'), child: const Text('Giriş yap')),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(28),
+      child: NuraCard(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.leaderboard_outlined,
+              size: 44,
+              color: Nura.mintDark,
             ),
-          ),
+            const SizedBox(height: 14),
+            const Text(
+              'Sıralamaya katıl',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Bu cihazda bugün $localXp XP kazandın. Haftalık Top 10 ve kendi sıran için hesabına giriş yap.',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Nura.muted, height: 1.45),
+            ),
+            const SizedBox(height: 18),
+            FilledButton(
+              onPressed: () => context.push('/auth'),
+              child: const Text('Giriş yap'),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   Widget _error() => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('Sıralama şu an alınamadı.', style: TextStyle(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 12),
-              OutlinedButton(onPressed: _reload, child: const Text('Tekrar dene')),
-            ],
+    child: Padding(
+      padding: const EdgeInsets.all(28),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'Sıralama şu an alınamadı.',
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
-        ),
-      );
+          const SizedBox(height: 12),
+          OutlinedButton(onPressed: _reload, child: const Text('Tekrar dene')),
+        ],
+      ),
+    ),
+  );
 
   Widget _board(List<LeaderboardEntry> entries) {
     final top = entries.where((entry) => entry.rank <= 10).toList();
-    final ownOutside = entries.where((entry) => entry.isMe && entry.rank > 10).firstOrNull;
+    final ownOutside = entries
+        .where((entry) => entry.isMe && entry.rank > 10)
+        .firstOrNull;
     return RefreshIndicator(
       onRefresh: () async {
         final next = await _load();
@@ -109,7 +127,10 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
         children: [
           Text('Bu hafta', style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 5),
-          const Text('Pazartesi 00.00 UTC’de yenilenir', style: TextStyle(color: Nura.muted)),
+          const Text(
+            'Pazartesi 00.00 UTC’de yenilenir',
+            style: TextStyle(color: Nura.muted),
+          ),
           const SizedBox(height: 14),
           NuraCard(
             onTap: () => context.push('/clan'),
@@ -117,7 +138,12 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
               children: [
                 Icon(Icons.groups_outlined, color: Nura.mintDark),
                 SizedBox(width: 12),
-                Expanded(child: Text('Takım sıralaması ve davet kodu', style: TextStyle(fontWeight: FontWeight.w600))),
+                Expanded(
+                  child: Text(
+                    'Takım sıralaması ve davet kodu',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
                 Icon(Icons.chevron_right, color: Nura.soft),
               ],
             ),
@@ -131,9 +157,15 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
                   children: [
                     Icon(Icons.flag_outlined, color: Nura.mintDark, size: 36),
                     SizedBox(height: 10),
-                    Text('İlk sırayı sen al.', style: TextStyle(fontWeight: FontWeight.w700)),
+                    Text(
+                      'İlk sırayı sen al.',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
                     SizedBox(height: 4),
-                    Text('XP kazandığında burada görüneceksin.', style: TextStyle(color: Nura.muted)),
+                    Text(
+                      'XP kazandığında burada görüneceksin.',
+                      style: TextStyle(color: Nura.muted),
+                    ),
                   ],
                 ),
               ),
@@ -154,7 +186,11 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
             const SizedBox(height: 22),
             const Eyebrow('Senin sıran'),
             const SizedBox(height: 8),
-            NuraCard(color: Nura.mintLight, padding: EdgeInsets.zero, child: _row(ownOutside)),
+            NuraCard(
+              color: Nura.mintLight,
+              padding: EdgeInsets.zero,
+              child: _row(ownOutside),
+            ),
           ],
         ],
       ),
@@ -169,7 +205,9 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
       _ => Nura.mintDark,
     };
     return Container(
-      color: entry.isMe ? Nura.mintLight.withValues(alpha: .55) : Colors.transparent,
+      color: entry.isMe
+          ? Nura.mintLight.withValues(alpha: .55)
+          : Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
@@ -181,7 +219,10 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
               color: rankColor.withValues(alpha: .12),
               shape: BoxShape.circle,
             ),
-            child: Text('${entry.rank}', style: TextStyle(color: rankColor, fontWeight: FontWeight.w700)),
+            child: Text(
+              '${entry.rank}',
+              style: TextStyle(color: rankColor, fontWeight: FontWeight.w700),
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -189,11 +230,19 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
               entry.isMe ? '${entry.playerName} · Sen' : entry.playerName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: entry.isMe ? FontWeight.w700 : FontWeight.w600),
+              style: TextStyle(
+                fontWeight: entry.isMe ? FontWeight.w700 : FontWeight.w600,
+              ),
             ),
           ),
           const SizedBox(width: 8),
-          Text('${entry.xp} XP', style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w700)),
+          Text(
+            '${entry.xp} XP',
+            style: const TextStyle(
+              color: Nura.mintDark,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );

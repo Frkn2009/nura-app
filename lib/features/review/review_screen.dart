@@ -41,7 +41,10 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                 padding: const EdgeInsets.fromLTRB(22, 12, 22, 24),
                 child: Column(
                   children: [
-                    Text('${i + 1} / ${due.length}', style: const TextStyle(color: Nura.muted)),
+                    Text(
+                      '${i + 1} / ${due.length}',
+                      style: const TextStyle(color: Nura.muted),
+                    ),
                     const SizedBox(height: 18),
                     Expanded(
                       child: NuraCard(
@@ -49,20 +52,34 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              due[i.clamp(0, due.length - 1)].glossFor(p.uiLang),
+                              due[i.clamp(0, due.length - 1)].glossFor(
+                                p.uiLang,
+                              ),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 18, color: Nura.muted),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Nura.muted,
+                              ),
                             ),
                             const SizedBox(height: 22),
                             if (revealed)
                               Text(
                                 due[i.clamp(0, due.length - 1)].target,
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: Nura.forest),
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w600,
+                                  color: Nura.forest,
+                                ),
                               )
                             else
-                              Text(i18n.holdToSpeak.replaceFirst('Konuşmak için basılı tut', 'Söyle, sonra aç'),
-                                  style: const TextStyle(color: Nura.soft)),
+                              Text(
+                                i18n.holdToSpeak.replaceFirst(
+                                  'Konuşmak için basılı tut',
+                                  'Söyle, sonra aç',
+                                ),
+                                style: const TextStyle(color: Nura.soft),
+                              ),
                           ],
                         ),
                       ),
@@ -76,12 +93,25 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                     else
                       Row(
                         children: [
-                          Expanded(child: OutlinedButton(onPressed: () => _grade(due, 0), child: const Text('Tekrar'))),
-                          const SizedBox(width: 8),
-                          Expanded(child: OutlinedButton(onPressed: () => _grade(due, 3), child: const Text('İyi'))),
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () => _grade(due, 0),
+                              child: const Text('Tekrar'),
+                            ),
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: FilledButton(onPressed: () => _grade(due, 5), child: const Text('Kolay')),
+                            child: OutlinedButton(
+                              onPressed: () => _grade(due, 3),
+                              child: const Text('İyi'),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: FilledButton(
+                              onPressed: () => _grade(due, 5),
+                              child: const Text('Kolay'),
+                            ),
                           ),
                         ],
                       ),

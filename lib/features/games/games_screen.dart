@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:characters/characters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,16 +30,61 @@ class GamesScreen extends ConsumerWidget {
     }
 
     final games = <_GameDefinition>[
-      _GameDefinition('Doğru / Yanlış', 'Çeviri eşleşmesini değerlendir', Icons.rule_rounded, Nura.mint,
-          () => TrueFalseGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
-      _GameDefinition('Harf Sıralama', 'Karışık harflerden kelime kur', Icons.sort_by_alpha_rounded, Nura.sky,
-          () => LetterOrderGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
-      _GameDefinition('Ses Bulmaca', 'Dinle ve dört seçenekten bul', Icons.headphones_rounded, Nura.lavender,
-          () => AudioPuzzleScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
-      _GameDefinition('Boşluk Doldur', 'Eksik kelimeyi tamamla', Icons.edit_note_rounded, Nura.coral,
-          () => FillBlankGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
-      _GameDefinition('Zamana Karşı', '60 saniyede en çok doğru', Icons.timer_outlined, Nura.sunflower,
-          () => TimedGameScreen(lang: profile.learnLang, ui: profile.uiLang, onComplete: completeGame)),
+      _GameDefinition(
+        'Doğru / Yanlış',
+        'Çeviri eşleşmesini değerlendir',
+        Icons.rule_rounded,
+        Nura.mint,
+        () => TrueFalseGameScreen(
+          lang: profile.learnLang,
+          ui: profile.uiLang,
+          onComplete: completeGame,
+        ),
+      ),
+      _GameDefinition(
+        'Harf Sıralama',
+        'Karışık harflerden kelime kur',
+        Icons.sort_by_alpha_rounded,
+        Nura.sky,
+        () => LetterOrderGameScreen(
+          lang: profile.learnLang,
+          ui: profile.uiLang,
+          onComplete: completeGame,
+        ),
+      ),
+      _GameDefinition(
+        'Ses Bulmaca',
+        'Dinle ve dört seçenekten bul',
+        Icons.headphones_rounded,
+        Nura.lavender,
+        () => AudioPuzzleScreen(
+          lang: profile.learnLang,
+          ui: profile.uiLang,
+          onComplete: completeGame,
+        ),
+      ),
+      _GameDefinition(
+        'Boşluk Doldur',
+        'Eksik kelimeyi tamamla',
+        Icons.edit_note_rounded,
+        Nura.coral,
+        () => FillBlankGameScreen(
+          lang: profile.learnLang,
+          ui: profile.uiLang,
+          onComplete: completeGame,
+        ),
+      ),
+      _GameDefinition(
+        'Zamana Karşı',
+        '60 saniyede en çok doğru',
+        Icons.timer_outlined,
+        Nura.sunflower,
+        () => TimedGameScreen(
+          lang: profile.learnLang,
+          ui: profile.uiLang,
+          onComplete: completeGame,
+        ),
+      ),
     ];
 
     return SafeArea(
@@ -65,7 +109,13 @@ class GamesScreen extends ConsumerWidget {
 }
 
 class _GameDefinition {
-  const _GameDefinition(this.title, this.subtitle, this.icon, this.color, this.screen);
+  const _GameDefinition(
+    this.title,
+    this.subtitle,
+    this.icon,
+    this.color,
+    this.screen,
+  );
   final String title;
   final String subtitle;
   final IconData icon;
@@ -79,39 +129,54 @@ class _GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => NuraCard(
-        onTap: () => Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute<void>(builder: (_) => definition.screen()),
+    onTap: () => Navigator.of(
+      context,
+      rootNavigator: true,
+    ).push(MaterialPageRoute<void>(builder: (_) => definition.screen())),
+    child: Row(
+      children: [
+        Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: definition.color.withValues(alpha: .12),
+            borderRadius: BorderRadius.circular(Nura.radius),
+          ),
+          child: Icon(definition.icon, color: definition.color),
         ),
-        child: Row(
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: definition.color.withValues(alpha: .12),
-                borderRadius: BorderRadius.circular(Nura.radius),
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                definition.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-              child: Icon(definition.icon, color: definition.color),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(definition.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 3),
-                  Text(definition.subtitle, style: const TextStyle(color: Nura.muted, fontSize: 13)),
-                ],
+              const SizedBox(height: 3),
+              Text(
+                definition.subtitle,
+                style: const TextStyle(color: Nura.muted, fontSize: 13),
               ),
-            ),
-            const Icon(Icons.chevron_right, color: Nura.soft),
-          ],
+            ],
+          ),
         ),
-      );
+        const Icon(Icons.chevron_right, color: Nura.soft),
+      ],
+    ),
+  );
 }
 
 class TrueFalseGameScreen extends StatefulWidget {
-  const TrueFalseGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
+  const TrueFalseGameScreen({
+    super.key,
+    required this.lang,
+    required this.ui,
+    required this.onComplete,
+  });
   final LearnLang lang;
   final UiLang ui;
   final Future<int> Function(int correct, int total) onComplete;
@@ -158,7 +223,13 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
     Future<void>.delayed(const Duration(milliseconds: 650), () {
       if (!mounted) return;
       if (round == 9) {
-        showGameResult(context, title: 'Doğru / Yanlış', correct: correct, total: 10, onComplete: widget.onComplete);
+        showGameResult(
+          context,
+          title: 'Doğru / Yanlış',
+          correct: correct,
+          total: 10,
+          onComplete: widget.onComplete,
+        );
       } else {
         setState(() {
           round++;
@@ -170,49 +241,54 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
 
   @override
   Widget build(BuildContext context) => _GameScaffold(
-        title: 'Doğru / Yanlış',
-        progress: (round + 1) / 10,
-        child: Column(
+    title: 'Doğru / Yanlış',
+    progress: (round + 1) / 10,
+    child: Column(
+      children: [
+        const Text('Bu çeviri doğru mu?', style: TextStyle(color: Nura.muted)),
+        const SizedBox(height: 24),
+        _PromptCard(primary: phrase.target, secondary: proposed),
+        const Spacer(),
+        Row(
           children: [
-            const Text('Bu çeviri doğru mu?', style: TextStyle(color: Nura.muted)),
-            const SizedBox(height: 24),
-            _PromptCard(primary: phrase.target, secondary: proposed),
-            const Spacer(),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: answered ? null : () => _answer(false),
-                    icon: const Icon(Icons.close_rounded),
-                    label: const Text('Yanlış'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: answered ? null : () => _answer(true),
-                    icon: const Icon(Icons.check_rounded),
-                    label: const Text('Doğru'),
-                  ),
-                ),
-              ],
-            ),
-            if (answered) ...[
-              const SizedBox(height: 12),
-              MascotFeedback(
-                correct: lastRight,
-                message: lastRight
-                    ? 'Doğru karar!'
-                    : 'Doğrusu: ${phrase.glossFor(widget.ui)}',
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: answered ? null : () => _answer(false),
+                icon: const Icon(Icons.close_rounded),
+                label: const Text('Yanlış'),
               ),
-            ],
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: FilledButton.icon(
+                onPressed: answered ? null : () => _answer(true),
+                icon: const Icon(Icons.check_rounded),
+                label: const Text('Doğru'),
+              ),
+            ),
           ],
         ),
-      );
+        if (answered) ...[
+          const SizedBox(height: 12),
+          MascotFeedback(
+            correct: lastRight,
+            message: lastRight
+                ? 'Doğru karar!'
+                : 'Doğrusu: ${phrase.glossFor(widget.ui)}',
+          ),
+        ],
+      ],
+    ),
+  );
 }
 
 class LetterOrderGameScreen extends StatefulWidget {
-  const LetterOrderGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
+  const LetterOrderGameScreen({
+    super.key,
+    required this.lang,
+    required this.ui,
+    required this.onComplete,
+  });
   final LearnLang lang;
   final UiLang ui;
   final Future<int> Function(int correct, int total) onComplete;
@@ -248,14 +324,14 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
   }
 
   void _pick(_LetterTile tile) => setState(() {
-        available.remove(tile);
-        selected.add(tile);
-      });
+    available.remove(tile);
+    selected.add(tile);
+  });
 
   void _undo(_LetterTile tile) => setState(() {
-        selected.remove(tile);
-        available.add(tile);
-      });
+    selected.remove(tile);
+    available.add(tile);
+  });
 
   void _check() {
     final answer = selected.map((tile) => tile.character).join();
@@ -263,11 +339,22 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
     final right = _norm(answer) == _norm(expected);
     if (right) correct++;
     if (round == 4) {
-      showGameResult(context, title: 'Harf Sıralama', correct: correct, total: 5, onComplete: widget.onComplete);
+      showGameResult(
+        context,
+        title: 'Harf Sıralama',
+        correct: correct,
+        total: 5,
+        onComplete: widget.onComplete,
+      );
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: MascotFeedback(correct: right, message: right ? 'Doğru!' : 'Tekrar dene · $expected')),
+      SnackBar(
+        content: MascotFeedback(
+          correct: right,
+          message: right ? 'Doğru!' : 'Tekrar dene · $expected',
+        ),
+      ),
     );
     setState(() {
       round++;
@@ -283,7 +370,11 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
       progress: (round + 1) / 5,
       child: Column(
         children: [
-          Text(phrase.glossFor(widget.ui), textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted)),
+          Text(
+            phrase.glossFor(widget.ui),
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Nura.muted),
+          ),
           const SizedBox(height: 26),
           Container(
             width: double.infinity,
@@ -298,7 +389,10 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
               alignment: WrapAlignment.center,
               spacing: 6,
               runSpacing: 6,
-              children: [for (final tile in selected) _letter(tile, () => _undo(tile), true)],
+              children: [
+                for (final tile in selected)
+                  _letter(tile, () => _undo(tile), true),
+              ],
             ),
           ),
           const SizedBox(height: 24),
@@ -306,7 +400,10 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
             alignment: WrapAlignment.center,
             spacing: 8,
             runSpacing: 8,
-            children: [for (final tile in available) _letter(tile, () => _pick(tile), false)],
+            children: [
+              for (final tile in available)
+                _letter(tile, () => _pick(tile), false),
+            ],
           ),
           const Spacer(),
           FilledButton(
@@ -318,7 +415,8 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
     );
   }
 
-  Widget _letter(_LetterTile tile, VoidCallback tap, bool selectedTile) => Material(
+  Widget _letter(_LetterTile tile, VoidCallback tap, bool selectedTile) =>
+      Material(
         color: selectedTile ? Nura.mintDark : Colors.white,
         borderRadius: BorderRadius.circular(Nura.radiusSm),
         child: InkWell(
@@ -328,8 +426,14 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
             constraints: const BoxConstraints(minWidth: 42, minHeight: 44),
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(tile.character,
-                style: TextStyle(color: selectedTile ? Colors.white : Nura.ink, fontSize: 18, fontWeight: FontWeight.w700)),
+            child: Text(
+              tile.character,
+              style: TextStyle(
+                color: selectedTile ? Colors.white : Nura.ink,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
         ),
       );
@@ -342,7 +446,12 @@ class _LetterTile {
 }
 
 class AudioPuzzleScreen extends StatefulWidget {
-  const AudioPuzzleScreen({super.key, required this.lang, required this.ui, required this.onComplete});
+  const AudioPuzzleScreen({
+    super.key,
+    required this.lang,
+    required this.ui,
+    required this.onComplete,
+  });
   final LearnLang lang;
   final UiLang ui;
   final Future<int> Function(int correct, int total) onComplete;
@@ -371,7 +480,8 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
 
   void _prepare() {
     phrase = deck[round % deck.length];
-    options = [phrase, ..._differentPhrases(deck, phrase, 3, random)]..shuffle(random);
+    options = [phrase, ..._differentPhrases(deck, phrase, 3, random)]
+      ..shuffle(random);
     answered = false;
   }
 
@@ -388,7 +498,13 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
     Future<void>.delayed(const Duration(milliseconds: 750), () {
       if (!mounted) return;
       if (round == 9) {
-        showGameResult(context, title: 'Ses Bulmaca', correct: correct, total: 10, onComplete: widget.onComplete);
+        showGameResult(
+          context,
+          title: 'Ses Bulmaca',
+          correct: correct,
+          total: 10,
+          onComplete: widget.onComplete,
+        );
       } else {
         setState(() {
           round++;
@@ -406,49 +522,67 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
 
   @override
   Widget build(BuildContext context) => _GameScaffold(
-        title: 'Ses Bulmaca',
-        progress: (round + 1) / 10,
-        child: Column(
-          children: [
-            const Text('Cümleyi dinle ve anlamını seç', style: TextStyle(color: Nura.muted)),
-            const SizedBox(height: 24),
-            Semantics(
-              button: true,
-              label: 'Sesi oynat',
-              child: InkWell(
-                onTap: _play,
-                borderRadius: BorderRadius.circular(Nura.radiusLg),
-                child: Container(
-                  width: 112,
-                  height: 112,
-                  decoration: const BoxDecoration(color: Nura.mintDark, shape: BoxShape.circle),
-                  child: const Icon(Icons.volume_up_rounded, color: Colors.white, size: 46),
-                ),
+    title: 'Ses Bulmaca',
+    progress: (round + 1) / 10,
+    child: Column(
+      children: [
+        const Text(
+          'Cümleyi dinle ve anlamını seç',
+          style: TextStyle(color: Nura.muted),
+        ),
+        const SizedBox(height: 24),
+        Semantics(
+          button: true,
+          label: 'Sesi oynat',
+          child: InkWell(
+            onTap: _play,
+            borderRadius: BorderRadius.circular(Nura.radiusLg),
+            child: Container(
+              width: 112,
+              height: 112,
+              decoration: const BoxDecoration(
+                color: Nura.mintDark,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.volume_up_rounded,
+                color: Colors.white,
+                size: 46,
               ),
             ),
-            const Spacer(),
-            for (final option in options)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 9),
-                child: OutlinedButton(
-                  onPressed: answered ? null : () => _answer(option),
-                  child: Text(option.glossFor(widget.ui), textAlign: TextAlign.center),
-                ),
-              ),
-            if (answered)
-              MascotFeedback(
-                correct: lastRight,
-                message: lastRight
-                    ? 'Harika dinledin!'
-                    : 'Luma: dinledikçe daha net olacak.',
-              ),
-          ],
+          ),
         ),
-      );
+        const Spacer(),
+        for (final option in options)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 9),
+            child: OutlinedButton(
+              onPressed: answered ? null : () => _answer(option),
+              child: Text(
+                option.glossFor(widget.ui),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        if (answered)
+          MascotFeedback(
+            correct: lastRight,
+            message: lastRight
+                ? 'Harika dinledin!'
+                : 'Luma: dinledikçe daha net olacak.',
+          ),
+      ],
+    ),
+  );
 }
 
 class FillBlankGameScreen extends StatefulWidget {
-  const FillBlankGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
+  const FillBlankGameScreen({
+    super.key,
+    required this.lang,
+    required this.ui,
+    required this.onComplete,
+  });
   final LearnLang lang;
   final UiLang ui;
   final Future<int> Function(int correct, int total) onComplete;
@@ -478,7 +612,10 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
     final words = phrase.target.trim().split(RegExp(r'\s+'));
     if (words.length > 1) {
       final index = words.length ~/ 2;
-      answer = words[index].replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), '');
+      answer = words[index].replaceAll(
+        RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true),
+        '',
+      );
       words[index] = '_____';
       question = words.join(' ');
     } else {
@@ -495,11 +632,22 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
     final right = _norm(controller.text) == _norm(answer);
     if (right) correct++;
     if (round == 4) {
-      showGameResult(context, title: 'Boşluk Doldur', correct: correct, total: 5, onComplete: widget.onComplete);
+      showGameResult(
+        context,
+        title: 'Boşluk Doldur',
+        correct: correct,
+        total: 5,
+        onComplete: widget.onComplete,
+      );
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: MascotFeedback(correct: right, message: right ? 'Doğru!' : 'Tekrar dene · $answer')),
+      SnackBar(
+        content: MascotFeedback(
+          correct: right,
+          message: right ? 'Doğru!' : 'Tekrar dene · $answer',
+        ),
+      ),
     );
     setState(() {
       round++;
@@ -515,30 +663,39 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
 
   @override
   Widget build(BuildContext context) => _GameScaffold(
-        title: 'Boşluk Doldur',
-        progress: (round + 1) / 5,
-        child: Column(
-          children: [
-            Text(phrase.glossFor(widget.ui), textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted)),
-            const SizedBox(height: 26),
-            _PromptCard(primary: question),
-            const SizedBox(height: 22),
-            TextField(
-              controller: controller,
-              textAlign: TextAlign.center,
-              autocorrect: false,
-              onSubmitted: (_) => _check(),
-              decoration: const InputDecoration(hintText: 'Eksik kelime'),
-            ),
-            const Spacer(),
-            FilledButton(onPressed: _check, child: const Text('Kontrol et')),
-          ],
+    title: 'Boşluk Doldur',
+    progress: (round + 1) / 5,
+    child: Column(
+      children: [
+        Text(
+          phrase.glossFor(widget.ui),
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Nura.muted),
         ),
-      );
+        const SizedBox(height: 26),
+        _PromptCard(primary: question),
+        const SizedBox(height: 22),
+        TextField(
+          controller: controller,
+          textAlign: TextAlign.center,
+          autocorrect: false,
+          onSubmitted: (_) => _check(),
+          decoration: const InputDecoration(hintText: 'Eksik kelime'),
+        ),
+        const Spacer(),
+        FilledButton(onPressed: _check, child: const Text('Kontrol et')),
+      ],
+    ),
+  );
 }
 
 class TimedGameScreen extends StatefulWidget {
-  const TimedGameScreen({super.key, required this.lang, required this.ui, required this.onComplete});
+  const TimedGameScreen({
+    super.key,
+    required this.lang,
+    required this.ui,
+    required this.onComplete,
+  });
   final LearnLang lang;
   final UiLang ui;
   final Future<int> Function(int correct, int total) onComplete;
@@ -567,7 +724,13 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
       if (seconds <= 1) {
         timer?.cancel();
         setState(() => seconds = 0);
-        showGameResult(context, title: 'Zamana Karşı', correct: correct, total: total, onComplete: widget.onComplete);
+        showGameResult(
+          context,
+          title: 'Zamana Karşı',
+          correct: correct,
+          total: total,
+          onComplete: widget.onComplete,
+        );
       } else {
         setState(() => seconds--);
       }
@@ -576,7 +739,8 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
 
   void _prepare() {
     phrase = deck[total % deck.length];
-    options = [phrase, ..._differentPhrases(deck, phrase, 3, random)]..shuffle(random);
+    options = [phrase, ..._differentPhrases(deck, phrase, 3, random)]
+      ..shuffle(random);
   }
 
   void _answer(Phrase choice) {
@@ -596,30 +760,38 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
 
   @override
   Widget build(BuildContext context) => _GameScaffold(
-        title: 'Zamana Karşı · ${seconds}s',
-        progress: seconds / 60,
-        trailing: '$correct doğru',
-        child: Column(
-          children: [
-            const Text('Doğru çeviriyi seç', style: TextStyle(color: Nura.muted)),
-            const SizedBox(height: 24),
-            _PromptCard(primary: phrase.target),
-            const Spacer(),
-            for (final option in options)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 9),
-                child: OutlinedButton(
-                  onPressed: () => _answer(option),
-                  child: Text(option.glossFor(widget.ui), textAlign: TextAlign.center),
-                ),
+    title: 'Zamana Karşı · ${seconds}s',
+    progress: seconds / 60,
+    trailing: '$correct doğru',
+    child: Column(
+      children: [
+        const Text('Doğru çeviriyi seç', style: TextStyle(color: Nura.muted)),
+        const SizedBox(height: 24),
+        _PromptCard(primary: phrase.target),
+        const Spacer(),
+        for (final option in options)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 9),
+            child: OutlinedButton(
+              onPressed: () => _answer(option),
+              child: Text(
+                option.glossFor(widget.ui),
+                textAlign: TextAlign.center,
               ),
-          ],
-        ),
-      );
+            ),
+          ),
+      ],
+    ),
+  );
 }
 
 class _GameScaffold extends StatelessWidget {
-  const _GameScaffold({required this.title, required this.progress, required this.child, this.trailing});
+  const _GameScaffold({
+    required this.title,
+    required this.progress,
+    required this.child,
+    this.trailing,
+  });
   final String title;
   final double progress;
   final String? trailing;
@@ -627,25 +799,30 @@ class _GameScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: NuraAppBar(
-          pageTitle: Text(title),
-          actions: trailing == null
-              ? null
-              : [Padding(padding: const EdgeInsets.only(right: 16), child: Center(child: Text(trailing!)))],
+    appBar: NuraAppBar(
+      pageTitle: Text(title),
+      actions: trailing == null
+          ? null
+          : [
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Center(child: Text(trailing!)),
+              ),
+            ],
+    ),
+    body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 8, 22, 22),
+        child: Column(
+          children: [
+            LinearProgressIndicator(value: progress.clamp(0, 1).toDouble()),
+            const SizedBox(height: 22),
+            Expanded(child: child),
+          ],
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(22, 8, 22, 22),
-            child: Column(
-              children: [
-                LinearProgressIndicator(value: progress.clamp(0, 1).toDouble()),
-                const SizedBox(height: 22),
-                Expanded(child: child),
-              ],
-            ),
-          ),
-        ),
-      );
+      ),
+    ),
+  );
 }
 
 class _PromptCard extends StatelessWidget {
@@ -655,21 +832,36 @@ class _PromptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => NuraCard(
-        color: Nura.mintLight,
-        child: Column(
-          children: [
-            Text(primary, textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 23, height: 1.3, fontWeight: FontWeight.w700, color: Nura.ink)),
-            if (secondary != null) ...[
-              const SizedBox(height: 14),
-              const Divider(),
-              const SizedBox(height: 8),
-              Text(secondary!, textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 17, height: 1.35, color: Nura.muted)),
-            ],
-          ],
+    color: Nura.mintLight,
+    child: Column(
+      children: [
+        Text(
+          primary,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 23,
+            height: 1.3,
+            fontWeight: FontWeight.w700,
+            color: Nura.ink,
+          ),
         ),
-      );
+        if (secondary != null) ...[
+          const SizedBox(height: 14),
+          const Divider(),
+          const SizedBox(height: 8),
+          Text(
+            secondary!,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 17,
+              height: 1.35,
+              color: Nura.muted,
+            ),
+          ),
+        ],
+      ],
+    ),
+  );
 }
 
 Future<void> showGameResult(
@@ -696,11 +888,27 @@ Future<void> showGameResult(
             mood: percent >= 70 ? MascotMood.celebrate : MascotMood.encourage,
           ),
           const SizedBox(height: 6),
-          Text('$percent%', style: const TextStyle(fontSize: 42, fontWeight: FontWeight.w700, color: Nura.mintDark)),
+          Text(
+            '$percent%',
+            style: const TextStyle(
+              fontSize: 42,
+              fontWeight: FontWeight.w700,
+              color: Nura.mintDark,
+            ),
+          ),
           const SizedBox(height: 6),
-          Text('$correct / $total doğru', style: const TextStyle(color: Nura.muted)),
+          Text(
+            '$correct / $total doğru',
+            style: const TextStyle(color: Nura.muted),
+          ),
           const SizedBox(height: 10),
-          Text('+$earnedXp XP', style: const TextStyle(color: Nura.sunflower, fontWeight: FontWeight.w700)),
+          Text(
+            '+$earnedXp XP',
+            style: const TextStyle(
+              color: Nura.sunflower,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
       actions: [
@@ -716,8 +924,14 @@ Future<void> showGameResult(
   );
 }
 
-List<Phrase> _differentPhrases(List<Phrase> source, Phrase current, int count, Random random) {
-  final candidates = source.where((phrase) => phrase.id != current.id).toList()..shuffle(random);
+List<Phrase> _differentPhrases(
+  List<Phrase> source,
+  Phrase current,
+  int count,
+  Random random,
+) {
+  final candidates = source.where((phrase) => phrase.id != current.id).toList()
+    ..shuffle(random);
   final unique = <String>{};
   final result = <Phrase>[];
   for (final phrase in candidates) {
@@ -730,11 +944,19 @@ List<Phrase> _differentPhrases(List<Phrase> source, Phrase current, int count, R
 String _practiceWord(String value) {
   final words = value
       .split(RegExp(r'\s+'))
-      .map((word) => word.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), ''))
-      .where((word) => word.characters.length >= 2 && word.characters.length <= 12)
+      .map(
+        (word) =>
+            word.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), ''),
+      )
+      .where(
+        (word) => word.characters.length >= 2 && word.characters.length <= 12,
+      )
       .toList();
   if (words.isNotEmpty) return words.first;
-  final clean = value.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true), '');
+  final clean = value.replaceAll(
+    RegExp(r'[^\p{L}\p{M}\p{N}]', unicode: true),
+    '',
+  );
   return clean.characters.take(12).join();
 }
 

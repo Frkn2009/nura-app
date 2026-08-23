@@ -7,10 +7,7 @@ class SrsMachine {
 
   final Clock clock;
 
-  SrsResult review({
-    required SrsCard card,
-    required AnswerQuality quality,
-  }) {
+  SrsResult review({required SrsCard card, required AnswerQuality quality}) {
     final now = clock.nowUtc();
 
     final newDifficulty = _nextDifficulty(card.difficulty, quality);
@@ -32,7 +29,11 @@ class SrsMachine {
       algorithmVersion: 'nura-fsrs-inspired-v1.4',
     );
 
-    return SrsResult(card: nextCard, intervalDays: intervalDays, dueAtUtc: dueAtUtc);
+    return SrsResult(
+      card: nextCard,
+      intervalDays: intervalDays,
+      dueAtUtc: dueAtUtc,
+    );
   }
 
   double _nextDifficulty(double old, AnswerQuality quality) {
@@ -45,20 +46,31 @@ class SrsMachine {
     return (old + delta).clamp(1.0, 10.0);
   }
 
-  double _nextStability(double oldStability, double difficulty, AnswerQuality quality) {
+  double _nextStability(
+    double oldStability,
+    double difficulty,
+    AnswerQuality quality,
+  ) {
     double stability = switch (quality) {
       AnswerQuality.again => oldStability * 0.45,
       AnswerQuality.hard => oldStability * 0.80,
-      AnswerQuality.good => oldStability * 1.6 * (1.0 + (1.0 / difficulty) * 0.35),
-      AnswerQuality.easy => oldStability * 2.2 * (1.0 + (1.0 / difficulty) * 0.60),
+      AnswerQuality.good =>
+        oldStability * 1.6 * (1.0 + (1.0 / difficulty) * 0.35),
+      AnswerQuality.easy =>
+        oldStability * 2.2 * (1.0 + (1.0 / difficulty) * 0.60),
     };
     return stability.clamp(0.5, 36500.0);
   }
 
-  SrsCardState _nextState({required SrsCardState currentState, required AnswerQuality quality}) {
+  SrsCardState _nextState({
+    required SrsCardState currentState,
+    required AnswerQuality quality,
+  }) {
     if (quality == AnswerQuality.again) return SrsCardState.relearning;
     return switch (currentState) {
-      SrsCardState.newCard || SrsCardState.learning || SrsCardState.relearning => SrsCardState.review,
+      SrsCardState.newCard ||
+      SrsCardState.learning ||
+      SrsCardState.relearning => SrsCardState.review,
       _ => currentState,
     };
   }
@@ -66,7 +78,11 @@ class SrsMachine {
 
 @immutable
 class SrsResult {
-  const SrsResult({required this.card, required this.intervalDays, required this.dueAtUtc});
+  const SrsResult({
+    required this.card,
+    required this.intervalDays,
+    required this.dueAtUtc,
+  });
   final SrsCard card;
   final int intervalDays;
   final DateTime dueAtUtc;

@@ -41,7 +41,9 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
       });
       return;
     }
-    await ref.read(sessionProvider.notifier).redeemRewardedAd(xpReward: xpReward);
+    await ref
+        .read(sessionProvider.notifier)
+        .redeemRewardedAd(xpReward: xpReward);
     if (mounted) context.pop();
   }
 
@@ -60,10 +62,19 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(i18n.freeMinute, style: const TextStyle(color: Nura.terrSoft)),
+                  Text(
+                    i18n.freeMinute,
+                    style: const TextStyle(color: Nura.terrSoft),
+                  ),
                   const SizedBox(height: 8),
-                  const Text('Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
-                      style: TextStyle(color: Nura.cream, fontSize: 18, height: 1.4)),
+                  const Text(
+                    'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
+                    style: TextStyle(
+                      color: Nura.cream,
+                      fontSize: 18,
+                      height: 1.4,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -79,28 +90,53 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
             const SizedBox(height: 8),
             SegmentedButton<bool>(
               segments: const [
-                ButtonSegment(value: false, icon: Icon(Icons.mic_none), label: Text('+30 sn konuşma')),
-                ButtonSegment(value: true, icon: Icon(Icons.bolt), label: Text('+20 XP')),
+                ButtonSegment(
+                  value: false,
+                  icon: Icon(Icons.mic_none),
+                  label: Text('+30 sn konuşma'),
+                ),
+                ButtonSegment(
+                  value: true,
+                  icon: Icon(Icons.bolt),
+                  label: Text('+20 XP'),
+                ),
               ],
               selected: {xpReward},
-              onSelectionChanged: loading ? null : (value) => setState(() => xpReward = value.first),
+              onSelectionChanged: loading
+                  ? null
+                  : (value) => setState(() => xpReward = value.first),
             ),
             if (error != null) ...[
               const SizedBox(height: 14),
-              Text(error!, textAlign: TextAlign.center, style: const TextStyle(color: Nura.coral)),
+              Text(
+                error!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Nura.coral),
+              ),
             ],
             const SizedBox(height: 28),
             FilledButton.icon(
               onPressed: loading
                   ? null
-                  : (profile.canWatchAd ? _play : () => context.push('/paywall')),
-              icon: Icon(profile.canWatchAd ? Icons.play_arrow_rounded : Icons.diamond_outlined),
-              label: Text(loading
-                  ? 'Video hazırlanıyor…'
-                  : (profile.canWatchAd ? 'Videoyu izle' : 'Plus’a geç')),
+                  : (profile.canWatchAd
+                        ? _play
+                        : () => context.push('/paywall')),
+              icon: Icon(
+                profile.canWatchAd
+                    ? Icons.play_arrow_rounded
+                    : Icons.diamond_outlined,
+              ),
+              label: Text(
+                loading
+                    ? 'Video hazırlanıyor…'
+                    : (profile.canWatchAd ? 'Videoyu izle' : 'Plus’a geç'),
+              ),
             ),
             const SizedBox(height: 10),
-            OutlinedButton(onPressed: () => context.push('/paywall'), child: Text(i18n.plusCta)),
+            OutlinedButton(
+              onPressed: () => context.push('/paywall'),
+              child: Text(i18n.plusCta),
+            ),
           ],
         ),
       ),

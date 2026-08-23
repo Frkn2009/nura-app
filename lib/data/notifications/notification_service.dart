@@ -12,21 +12,18 @@ class NotificationService {
 
   static Future<void> initialize() async {
     if (_initialized || kIsWeb) return;
-    await AwesomeNotifications().initialize(
-      null,
-      [
-        NotificationChannel(
-          channelKey: _channelKey,
-          channelName: 'Günlük pratik',
-          channelDescription: 'NURA günlük ders ve seri hatırlatmaları',
-          defaultColor: const Color(0xFF0D5955),
-          ledColor: const Color(0xFFFFFFFF),
-          importance: NotificationImportance.Default,
-          playSound: true,
-          enableVibration: true,
-        ),
-      ],
-    );
+    await AwesomeNotifications().initialize(null, [
+      NotificationChannel(
+        channelKey: _channelKey,
+        channelName: 'Günlük pratik',
+        channelDescription: 'NURA günlük ders ve seri hatırlatmaları',
+        defaultColor: const Color(0xFF0D5955),
+        ledColor: const Color(0xFFFFFFFF),
+        importance: NotificationImportance.Default,
+        playSound: true,
+        enableVibration: true,
+      ),
+    ]);
     _initialized = true;
   }
 
@@ -39,7 +36,8 @@ class NotificationService {
       await AwesomeNotifications().cancelSchedule(_firstReminderId + offset);
     }
     if (!profile.notificationsEnabled) return;
-    final allowed = await AwesomeNotifications().isNotificationAllowed() ||
+    final allowed =
+        await AwesomeNotifications().isNotificationAllowed() ||
         await AwesomeNotifications().requestPermissionToSendNotifications();
     if (!allowed) return;
 
@@ -72,21 +70,36 @@ class NotificationService {
     final turkish = profile.uiLang == UiLang.tr;
     if (profile.isPlus && dayOffset % 4 == 0) {
       return turkish
-          ? ('NURA Plus', 'Sınırsız konuşma hakkın hazır. Bugünün sahnesine geç!')
+          ? (
+              'NURA Plus',
+              'Sınırsız konuşma hakkın hazır. Bugünün sahnesine geç!',
+            )
           : ('NURA Plus', 'Unlimited speaking is ready. Start today’s scene.');
     }
     if (profile.streak >= 2 && dayOffset % 3 == 1) {
       return turkish
           ? ('Serini koru', '🔥 Serin ${profile.streak} gün! Bugün kırma!')
-          : ('Keep your streak', '${profile.streak} days strong. Keep the chain alive today.');
+          : (
+              'Keep your streak',
+              '${profile.streak} days strong. Keep the chain alive today.',
+            );
     }
     if (dayOffset % 3 == 2) {
       return turkish
           ? ('Yeni oyun', '🎮 Yeni oyun: Harf Sıralama dene!')
-          : ('Ready for a quick game?', 'Try Letter Order to sharpen your vocabulary.');
+          : (
+              'Ready for a quick game?',
+              'Try Letter Order to sharpen your vocabulary.',
+            );
     }
     return turkish
-        ? ('Hadi derse! 📚', 'Bugün henüz pratik yapmadın. Kısa bir konuşma yeter.')
-        : ('Time to practise!', 'You have not practised today. One short conversation is enough.');
+        ? (
+            'Hadi derse! 📚',
+            'Bugün henüz pratik yapmadın. Kısa bir konuşma yeter.',
+          )
+        : (
+            'Time to practise!',
+            'You have not practised today. One short conversation is enough.',
+          );
   }
 }

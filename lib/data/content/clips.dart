@@ -24,13 +24,15 @@ class ClipCatalog {
     for (final scenario in Catalog.forLang(language)) {
       for (var index = 0; index < scenario.phrases.length; index++) {
         final phrase = scenario.phrases[index];
-        clips.add(LearningClip(
-          id: 'clip_${phrase.id}',
-          scenarioId: scenario.id,
-          scenario: scenario,
-          phrase: phrase,
-          position: clips.length,
-        ));
+        clips.add(
+          LearningClip(
+            id: 'clip_${phrase.id}',
+            scenarioId: scenario.id,
+            scenario: scenario,
+            phrase: phrase,
+            position: clips.length,
+          ),
+        );
       }
     }
     return clips;

@@ -9,8 +9,8 @@ final billingServiceProvider = Provider<BillingService>((ref) {
 
 final plusControllerProvider =
     StateNotifierProvider<PlusController, NuraEntitlement>((ref) {
-  return PlusController(ref.watch(billingServiceProvider));
-});
+      return PlusController(ref.watch(billingServiceProvider));
+    });
 
 class PlusController extends StateNotifier<NuraEntitlement> {
   PlusController(this._billingService) : super(NuraEntitlement.free);

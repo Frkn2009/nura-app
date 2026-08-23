@@ -29,15 +29,41 @@ class AppShell extends ConsumerWidget {
         indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         onDestinationSelected: (i) {
-          const paths = ['/app', '/app/speak', '/app/games', '/app/translate', '/app/you'];
+          const paths = [
+            '/app',
+            '/app/speak',
+            '/app/games',
+            '/app/translate',
+            '/app/you',
+          ];
           context.go(paths[i]);
         },
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home, color: Nura.mint), label: i18n.home),
-          NavigationDestination(icon: const Icon(Icons.mic_none), selectedIcon: Icon(Icons.mic, color: Nura.mint), label: i18n.speak),
-          const NavigationDestination(icon: Icon(Icons.sports_esports_outlined), selectedIcon: Icon(Icons.sports_esports, color: Nura.coral), label: 'Oyun'),
-          NavigationDestination(icon: const Icon(Icons.translate_outlined), selectedIcon: Icon(Icons.translate, color: Nura.mint), label: i18n.translate),
-          NavigationDestination(icon: const Icon(Icons.person_outline), selectedIcon: Icon(Icons.person, color: Nura.mint), label: i18n.you),
+          NavigationDestination(
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home, color: Nura.mint),
+            label: i18n.home,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.mic_none),
+            selectedIcon: Icon(Icons.mic, color: Nura.mint),
+            label: i18n.speak,
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.sports_esports_outlined),
+            selectedIcon: Icon(Icons.sports_esports, color: Nura.coral),
+            label: 'Oyun',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.translate_outlined),
+            selectedIcon: Icon(Icons.translate, color: Nura.mint),
+            label: i18n.translate,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person, color: Nura.mint),
+            label: i18n.you,
+          ),
         ],
       ),
     );

@@ -28,7 +28,9 @@ class SpeakHubScreen extends ConsumerWidget {
           Text(i18n.speak, style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 6),
           Text(
-            p.isPlus ? 'Sınırsız · Maya ile senaryo' : '${i18n.remainingToday}: ${remain}s',
+            p.isPlus
+                ? 'Sınırsız · Maya ile senaryo'
+                : '${i18n.remainingToday}: ${remain}s',
             style: const TextStyle(color: Nura.muted),
           ),
           const SizedBox(height: 16),
@@ -44,15 +46,28 @@ class SpeakHubScreen extends ConsumerWidget {
                     color: Nura.mintDark,
                     borderRadius: BorderRadius.circular(Nura.radius),
                   ),
-                  child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 30),
+                  child: const Icon(
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
                 const SizedBox(width: 13),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(i18n.clips, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                      const Text('Kısa cümleleri dinle, gölgele ve konuş', style: TextStyle(color: Nura.muted, fontSize: 12)),
+                      Text(
+                        i18n.clips,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const Text(
+                        'Kısa cümleleri dinle, gölgele ve konuş',
+                        style: TextStyle(color: Nura.muted, fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
@@ -65,7 +80,13 @@ class SpeakHubScreen extends ConsumerWidget {
             NuraCard(
               color: Nura.pale,
               onTap: () => context.push('/paywall'),
-              child: Text(i18n.plusCta, style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.forest)),
+              child: Text(
+                i18n.plusCta,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Nura.forest,
+                ),
+              ),
             ),
           const SizedBox(height: 10),
           for (final s in scenes)
@@ -77,16 +98,30 @@ class SpeakHubScreen extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       backgroundColor: Nura.forest,
-                      child: Text(s.lang.flag(), style: const TextStyle(fontSize: 18)),
+                      child: Text(
+                        s.lang.flag(),
+                        style: const TextStyle(fontSize: 18),
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(s.title(p.uiLang), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-                          Text('${s.minutes} dk · ${s.cefr.name.toUpperCase()} · ${s.turns.length} tur',
-                              style: const TextStyle(color: Nura.muted, fontSize: 13)),
+                          Text(
+                            s.title(p.uiLang),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            '${s.minutes} dk · ${s.cefr.name.toUpperCase()} · ${s.turns.length} tur',
+                            style: const TextStyle(
+                              color: Nura.muted,
+                              fontSize: 13,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -137,11 +172,14 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     if (mounted) setState(() => _speechReady = ready);
   }
 
-  Scenario get scene => Catalog.byId(widget.scenarioId) ?? Catalog.forLang(LearnLang.en).first;
+  Scenario get scene =>
+      Catalog.byId(widget.scenarioId) ?? Catalog.forLang(LearnLang.en).first;
 
-  SpeakTurn get currentTurn => scene.turns[turn.clamp(0, scene.turns.length - 1)];
+  SpeakTurn get currentTurn =>
+      scene.turns[turn.clamp(0, scene.turns.length - 1)];
 
-  Phrase get currentPhrase => scene.phrases[turn.clamp(0, scene.phrases.length - 1)];
+  Phrase get currentPhrase =>
+      scene.phrases[turn.clamp(0, scene.phrases.length - 1)];
 
   @override
   void dispose() {
@@ -155,14 +193,14 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   }
 
   String _microphoneMessage() => switch (speech.availability) {
-        SpeechAvailability.permissionPermanentlyDenied =>
-          'Mikrofon izni kapalı. Telefon ayarlarından NURA için mikrofonu aç.',
-        SpeechAvailability.permissionDenied =>
-          'Konuşabilmek için mikrofon izni vermen gerekiyor.',
-        SpeechAvailability.unavailable =>
-          'Bu cihazda konuşma tanıma kullanılamıyor. Telefonda tekrar dene.',
-        _ => 'Mikrofon başlatılamadı. Lütfen tekrar dene.',
-      };
+    SpeechAvailability.permissionPermanentlyDenied =>
+      'Mikrofon izni kapalı. Telefon ayarlarından NURA için mikrofonu aç.',
+    SpeechAvailability.permissionDenied =>
+      'Konuşabilmek için mikrofon izni vermen gerekiyor.',
+    SpeechAvailability.unavailable =>
+      'Bu cihazda konuşma tanıma kullanılamıyor. Telefonda tekrar dene.',
+    _ => 'Mikrofon başlatılamadı. Lütfen tekrar dene.',
+  };
 
   Future<void> _down() async {
     final p = ref.read(sessionProvider);
@@ -208,9 +246,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         holding = false;
         _speechReady = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(_microphoneMessage())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(_microphoneMessage())));
       return;
     }
     if (mounted) {
@@ -273,7 +311,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         pronunciationFeedback = '';
       });
     } else {
-      final sceneXp = await ref.read(sessionProvider.notifier).completeScene(scene.lang);
+      final sceneXp = await ref
+          .read(sessionProvider.notifier)
+          .completeScene(scene.lang);
       final latest = ref.read(sessionProvider);
       if (latest.canShowInterstitial() && await AdService.showInterstitial()) {
         if (!mounted) return;
@@ -308,7 +348,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16, top: 18),
-            child: Text(p.isPlus ? '∞' : '${remain}s', style: const TextStyle(color: Nura.terrSoft)),
+            child: Text(
+              p.isPlus ? '∞' : '${remain}s',
+              style: const TextStyle(color: Nura.terrSoft),
+            ),
           ),
         ],
       ),
@@ -325,7 +368,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       labels[s]!,
                       style: TextStyle(
                         color: s == step ? Nura.terrSoft : Nura.soft,
-                        fontWeight: s == step ? FontWeight.w700 : FontWeight.w400,
+                        fontWeight: s == step
+                            ? FontWeight.w700
+                            : FontWeight.w400,
                         fontSize: 12,
                       ),
                     ),
@@ -335,11 +380,20 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               const CircleAvatar(
                 radius: 40,
                 backgroundColor: Nura.cream,
-                child: Text('M', style: TextStyle(fontSize: 28, color: Nura.forest, fontWeight: FontWeight.w700)),
+                child: Text(
+                  'M',
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Nura.forest,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
               const SizedBox(height: 8),
               Text(
-                speech.usingNeuralVoice ? 'Maya · Neural' : 'Maya · kadın cihaz sesi',
+                speech.usingNeuralVoice
+                    ? 'Maya · Neural'
+                    : 'Maya · kadın cihaz sesi',
                 style: const TextStyle(color: Nura.terrSoft),
               ),
               const SizedBox(height: 18),
@@ -352,7 +406,12 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Text(
                 currentTurn.expected,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Nura.cream, fontSize: 24, fontWeight: FontWeight.w600, height: 1.3),
+                style: const TextStyle(
+                  color: Nura.cream,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  height: 1.3,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -360,7 +419,8 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Nura.muted),
               ),
-              if (LanguageGuide.of(scene.lang).tipFor(currentTurn.expected) != null) ...[
+              if (LanguageGuide.of(scene.lang).tipFor(currentTurn.expected) !=
+                  null) ...[
                 const SizedBox(height: 14),
                 Container(
                   width: double.infinity,
@@ -371,11 +431,17 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   ),
                   child: Text(
                     () {
-                      final tip = LanguageGuide.of(scene.lang).tipFor(currentTurn.expected)!;
+                      final tip = LanguageGuide.of(
+                        scene.lang,
+                      ).tipFor(currentTurn.expected)!;
                       return '${tip.written}  →  ${tip.heard}\n${tip.example}  ≈  ${tip.exampleSaid}';
                     }(),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Nura.terrSoft, height: 1.35, fontSize: 13),
+                    style: const TextStyle(
+                      color: Nura.terrSoft,
+                      height: 1.35,
+                      fontSize: 13,
+                    ),
                   ),
                 ),
               ],
@@ -383,7 +449,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               if (step == _Step.fix) ...[
                 NuraMascot(
                   size: 64,
-                  mood: score >= 70 ? MascotMood.celebrate : MascotMood.encourage,
+                  mood: score >= 70
+                      ? MascotMood.celebrate
+                      : MascotMood.encourage,
                 ),
                 const SizedBox(height: 8),
                 Wrap(
@@ -407,9 +475,13 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   onPressed: score == 0
                       ? () => setState(() => step = _Step.speak)
                       : _nextTurn,
-                  child: Text(score == 0
-                      ? 'Tekrar dene'
-                      : (turn < scene.turns.length - 1 ? i18n.continueCta : 'Bitir')),
+                  child: Text(
+                    score == 0
+                        ? 'Tekrar dene'
+                        : (turn < scene.turns.length - 1
+                              ? i18n.continueCta
+                              : 'Bitir'),
+                  ),
                 ),
               ] else if (step == _Step.speak) ...[
                 GestureDetector(
@@ -423,33 +495,55 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       color: Nura.cream,
                       shape: BoxShape.circle,
                       border: Border.all(color: Nura.terr, width: 4),
-                      boxShadow: holding ? [BoxShadow(color: Nura.terr.withValues(alpha: 0.45), blurRadius: 24)] : null,
+                      boxShadow: holding
+                          ? [
+                              BoxShadow(
+                                color: Nura.terr.withValues(alpha: 0.45),
+                                blurRadius: 24,
+                              ),
+                            ]
+                          : null,
                     ),
-                    child: Icon(Icons.mic, color: Nura.terr, size: holding ? 38 : 32),
+                    child: Icon(
+                      Icons.mic,
+                      color: Nura.terr,
+                      size: holding ? 38 : 32,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   holding
                       ? '${holdSec}s · dinliyorum'
-                      : (_speechReady ? i18n.holdToSpeak : 'Basılı tut · mikrofon izni istenecek'),
+                      : (_speechReady
+                            ? i18n.holdToSpeak
+                            : 'Basılı tut · mikrofon izni istenecek'),
                   style: const TextStyle(color: Nura.muted),
                 ),
                 if (heard.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(heard, textAlign: TextAlign.center, style: const TextStyle(color: Nura.muted, fontSize: 13)),
+                    child: Text(
+                      heard,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Nura.muted, fontSize: 13),
+                    ),
                   ),
               ] else
                 FilledButton(
                   style: FilledButton.styleFrom(backgroundColor: Nura.terr),
                   onPressed: () async {
                     if (step == _Step.hear) {
-                      await speech.speakTarget(currentTurn.expected, scene.lang.code);
+                      await speech.speakTarget(
+                        currentTurn.expected,
+                        scene.lang.code,
+                      );
                     }
                     _nextStep();
                   },
-                  child: Text(step == _Step.hear ? 'Dinle / duydum' : 'Gölgeledim'),
+                  child: Text(
+                    step == _Step.hear ? 'Dinle / duydum' : 'Gölgeledim',
+                  ),
                 ),
             ],
           ),
@@ -461,7 +555,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   Widget _chip(String s) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(color: Nura.mintDark, borderRadius: BorderRadius.circular(Nura.radius)),
+      decoration: BoxDecoration(
+        color: Nura.mintDark,
+        borderRadius: BorderRadius.circular(Nura.radius),
+      ),
       child: Text(s, style: const TextStyle(color: Nura.cream, fontSize: 12)),
     );
   }

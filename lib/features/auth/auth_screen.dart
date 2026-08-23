@@ -46,7 +46,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       if (_signup) {
         final hasSession = await Supa.signUp(mail, pass);
         if (!hasSession) {
-          setState(() => _info = 'Doğrulama e-postası gönderildi. Linke tıkla, sonra buradan giriş yap.');
+          setState(
+            () => _info =
+                'Doğrulama e-postası gönderildi. Linke tıkla, sonra buradan giriş yap.',
+          );
           return;
         }
         await _afterLogin();
@@ -60,7 +63,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       setState(() {
         if (s.contains('invalid login')) {
           _err = 'E-posta veya şifre hatalı.';
-        } else if (s.contains('already registered') || s.contains('already exists')) {
+        } else if (s.contains('already registered') ||
+            s.contains('already exists')) {
           _err = 'Bu e-posta zaten kayıtlı. Giriş yapmayı dene.';
         } else if (s.contains('weak password')) {
           _err = 'Şifre çok zayıf. En az 6 karakter gir.';
@@ -145,7 +149,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ? const SizedBox(
                       width: 22,
                       height: 22,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Nura.cream),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Nura.cream,
+                      ),
                     )
                   : Text(_signup ? 'Kayıt ol' : 'Giriş yap'),
             ),
@@ -153,11 +160,15 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               onPressed: _busy
                   ? null
                   : () => setState(() {
-                        _signup = !_signup;
-                        _err = null;
-                        _info = null;
-                      }),
-              child: Text(_signup ? 'Zaten hesabın var mı? Giriş yap' : 'Hesabın yok mu? Kayıt ol'),
+                      _signup = !_signup;
+                      _err = null;
+                      _info = null;
+                    }),
+              child: Text(
+                _signup
+                    ? 'Zaten hesabın var mı? Giriş yap'
+                    : 'Hesabın yok mu? Kayıt ol',
+              ),
             ),
             const SizedBox(height: 16),
             const Text(

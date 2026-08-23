@@ -94,14 +94,20 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                         ),
                         Text(
                           '${clips.length} kısa müfredat klibi · kaydırarak ilerle',
-                          style: const TextStyle(color: Nura.muted, fontSize: 13),
+                          style: const TextStyle(
+                            color: Nura.muted,
+                            fontSize: 13,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Text(
                     '${index + 1} / ${clips.length}',
-                    style: const TextStyle(color: Nura.muted, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                      color: Nura.muted,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),
@@ -178,7 +184,9 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                         _play(clip, slow: false);
                       }
                     },
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(Nura.radius)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(Nura.radius),
+                    ),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 240),
                       height: 200,
@@ -188,7 +196,9 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                           end: Alignment.bottomRight,
                           colors: gradient,
                         ),
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(Nura.radius)),
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(Nura.radius),
+                        ),
                       ),
                       child: Stack(
                         children: [
@@ -216,20 +226,30 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                                     border: Border.all(color: Colors.white38),
                                   ),
                                   child: Icon(
-                                    isPlaying ? Icons.graphic_eq_rounded : Icons.play_arrow_rounded,
+                                    isPlaying
+                                        ? Icons.graphic_eq_rounded
+                                        : Icons.play_arrow_rounded,
                                     color: Colors.white,
                                     size: 38,
                                   ),
                                 ),
                                 const SizedBox(height: 14),
                                 Text(
-                                  shadowMode && isPlaying ? 'Dinle ve aynı anda tekrar et' : clip.scenario.title(uiLanguage),
-                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                                  shadowMode && isPlaying
+                                      ? 'Dinle ve aynı anda tekrar et'
+                                      : clip.scenario.title(uiLanguage),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   'Müfredat klibi ${clip.position + 1}',
-                                  style: const TextStyle(color: Colors.white60, fontSize: 12),
+                                  style: const TextStyle(
+                                    color: Colors.white60,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ],
                             ),
@@ -276,7 +296,8 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                           _action(
                             icon: Icons.mic_none_rounded,
                             label: i18n.speak,
-                            onTap: () => context.push('/session?id=${clip.scenarioId}'),
+                            onTap: () =>
+                                context.push('/session?id=${clip.scenarioId}'),
                             emphasized: true,
                           ),
                         ],
@@ -286,9 +307,13 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton.icon(
                           onPressed: () {
-                            ref.read(sessionProvider.notifier).learnPhrase(clip.phrase.id);
+                            ref
+                                .read(sessionProvider.notifier)
+                                .learnPhrase(clip.phrase.id);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Kalıp tekrar listene eklendi.')),
+                              const SnackBar(
+                                content: Text('Kalıp tekrar listene eklendi.'),
+                              ),
                             );
                           },
                           icon: const Icon(Icons.bookmark_add_outlined),
@@ -331,7 +356,11 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                   label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: foreground, fontSize: 11, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    color: foreground,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -348,11 +377,11 @@ class _DecorativeRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.white12, width: 24),
-        ),
-      );
+    width: size,
+    height: size,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(color: Colors.white12, width: 24),
+    ),
+  );
 }

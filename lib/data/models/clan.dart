@@ -21,7 +21,8 @@ class ClanMemberEntry {
   final bool isMe;
   final bool isOwner;
 
-  factory ClanMemberEntry.fromJson(Map<String, dynamic> json) => ClanMemberEntry(
+  factory ClanMemberEntry.fromJson(Map<String, dynamic> json) =>
+      ClanMemberEntry(
         clanId: json['clan_id'] as String,
         clanName: json['clan_name'] as String,
         joinCode: json['join_code'] as String,

@@ -3,11 +3,27 @@ import 'dart:math';
 class FsrsParameters {
   final List<double> w;
   FsrsParameters()
-      : w = [
-          0.4072, 1.4121, 3.2818, 14.8590, 0.4979, 1.0920, 0.0590, 1.6938,
-          0.3329, 0.0520, 0.3949, 1.7792, 0.5283, 0.3928, 0.0066, 1.1835,
-          0.0204, 0.2762, 1.0
-        ];
+    : w = [
+        0.4072,
+        1.4121,
+        3.2818,
+        14.8590,
+        0.4979,
+        1.0920,
+        0.0590,
+        1.6938,
+        0.3329,
+        0.0520,
+        0.3949,
+        1.7792,
+        0.5283,
+        0.3928,
+        0.0066,
+        1.1835,
+        0.0204,
+        0.2762,
+        1.0,
+      ];
 }
 
 enum Rating { again, hard, good, easy }
@@ -34,12 +50,14 @@ class NuraBrain {
   final double desiredRetention;
 
   NuraBrain({FsrsParameters? params, this.desiredRetention = 0.9})
-      : params = params ?? FsrsParameters();
+    : params = params ?? FsrsParameters();
 
   double retrievability(FSRSCard card) {
     if (card.stability <= 0) return 0;
-    return pow(1 + (card.elapsedDays * 19) / (81 * card.stability), -1.0)
-        .toDouble();
+    return pow(
+      1 + (card.elapsedDays * 19) / (81 * card.stability),
+      -1.0,
+    ).toDouble();
   }
 
   double _initDifficulty(Rating r) =>
@@ -59,8 +77,7 @@ class NuraBrain {
         (1 - params.w[17]) * nextD;
   }
 
-  double _nextStabilitySuccess(
-      double d, double s, double r, Rating rating) {
+  double _nextStabilitySuccess(double d, double s, double r, Rating rating) {
     double hardPenalty = rating == Rating.hard ? params.w[18] : 1.0;
     double easyBonus = rating == Rating.easy ? params.w[7] : 1.0;
     return s *
@@ -88,7 +105,11 @@ class NuraBrain {
       nextS = rating == Rating.again
           ? _nextStabilityFail(card.difficulty, card.stability)
           : _nextStabilitySuccess(
-              card.difficulty, card.stability, retrievability(card), rating);
+              card.difficulty,
+              card.stability,
+              retrievability(card),
+              rating,
+            );
     }
     nextD = nextD.clamp(1.0, 10.0);
     nextS = nextS.clamp(0.1, 36500.0);
@@ -103,7 +124,8 @@ class NuraBrain {
   }
 
   int _nextInterval(double s) =>
-      (s * (pow(desiredRetention, -1.0) - 1) / (19.0 / 81.0))
-          .round()
-          .clamp(1, 36500);
+      (s * (pow(desiredRetention, -1.0) - 1) / (19.0 / 81.0)).round().clamp(
+        1,
+        36500,
+      );
 }

@@ -23,7 +23,8 @@ class AdService {
     defaultValue: 'ca-app-pub-3940256099942544/4411468910',
   );
 
-  static bool get supported => !kIsWeb &&
+  static bool get supported =>
+      !kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.android ||
           defaultTargetPlatform == TargetPlatform.iOS);
 
@@ -37,9 +38,7 @@ class AdService {
     );
     await consentUpdate.future;
     final consentForm = Completer<void>();
-    ConsentForm.loadAndShowConsentFormIfRequired(
-      (_) => consentForm.complete(),
-    );
+    ConsentForm.loadAndShowConsentFormIfRequired((_) => consentForm.complete());
     await consentForm.future;
     _canRequestAds = await ConsentInformation.instance.canRequestAds();
     if (_canRequestAds) {
@@ -54,7 +53,8 @@ class AdService {
   static String get _rewardedUnit => defaultTargetPlatform == TargetPlatform.iOS
       ? _rewardedIos
       : _rewardedAndroid;
-  static String get _interstitialUnit => defaultTargetPlatform == TargetPlatform.iOS
+  static String get _interstitialUnit =>
+      defaultTargetPlatform == TargetPlatform.iOS
       ? _interstitialIos
       : _interstitialAndroid;
 
@@ -80,7 +80,7 @@ class AdService {
               if (!result.isCompleted) result.complete(false);
             },
           );
-          ad.show(onUserEarnedReward: (_, __) => earned = true);
+          ad.show(onUserEarnedReward: (_, _) => earned = true);
         },
       ),
     );

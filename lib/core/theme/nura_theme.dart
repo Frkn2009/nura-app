@@ -6,40 +6,70 @@ import 'tokens.dart';
 ThemeData buildNuraTheme() {
   const text = TextTheme(
     displayLarge: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w700, fontSize: 34,
-      height: 1.12, letterSpacing: -1, color: Nura.ink,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w700,
+      fontSize: 34,
+      height: 1.12,
+      letterSpacing: -1,
+      color: Nura.ink,
     ),
     displayMedium: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w700, fontSize: 28,
-      height: 1.16, letterSpacing: -.6, color: Nura.ink,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w700,
+      fontSize: 28,
+      height: 1.16,
+      letterSpacing: -.6,
+      color: Nura.ink,
     ),
     headlineMedium: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 22,
-      height: 1.25, letterSpacing: -.25, color: Nura.ink,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w600,
+      fontSize: 22,
+      height: 1.25,
+      letterSpacing: -.25,
+      color: Nura.ink,
     ),
     titleLarge: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 18,
-      height: 1.3, color: Nura.ink,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w600,
+      fontSize: 18,
+      height: 1.3,
+      color: Nura.ink,
     ),
     titleMedium: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 16,
-      height: 1.35, color: Nura.ink,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+      height: 1.35,
+      color: Nura.ink,
     ),
     bodyLarge: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 16,
-      height: 1.5, color: Nura.ink,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+      height: 1.5,
+      color: Nura.ink,
     ),
     bodyMedium: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 14,
-      height: 1.5, color: Nura.muted,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      height: 1.5,
+      color: Nura.muted,
     ),
     labelLarge: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 14,
-      letterSpacing: .1, color: Colors.white,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w600,
+      fontSize: 14,
+      letterSpacing: .1,
+      color: Colors.white,
     ),
     labelSmall: TextStyle(
-      fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 11,
-      letterSpacing: .7, color: Nura.mintDark,
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w600,
+      fontSize: 11,
+      letterSpacing: .7,
+      color: Nura.mintDark,
     ),
   );
 
@@ -81,8 +111,10 @@ ThemeData buildNuraTheme() {
       toolbarHeight: 60,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       titleTextStyle: TextStyle(
-        fontFamily: 'Inter', fontWeight: FontWeight.w600,
-        fontSize: 16, color: Nura.ink,
+        fontFamily: 'Inter',
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+        color: Nura.ink,
       ),
     ),
     cardTheme: CardThemeData(
@@ -125,7 +157,9 @@ ThemeData buildNuraTheme() {
           borderRadius: BorderRadius.circular(Nura.radiusSm),
         ),
         textStyle: const TextStyle(
-          fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 14,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
         ),
       ),
     ),
@@ -160,7 +194,11 @@ ThemeData buildNuraTheme() {
         borderRadius: BorderRadius.circular(Nura.radiusSm),
       ),
       labelTextStyle: const WidgetStatePropertyAll(
-        TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 11),
+        TextStyle(
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
+          fontSize: 11,
+        ),
       ),
     ),
     dialogTheme: DialogThemeData(
@@ -183,8 +221,10 @@ ThemeData buildNuraTheme() {
       side: const BorderSide(color: Nura.fog),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       labelStyle: const TextStyle(
-        fontFamily: 'Inter', color: Nura.ink,
-        fontWeight: FontWeight.w500, fontSize: 13,
+        fontFamily: 'Inter',
+        color: Nura.ink,
+        fontWeight: FontWeight.w500,
+        fontSize: 13,
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Nura.radiusSm),
@@ -192,7 +232,10 @@ ThemeData buildNuraTheme() {
     ),
     snackBarTheme: SnackBarThemeData(
       backgroundColor: Nura.ink,
-      contentTextStyle: const TextStyle(color: Colors.white, fontFamily: 'Inter'),
+      contentTextStyle: const TextStyle(
+        color: Colors.white,
+        fontFamily: 'Inter',
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Nura.radiusSm),
       ),

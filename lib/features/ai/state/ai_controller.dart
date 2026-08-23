@@ -7,16 +7,20 @@ final aiServiceProvider = Provider<AiService>((ref) {
   return FakeAiService();
 });
 
-final dailySummaryProvider = FutureProvider.family<LessonSummary, DailySummaryParams>((ref, params) async {
-  final ai = ref.read(aiServiceProvider);
-  return ai.generateDailySummary(
-    reviewedCount: params.reviewed,
-    difficultCount: params.difficult,
-    masteredCount: params.mastered,
-    targetLanguage: params.lang,
-    streakDays: params.streak,
-  );
-});
+final dailySummaryProvider =
+    FutureProvider.family<LessonSummary, DailySummaryParams>((
+      ref,
+      params,
+    ) async {
+      final ai = ref.read(aiServiceProvider);
+      return ai.generateDailySummary(
+        reviewedCount: params.reviewed,
+        difficultCount: params.difficult,
+        masteredCount: params.mastered,
+        targetLanguage: params.lang,
+        streakDays: params.streak,
+      );
+    });
 
 class DailySummaryParams {
   const DailySummaryParams({

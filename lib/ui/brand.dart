@@ -8,11 +8,7 @@ import '../core/theme/tokens.dart';
 /// öğrenme ilerlemesini temsil eder. Tamamen Flutter ile çizildiği için ekran
 /// yoğunluğundan bağımsız olarak net kalır ve harici/telifli varlık kullanmaz.
 class NuraMark extends StatelessWidget {
-  const NuraMark({
-    super.key,
-    this.size = 32,
-    this.onDark = false,
-  });
+  const NuraMark({super.key, this.size = 32, this.onDark = false});
 
   final double size;
   final bool onDark;
@@ -74,11 +70,7 @@ class _NuraMarkPainter extends CustomPainter {
 }
 
 class NuraWordmark extends StatelessWidget {
-  const NuraWordmark({
-    super.key,
-    this.onDark = false,
-    this.compact = false,
-  });
+  const NuraWordmark({super.key, this.onDark = false, this.compact = false});
 
   final bool onDark;
   final bool compact;
@@ -121,13 +113,14 @@ class NuraAppBar extends AppBar {
     super.foregroundColor,
     super.automaticallyImplyLeading,
   }) : super(
-          titleSpacing: 16,
-          title: _NuraAppBarTitle(
-            pageTitle: pageTitle,
-            onDark: backgroundColor == Nura.forest ||
-                backgroundColor == Nura.mintDark,
-          ),
-        );
+         titleSpacing: 16,
+         title: _NuraAppBarTitle(
+           pageTitle: pageTitle,
+           onDark:
+               backgroundColor == Nura.forest ||
+               backgroundColor == Nura.mintDark,
+         ),
+       );
 }
 
 class _NuraAppBarTitle extends StatelessWidget {
@@ -138,7 +131,8 @@ class _NuraAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final useDarkMark = onDark || Theme.of(context).brightness == Brightness.dark;
+    final useDarkMark =
+        onDark || Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         NuraWordmark(onDark: useDarkMark, compact: true),

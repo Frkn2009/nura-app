@@ -9,14 +9,14 @@ class NuraTokens {
   static const surface = Colors.white;
 
   // Ana renkler
-  static const primary = Color(0xFF58CC02);     // Yeşil — başarı, devam
+  static const primary = Color(0xFF58CC02); // Yeşil — başarı, devam
   static const primaryDark = Color(0xFF46A302);
-  static const accent = Color(0xFF1CB0F6);       // Mavi — bilgi, AI
+  static const accent = Color(0xFF1CB0F6); // Mavi — bilgi, AI
   static const accentDark = Color(0xFF158DD0);
-  static const danger = Color(0xFFFF4B4B);       // Kırmızı — hata, kalp
-  static const gold = Color(0xFFFFC800);         // Altın — ödül, streak, çark
+  static const danger = Color(0xFFFF4B4B); // Kırmızı — hata, kalp
+  static const gold = Color(0xFFFFC800); // Altın — ödül, streak, çark
   static const goldDark = Color(0xFFDBA800);
-  static const purple = Color(0xFF9B72CF);       // Mor — premium
+  static const purple = Color(0xFF9B72CF); // Mor — premium
 
   // Metin
   static const textPrimary = Color(0xFF3C3C3C);
@@ -42,7 +42,11 @@ class NuraTokens {
 
   // Shadow
   static List<BoxShadow> get softShadow => [
-    BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 14, offset: const Offset(0, 6)),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.06),
+      blurRadius: 14,
+      offset: const Offset(0, 6),
+    ),
   ];
 
   // Eski isimlerin uyumluluğu — mevcut kod kırılmasın

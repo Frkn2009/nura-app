@@ -1,20 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-enum SrsCardState {
-  newCard,
-  learning,
-  review,
-  relearning,
-  suspended,
-  buried,
-}
+enum SrsCardState { newCard, learning, review, relearning, suspended, buried }
 
-enum AnswerQuality {
-  again,
-  hard,
-  good,
-  easy,
-}
+enum AnswerQuality { again, hard, good, easy }
 
 @immutable
 class SrsCard {
@@ -96,7 +84,8 @@ class SrsCard {
       lapses: (json['lapses'] as num?)?.toInt() ?? 0,
       step: (json['step'] as num?)?.toInt() ?? 0,
       scheduledDays: (json['scheduledDays'] as num?)?.toInt() ?? 1,
-      dueAtUtc: DateTime.tryParse(json['dueAtUtc'] as String? ?? '')?.toUtc() ??
+      dueAtUtc:
+          DateTime.tryParse(json['dueAtUtc'] as String? ?? '')?.toUtc() ??
           DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
       algorithmVersion: json['algorithmVersion'] as String? ?? 'nura-sm2-lite',
     );

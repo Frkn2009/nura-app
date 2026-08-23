@@ -1,4 +1,3 @@
-import 'package:characters/characters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,13 +21,23 @@ class FamilyProfilesScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 16, 22, 30),
           children: [
-            Text('Kimin sırası?', style: Theme.of(context).textTheme.displayMedium),
+            Text(
+              'Kimin sırası?',
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
             const SizedBox(height: 7),
-            const Text('Her profil kendi dilini, XP’sini, serisini ve tekrarlarını saklar.',
-                style: TextStyle(color: Nura.muted, height: 1.4)),
+            const Text(
+              'Her profil kendi dilini, XP’sini, serisini ve tekrarlarını saklar.',
+              style: TextStyle(color: Nura.muted, height: 1.4),
+            ),
             const SizedBox(height: 20),
             for (final profile in profiles) ...[
-              _profileCard(context, ref, profile, active.profileId == profile.profileId),
+              _profileCard(
+                context,
+                ref,
+                profile,
+                active.profileId == profile.profileId,
+              ),
               const SizedBox(height: 10),
             ],
             if (profiles.length < 4) ...[
@@ -37,13 +46,22 @@ class FamilyProfilesScreen extends ConsumerWidget {
                 onPressed: active.isPlus
                     ? () => _addProfile(context, ref)
                     : () => context.push('/paywall'),
-                icon: Icon(active.isPlus ? Icons.person_add_alt_1_outlined : Icons.lock_outline),
-                label: Text(active.isPlus ? 'Profil ekle' : 'Aile profilleri · Plus'),
+                icon: Icon(
+                  active.isPlus
+                      ? Icons.person_add_alt_1_outlined
+                      : Icons.lock_outline,
+                ),
+                label: Text(
+                  active.isPlus ? 'Profil ekle' : 'Aile profilleri · Plus',
+                ),
               ),
             ],
             const SizedBox(height: 12),
-            Text('${profiles.length} / 4 profil', textAlign: TextAlign.center,
-                style: const TextStyle(color: Nura.muted, fontSize: 12)),
+            Text(
+              '${profiles.length} / 4 profil',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Nura.muted, fontSize: 12),
+            ),
           ],
         ),
       ),
@@ -55,52 +73,59 @@ class FamilyProfilesScreen extends ConsumerWidget {
     WidgetRef ref,
     UserProfile profile,
     bool selected,
-  ) =>
-      NuraCard(
-        color: selected ? Nura.mintLight : null,
-        onTap: selected
-            ? null
-            : () => ref
-                .read(sessionProvider.notifier)
-                .switchFamilyProfile(profile.profileId),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: selected ? Nura.mintDark : Nura.cloud,
-              child: Text(
-                profile.profileName.characters.first.toUpperCase(),
-                style: TextStyle(
-                  color: selected ? Colors.white : Nura.ink,
+  ) => NuraCard(
+    color: selected ? Nura.mintLight : null,
+    onTap: selected
+        ? null
+        : () => ref
+              .read(sessionProvider.notifier)
+              .switchFamilyProfile(profile.profileId),
+    child: Row(
+      children: [
+        CircleAvatar(
+          radius: 24,
+          backgroundColor: selected ? Nura.mintDark : Nura.cloud,
+          child: Text(
+            profile.profileName.characters.first.toUpperCase(),
+            style: TextStyle(
+              color: selected ? Colors.white : Nura.ink,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        const SizedBox(width: 13),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                profile.profileName,
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
+                  fontSize: 16,
                 ),
               ),
-            ),
-            const SizedBox(width: 13),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(profile.profileName, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                  const SizedBox(height: 3),
-                  Text('${profile.learnLang.flag()} ${profile.totalXp} XP · ${profile.streak} gün',
-                      style: const TextStyle(color: Nura.muted, fontSize: 12)),
-                ],
+              const SizedBox(height: 3),
+              Text(
+                '${profile.learnLang.flag()} ${profile.totalXp} XP · ${profile.streak} gün',
+                style: const TextStyle(color: Nura.muted, fontSize: 12),
               ),
-            ),
-            if (selected)
-              const Icon(Icons.check_circle, color: Nura.mintDark)
-            else if (profile.profileId != 'main')
-              IconButton(
-                tooltip: 'Profili sil',
-                onPressed: () => ref
-                    .read(sessionProvider.notifier)
-                    .deleteFamilyProfile(profile.profileId),
-                icon: const Icon(Icons.delete_outline, color: Nura.soft),
-              ),
-          ],
+            ],
+          ),
         ),
-      );
+        if (selected)
+          const Icon(Icons.check_circle, color: Nura.mintDark)
+        else if (profile.profileId != 'main')
+          IconButton(
+            tooltip: 'Profili sil',
+            onPressed: () => ref
+                .read(sessionProvider.notifier)
+                .deleteFamilyProfile(profile.profileId),
+            icon: const Icon(Icons.delete_outline, color: Nura.soft),
+          ),
+      ],
+    ),
+  );
 
   Future<void> _addProfile(BuildContext context, WidgetRef ref) async {
     final text = TextEditingController();
@@ -115,8 +140,14 @@ class FamilyProfilesScreen extends ConsumerWidget {
           decoration: const InputDecoration(labelText: 'Profil adı'),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Vazgeç')),
-          FilledButton(onPressed: () => Navigator.pop(dialogContext, text.text), child: const Text('Ekle')),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Vazgeç'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, text.text),
+            child: const Text('Ekle'),
+          ),
         ],
       ),
     );

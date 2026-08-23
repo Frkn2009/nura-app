@@ -91,47 +91,97 @@ class PhonemeScorer {
       value = value.replaceAll('ş', 'ʃ').replaceAll('ç', 'tʃ');
     }
     const accents = {
-      'á': 'a', 'à': 'a', 'â': 'a', 'ä': 'e', 'ã': 'a', 'å': 'o',
-      'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e', 'í': 'i', 'ì': 'i',
-      'î': 'i', 'ï': 'i', 'ó': 'o', 'ò': 'o', 'ô': 'o', 'ö': 'oe',
-      'õ': 'o', 'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'ue', 'ý': 'i',
-      'ç': 's', 'ş': 'sh', 'ğ': '', 'ı': 'i', 'ñ': 'ny', 'ß': 'ss',
+      'á': 'a',
+      'à': 'a',
+      'â': 'a',
+      'ä': 'e',
+      'ã': 'a',
+      'å': 'o',
+      'é': 'e',
+      'è': 'e',
+      'ê': 'e',
+      'ë': 'e',
+      'í': 'i',
+      'ì': 'i',
+      'î': 'i',
+      'ï': 'i',
+      'ó': 'o',
+      'ò': 'o',
+      'ô': 'o',
+      'ö': 'oe',
+      'õ': 'o',
+      'ú': 'u',
+      'ù': 'u',
+      'û': 'u',
+      'ü': 'ue',
+      'ý': 'i',
+      'ç': 's',
+      'ş': 'sh',
+      'ğ': '',
+      'ı': 'i',
+      'ñ': 'ny',
+      'ß': 'ss',
     };
     accents.forEach((from, to) => value = value.replaceAll(from, to));
 
     final rules = <String, String>{
       if (language == 'en') ...{
-        'tion': 'shun', 'th': 'θ', 'sh': 'ʃ', 'ch': 'tʃ', 'ph': 'f',
-        'qu': 'kw', 'ng': 'ŋ',
+        'tion': 'shun',
+        'th': 'θ',
+        'sh': 'ʃ',
+        'ch': 'tʃ',
+        'ph': 'f',
+        'qu': 'kw',
+        'ng': 'ŋ',
       },
       if (language == 'es') ...{
-        'll': 'y', 'rr': 'r', 'qu': 'k', 'gue': 'ge', 'gui': 'gi',
-        'j': 'x', 'z': 's',
+        'll': 'y',
+        'rr': 'r',
+        'qu': 'k',
+        'gue': 'ge',
+        'gui': 'gi',
+        'j': 'x',
+        'z': 's',
       },
       if (language == 'de') ...{
-        'sch': 'ʃ', 'ch': 'x', 'ei': 'ay', 'ie': 'i', 'eu': 'oy',
-        'z': 'ts', 'w': 'v',
+        'sch': 'ʃ',
+        'ch': 'x',
+        'ei': 'ay',
+        'ie': 'i',
+        'eu': 'oy',
+        'z': 'ts',
+        'w': 'v',
       },
       if (language == 'fr') ...{
-        'eau': 'o', 'ou': 'u', 'oi': 'wa', 'ch': 'ʃ', 'gn': 'ny',
+        'eau': 'o',
+        'ou': 'u',
+        'oi': 'wa',
+        'ch': 'ʃ',
+        'gn': 'ny',
         'ph': 'f',
       },
-      if (language == 'pt') ...{
-        'nh': 'ny', 'lh': 'ly', 'ch': 'ʃ', 'ão': 'aw',
-      },
+      if (language == 'pt') ...{'nh': 'ny', 'lh': 'ly', 'ch': 'ʃ', 'ão': 'aw'},
       if (language == 'it') ...{
-        'gli': 'ly', 'gn': 'ny', 'ch': 'k', 'ci': 'tʃi', 'ce': 'tʃe',
+        'gli': 'ly',
+        'gn': 'ny',
+        'ch': 'k',
+        'ci': 'tʃi',
+        'ce': 'tʃe',
       },
       if (language == 'nl') ...{'sch': 'sx', 'ij': 'ay', 'oe': 'u'},
       if (language == 'tr') ...{'ş': 'ʃ', 'ç': 'tʃ', 'c': 'dʒ'},
-      'ts': 'ʦ', 'dz': 'ʣ',
+      'ts': 'ʦ',
+      'dz': 'ʣ',
     };
     final ordered = rules.keys.toList()
       ..sort((a, b) => b.length.compareTo(a.length));
     for (final pattern in ordered) {
       value = value.replaceAll(pattern, ' ${rules[pattern]} ');
     }
-    value = value.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}θʃŋʦʣʒ\s]', unicode: true), ' ');
+    value = value.replaceAll(
+      RegExp(r'[^\p{L}\p{M}\p{N}θʃŋʦʣʒ\s]', unicode: true),
+      ' ',
+    );
     return value
         .split(RegExp(r'\s+'))
         .where((part) => part.isNotEmpty)
@@ -163,5 +213,6 @@ class PhonemeScorer {
     return previous.last;
   }
 
-  static int _min3(int a, int b, int c) => a < b ? (a < c ? a : c) : (b < c ? b : c);
+  static int _min3(int a, int b, int c) =>
+      a < b ? (a < c ? a : c) : (b < c ? b : c);
 }

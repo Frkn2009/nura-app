@@ -39,10 +39,9 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
       });
       return;
     }
-    await ref.read(sessionProvider.notifier).joinWeeklyEvent(
-          event.id,
-          countAd: !profile.isPlus,
-        );
+    await ref
+        .read(sessionProvider.notifier)
+        .joinWeeklyEvent(event.id, countAd: !profile.isPlus);
     if (mounted) setState(() => busy = false);
   }
 
@@ -71,10 +70,20 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
                 children: [
                   const NuraMascot(size: 100, mood: MascotMood.celebrate),
                   const SizedBox(height: 12),
-                  Text(event.title, style: const TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700)),
+                  Text(
+                    event.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 27,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                   const SizedBox(height: 8),
-                  Text(event.description, textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white70, height: 1.45)),
+                  Text(
+                    event.description,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white70, height: 1.45),
+                  ),
                 ],
               ),
             ),
@@ -85,32 +94,59 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
                 children: [
                   const Eyebrow('Nasıl çalışır?'),
                   const SizedBox(height: 10),
-                  _line(Icons.play_circle_outline, profile.isPlus ? 'Plus üyeler reklamsız katılır' : 'Bir ödüllü video izle'),
-                  _line(Icons.language_outlined, 'Öğrenme dilini İspanyolca seç'),
-                  _line(Icons.bolt_outlined, 'Sahne, doğru cevap ve oyun XP’sini ikiye katla'),
+                  _line(
+                    Icons.play_circle_outline,
+                    profile.isPlus
+                        ? 'Plus üyeler reklamsız katılır'
+                        : 'Bir ödüllü video izle',
+                  ),
+                  _line(
+                    Icons.language_outlined,
+                    'Öğrenme dilini İspanyolca seç',
+                  ),
+                  _line(
+                    Icons.bolt_outlined,
+                    'Sahne, doğru cevap ve oyun XP’sini ikiye katla',
+                  ),
                   const SizedBox(height: 8),
-                  Text('Etkinlik haftası: ${WeeklyEvent.weekKey()}', style: const TextStyle(color: Nura.muted, fontSize: 12)),
+                  Text(
+                    'Etkinlik haftası: ${WeeklyEvent.weekKey()}',
+                    style: const TextStyle(color: Nura.muted, fontSize: 12),
+                  ),
                 ],
               ),
             ),
             if (error != null) ...[
               const SizedBox(height: 12),
-              Text(error!, textAlign: TextAlign.center, style: const TextStyle(color: Nura.coral)),
+              Text(
+                error!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Nura.coral),
+              ),
             ],
             const SizedBox(height: 20),
             FilledButton.icon(
               onPressed: joined || busy ? null : _join,
-              icon: Icon(joined ? Icons.check_circle_outline : Icons.play_arrow_rounded),
-              label: Text(joined
-                  ? 'Etkinliğe katıldın'
-                  : busy
-                      ? 'Video hazırlanıyor…'
-                      : (profile.isPlus ? 'Reklamsız katıl' : 'Video izle ve katıl')),
+              icon: Icon(
+                joined ? Icons.check_circle_outline : Icons.play_arrow_rounded,
+              ),
+              label: Text(
+                joined
+                    ? 'Etkinliğe katıldın'
+                    : busy
+                    ? 'Video hazırlanıyor…'
+                    : (profile.isPlus
+                          ? 'Reklamsız katıl'
+                          : 'Video izle ve katıl'),
+              ),
             ),
             if (joined && profile.learnLang != event.language) ...[
               const SizedBox(height: 10),
-              const Text('×2 XP için profilinden öğrenme dilini İspanyolca seç.',
-                  textAlign: TextAlign.center, style: TextStyle(color: Nura.muted)),
+              const Text(
+                '×2 XP için profilinden öğrenme dilini İspanyolca seç.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Nura.muted),
+              ),
             ],
           ],
         ),
@@ -119,13 +155,13 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
   }
 
   Widget _line(IconData icon, String text) => Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Row(
-          children: [
-            Icon(icon, size: 20, color: Nura.mintDark),
-            const SizedBox(width: 10),
-            Expanded(child: Text(text)),
-          ],
-        ),
-      );
+    padding: const EdgeInsets.only(bottom: 10),
+    child: Row(
+      children: [
+        Icon(icon, size: 20, color: Nura.mintDark),
+        const SizedBox(width: 10),
+        Expanded(child: Text(text)),
+      ],
+    ),
+  );
 }

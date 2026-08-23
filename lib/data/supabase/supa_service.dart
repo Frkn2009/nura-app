@@ -34,15 +34,11 @@ class Supa {
     await _c.auth.signOut();
   }
 
-
   // ---------- XP / HAFTALIK SIRALAMA ----------
 
   static Future<void> recordXp(int amount, String source) async {
     if (!enabled || _c.auth.currentUser == null || amount <= 0) return;
-    await _c.rpc('record_xp', params: {
-      'p_amount': amount,
-      'p_source': source,
-    });
+    await _c.rpc('record_xp', params: {'p_amount': amount, 'p_source': source});
   }
 
   /// Haftanın ilk 10'unu ve kullanıcı ilk 10 dışında olsa da kendi satırını alır.
@@ -72,9 +68,10 @@ class Supa {
     if (!enabled || _c.auth.currentUser == null) return const [];
     final response = await _c.rpc('get_my_clan');
     return (response as List)
-        .map((row) => ClanMemberEntry.fromJson(
-              Map<String, dynamic>.from(row as Map),
-            ))
+        .map(
+          (row) =>
+              ClanMemberEntry.fromJson(Map<String, dynamic>.from(row as Map)),
+        )
         .toList(growable: false);
   }
 
@@ -113,8 +110,12 @@ class Supa {
       'xp_day_key': p.xpDayKey,
       'completed_scenes': p.completedScenes,
       'games_completed': p.gamesCompleted,
-      'completed_languages': p.completedLanguages.map((language) => language.name).toList(),
-      'achievements': p.achievements.map((achievement) => achievement.name).toList(),
+      'completed_languages': p.completedLanguages
+          .map((language) => language.name)
+          .toList(),
+      'achievements': p.achievements
+          .map((achievement) => achievement.name)
+          .toList(),
       'notifications_enabled': p.notificationsEnabled,
       'reminder_hour': p.reminderHour,
       'theme_preference': p.themePreference.name,
@@ -149,9 +150,11 @@ class Supa {
     if (!enabled || _c.auth.currentUser == null) return const [];
     final rows = await _c.from('family_profiles').select('profile_data');
     return (rows as List)
-        .map((row) => UserProfile.fromJson(
-              Map<String, dynamic>.from(row['profile_data'] as Map),
-            ))
+        .map(
+          (row) => UserProfile.fromJson(
+            Map<String, dynamic>.from(row['profile_data'] as Map),
+          ),
+        )
         .toList(growable: false);
   }
 

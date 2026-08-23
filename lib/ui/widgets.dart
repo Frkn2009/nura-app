@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import '../core/theme/tokens.dart';
 
 class NuraCard extends StatelessWidget {
-  const NuraCard({super.key, required this.child, this.padding, this.color, this.onTap});
+  const NuraCard({
+    super.key,
+    required this.child,
+    this.padding,
+    this.color,
+    this.onTap,
+  });
   final Widget child;
   final EdgeInsets? padding;
   final Color? color;
@@ -99,16 +105,32 @@ class ChoiceTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Theme.of(context).colorScheme.onSurface)),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
-                      Text(subtitle!, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13)),
+                      Text(
+                        subtitle!,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 13,
+                        ),
+                      ),
                     ],
                   ],
                 ),
               ),
               if (selected)
-                Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary),
+                Icon(
+                  Icons.check_circle,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
             ],
           ),
         ),

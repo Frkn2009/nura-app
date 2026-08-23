@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/models/clan.dart';
 import '../../data/supabase/supa_service.dart';
-import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
 class ClanScreen extends ConsumerStatefulWidget {
@@ -27,9 +26,9 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
   }
 
   void reload() => setState(() {
-        error = null;
-        request = Supa.myClan();
-      });
+    error = null;
+    request = Supa.myClan();
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,44 +54,68 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
   }
 
   Widget _login(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: NuraCard(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.groups_outlined, size: 48, color: Nura.mintDark),
-                const SizedBox(height: 12),
-                const Text('Takıma katılmak için giriş yap', textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700)),
-                const SizedBox(height: 16),
-                FilledButton(onPressed: () => context.push('/auth'), child: const Text('Giriş yap')),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(28),
+      child: NuraCard(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.groups_outlined, size: 48, color: Nura.mintDark),
+            const SizedBox(height: 12),
+            const Text(
+              'Takıma katılmak için giriş yap',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
             ),
-          ),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () => context.push('/auth'),
+              child: const Text('Giriş yap'),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   Widget _empty() => ListView(
-        padding: const EdgeInsets.fromLTRB(22, 24, 22, 30),
-        children: [
-          const NuraMascot(size: 110, mood: MascotMood.wave),
-          const SizedBox(height: 16),
-          Text('Birlikte daha düzenli', textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displayMedium),
-          const SizedBox(height: 8),
-          const Text('Takım kur veya 6 haneli davet koduyla arkadaşlarına katıl.',
-              textAlign: TextAlign.center, style: TextStyle(color: Nura.muted, height: 1.45)),
-          const SizedBox(height: 24),
-          FilledButton.icon(onPressed: _create, icon: const Icon(Icons.add), label: const Text('Takım kur')),
-          const SizedBox(height: 10),
-          OutlinedButton.icon(onPressed: _join, icon: const Icon(Icons.login), label: const Text('Kodla katıl')),
-          if (error != null) ...[
-            const SizedBox(height: 14),
-            Text(error!, textAlign: TextAlign.center, style: const TextStyle(color: Nura.coral)),
-          ],
-        ],
-      );
+    padding: const EdgeInsets.fromLTRB(22, 24, 22, 30),
+    children: [
+      const NuraMascot(size: 110, mood: MascotMood.wave),
+      const SizedBox(height: 16),
+      Text(
+        'Birlikte daha düzenli',
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.displayMedium,
+      ),
+      const SizedBox(height: 8),
+      const Text(
+        'Takım kur veya 6 haneli davet koduyla arkadaşlarına katıl.',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Nura.muted, height: 1.45),
+      ),
+      const SizedBox(height: 24),
+      FilledButton.icon(
+        onPressed: _create,
+        icon: const Icon(Icons.add),
+        label: const Text('Takım kur'),
+      ),
+      const SizedBox(height: 10),
+      OutlinedButton.icon(
+        onPressed: _join,
+        icon: const Icon(Icons.login),
+        label: const Text('Kodla katıl'),
+      ),
+      if (error != null) ...[
+        const SizedBox(height: 14),
+        Text(
+          error!,
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Nura.coral),
+        ),
+      ],
+    ],
+  );
 
   Widget _team(List<ClanMemberEntry> members) {
     final clan = members.first;
@@ -105,14 +128,22 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         InkWell(
           onTap: () async {
             await Clipboard.setData(ClipboardData(text: clan.joinCode));
-            if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Davet kodu kopyalandı')),
-            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Davet kodu kopyalandı')),
+              );
+            }
           },
           child: Row(
             children: [
               const Text('Davet kodu: ', style: TextStyle(color: Nura.muted)),
-              Text(clan.joinCode, style: const TextStyle(fontWeight: FontWeight.w700, letterSpacing: 1.5)),
+              Text(
+                clan.joinCode,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.5,
+                ),
+              ),
               const SizedBox(width: 6),
               const Icon(Icons.copy, size: 16, color: Nura.mintDark),
             ],
@@ -133,40 +164,66 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         const SizedBox(height: 16),
         OutlinedButton(
           onPressed: () => _leave(me.isOwner, members.length),
-          child: Text(me.isOwner && members.length > 1 ? 'Sahip takımdan ayrılamaz' : 'Takımdan ayrıl'),
+          child: Text(
+            me.isOwner && members.length > 1
+                ? 'Sahip takımdan ayrılamaz'
+                : 'Takımdan ayrıl',
+          ),
         ),
       ],
     );
   }
 
   Widget _member(ClanMemberEntry member) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            SizedBox(width: 32, child: Text('${member.rank}', textAlign: TextAlign.center,
-                style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w700))),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text('${member.playerName}${member.isMe ? ' · Sen' : ''}',
-                  style: TextStyle(fontWeight: member.isMe ? FontWeight.w700 : FontWeight.w500)),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    child: Row(
+      children: [
+        SizedBox(
+          width: 32,
+          child: Text(
+            '${member.rank}',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Nura.mintDark,
+              fontWeight: FontWeight.w700,
             ),
-            if (member.isOwner) const Padding(
-              padding: EdgeInsets.only(right: 8), child: Icon(Icons.shield_outlined, size: 18, color: Nura.sunflower)),
-            Text('${member.xp} XP', style: const TextStyle(color: Nura.mintDark, fontWeight: FontWeight.w700)),
-          ],
+          ),
         ),
-      );
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            '${member.playerName}${member.isMe ? ' · Sen' : ''}',
+            style: TextStyle(
+              fontWeight: member.isMe ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
+        ),
+        if (member.isOwner)
+          const Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: Icon(Icons.shield_outlined, size: 18, color: Nura.sunflower),
+          ),
+        Text(
+          '${member.xp} XP',
+          style: const TextStyle(
+            color: Nura.mintDark,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _failed() => Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Takım bilgisi alınamadı.'),
-            const SizedBox(height: 10),
-            OutlinedButton(onPressed: reload, child: const Text('Tekrar dene')),
-          ],
-        ),
-      );
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text('Takım bilgisi alınamadı.'),
+        const SizedBox(height: 10),
+        OutlinedButton(onPressed: reload, child: const Text('Tekrar dene')),
+      ],
+    ),
+  );
 
   Future<void> _create() async {
     final name = await _input('Takım kur', 'Takım adı');
@@ -202,11 +259,22 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(title),
-        content: TextField(controller: controller, autofocus: true, maxLength: 32,
-            decoration: InputDecoration(labelText: label)),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLength: 32,
+          decoration: InputDecoration(labelText: label),
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Vazgeç')),
-          FilledButton(onPressed: () => Navigator.pop(dialogContext, controller.text.trim()), child: const Text('Devam')),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Vazgeç'),
+          ),
+          FilledButton(
+            onPressed: () =>
+                Navigator.pop(dialogContext, controller.text.trim()),
+            child: const Text('Devam'),
+          ),
         ],
       ),
     );
@@ -217,7 +285,9 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
   String _message(Object error) {
     final text = error.toString();
     if (text.contains('already_in_clan')) return 'Zaten bir takımdasın.';
-    if (text.contains('clan_not_found')) return 'Bu davet koduyla takım bulunamadı.';
+    if (text.contains('clan_not_found')) {
+      return 'Bu davet koduyla takım bulunamadı.';
+    }
     return 'İşlem tamamlanamadı. Tekrar dene.';
   }
 }

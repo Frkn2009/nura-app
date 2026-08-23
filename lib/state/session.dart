@@ -16,9 +16,13 @@ final prefsProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError('prefs override in main');
 });
 
-final sessionProvider = NotifierProvider<SessionController, UserProfile>(SessionController.new);
+final sessionProvider = NotifierProvider<SessionController, UserProfile>(
+  SessionController.new,
+);
 
-final i18nProvider = Provider<I18n>((ref) => I18n(ref.watch(sessionProvider).uiLang));
+final i18nProvider = Provider<I18n>(
+  (ref) => I18n(ref.watch(sessionProvider).uiLang),
+);
 
 class SessionController extends Notifier<UserProfile> {
   static const _key = 'nura.profile.v1';
@@ -30,8 +34,8 @@ class SessionController extends Notifier<UserProfile> {
   @override
   UserProfile build() {
     final activeId = _prefs.getString(_activeProfileKey) ?? 'main';
-    final raw = _prefs.getString('$_profilePrefix$activeId') ??
-        _prefs.getString(_key);
+    final raw =
+        _prefs.getString('$_profilePrefix$activeId') ?? _prefs.getString(_key);
     var profile = raw == null
         ? UserProfile.empty
         : UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
@@ -84,9 +88,13 @@ class SessionController extends Notifier<UserProfile> {
     if (profile.streak >= 3) unlocked.add(Achievement.fireStarted);
     if (profile.phrasesKnown >= 10) unlocked.add(Achievement.tenPhrases);
     if (profile.gamesCompleted > 0) unlocked.add(Achievement.gamer);
-    if (profile.completedLanguages.length >= 3) unlocked.add(Achievement.traveler);
+    if (profile.completedLanguages.length >= 3) {
+      unlocked.add(Achievement.traveler);
+    }
     if (profile.isPlus) unlocked.add(Achievement.plus);
-    if (profile.dailyXp >= UserProfile.dailyXpGoal) unlocked.add(Achievement.dailyHundred);
+    if (profile.dailyXp >= UserProfile.dailyXpGoal) {
+      unlocked.add(Achievement.dailyHundred);
+    }
     if (profile.streak >= 7) unlocked.add(Achievement.sevenDayStreak);
     return profile.copyWith(achievements: unlocked);
   }
@@ -112,7 +120,8 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> setLearn(LearnLang l) => _save(state.copyWith(learnLang: l));
   Future<void> setMotive(Motive m) => _save(state.copyWith(motive: m));
   Future<void> setCefr(Cefr c) => _save(state.copyWith(cefr: c));
-  Future<void> finishOnboarding() => _save(state.copyWith(onboarded: true, streak: 1));
+  Future<void> finishOnboarding() =>
+      _save(state.copyWith(onboarded: true, streak: 1));
   Future<void> setPlus(bool v) => _save(state.copyWith(isPlus: v));
   Future<void> setNotificationsEnabled(bool value) =>
       _save(state.copyWith(notificationsEnabled: value));
@@ -123,11 +132,15 @@ class SessionController extends Notifier<UserProfile> {
 
   List<UserProfile> familyProfiles() {
     final profiles = <String, UserProfile>{state.profileId: state};
-    for (final key in _prefs.getKeys().where((key) => key.startsWith(_profilePrefix))) {
+    for (final key in _prefs.getKeys().where(
+      (key) => key.startsWith(_profilePrefix),
+    )) {
       final raw = _prefs.getString(key);
       if (raw == null) continue;
       try {
-        final profile = UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+        final profile = UserProfile.fromJson(
+          jsonDecode(raw) as Map<String, dynamic>,
+        );
         profiles[profile.profileId] = profile;
       } catch (_) {}
     }
@@ -164,7 +177,9 @@ class SessionController extends Notifier<UserProfile> {
   Future<bool> switchFamilyProfile(String profileId) async {
     final raw = _prefs.getString('$_profilePrefix$profileId');
     if (raw == null) return false;
-    final profile = UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    final profile = UserProfile.fromJson(
+      jsonDecode(raw) as Map<String, dynamic>,
+    );
     await _save(_rollDay(profile));
     return true;
   }
@@ -194,14 +209,16 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> learnPhrase(String id) async {
     final ids = {...state.learnedIds, id};
     final due = {...state.srs, id: _epochDay() + 1};
-    await _save(state.copyWith(learnedIds: ids, phrasesKnown: ids.length, srs: due));
+    await _save(
+      state.copyWith(learnedIds: ids, phrasesKnown: ids.length, srs: due),
+    );
   }
-
 
   Future<int> awardXp(int amount, {String source = 'correct'}) async {
     if (amount <= 0) return 0;
     final profile = _rollDay(state);
-    final effectiveAmount = WeeklyEvent.current().applies(profile) && source != 'ad'
+    final effectiveAmount =
+        WeeklyEvent.current().applies(profile) && source != 'ad'
         ? amount * WeeklyEvent.current().multiplier
         : amount;
     final today = _today();
@@ -211,12 +228,14 @@ class SessionController extends Notifier<UserProfile> {
           ? (profile.streak <= 0 ? 1 : profile.streak + 1)
           : 1;
     }
-    await _save(profile.copyWith(
-      totalXp: profile.totalXp + effectiveAmount,
-      dailyXp: profile.dailyXp + effectiveAmount,
-      streak: nextStreak,
-      lastPracticeDayKey: today,
-    ));
+    await _save(
+      profile.copyWith(
+        totalXp: profile.totalXp + effectiveAmount,
+        dailyXp: profile.dailyXp + effectiveAmount,
+        streak: nextStreak,
+        lastPracticeDayKey: today,
+      ),
+    );
     if (Supa.enabled) {
       unawaited(Supa.recordXp(effectiveAmount, source).catchError((_) {}));
     }
@@ -236,63 +255,70 @@ class SessionController extends Notifier<UserProfile> {
     final granted = await awardXp(earned, source: 'game');
     final unlocked = {...state.achievements};
     if (total > 0 && correct >= total) unlocked.add(Achievement.perfect);
-    await _save(state.copyWith(
-      gamesCompleted: state.gamesCompleted + 1,
-      achievements: unlocked,
-    ));
+    await _save(
+      state.copyWith(
+        gamesCompleted: state.gamesCompleted + 1,
+        achievements: unlocked,
+      ),
+    );
     return granted;
   }
 
   Future<int> completeScene(LearnLang language) async {
     final granted = await awardXp(50, source: 'scene');
-    await _save(state.copyWith(
-      completedScenes: state.completedScenes + 1,
-      completedLanguages: {...state.completedLanguages, language},
-    ));
+    await _save(
+      state.copyWith(
+        completedScenes: state.completedScenes + 1,
+        completedLanguages: {...state.completedLanguages, language},
+      ),
+    );
     return granted;
   }
 
   Future<void> unlockAchievement(Achievement achievement) async {
     if (state.achievements.contains(achievement)) return;
-    await _save(state.copyWith(
-      achievements: {...state.achievements, achievement},
-    ));
+    await _save(
+      state.copyWith(achievements: {...state.achievements, achievement}),
+    );
   }
 
   Future<void> redeemRewardedAd({required bool xpReward}) async {
     final profile = _rollDay(state);
     if (!profile.canWatchAd) return;
     final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    await _save(profile.copyWith(
-      bonusSpeakSeconds: profile.bonusSpeakSeconds + (xpReward ? 0 : 30),
-      adsWatchedToday: profile.adsWatchedToday + 1,
-      lastAdEpoch: now,
-    ));
+    await _save(
+      profile.copyWith(
+        bonusSpeakSeconds: profile.bonusSpeakSeconds + (xpReward ? 0 : 30),
+        adsWatchedToday: profile.adsWatchedToday + 1,
+        lastAdEpoch: now,
+      ),
+    );
     if (xpReward) await awardXp(20, source: 'ad');
   }
 
   Future<void> recordInterstitial() async {
     final profile = _rollDay(state);
     if (!profile.canWatchAd) return;
-    await _save(profile.copyWith(
-      adsWatchedToday: profile.adsWatchedToday + 1,
-      lastAdEpoch: DateTime.now().millisecondsSinceEpoch ~/ 1000,
-    ));
+    await _save(
+      profile.copyWith(
+        adsWatchedToday: profile.adsWatchedToday + 1,
+        lastAdEpoch: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      ),
+    );
   }
 
-  Future<void> joinWeeklyEvent(
-    String eventId, {
-    required bool countAd,
-  }) async {
+  Future<void> joinWeeklyEvent(String eventId, {required bool countAd}) async {
     final profile = _rollDay(state);
     if (countAd && !profile.canWatchAd) return;
-    await _save(profile.copyWith(
-      joinedEventId: eventId,
-      adsWatchedToday: profile.adsWatchedToday + (countAd ? 1 : 0),
-      lastAdEpoch: countAd
-          ? DateTime.now().millisecondsSinceEpoch ~/ 1000
-          : profile.lastAdEpoch,
-    ));
+    await _save(
+      profile.copyWith(
+        joinedEventId: eventId,
+        adsWatchedToday: profile.adsWatchedToday + (countAd ? 1 : 0),
+        lastAdEpoch: countAd
+            ? DateTime.now().millisecondsSinceEpoch ~/ 1000
+            : profile.lastAdEpoch,
+      ),
+    );
   }
 
   List<Phrase> duePhrases() {
@@ -324,7 +350,6 @@ class SessionController extends Notifier<UserProfile> {
     await _save(remote);
   }
 
-
   Future<void> importFamilyProfiles(List<UserProfile> profiles) async {
     for (final profile in profiles.take(4)) {
       await _prefs.setString(
@@ -342,8 +367,8 @@ class SessionController extends Notifier<UserProfile> {
 
   Future<void> wipeAccount() async {
     for (final key in _prefs.getKeys().where(
-          (key) => key.startsWith(_profilePrefix) || key == _activeProfileKey,
-        )) {
+      (key) => key.startsWith(_profilePrefix) || key == _activeProfileKey,
+    )) {
       await _prefs.remove(key);
     }
     await _prefs.remove(_key);

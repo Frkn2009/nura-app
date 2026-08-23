@@ -4,10 +4,7 @@ import '../models/models.dart';
 /// üretir. Yeni çeviri uydurmak yerine bilişsel zorluğu cümleleri daha uzun,
 /// bağlantılı görevlerde birleştirerek yükseltir.
 class IntermediateCatalog {
-  static List<Scenario> build(
-    LearnLang language,
-    List<Scenario> foundation,
-  ) {
+  static List<Scenario> build(LearnLang language, List<Scenario> foundation) {
     if (foundation.length < 6) return const [];
     return [
       _scenario(
