@@ -15,7 +15,7 @@ sundu).
 | | |
 |---|---|
 | **GitHub** | https://github.com/Frkn2009/nura-app |
-| **Son commit** | `acfa36e` — flutter_native_splash gerçekten bağlandı |
+| **Son commit** | `3e8648f` — uygulama ikonu yeni logoyla yeniden üretildi |
 | **Test** | ✅ 35/35 geçiyor |
 | **Analyze** | ✅ Temiz (0 uyarı) |
 | **Windows test ortamı** | `C:\nura-app` + `PUB_CACHE=C:\pub-cache` (kullanıcı profil yolunda Türkçe karakter olduğu için `flutter test`/native-asset derleyicisi kırılıyor — ASCII yol şart) |
@@ -25,7 +25,9 @@ sundu).
 - **SRS motoru**: `lib/core/algorithm/fsrs5_engine.dart` (`NuraBrain`, FSRS-5 tam parametreli) + `lib/data/srs/srs_machine.dart` (FSRS-inspired). `SrsCard`'da `phrase` alanı YOK.
 - **Bilişsel takip**: `lib/core/algorithm/cognitive_tracker.dart` (Reflex/Recall/Guess sınıflandırması, cevap süresine göre).
 - **Kaydırmalı review**: `lib/ui/review/swipe_review_card.dart` (Tinder tarzı fiziksel swipe).
-- **Alfabe sistemi**: `lib/features/alphabet/alphabet_engine.dart` — 30 dilin **tamamı** haritalı. ar/he/ru/uk/fa/el/hi/th/ja/ko tam veya kapsamlı; zh Pinyin olarak (Çince'nin alfabesi yok); vi tam; id/sw bilinçli olarak jenerik Latin (gerçekten aksansız). **pl/cs/ro/hu/sv/da/no/fi hâlâ jenerik Latin'e düşüyor — bu bilinen tek kalan alfabe eksiği.**
+- **Alfabe sistemi TAM**: `lib/features/alphabet/alphabet_engine.dart` — 30 dilin **tamamı** kendi gerçek alfabesiyle. ar/he/ru/uk/fa/el/hi/th/ja/ko/vi/pl/cs/ro/hu/sv/da/no/fi hepsi tam veya kapsamlı; zh Pinyin olarak (Çince'nin alfabesi yok); id/sw bilinçli olarak jenerik Latin (gerçekten aksansız, doğru). Kalan alfabe eksiği yok.
+- **RTL (sağdan sola) desteği**: `LearnLang.isRtl` (ar/he/fa) eklendi, `Directionality` artık alfabe ekranı dışında konuşma/çeviri/klip ekranlarında da uygulanıyor — önceden bu ekranlarda Arapça/İbranice/Farsça metin soldan sağa yanlış render ediliyordu.
+- **Uygulama ikonu güncel**: `assets/icon_source.png` (yeni `NuraMark`'tan render edildi) + `flutter_launcher_icons` ile Android/iOS/web ikon setleri yeniden üretildi. Artık gerçek logo ile uyumlu.
 - **Canlı AI konuşma partneri (Plus)**: `supabase/functions/chat/index.ts` (Claude API proxy) + `lib/features/ai/screen/live_chat_screen.dart`, alt gezinme çubuğunda **"Sohbet"** sekmesi olarak (`/app/chat`). Çalışması için Supabase'e `ANTHROPIC_API_KEY` secret'ı girilmeli ve fonksiyon deploy edilmeli — kod hazır, deploy kullanıcının elinde.
 - **Günlük çark**: `lib/features/games/daily_wheel_screen.dart` — artık gerçekten `SessionController.awardXp` çağırıyor, günde bir kez (SharedPreferences `wheel_day`).
 - **Klan sistemi**: `lib/features/clan/` — üyelik, davet kodu, **haftalık otomatik sıfırlanan** XP yarışması (`clan_xp` tablosu, `get_my_clan()` RPC, her Pazartesi resetleniyor — bu zaten backend'de vardı, sadece arayüzde "yarışma" diye belirtilmiyordu). Klan sohbeti yeni: `supabase/clan_chat.sql` (kullanıcı tarafından manuel apply edilmeli) + `lib/features/clan/clan_chat_screen.dart`.
@@ -46,16 +48,15 @@ sundu).
 
 | # | İş | Not |
 |---|---|---|
-| 1 | pl/cs/ro/hu/sv/da/no/fi alfabeleri | Jenerik Latin'e düşüyor, kendi aksan harfleri + örnek kelimeleri yok |
-| 2 | Video mikro-dersler | Gerçek anadil konuşan kaydı gerektirir — bir AI bunu üretemez, içerik prodüksiyonu lazım |
-| 3 | Uygulama içi kitaplık (e-kitap okuyucu) | Henüz başlanmadı |
-| 4 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
-| 5 | Akıllı Plus zamanlaması | `AdGateScreen` var ama tetikleme anı/tonu iyileştirilmedi |
-| 6 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
-| 7 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
-| 8 | Supabase deploy adımları | `supabase/functions/chat` deploy edilmedi, `ANTHROPIC_API_KEY` secret girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
-| 9 | Uygulama ikonu eski logoda kaldı | `android/app/src/main/res/mipmap-*/ic_launcher.png` hâlâ eski (zikzak N) logoyu kullanıyor — `brand.dart`'taki `NuraMark` yeniden tasarımı yalnızca uygulama içi widget'ı etkiledi, statik launcher PNG'leri yeniden üretilmedi. `flutter_launcher_icons` ile veya yeni logoyu bir kaynak PNG'ye render edip yeniden üretilebilir. |
-| 10 | Premium/sinematik TTS sesi | Masaüstü Chrome'da ses robotik — bu ortamın (Windows SAPI5 sesleri) doğal sınırı, kod hatası değil. Gerçek telefonda muhtemelen çok daha iyi (Android/iOS neural sesleri). Gerçekten "film aktörü" kalitesi için ElevenLabs/Google Cloud Neural2 gibi bir bulut TTS'e geçmek gerekir — `chat` fonksiyonuyla aynı desen (Edge Function proxy + gerçek ses dosyası oynatma), kullanıcının o servisten API key alması gerekiyor. |
+| 1 | Video mikro-dersler | Gerçek anadil konuşan kaydı gerektirir — bir AI bunu üretemez, içerik prodüksiyonu lazım |
+| 2 | Uygulama içi kitaplık (e-kitap okuyucu) | Henüz başlanmadı |
+| 3 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
+| 4 | Akıllı Plus zamanlaması | `AdGateScreen` var ama tetikleme anı/tonu iyileştirilmedi |
+| 5 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
+| 6 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
+| 7 | Supabase deploy adımları | `supabase/functions/chat` deploy edilmedi, `ANTHROPIC_API_KEY` secret girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
+| 8 | Premium/sinematik TTS sesi | Masaüstü Chrome'da ses robotik — bu ortamın (Windows SAPI5 sesleri) doğal sınırı, kod hatası değil. Gerçek telefonda muhtemelen çok daha iyi (Android/iOS neural sesleri). Gerçekten "film aktörü" kalitesi için ElevenLabs/Google Cloud Neural2 gibi bir bulut TTS'e geçmek gerekir — `chat` fonksiyonuyla aynı desen (Edge Function proxy + gerçek ses dosyası oynatma), kullanıcının o servisten API key alması gerekiyor. |
+| 9 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
 
 ## 💾 YEDEKLEME KURALI (HER OTURUMDA ZORUNLU)
 
