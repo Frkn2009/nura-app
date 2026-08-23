@@ -30,8 +30,21 @@ class Catalog {
     return null;
   }
 
-  static List<Phrase> allPhrases(LearnLang lang) =>
-      forLang(lang).expand((s) => s.phrases).toList();
+  /// [maxLevel] verilirse yalnızca o seviye ve altındaki senaryoların
+  /// kelimeleri kullanılır (oyunlar kullanıcının seviyesini aşmasın diye).
+  /// Filtre çok az kelime bırakırsa (deste kilitlenmesin diye) filtresiz
+  /// tüm havuza düşülür.
+  static List<Phrase> allPhrases(LearnLang lang, {Cefr? maxLevel}) {
+    final scenarios = forLang(lang);
+    if (maxLevel == null) return scenarios.expand((s) => s.phrases).toList();
+    final leveled = scenarios
+        .where((s) => s.cefr.index <= maxLevel.index)
+        .expand((s) => s.phrases)
+        .toList();
+    return leveled.length >= 8
+        ? leveled
+        : scenarios.expand((s) => s.phrases).toList();
+  }
 
   static final List<Scenario> _all = [
     Scenario(

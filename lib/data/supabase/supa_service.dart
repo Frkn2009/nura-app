@@ -87,6 +87,36 @@ class Supa {
     await _c.rpc('leave_clan');
   }
 
+  static Future<List<ClanChatMessage>> clanMessages({int limit = 50}) async {
+    if (!enabled || _c.auth.currentUser == null) return const [];
+    final response = await _c.rpc(
+      'get_clan_messages',
+      params: {'p_limit': limit},
+    );
+    return (response as List)
+        .map(
+          (row) =>
+              ClanChatMessage.fromJson(Map<String, dynamic>.from(row as Map)),
+        )
+        .toList(growable: false)
+        .reversed
+        .toList(growable: false);
+  }
+
+  static Future<void> sendClanMessage(String text) async {
+    final clean = text.trim();
+    if (!enabled || _c.auth.currentUser == null || clean.isEmpty) return;
+    final clan = await _c.rpc('get_my_clan');
+    final rows = clan as List;
+    if (rows.isEmpty) return;
+    final clanId = (rows.first as Map)['clan_id'];
+    await _c.from('clan_messages').insert({
+      'clan_id': clanId,
+      'user_id': _c.auth.currentUser!.id,
+      'text': clean,
+    });
+  }
+
   // ---------- PROFİL ----------
 
   /// Yerel profili `profiles` tablosuna yazar (varsa günceller).

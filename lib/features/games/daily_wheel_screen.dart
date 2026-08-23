@@ -1,14 +1,32 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../core/theme/tokens.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DailyWheelScreen extends StatefulWidget {
+import '../../core/theme/tokens.dart';
+import '../../state/session.dart';
+
+class DailyWheelScreen extends ConsumerStatefulWidget {
   const DailyWheelScreen({super.key});
   @override
-  State<DailyWheelScreen> createState() => _DailyWheelScreenState();
+  ConsumerState<DailyWheelScreen> createState() => _DailyWheelScreenState();
 }
 
-class _DailyWheelScreenState extends State<DailyWheelScreen>
+class _WheelPrize {
+  const _WheelPrize({
+    required this.title,
+    required this.color,
+    required this.icon,
+    this.xp = 0,
+  });
+  final String title;
+  final Color color;
+  final String icon;
+  final int xp;
+}
+
+class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _ctrl;
   late Animation<double> _anim;
@@ -16,14 +34,19 @@ class _DailyWheelScreenState extends State<DailyWheelScreen>
   bool _done = false;
   int _wonIndex = 0;
 
-  final _segments = [
-    {'title': '+50 XP', 'color': NuraTokens.accent, 'icon': '⚡'},
-    {'title': '+1 Can', 'color': NuraTokens.danger, 'icon': '❤️'},
-    {'title': '2x XP', 'color': NuraTokens.primary, 'icon': '🔥'},
-    {'title': 'Plus Dene', 'color': NuraTokens.gold, 'icon': '👑'},
-    {'title': '+10 💎', 'color': NuraTokens.purple, 'icon': '💎'},
-    {'title': 'Gizli!', 'color': Colors.teal, 'icon': '🎁'},
+  static const _segments = [
+    _WheelPrize(title: '+20 XP', color: NuraTokens.accent, icon: '⚡', xp: 20),
+    _WheelPrize(title: '+40 XP', color: NuraTokens.primary, icon: '🔥', xp: 40),
+    _WheelPrize(title: '+30 XP', color: NuraTokens.purple, icon: '💎', xp: 30),
+    _WheelPrize(title: 'Plus Dene', color: NuraTokens.gold, icon: '👑'),
+    _WheelPrize(title: '+60 XP', color: Colors.teal, icon: '🎁', xp: 60),
+    _WheelPrize(title: '+25 XP', color: NuraTokens.danger, icon: '✨', xp: 25),
   ];
+
+  String get _todayKey {
+    final n = DateTime.now().toUtc();
+    return '${n.year}-${n.month}-${n.day}';
+  }
 
   @override
   void initState() {
@@ -33,9 +56,16 @@ class _DailyWheelScreenState extends State<DailyWheelScreen>
       duration: const Duration(seconds: 4),
     );
     _anim = CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic);
+    _loadState();
   }
 
-  void _spin() {
+  Future<void> _loadState() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() => _done = prefs.getString('wheel_day') == _todayKey);
+  }
+
+  Future<void> _spin() async {
     if (_spinning || _done) return;
     _wonIndex = Random().nextInt(_segments.length);
     final targetAngle = 2 * pi * 8 + (2 * pi * _wonIndex / _segments.length);
@@ -46,37 +76,62 @@ class _DailyWheelScreenState extends State<DailyWheelScreen>
       begin: 0,
       end: targetAngle,
     ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
-    _ctrl.forward().then((_) {
-      setState(() {
-        _spinning = false;
-        _done = true;
-      });
-      _showReward();
+    await _ctrl.forward();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('wheel_day', _todayKey);
+
+    final prize = _segments[_wonIndex];
+    var awarded = 0;
+    if (prize.xp > 0) {
+      awarded = await ref
+          .read(sessionProvider.notifier)
+          .awardXp(prize.xp, source: 'wheel');
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _spinning = false;
+      _done = true;
     });
+    _showReward(prize, awarded);
   }
 
-  void _showReward() {
-    final won = _segments[_wonIndex];
+  void _showReward(_WheelPrize prize, int awarded) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (c) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         title: Text(
-          '${won['icon']} Tebrikler!',
+          '${prize.icon} Tebrikler!',
           style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 24),
         ),
         content: Text(
-          '${won['title']} kazandın!',
+          prize.xp > 0
+              ? '$awarded XP hesabına eklendi!'
+              : 'Plus ile sınırsız konuşma ve reklamsız deneyimi keşfet.',
           style: const TextStyle(fontSize: 18),
         ),
         actions: [
+          if (prize.xp == 0)
+            TextButton(
+              onPressed: () {
+                Navigator.pop(c);
+                Navigator.pop(context);
+              },
+              child: const Text('Belki sonra'),
+            ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(c);
-              Navigator.pop(context);
+              if (prize.xp == 0) {
+                context.push('/paywall');
+              } else {
+                Navigator.pop(context);
+              }
             },
-            child: const Text('Topla'),
+            child: Text(prize.xp == 0 ? 'Plus\'a geç' : 'Topla'),
           ),
         ],
       ),
@@ -112,13 +167,11 @@ class _DailyWheelScreenState extends State<DailyWheelScreen>
               ),
             ),
             const SizedBox(height: 24),
-            // Ok işareti
             const Icon(
               Icons.arrow_drop_down,
               size: 48,
               color: NuraTokens.danger,
             ),
-            // Çark
             AnimatedBuilder(
               animation: _anim,
               builder: (context, child) {
@@ -162,7 +215,7 @@ class _DailyWheelScreenState extends State<DailyWheelScreen>
 }
 
 class _WheelPainter extends CustomPainter {
-  final List<Map<String, dynamic>> segments;
+  final List<_WheelPrize> segments;
   _WheelPainter({required this.segments});
 
   @override
@@ -178,10 +231,9 @@ class _WheelPainter extends CustomPainter {
         start,
         sweep,
         true,
-        Paint()..color = segments[i]['color'] as Color,
+        Paint()..color = segments[i].color,
       );
 
-      // Segment çizgisi
       canvas.drawLine(
         center,
         center + Offset.fromDirection(start, radius),
@@ -190,10 +242,9 @@ class _WheelPainter extends CustomPainter {
           ..strokeWidth = 2,
       );
 
-      // Metin
       final tp = TextPainter(
         text: TextSpan(
-          text: segments[i]['title'] as String,
+          text: segments[i].title,
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w800,
@@ -208,7 +259,6 @@ class _WheelPainter extends CustomPainter {
       tp.paint(canvas, textPos - Offset(tp.width / 2, tp.height / 2));
     }
 
-    // Merkez daire
     canvas.drawCircle(center, 20, Paint()..color = Colors.white);
     canvas.drawCircle(center, 18, Paint()..color = NuraTokens.textPrimary);
   }

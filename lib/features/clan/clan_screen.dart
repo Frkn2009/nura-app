@@ -7,6 +7,7 @@ import '../../core/theme/tokens.dart';
 import '../../data/models/clan.dart';
 import '../../data/supabase/supa_service.dart';
 import '../../ui/widgets.dart';
+import 'clan_chat_screen.dart';
 
 class ClanScreen extends ConsumerStatefulWidget {
   const ClanScreen({super.key});
@@ -124,7 +125,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
       padding: const EdgeInsets.fromLTRB(22, 16, 22, 30),
       children: [
         Text(clan.clanName, style: Theme.of(context).textTheme.displayMedium),
-        const SizedBox(height: 7),
+        const SizedBox(height: 4),
+        const Text(
+          'Bu haftanın yarışması · her Pazartesi sıfırlanır',
+          style: TextStyle(color: Nura.muted, fontSize: 12),
+        ),
+        const SizedBox(height: 10),
         InkWell(
           onTap: () async {
             await Clipboard.setData(ClipboardData(text: clan.joinCode));
@@ -161,7 +167,15 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
+        OutlinedButton.icon(
+          onPressed: () => Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const ClanChatScreen())),
+          icon: const Icon(Icons.chat_bubble_outline),
+          label: const Text('Klan sohbeti'),
+        ),
+        const SizedBox(height: 10),
         OutlinedButton(
           onPressed: () => _leave(me.isOwner, members.length),
           child: Text(
@@ -180,14 +194,16 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
       children: [
         SizedBox(
           width: 32,
-          child: Text(
-            '${member.rank}',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Nura.mintDark,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: member.rank == 1
+              ? const Icon(Icons.emoji_events, color: Nura.sunflower, size: 20)
+              : Text(
+                  '${member.rank}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Nura.mintDark,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
         ),
         const SizedBox(width: 8),
         Expanded(

@@ -38,6 +38,7 @@ class GamesScreen extends ConsumerWidget {
         () => TrueFalseGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
+          cefr: profile.cefr,
           onComplete: completeGame,
         ),
       ),
@@ -49,6 +50,7 @@ class GamesScreen extends ConsumerWidget {
         () => LetterOrderGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
+          cefr: profile.cefr,
           onComplete: completeGame,
         ),
       ),
@@ -60,6 +62,7 @@ class GamesScreen extends ConsumerWidget {
         () => AudioPuzzleScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
+          cefr: profile.cefr,
           onComplete: completeGame,
         ),
       ),
@@ -71,6 +74,7 @@ class GamesScreen extends ConsumerWidget {
         () => FillBlankGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
+          cefr: profile.cefr,
           onComplete: completeGame,
         ),
       ),
@@ -82,6 +86,7 @@ class GamesScreen extends ConsumerWidget {
         () => TimedGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
+          cefr: profile.cefr,
           onComplete: completeGame,
         ),
       ),
@@ -175,10 +180,12 @@ class TrueFalseGameScreen extends StatefulWidget {
     super.key,
     required this.lang,
     required this.ui,
+    required this.cefr,
     required this.onComplete,
   });
   final LearnLang lang;
   final UiLang ui;
+  final Cefr cefr;
   final Future<int> Function(int correct, int total) onComplete;
 
   @override
@@ -199,7 +206,8 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
   @override
   void initState() {
     super.initState();
-    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    deck = Catalog.allPhrases(widget.lang, maxLevel: widget.cefr)
+      ..shuffle(random);
     _prepare();
   }
 
@@ -287,10 +295,12 @@ class LetterOrderGameScreen extends StatefulWidget {
     super.key,
     required this.lang,
     required this.ui,
+    required this.cefr,
     required this.onComplete,
   });
   final LearnLang lang;
   final UiLang ui;
+  final Cefr cefr;
   final Future<int> Function(int correct, int total) onComplete;
 
   @override
@@ -309,7 +319,8 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
   @override
   void initState() {
     super.initState();
-    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    deck = Catalog.allPhrases(widget.lang, maxLevel: widget.cefr)
+      ..shuffle(random);
     _prepare();
   }
 
@@ -450,10 +461,12 @@ class AudioPuzzleScreen extends StatefulWidget {
     super.key,
     required this.lang,
     required this.ui,
+    required this.cefr,
     required this.onComplete,
   });
   final LearnLang lang;
   final UiLang ui;
+  final Cefr cefr;
   final Future<int> Function(int correct, int total) onComplete;
 
   @override
@@ -474,7 +487,8 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
   @override
   void initState() {
     super.initState();
-    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    deck = Catalog.allPhrases(widget.lang, maxLevel: widget.cefr)
+      ..shuffle(random);
     _prepare();
   }
 
@@ -581,10 +595,12 @@ class FillBlankGameScreen extends StatefulWidget {
     super.key,
     required this.lang,
     required this.ui,
+    required this.cefr,
     required this.onComplete,
   });
   final LearnLang lang;
   final UiLang ui;
+  final Cefr cefr;
   final Future<int> Function(int correct, int total) onComplete;
 
   @override
@@ -603,7 +619,8 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
   @override
   void initState() {
     super.initState();
-    deck = Catalog.allPhrases(widget.lang)..shuffle(Random());
+    deck = Catalog.allPhrases(widget.lang, maxLevel: widget.cefr)
+      ..shuffle(Random());
     _prepare();
   }
 
@@ -694,10 +711,12 @@ class TimedGameScreen extends StatefulWidget {
     super.key,
     required this.lang,
     required this.ui,
+    required this.cefr,
     required this.onComplete,
   });
   final LearnLang lang;
   final UiLang ui;
+  final Cefr cefr;
   final Future<int> Function(int correct, int total) onComplete;
 
   @override
@@ -717,7 +736,8 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
   @override
   void initState() {
     super.initState();
-    deck = Catalog.allPhrases(widget.lang)..shuffle(random);
+    deck = Catalog.allPhrases(widget.lang, maxLevel: widget.cefr)
+      ..shuffle(random);
     _prepare();
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!mounted) return;

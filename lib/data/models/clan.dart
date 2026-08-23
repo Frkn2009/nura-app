@@ -34,3 +34,31 @@ class ClanMemberEntry {
         isOwner: json['is_owner'] as bool? ?? false,
       );
 }
+
+class ClanChatMessage {
+  const ClanChatMessage({
+    required this.id,
+    required this.userId,
+    required this.playerName,
+    required this.text,
+    required this.createdAt,
+    required this.isMe,
+  });
+
+  final int id;
+  final String userId;
+  final String playerName;
+  final String text;
+  final DateTime createdAt;
+  final bool isMe;
+
+  factory ClanChatMessage.fromJson(Map<String, dynamic> json) =>
+      ClanChatMessage(
+        id: (json['id'] as num).toInt(),
+        userId: json['user_id'] as String,
+        playerName: json['player_name'] as String? ?? 'NURA Öğrencisi',
+        text: json['text'] as String? ?? '',
+        createdAt: DateTime.parse(json['created_at'] as String),
+        isMe: json['is_me'] as bool? ?? false,
+      );
+}
