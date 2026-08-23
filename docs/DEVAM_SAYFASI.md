@@ -15,7 +15,7 @@ sundu).
 | | |
 |---|---|
 | **GitHub** | https://github.com/Frkn2009/nura-app |
-| **Son commit** | `9567aad` — uygulama içi kitaplık eklendi |
+| **Son commit** | `f65042b` — kitaplık 15/30 dile genişletildi |
 | **Test** | ✅ 35/35 geçiyor |
 | **Analyze** | ✅ Temiz (0 uyarı) |
 | **Windows test ortamı** | `C:\nura-app` + `PUB_CACHE=C:\pub-cache` (kullanıcı profil yolunda Türkçe karakter olduğu için `flutter test`/native-asset derleyicisi kırılıyor — ASCII yol şart) |
@@ -28,7 +28,7 @@ sundu).
 - **Alfabe sistemi TAM**: `lib/features/alphabet/alphabet_engine.dart` — 30 dilin **tamamı** kendi gerçek alfabesiyle. ar/he/ru/uk/fa/el/hi/th/ja/ko/vi/pl/cs/ro/hu/sv/da/no/fi hepsi tam veya kapsamlı; zh Pinyin olarak (Çince'nin alfabesi yok); id/sw bilinçli olarak jenerik Latin (gerçekten aksansız, doğru). Kalan alfabe eksiği yok.
 - **RTL (sağdan sola) desteği**: `LearnLang.isRtl` (ar/he/fa) eklendi, `Directionality` artık alfabe ekranı dışında konuşma/çeviri/klip ekranlarında da uygulanıyor — önceden bu ekranlarda Arapça/İbranice/Farsça metin soldan sağa yanlış render ediliyordu.
 - **Uygulama ikonu güncel**: `assets/icon_source.png` (yeni `NuraMark`'tan render edildi) + `flutter_launcher_icons` ile Android/iOS/web ikon setleri yeniden üretildi. Artık gerçek logo ile uyumlu.
-- **Kitaplık (`/library`)**: `lib/data/content/library.dart` + `lib/features/library/` — gerçek, gramer kontrolü yapılmış 10 kısa A1 hikaye (EN/ES/DE/FR/AR, 5 dil × 2 hikaye), Türkçe glosslu. `StoryReaderScreen`'de "Tümünü Oynat" gerçekten her cümleyi sırayla sesli okuyor. **Sadece 5/30 dilde içerik var — başlangıç kütüphanesi, tam kapsam değil.** Video içeriği hâlâ gerçek prodüksiyon gerektiriyor, üretilemedi.
+- **Kitaplık (`/library`)**: `lib/data/content/library.dart` + `lib/features/library/` — gerçek, gramer kontrolü yapılmış A1 hikayeler, Türkçe glosslu. `StoryReaderScreen`'de "Tümünü Oynat" gerçekten her cümleyi sırayla sesli okuyor. **15/30 dilde içerik var** (EN/ES/DE/FR/AR ilk turdan + PT/IT/RU/ZH/JA/KO/HI/TH/EL/TR ikinci turdan, dil başına 2-3 hikaye). Kalan 15 dil (pl/cs/ro/hu/sv/da/no/fi/vi/id/uk/he/fa/sw) için aynı JSON şablonu tekrar kullanılabilir — bkz. sohbet geçmişi. Video içeriği hâlâ gerçek prodüksiyon gerektiriyor, üretilemedi.
 - **Canlı AI konuşma partneri (Plus)**: `supabase/functions/chat/index.ts` (Claude API proxy) + `lib/features/ai/screen/live_chat_screen.dart`, alt gezinme çubuğunda **"Sohbet"** sekmesi olarak (`/app/chat`). Çalışması için Supabase'e `ANTHROPIC_API_KEY` secret'ı girilmeli ve fonksiyon deploy edilmeli — kod hazır, deploy kullanıcının elinde.
 - **Günlük çark**: `lib/features/games/daily_wheel_screen.dart` — artık gerçekten `SessionController.awardXp` çağırıyor, günde bir kez (SharedPreferences `wheel_day`).
 - **Klan sistemi**: `lib/features/clan/` — üyelik, davet kodu, **haftalık otomatik sıfırlanan** XP yarışması (`clan_xp` tablosu, `get_my_clan()` RPC, her Pazartesi resetleniyor — bu zaten backend'de vardı, sadece arayüzde "yarışma" diye belirtilmiyordu). Klan sohbeti yeni: `supabase/clan_chat.sql` (kullanıcı tarafından manuel apply edilmeli) + `lib/features/clan/clan_chat_screen.dart`.
