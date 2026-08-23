@@ -15,7 +15,7 @@ sundu).
 | | |
 |---|---|
 | **GitHub** | https://github.com/Frkn2009/nura-app |
-| **Son commit** | `7f01aac` — mission-control.ps1 precommit script |
+| **Son commit** | `acfa36e` — flutter_native_splash gerçekten bağlandı |
 | **Test** | ✅ 35/35 geçiyor |
 | **Analyze** | ✅ Temiz (0 uyarı) |
 | **Windows test ortamı** | `C:\nura-app` + `PUB_CACHE=C:\pub-cache` (kullanıcı profil yolunda Türkçe karakter olduğu için `flutter test`/native-asset derleyicisi kırılıyor — ASCII yol şart) |
@@ -39,6 +39,8 @@ sundu).
 - **Görsel derinlik**: `NuraCard` artık düz kenarlıklı değil, açık/bal temalarda yumuşak gölgeli (koyu temada gölge yerine kenarlık — siyah zeminde gölge görünmez). Ana sayfadaki "Bugünün konuşması" kartına da renkli glow gölgesi eklendi.
 - **Android release imzalama hazır**: `android/upload-keystore.jks` üretildi, `android/key.properties` ve `build.gradle.kts`'teki `signingConfigs` bağlandı (ikisi de gitignore'da, kullanıcıda şifreler var). **Yeniden üretme** — `flutter build appbundle --release` şu an Android SDK'nın Türkçe/boşluklu yoldaki NDK sorunundan dolayı denenemedi, bu ayrı bir açık iş.
 - **`tools/mission-control.ps1`**: yedekleme + `git fetch`/uzak kontrolü + `dart analyze` + `flutter test`'i tek komutta birleştiren PowerShell scripti (`status`/`remote`/`backup`/`check`/`precommit` alt komutları). **Yeniden yazma**, sadece kullan.
+- **Paywall gerçek billing'e bağlandı**: `PaywallScreen` eskiden `session.setPlus(true)`'ı direkt çağırıyordu (satın alma yoktu, herkes bedava Plus oluyordu). Artık `plusControllerProvider.purchase()` üzerinden gidiyor, `PlusController` sonucu `session.isPlus`'a senkronluyor. Gerçek ödeme için hâlâ `FakeBillingService` yerine gerçek bir RevenueCat `BillingService` implementasyonu gerekiyor (kullanıcının RevenueCat hesabı lazım) — ama artık doğru yere takılacak.
+- **Splash screen gerçekten bağlandı**: `flutter_native_splash.yaml` config'i vardı ama paket hiç `pubspec.yaml`'a eklenmemişti — uygulama varsayılan beyaz Flutter splash'ıyla açılıyordu. Artık `flutter_native_splash` dependency'si eklendi ve `dart run flutter_native_splash:create` çalıştırıldı.
 
 ## 🔶 GERÇEKTEN AÇIK OLAN İŞLER
 
@@ -52,6 +54,8 @@ sundu).
 | 6 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
 | 7 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
 | 8 | Supabase deploy adımları | `supabase/functions/chat` deploy edilmedi, `ANTHROPIC_API_KEY` secret girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
+| 9 | Uygulama ikonu eski logoda kaldı | `android/app/src/main/res/mipmap-*/ic_launcher.png` hâlâ eski (zikzak N) logoyu kullanıyor — `brand.dart`'taki `NuraMark` yeniden tasarımı yalnızca uygulama içi widget'ı etkiledi, statik launcher PNG'leri yeniden üretilmedi. `flutter_launcher_icons` ile veya yeni logoyu bir kaynak PNG'ye render edip yeniden üretilebilir. |
+| 10 | Premium/sinematik TTS sesi | Masaüstü Chrome'da ses robotik — bu ortamın (Windows SAPI5 sesleri) doğal sınırı, kod hatası değil. Gerçek telefonda muhtemelen çok daha iyi (Android/iOS neural sesleri). Gerçekten "film aktörü" kalitesi için ElevenLabs/Google Cloud Neural2 gibi bir bulut TTS'e geçmek gerekir — `chat` fonksiyonuyla aynı desen (Edge Function proxy + gerçek ses dosyası oynatma), kullanıcının o servisten API key alması gerekiyor. |
 
 ## 💾 YEDEKLEME KURALI (HER OTURUMDA ZORUNLU)
 
