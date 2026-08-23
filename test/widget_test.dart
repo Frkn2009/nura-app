@@ -229,7 +229,7 @@ void main() {
     expect(restored.reminderHour, 10);
   });
 
-  testWidgets('original Luma mascot renders every expression', (tester) async {
+  testWidgets('original Nura mascot renders every expression', (tester) async {
     for (final mood in MascotMood.values) {
       await tester.pumpWidget(
         MaterialApp(

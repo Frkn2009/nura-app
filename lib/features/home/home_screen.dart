@@ -302,6 +302,38 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           NuraCard(
+            onTap: () => context.push('/chat'),
+            child: Row(
+              children: [
+                const Icon(Icons.forum_outlined, color: Nura.forest),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Serbest Sohbet',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Nura.ink,
+                        ),
+                      ),
+                      Text(
+                        p.isPlus ? 'Nura ile canlı konuş' : 'Plus ile aç',
+                        style: const TextStyle(color: Nura.muted, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                if (!p.isPlus)
+                  const Icon(Icons.lock_outline, size: 18, color: Nura.soft)
+                else
+                  const Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          NuraCard(
             onTap: () => context.push('/guide'),
             child: Row(
               children: [

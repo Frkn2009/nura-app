@@ -6,7 +6,7 @@ import '../core/theme/tokens.dart';
 
 enum MascotMood { neutral, wave, celebrate, encourage, streak }
 
-/// NURA'nın özgün “Luma” karakteri: konuşma ışığını taşıyan küçük rehber.
+/// NURA'nın özgün “Nura” karakteri: konuşma ışığını taşıyan küçük rehber.
 /// Harici görsel kullanmaz; tüm şekiller Flutter Canvas ile çizilir.
 class NuraMascot extends StatefulWidget {
   const NuraMascot({
@@ -53,7 +53,7 @@ class _NuraMascotState extends State<NuraMascot>
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Luma, NURA rehberi',
+    label: 'Nura, NURA rehberi',
     image: true,
     child: AnimatedBuilder(
       animation: controller,
@@ -70,7 +70,7 @@ class _NuraMascotState extends State<NuraMascot>
             angle: tilt,
             child: CustomPaint(
               size: Size.square(widget.size),
-              painter: _LumaPainter(mood: widget.mood, phase: phase),
+              painter: _NuraMascotPainter(mood: widget.mood, phase: phase),
             ),
           ),
         );
@@ -79,8 +79,8 @@ class _NuraMascotState extends State<NuraMascot>
   );
 }
 
-class _LumaPainter extends CustomPainter {
-  const _LumaPainter({required this.mood, required this.phase});
+class _NuraMascotPainter extends CustomPainter {
+  const _NuraMascotPainter({required this.mood, required this.phase});
   final MascotMood mood;
   final double phase;
 
@@ -206,7 +206,7 @@ class _LumaPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _LumaPainter oldDelegate) =>
+  bool shouldRepaint(covariant _NuraMascotPainter oldDelegate) =>
       oldDelegate.mood != mood || oldDelegate.phase != phase;
 }
 

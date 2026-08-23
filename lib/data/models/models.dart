@@ -72,7 +72,7 @@ enum Motive { work, travel, exam, life }
 
 enum Cefr { a1, a2, b1, b2 }
 
-enum AppThemePreference { system, light, dark }
+enum AppThemePreference { system, light, dark, amber }
 
 extension LearnLangX on LearnLang {
   String get code => name;

@@ -238,6 +238,11 @@ class ProfileScreen extends ConsumerWidget {
                   icon: Icon(Icons.dark_mode_outlined),
                   label: Text('Koyu'),
                 ),
+                ButtonSegment(
+                  value: AppThemePreference.amber,
+                  icon: Icon(Icons.wb_twilight_outlined),
+                  label: Text('Bal'),
+                ),
               ],
               selected: {p.themePreference},
               onSelectionChanged: (value) => ref

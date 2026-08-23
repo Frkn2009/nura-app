@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/achievements/achievements_screen.dart';
+import '../../features/ai/screen/live_chat_screen.dart';
 import '../../features/alphabet/alphabet_screen.dart';
 import '../../features/games/daily_wheel_screen.dart';
 import '../../features/ads/ad_gate_screen.dart';
@@ -94,6 +95,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/wheel',
         parentNavigatorKey: _root,
         builder: (_, _) => const DailyWheelScreen(),
+      ),
+      GoRoute(
+        path: '/chat',
+        parentNavigatorKey: _root,
+        builder: (_, _) => const LiveChatScreen(),
       ),
       GoRoute(
         path: '/privacy',

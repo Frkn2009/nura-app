@@ -106,11 +106,14 @@ class SpeechController {
   }
 
   Future<void> _setFemaleVoice(String langCode) async {
-    const femalePitch = 1.12;
-    await _tts.setPitch(femalePitch);
+    const fallbackPitch = 1.12;
     try {
       final rawVoices = await _tts.getVoices;
-      if (rawVoices is! List || rawVoices.isEmpty) return;
+      if (rawVoices is! List || rawVoices.isEmpty) {
+        await _tts.setPitch(fallbackPitch);
+        _usingNeuralVoice = false;
+        return;
+      }
       final voices = rawVoices.whereType<Map>().toList()
         ..sort(
           (a, b) => voiceQualityScore(
@@ -121,7 +124,11 @@ class SpeechController {
       final matching = voices
           .where((voice) => voiceQualityScore(voice, langCode) >= 0)
           .toList();
-      if (matching.isEmpty) return;
+      if (matching.isEmpty) {
+        await _tts.setPitch(fallbackPitch);
+        _usingNeuralVoice = false;
+        return;
+      }
 
       // Önce kadın, kadın seçenekleri içinde neural/premium/enhanced kalite.
       final female = matching
@@ -140,9 +147,17 @@ class SpeechController {
           normalized.contains('premium') ||
           normalized.contains('enhanced') ||
           normalized.contains('natural');
+
+      // Gerçek bir kadın veya yüksek kaliteli ses bulunduysa doğal
+      // perdesinde bırak — üzerine yapay pitch bindirmek neural/premium
+      // sesleri robotikleştiriyor. Sadece hiç kadın eşleşmesi yoksa
+      // (jenerik/erkek sese düşüldüyse) dişil tona yaklaştır.
+      await _tts.setPitch(
+        female.isNotEmpty || _usingNeuralVoice ? 1.0 : fallbackPitch,
+      );
     } catch (_) {
+      await _tts.setPitch(fallbackPitch);
       _usingNeuralVoice = false;
-      // Eski motorlarda kadın ses profili sabit pitch ile korunur.
     }
   }
 

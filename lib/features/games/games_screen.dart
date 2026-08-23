@@ -569,7 +569,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
             correct: lastRight,
             message: lastRight
                 ? 'Harika dinledin!'
-                : 'Luma: dinledikçe daha net olacak.',
+                : 'Nura: dinledikçe daha net olacak.',
           ),
       ],
     ),

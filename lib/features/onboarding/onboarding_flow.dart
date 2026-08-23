@@ -64,7 +64,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 const SizedBox(height: 8),
                 const Center(
                   child: Text(
-                    'Merhaba, ben Luma. Konuşma yolculuğunda yanındayım.',
+                    'Merhaba, ben Nura. Konuşma yolculuğunda yanındayım.',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Nura.muted, fontSize: 13),
                   ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
+import 'core/theme/amber_theme.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/nura_theme.dart';
 import 'data/models/models.dart';
@@ -27,12 +28,15 @@ class NuraApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'NURA',
       debugShowCheckedModeBanner: false,
-      theme: buildNuraTheme(),
+      theme: themePreference == AppThemePreference.amber
+          ? buildNuraAmberTheme()
+          : buildNuraTheme(),
       darkTheme: buildNuraDarkTheme(),
       themeMode: switch (themePreference) {
         AppThemePreference.system => ThemeMode.system,
         AppThemePreference.light => ThemeMode.light,
         AppThemePreference.dark => ThemeMode.dark,
+        AppThemePreference.amber => ThemeMode.light,
       },
       routerConfig: router,
     );
