@@ -50,3 +50,8 @@ app.*.map.json
 # Server-side Supabase/translation secrets
 /supabase/.env
 /supabase/functions/.env
+
+# Android release signing — NEVER commit these
+/android/key.properties
+/android/*.jks
+/android/*.keystore
