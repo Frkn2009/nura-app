@@ -203,6 +203,23 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           NuraCard(
+            onTap: () => context.push('/alphabet?lang=${p.learnLang.code}'),
+            child: Row(
+              children: [
+                const Icon(Icons.abc, color: Nura.forest),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'Alfabe · ${p.learnLang.flag()} harfleri öğren',
+                    style: const TextStyle(fontWeight: FontWeight.w600, color: Nura.ink),
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Nura.soft),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          NuraCard(
             onTap: () => context.push('/guide'),
             child: Row(
               children: [

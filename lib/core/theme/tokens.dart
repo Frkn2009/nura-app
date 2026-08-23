@@ -71,6 +71,8 @@ class NuraTokens {
   static const forestMid = primaryDark;
   static const white = Colors.white;
   static const radius = radiusMedium;
+  static const radiusSm = radiusSmall;
+  static const radiusLg = radiusLarge;
 }
 
 // Nura alias — eski kodla uyum
