@@ -15,7 +15,7 @@ sundu).
 | | |
 |---|---|
 | **GitHub** | https://github.com/Frkn2009/nura-app |
-| **Son commit** | `78fb4a0` — Sohbet sekmesi + alfabe ekranı markalama |
+| **Son commit** | `7f01aac` — mission-control.ps1 precommit script |
 | **Test** | ✅ 35/35 geçiyor |
 | **Analyze** | ✅ Temiz (0 uyarı) |
 | **Windows test ortamı** | `C:\nura-app` + `PUB_CACHE=C:\pub-cache` (kullanıcı profil yolunda Türkçe karakter olduğu için `flutter test`/native-asset derleyicisi kırılıyor — ASCII yol şart) |
@@ -37,6 +37,8 @@ sundu).
 - **TTS**: `lib/data/speech/speech_controller.dart` — kaliteli/neural ses bulununca üstüne yapay pitch bindirmiyor (eskiden hep 1.12 pitch zorluyordu, bu neural sesleri robotikleştiriyordu).
 - **Güvenlik denetimi yapıldı** (23 Ağustos): secret sızıntısı yok, RLS büyük ölçüde sağlam, Plus hakkı doğru şekilde `subscriptions` tablosundan doğrulanıyor. İki bulgu `supabase/security_hardening.sql`'de düzeltildi (henüz apply edilmedi): `profiles.is_plus` istemciden yazılabiliyordu (trigger ile korundu), `record_xp`'de hız sınırı yoktu (10 saniyede 5 çağrı sınırı eklendi).
 - **Görsel derinlik**: `NuraCard` artık düz kenarlıklı değil, açık/bal temalarda yumuşak gölgeli (koyu temada gölge yerine kenarlık — siyah zeminde gölge görünmez). Ana sayfadaki "Bugünün konuşması" kartına da renkli glow gölgesi eklendi.
+- **Android release imzalama hazır**: `android/upload-keystore.jks` üretildi, `android/key.properties` ve `build.gradle.kts`'teki `signingConfigs` bağlandı (ikisi de gitignore'da, kullanıcıda şifreler var). **Yeniden üretme** — `flutter build appbundle --release` şu an Android SDK'nın Türkçe/boşluklu yoldaki NDK sorunundan dolayı denenemedi, bu ayrı bir açık iş.
+- **`tools/mission-control.ps1`**: yedekleme + `git fetch`/uzak kontrolü + `dart analyze` + `flutter test`'i tek komutta birleştiren PowerShell scripti (`status`/`remote`/`backup`/`check`/`precommit` alt komutları). **Yeniden yazma**, sadece kullan.
 
 ## 🔶 GERÇEKTEN AÇIK OLAN İŞLER
 
@@ -48,7 +50,7 @@ sundu).
 | 4 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
 | 5 | Akıllı Plus zamanlaması | `AdGateScreen` var ama tetikleme anı/tonu iyileştirilmedi |
 | 6 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
-| 7 | Keystore + release build | Mağazaya çıkış öncesi |
+| 7 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
 | 8 | Supabase deploy adımları | `supabase/functions/chat` deploy edilmedi, `ANTHROPIC_API_KEY` secret girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
 
 ## 💾 YEDEKLEME KURALI (HER OTURUMDA ZORUNLU)
@@ -60,6 +62,12 @@ git status --short
 mkdir -p ../nura_backup
 stamp=$(date +%Y%m%d_%H%M%S)
 git diff --binary > "../nura_backup/before_$stamp.patch"
+```
+
+Windows'ta `tools\mission-control.ps1` bu adımları (yedek + `git fetch`/uzak kontrolü + `dart analyze` + `flutter test`) tek komutta yapar:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\mission-control.ps1 precommit
 ```
 
 Bu, commit edilmemiş değişiklikleri repo **dışında** yedekler; hiçbir şeyi silmez. Push'tan önce de `git fetch && git log --oneline HEAD..origin/main` ile uzağın ilerlemediğini doğrula (aşağıda tekrar var). Büyük bir iş bitince bu dosyayı ("DEVAM_SAYFASI.md") güncelleyip commit et — bir sonraki oturum/AI buradan devam edecek.
