@@ -17,6 +17,9 @@ import '../../features/leaderboard/leaderboard_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
 import '../../features/games/games_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../data/content/library.dart';
+import '../../features/library/library_screen.dart';
+import '../../features/library/story_reader_screen.dart';
 import '../../features/onboarding/onboarding_flow.dart';
 import '../../features/paywall/paywall_screen.dart';
 import '../../features/profile/profile_screen.dart';
@@ -95,6 +98,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/wheel',
         parentNavigatorKey: _root,
         builder: (_, _) => const DailyWheelScreen(),
+      ),
+      GoRoute(
+        path: '/library',
+        parentNavigatorKey: _root,
+        builder: (_, _) => const LibraryScreen(),
+      ),
+      GoRoute(
+        path: '/library/:storyId',
+        parentNavigatorKey: _root,
+        builder: (_, s) {
+          final story = NuraLibrary.byId(s.pathParameters['storyId'] ?? '');
+          if (story == null) return const LibraryScreen();
+          return StoryReaderScreen(story: story);
+        },
       ),
       GoRoute(
         path: '/privacy',
