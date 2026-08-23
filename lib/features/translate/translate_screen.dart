@@ -298,13 +298,18 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    hit!.target,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      height: 1.3,
+                  Directionality(
+                    textDirection: toLang.isRtl
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
+                    child: Text(
+                      hit!.target,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        height: 1.3,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),

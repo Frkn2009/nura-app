@@ -403,14 +403,19 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 style: const TextStyle(color: Nura.muted, fontSize: 15),
               ),
               const SizedBox(height: 12),
-              Text(
-                currentTurn.expected,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Nura.cream,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  height: 1.3,
+              Directionality(
+                textDirection: scene.lang.isRtl
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
+                child: Text(
+                  currentTurn.expected,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Nura.cream,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    height: 1.3,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -523,10 +528,15 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 if (heard.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      heard,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Nura.muted, fontSize: 13),
+                    child: Directionality(
+                      textDirection: scene.lang.isRtl
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      child: Text(
+                        heard,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Nura.muted, fontSize: 13),
+                      ),
                     ),
                   ),
               ] else

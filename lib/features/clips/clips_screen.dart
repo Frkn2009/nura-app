@@ -264,13 +264,18 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        clip.phrase.target,
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
-                          color: Nura.ink,
+                      Directionality(
+                        textDirection: clip.scenario.lang.isRtl
+                            ? TextDirection.rtl
+                            : TextDirection.ltr,
+                        child: Text(
+                          clip.phrase.target,
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            height: 1.25,
+                            color: Nura.ink,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),

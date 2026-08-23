@@ -77,6 +77,11 @@ enum AppThemePreference { system, light, dark, amber }
 extension LearnLangX on LearnLang {
   String get code => name;
 
+  /// Arapça, İbranice, Farsça sağdan sola yazılır — hedef dil metni bu
+  /// dillerde gösterilirken Directionality.rtl uygulanmalı.
+  bool get isRtl =>
+      this == LearnLang.ar || this == LearnLang.he || this == LearnLang.fa;
+
   String flag() => switch (this) {
     LearnLang.en => '🇬🇧',
     LearnLang.es => '🇪🇸',
