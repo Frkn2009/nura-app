@@ -155,6 +155,13 @@ class HomeScreen extends ConsumerWidget {
             decoration: BoxDecoration(
               color: Nura.forest,
               borderRadius: BorderRadius.circular(Nura.radiusLg),
+              boxShadow: [
+                BoxShadow(
+                  color: Nura.forest.withValues(alpha: .35),
+                  blurRadius: 24,
+                  offset: const Offset(0, 12),
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

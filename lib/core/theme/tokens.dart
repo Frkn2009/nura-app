@@ -40,12 +40,18 @@ class NuraTokens {
   static const pad = 16.0;
   static const padLarge = 24.0;
 
-  // Shadow
+  // Shadow — iki katman: yakın/keskin + geniş/yumuşak, tek düz gölgeden
+  // daha "tasarlanmış" bir derinlik hissi verir.
   static List<BoxShadow> get softShadow => [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.06),
-      blurRadius: 14,
-      offset: const Offset(0, 6),
+      color: Colors.black.withValues(alpha: 0.045),
+      blurRadius: 3,
+      offset: const Offset(0, 1),
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.09),
+      blurRadius: 20,
+      offset: const Offset(0, 10),
     ),
   ];
 

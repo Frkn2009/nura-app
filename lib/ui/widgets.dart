@@ -19,12 +19,21 @@ class NuraCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Koyu temada gölge okunmaz (siyah zemin üstünde siyah gölge görünmez),
+    // o yüzden yalnızca açık/bal temalarda gölgeyle "kaldırılmış" his
+    // veriyoruz — düz kenarlıklı kartların "basit" görünmesinin sebebiydi.
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final box = Container(
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(Nura.radius),
-        border: Border.all(color: Theme.of(context).dividerColor),
+        border: Border.all(
+          color: Theme.of(
+            context,
+          ).dividerColor.withValues(alpha: isDark ? 1 : .5),
+        ),
+        boxShadow: isDark ? null : Nura.softShadow,
       ),
       child: child,
     );
