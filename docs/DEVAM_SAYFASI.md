@@ -28,7 +28,7 @@ sundu).
 - **Alfabe sistemi TAM**: `lib/features/alphabet/alphabet_engine.dart` — 30 dilin **tamamı** kendi gerçek alfabesiyle. ar/he/ru/uk/fa/el/hi/th/ja/ko/vi/pl/cs/ro/hu/sv/da/no/fi hepsi tam veya kapsamlı; zh Pinyin olarak (Çince'nin alfabesi yok); id/sw bilinçli olarak jenerik Latin (gerçekten aksansız, doğru). Kalan alfabe eksiği yok.
 - **RTL (sağdan sola) desteği**: `LearnLang.isRtl` (ar/he/fa) eklendi, `Directionality` artık alfabe ekranı dışında konuşma/çeviri/klip ekranlarında da uygulanıyor — önceden bu ekranlarda Arapça/İbranice/Farsça metin soldan sağa yanlış render ediliyordu.
 - **Uygulama ikonu güncel**: `assets/icon_source.png` (yeni `NuraMark`'tan render edildi) + `flutter_launcher_icons` ile Android/iOS/web ikon setleri yeniden üretildi. Artık gerçek logo ile uyumlu.
-- **Kitaplık (`/library`)**: `lib/data/content/library.dart` + `lib/features/library/` — gerçek, gramer kontrolü yapılmış A1 hikayeler, Türkçe glosslu. `StoryReaderScreen`'de "Tümünü Oynat" gerçekten her cümleyi sırayla sesli okuyor. **15/30 dilde içerik var** (EN/ES/DE/FR/AR ilk turdan + PT/IT/RU/ZH/JA/KO/HI/TH/EL/TR ikinci turdan, dil başına 2-3 hikaye). Kalan 15 dil (nl/pl/sv/da/no/fi/cs/ro/hu/vi/id/uk/he/fa/sw) için aynı JSON şablonu tekrar kullanılabilir — kullanıcının sohbette hazır kopyala-yapıştır bloğu var. Video içeriği hâlâ gerçek prodüksiyon gerektiriyor, üretilemedi.
+- **Kitaplık (`/library`)**: `lib/data/content/library.dart` + `lib/features/library/` — gerçek, gramer kontrolü yapılmış A1 hikayeler, Türkçe glosslu. `StoryReaderScreen`'de "Tümünü Oynat" gerçekten her cümleyi sırayla sesli okuyor. **Artık 30/30 dilde içerik var** (24 Ağustos: kalan 15 dil — nl/pl/sv/da/no/fi/cs/ro/hu/vi/id/uk/he/fa/sw — başka bir AI'ya verilen şablonla üretildi, 85 hikaye toplam, `dart analyze` temiz, id'ler benzersiz doğrulandı). Video içeriği hâlâ gerçek prodüksiyon gerektiriyor, üretilemedi.
 - **Premium ses (ElevenLabs)**: `supabase/functions/tts` + `lib/data/speech/premium_tts_service.dart`. `chat` ile aynı desen — Plus'a kilitli, `ELEVENLABS_API_KEY` secret'ı yok/deploy edilmemişse sessizce cihaz TTS'ine düşer. **Artık kitaplık okuyucusu + konuşma pratiği (`speak_screens.dart`) + alfabe örnek kelimeleri (`alphabet_screen.dart`, sadece kelimeler — tek harf/ses telaffuzu bilinçli olarak cihazın özel ayarlı (yavaş/yüksek perde) TTS'inde kaldı) + sohbet cevapları (`live_chat_screen.dart`) hepsi aynı "önce premium dene, olmazsa cihaz TTS'i" desenini kullanıyor** (24 Ağustos). **Kullanıcının yapması gereken**: ElevenLabs hesabı aç, `ELEVENLABS_API_KEY`'i Supabase secret olarak gir, `supabase functions deploy tts` çalıştır.
 - **Canlı AI konuşma partneri (Plus)**: `supabase/functions/chat/index.ts` (Claude API proxy) + `lib/features/ai/screen/live_chat_screen.dart`, alt gezinme çubuğunda **"Sohbet"** sekmesi olarak (`/app/chat`). Çalışması için Supabase'e `ANTHROPIC_API_KEY` secret'ı girilmeli ve fonksiyon deploy edilmeli — kod hazır, deploy kullanıcının elinde.
 - **Günlük çark**: `lib/features/games/daily_wheel_screen.dart` — artık gerçekten `SessionController.awardXp` çağırıyor, günde bir kez (SharedPreferences `wheel_day`).
@@ -51,15 +51,14 @@ sundu).
 | # | İş | Not |
 |---|---|---|
 | 1 | Video mikro-dersler | Gerçek anadil konuşan kaydı gerektirir — bir AI bunu üretemez, içerik prodüksiyonu lazım |
-| 2 | Kitaplığı kalan 15 dile genişlet | nl/pl/sv/da/no/fi/cs/ro/hu/vi/id/uk/he/fa/sw — kullanıcıda hazır JSON şablonu var |
-| 3 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
-| 4 | Akıllı Plus zamanlaması | `AdGateScreen` var ama tetikleme anı/tonu iyileştirilmedi |
-| 5 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
-| 6 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
-| 7 | Supabase deploy adımları | `supabase/functions/chat` ve `supabase/functions/tts` deploy edilmedi, `ANTHROPIC_API_KEY`/`ELEVENLABS_API_KEY` secret'ları girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
-| 8 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
+| 2 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
+| 3 | Akıllı Plus zamanlaması | `AdGateScreen` var ama tetikleme anı/tonu iyileştirilmedi |
+| 4 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
+| 5 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
+| 6 | Supabase deploy adımları | `supabase/functions/chat` ve `supabase/functions/tts` deploy edilmedi, `ANTHROPIC_API_KEY`/`ELEVENLABS_API_KEY` secret'ları girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
+| 7 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
 
-**Not (24 Ağustos):** Eski madde 3 ("Premium sesi diğer ekranlara bağla") tamamlandı — yukarıdaki "ZATEN VAR" listesine taşındı, liste numaraları buna göre kaydı.
+**Not (24 Ağustos):** Eski madde 3 ("Premium sesi diğer ekranlara bağla") ve madde 2 ("Kitaplığı kalan 15 dile genişlet") tamamlandı — ikisi de yukarıdaki "ZATEN VAR" listesine taşındı, liste numaraları buna göre kaydı.
 
 ## 💾 YEDEKLEME KURALI (HER OTURUMDA ZORUNLU)
 
