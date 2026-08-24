@@ -75,3 +75,21 @@ flutter build ipa \
 ```
 
 Gelir ve eCPM, AdMob panelindeki doğrulanmış gösterimlerden hesaplanır. Free kullanıcıda 3–5 dakikalık sıklık sınırı ve günlük toplam 5 video sınırı vardır; Plus kullanıcıya reklam çağrısı yapılmaz.
+
+## RevenueCat (Plus satın alma) kurulumu
+
+`NURA_REVENUECAT_API_KEY` dart-define'ı girilmediyse `PlusController` otomatik olarak `FakeBillingService`'i kullanır (test/dev modu, uygulama bozulmaz). Gerçek satın almayı açmak için:
+
+```bash
+flutter run \
+  --dart-define=NURA_REVENUECAT_API_KEY=xxxxx
+
+flutter build appbundle \
+  --dart-define=NURA_REVENUECAT_API_KEY=xxxxx \
+  --dart-define=NURA_REVENUECAT_ENTITLEMENT_ID=plus
+```
+
+- API key'i RevenueCat panelinden al (Project settings → API keys). "Public app-specific" veya "Test Store" anahtarı client koduna gömülmek için tasarlanmıştır, güvenle dart-define ile geçilebilir — ama panelden aldığın anahtarın **Secret key (V1/V2 REST API)** olmadığından emin ol, o asla client'a gömülmemeli.
+- `NURA_REVENUECAT_ENTITLEMENT_ID` panelde tanımladığın entitlement kimliğiyle eşleşmeli; varsayılan `plus`.
+- RevenueCat panelindeki paket/ürünlerin store ürün kimlikleri (`nura_plus_monthly`, `nura_plus_yearly`, `nura_plus_family` — bkz. `lib/features/plus/domain/entitlement.dart`) ile birebir aynı olmalı, `RevenueCatBillingService` eşleştirmeyi bu kimlik üzerinden yapıyor.
+- Gerçek App Store/Play Store ürünleri olmadan da RevenueCat'in **Test Store** özelliğiyle (`test_` önekli anahtar) satın alma akışını uçtan uca deneyebilirsin — mağaza hesabı gerektirmez.

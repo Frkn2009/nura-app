@@ -1,11 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nura/features/plus/data/billing_service.dart';
 import 'package:nura/features/plus/data/fake_billing_service.dart';
+import 'package:nura/features/plus/data/revenuecat_billing_service.dart';
 import 'package:nura/features/plus/domain/entitlement.dart';
 import 'package:nura/state/session.dart';
 
 final billingServiceProvider = Provider<BillingService>((ref) {
-  return FakeBillingService();
+  return RevenueCatBillingService.isConfigured
+      ? RevenueCatBillingService()
+      : FakeBillingService();
 });
 
 final plusControllerProvider =

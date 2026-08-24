@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/supabase_config.dart';
 import 'data/notifications/notification_service.dart';
+import 'features/plus/data/revenuecat_billing_service.dart';
 import 'state/session.dart';
 
 Future<void> main() async {
@@ -19,6 +20,10 @@ Future<void> main() async {
       publishableKey: SupaConfig.publishableKey,
     );
   }
+
+  // NURA_REVENUECAT_API_KEY dart-define'ı girilmediyse hiçbir şey yapmaz —
+  // PlusController o zaman FakeBillingService kullanmaya devam eder.
+  await RevenueCatBillingService.configureIfNeeded();
 
   try {
     await NotificationService.initialize();
