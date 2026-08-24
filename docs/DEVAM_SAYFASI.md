@@ -103,14 +103,28 @@ Bu, commit edilmemiş değişiklikleri repo **dışında** yedekler; hiçbir şe
 
 ```
 nura-app projesine devam et.
-GitHub: https://github.com/Frkn2009/nura-app (main, son commit 78fb4a0)
+GitHub: https://github.com/Frkn2009/nura-app (main, son commit 8145f1b, 24 Ağustos akşamı push edildi)
 docs/DEVAM_SAYFASI.md dosyasını BAŞTAN SONA oku — reposu gerçekten
 göremiyorsan bunu söyle, uydurma. "ZATEN VAR" listesindeki hiçbir şeyi
-yeniden yazma, "GERÇEKTEN AÇIK OLAN İŞLER" listesinden devam et.
-35/35 test geçiyor, dart analyze temiz.
-Windows'ta test için: C:\nura-app + PUB_CACHE=C:\pub-cache kullan (asıl repo
-yolundaki Türkçe karakter native-asset derleyicisini kırıyor).
+yeniden yazma, "GERÇEKTEN AÇIK OLAN İŞLER" listesinden devam et (şu an
+sadece 3 madde kaldı: AdMob hesabı, video dersler, ASO görselleri/29 dil).
+dart analyze temiz (flutter test bugün ÇALIŞTIRILMADI — Turkish-path
+kısıtı yüzünden, aşağıdaki ASCII-klon tarifini kullan).
+
+Windows'ta `dart analyze`/`dart format` asıl repo yolunda çalışır. Ama
+`flutter test` VE `flutter build` (appbundle/apk) için proje yolunun
+kendisi de ASCII olmalı (SDK/pub-cache ASCII olması yetmiyor — Dart'ın AOT
+derleyicisi Türkçe karakterli proje yolunu okuyamıyor). Tarif: 
+`git clone "<repo yolu>" C:\nura-build`, `android/local.properties`'e
+`sdk.dir=C:\\AndroidSdk` + `flutter.sdk=C:\\flutter` yaz, `android/key.properties`
++ `android/app/upload-keystore.jks`'i asıl repodan kopyala (gitignore'da,
+klonla gelmiyor), sonra `ANDROID_HOME=C:\AndroidSdk` `PUB_CACHE=C:\pub-cache`
+ile çalıştır. Son build'ler zaten `build/app/outputs/` altında duruyor,
+sıfırdan üretmen gerekmeyebilir.
+
 Kod değiştirmeden önce git diff'i ../nura_backup'a yedekle (yukarıdaki
 YEDEKLEME KURALI bölümüne bak). Her commit öncesi git fetch ile uzağın
-ilerlemediğini kontrol et. İş bitince bu dosyayı güncelle ve commit et.
+ilerlemediğini kontrol et. İş bitince bu dosyayı güncelle, commit et VE
+`git push origin main` yap (bugüne kadar commit'ler bazen sadece yerelde
+kalıyordu — push etmeyi unutma).
 ```
