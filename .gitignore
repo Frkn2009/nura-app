@@ -51,6 +51,9 @@ app.*.map.json
 /supabase/.env
 /supabase/functions/.env
 
+# Supabase CLI local cache
+/supabase/.temp/
+
 # Android release signing — NEVER commit these
 /android/key.properties
 /android/*.jks
