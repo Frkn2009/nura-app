@@ -36,6 +36,17 @@ dev_dependencies:
   flutter_native_splash: ^2.4.3
   flutter_launcher_icons: ^0.14.3
 
+# path_provider_foundation >=2.5.0, "objective_c" paketi üzerinden Dart'ın
+# native-assets "hook" sistemini kullanıyor; objective_c'nin (9.5.0/9.6.0)
+# hook/build.dart'ı Flutter 3.47.1'in hooks/code_assets protokolüyle derlenmiyor
+# (Undefined name: OS/Architecture/CodeConfig vb. — hem Android hem her platform
+# için, hook derlemesi hedef platform ayrımı yapmadan çalışıyor). Bu app'in
+# path_provider'ı sadece audioplayers/home_widget üzerinden dolaylı kullanıyor,
+# iOS/macOS build'i şu an planda yok — objective_c'ye ihtiyaç duymayan son sürüme
+# (2.5.1) sabitleyip bu kırık zinciri tamamen devre dışı bırakıyoruz.
+dependency_overrides:
+  path_provider_foundation: 2.5.1
+
 flutter_launcher_icons:
   android: true
   ios: true
