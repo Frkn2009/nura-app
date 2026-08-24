@@ -45,19 +45,19 @@ sundu).
 - **`tools/mission-control.ps1`**: yedekleme + `git fetch`/uzak kontrolü + `dart analyze` + `flutter test`'i tek komutta birleştiren PowerShell scripti (`status`/`remote`/`backup`/`check`/`precommit` alt komutları). **Yeniden yazma**, sadece kullan.
 - **Paywall gerçek billing'e bağlandı**: `PaywallScreen` eskiden `session.setPlus(true)`'ı direkt çağırıyordu (satın alma yoktu, herkes bedava Plus oluyordu). Artık `plusControllerProvider.purchase()` üzerinden gidiyor, `PlusController` sonucu `session.isPlus`'a senkronluyor. Gerçek ödeme için hâlâ `FakeBillingService` yerine gerçek bir RevenueCat `BillingService` implementasyonu gerekiyor (kullanıcının RevenueCat hesabı lazım) — ama artık doğru yere takılacak.
 - **Splash screen gerçekten bağlandı**: `flutter_native_splash.yaml` config'i vardı ama paket hiç `pubspec.yaml`'a eklenmemişti — uygulama varsayılan beyaz Flutter splash'ıyla açılıyordu. Artık `flutter_native_splash` dependency'si eklendi ve `dart run flutter_native_splash:create` çalıştırıldı.
+- **İnteraktif tanıtım turu**: `lib/features/onboarding/coach_tour.dart` — yeniden kullanılabilir, spot ışıklı (`CustomPainter` ile karartılmış arka planda "delik") coach-mark overlay sistemi; `CoachStep(targetKey: GlobalKey, title, body)` listesi alıp gerçek widget'ların pozisyonunu `RenderBox.localToGlobal` ile bulup üzerlerine balon gösteriyor (mockup ekran değil). `HomeScreen`'e bağlandı: ilk açılışta günlük hedef kartı → bugünün konuşması → kitaplık → tekrar sırasıyla 4 adımlık tur, `SharedPreferences` (`home_tour_seen_v1`) ile bir kere gösteriliyor, "Geç" ile her an atlanabilir.
 
 ## 🔶 GERÇEKTEN AÇIK OLAN İŞLER
 
 | # | İş | Not |
 |---|---|---|
 | 1 | Video mikro-dersler | Gerçek anadil konuşan kaydı gerektirir — bir AI bunu üretemez, içerik prodüksiyonu lazım |
-| 2 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
-| 3 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
-| 4 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
-| 5 | Supabase deploy adımları | `supabase/functions/chat` ve `supabase/functions/tts` deploy edilmedi, `ANTHROPIC_API_KEY`/`ELEVENLABS_API_KEY` secret'ları girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
-| 6 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
+| 2 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
+| 3 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
+| 4 | Supabase deploy adımları | `supabase/functions/chat` ve `supabase/functions/tts` deploy edilmedi, `ANTHROPIC_API_KEY`/`ELEVENLABS_API_KEY` secret'ları girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
+| 5 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
 
-**Not (24 Ağustos):** Şu maddeler tamamlandı ve "ZATEN VAR" listesine taşındı: eski madde 3 ("Premium sesi diğer ekranlara bağla"), eski madde 2 ("Kitaplığı kalan 15 dile genişlet"), ve "Akıllı Plus zamanlaması" — `speak_screens.dart`'ta kalan süre göstergesi artık ≤15sn'de altın, ≤5sn'de kırmızı renge dönüyor (ani kesilme hissini azaltmak için), `ad_gate_screen.dart`'ın metni artık o gün pratik yapılan dakikayı övgüyle belirtiyor (jenerik "sınıra ulaştın" yerine). Liste numaraları buna göre kaydı.
+**Not (24 Ağustos):** Şu maddeler tamamlandı ve "ZATEN VAR" listesine taşındı: eski madde 3 ("Premium sesi diğer ekranlara bağla"), eski madde 2 ("Kitaplığı kalan 15 dile genişlet"), "Akıllı Plus zamanlaması" (`speak_screens.dart`'ta kalan süre göstergesi artık ≤15sn'de altın, ≤5sn'de kırmızı renge dönüyor, `ad_gate_screen.dart`'ın metni artık o gün pratik yapılan dakikayı övgüyle belirtiyor), ve **"İnteraktif tanıtım turu"** — `lib/features/onboarding/coach_tour.dart` (yeniden kullanılabilir spot ışıklı overlay sistemi, `GlobalKey` ile gerçek widget'ları hedefliyor) artık `HomeScreen`'e bağlı: ilk açılışta 4 adımlık bir tur (günlük hedef kartı → bugünün konuşması → kitaplık → tekrar) gösteriliyor, `SharedPreferences` (`home_tour_seen_v1`) ile bir kere gösteriliyor. Liste numaraları buna göre kaydı.
 
 ## 💾 YEDEKLEME KURALI (HER OTURUMDA ZORUNLU)
 

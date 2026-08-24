@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/content/catalog.dart';
@@ -8,12 +9,76 @@ import '../../data/events/weekly_event.dart';
 import '../../data/models/models.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
+import '../onboarding/coach_tour.dart';
 
-class HomeScreen extends ConsumerWidget {
+/// Uygulamayı ilk kez açan kullanıcıya bir kere gösterilen, gerçek ana
+/// sayfa öğelerini işaret eden interaktif tanıtım turu.
+const _tourSeenPrefsKey = 'home_tour_seen_v1';
+
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final _xpCardKey = GlobalKey();
+  final _todaySpeakKey = GlobalKey();
+  final _libraryKey = GlobalKey();
+  final _reviewKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeStartTour());
+  }
+
+  Future<void> _maybeStartTour() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool(_tourSeenPrefsKey) == true) return;
+    if (!mounted) return;
+    await prefs.setBool(_tourSeenPrefsKey, true);
+    if (!mounted) return;
+    CoachTour.start(
+      context,
+      steps: [
+        CoachStep(
+          targetKey: _xpCardKey,
+          title: 'Günlük hedefin',
+          body:
+              'Her gün XP kazanarak seviyeni ilerlet. Çubuk dolunca günlük hedefini tamamlamış olursun.',
+        ),
+        CoachStep(
+          targetKey: _todaySpeakKey,
+          title: 'Bugünün konuşması',
+          body:
+              'Her gün sana özel kısa bir konuşma pratiği seçiyoruz. Buradan başla, dinle ve tekrar et.',
+        ),
+        CoachStep(
+          targetKey: _libraryKey,
+          title: 'Kitaplık',
+          body:
+              'Seviyene uygun kısa hikayeleri okuyup dinleyerek okuma ve telaffuz pratiği yap.',
+        ),
+        CoachStep(
+          targetKey: _reviewKey,
+          title: 'Tekrar',
+          body:
+              'Öğrendiğin kelimeler zamanı gelince burada tekrar için birikir — unutmadan pekiştir.',
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    CoachTour.dismiss();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
     final p = ref.watch(sessionProvider);
     final scene = ref.read(sessionProvider.notifier).todayScenario();
@@ -75,6 +140,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 14),
           NuraCard(
+            key: _xpCardKey,
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
@@ -151,6 +217,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 18),
           Container(
+            key: _todaySpeakKey,
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               color: Nura.forest,
@@ -309,6 +376,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           NuraCard(
+            key: _libraryKey,
             onTap: () => context.push('/library'),
             child: const Row(
               children: [
@@ -381,6 +449,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           NuraCard(
+            key: _reviewKey,
             onTap: () => context.push('/review'),
             child: Row(
               children: [
