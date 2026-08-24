@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/tokens.dart';
+import '../../data/speech/premium_tts_service.dart';
 import '../../ui/widgets.dart';
 import 'alphabet_engine.dart';
 
@@ -29,6 +30,17 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  /// Örnek kelimeler için önce ElevenLabs'i dener (Plus + sunucu
+  /// yapılandırılmışsa), olmazsa cihaz TTS'ine düşer. Tek harf/ses
+  /// telaffuzu bu yola girmiyor — [AlphabetEngine.speak]'in yavaş/yüksek
+  /// perdeli ayarı harf sesini öğretmek için özellikle ayarlanmış.
+  Future<void> _speakWord(String word) async {
+    final usedPremium = await PremiumTtsService.speak(word);
+    if (!usedPremium) {
+      await AlphabetEngine.speak(word, widget.languageCode);
+    }
   }
 
   void _learnStep(String character) {
@@ -151,10 +163,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                     ),
                     const SizedBox(height: 12),
                     GestureDetector(
-                      onTap: () => AlphabetEngine.speak(
-                        letter.exampleWord,
-                        widget.languageCode,
-                      ),
+                      onTap: () => _speakWord(letter.exampleWord),
                       child: Text(
                         '${letter.exampleWord}  →  ${letter.exampleMeaning}',
                         style: const TextStyle(
@@ -280,10 +289,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                           Icons.volume_up,
                           color: NuraTokens.accent,
                         ),
-                        onPressed: () => AlphabetEngine.speak(
-                          letter.exampleWord,
-                          widget.languageCode,
-                        ),
+                        onPressed: () => _speakWord(letter.exampleWord),
                       ),
                       IconButton(
                         icon: Icon(

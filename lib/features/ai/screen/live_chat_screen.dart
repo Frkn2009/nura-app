@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/tokens.dart';
 import '../../../data/models/models.dart';
+import '../../../data/speech/premium_tts_service.dart';
 import '../../../data/speech/speech_controller.dart';
 import '../../../state/session.dart';
 import '../../../ui/widgets.dart';
@@ -32,6 +33,13 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   bool _sending = false;
   bool _listening = false;
   String? _error;
+
+  Future<void> _speakReply(String reply, String langCode) async {
+    final usedPremium = await PremiumTtsService.speak(reply);
+    if (!usedPremium) {
+      await _speech.speakTarget(reply, langCode);
+    }
+  }
 
   @override
   void initState() {
@@ -106,7 +114,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
         _sending = false;
       });
       _scrollToEnd();
-      unawaited(_speech.speakTarget(reply, p.learnLang.code));
+      unawaited(_speakReply(reply, p.learnLang.code));
     } on LiveChatException catch (e) {
       if (!mounted) return;
       setState(() {

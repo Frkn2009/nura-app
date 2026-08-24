@@ -7,6 +7,7 @@ import '../../data/ads/ad_service.dart';
 import '../../data/content/catalog.dart';
 import '../../data/content/language_guides.dart';
 import '../../data/models/models.dart';
+import '../../data/speech/premium_tts_service.dart';
 import '../../data/speech/speech_controller.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
@@ -544,10 +545,17 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   style: FilledButton.styleFrom(backgroundColor: Nura.terr),
                   onPressed: () async {
                     if (step == _Step.hear) {
-                      await speech.speakTarget(
+                      final usedPremium = await PremiumTtsService.speak(
                         currentTurn.expected,
-                        scene.lang.code,
                       );
+                      if (usedPremium) {
+                        await PremiumTtsService.waitUntilDone();
+                      } else {
+                        await speech.speakTarget(
+                          currentTurn.expected,
+                          scene.lang.code,
+                        );
+                      }
                     }
                     _nextStep();
                   },
