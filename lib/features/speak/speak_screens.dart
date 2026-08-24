@@ -351,7 +351,16 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
             padding: const EdgeInsets.only(right: 16, top: 18),
             child: Text(
               p.isPlus ? '∞' : '${remain}s',
-              style: const TextStyle(color: Nura.terrSoft),
+              style: TextStyle(
+                color: p.isPlus
+                    ? Nura.terrSoft
+                    : (remain <= 5
+                          ? Nura.coral
+                          : (remain <= 15 ? Nura.gold : Nura.terrSoft)),
+                fontWeight: !p.isPlus && remain <= 15
+                    ? FontWeight.w800
+                    : FontWeight.w400,
+              ),
             ),
           ),
         ],

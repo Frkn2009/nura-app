@@ -67,9 +67,11 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
                     style: const TextStyle(color: Nura.terrSoft),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
-                    style: TextStyle(
+                  Text(
+                    profile.speakSecondsUsed >= 60
+                        ? 'Bugün ${profile.speakSecondsUsed ~/ 60} dakika konuşma pratiği yaptın, harika gidiyorsun! Devam etmek için kısa bir video izle ve ödülünü seç.'
+                        : 'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
+                    style: const TextStyle(
                       color: Nura.cream,
                       fontSize: 18,
                       height: 1.4,

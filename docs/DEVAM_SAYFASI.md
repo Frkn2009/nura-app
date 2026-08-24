@@ -52,13 +52,12 @@ sundu).
 |---|---|---|
 | 1 | Video mikro-dersler | Gerçek anadil konuşan kaydı gerektirir — bir AI bunu üretemez, içerik prodüksiyonu lazım |
 | 2 | İnteraktif tanıtım turu | Gerçek ekranlar üzerinde coach-mark, henüz yok |
-| 3 | Akıllı Plus zamanlaması | `AdGateScreen` var ama tetikleme anı/tonu iyileştirilmedi |
-| 4 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
-| 5 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
-| 6 | Supabase deploy adımları | `supabase/functions/chat` ve `supabase/functions/tts` deploy edilmedi, `ANTHROPIC_API_KEY`/`ELEVENLABS_API_KEY` secret'ları girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
-| 7 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
+| 3 | RevenueCat / AdMob gerçek anahtarlar | Hesap açılınca |
+| 4 | Release build (`.aab`) | Keystore hazır (bkz. yukarı), ama Android SDK yolu (`C:\Users\M Y DERİ\...\Android\Sdk`) Türkçe/boşluklu olduğu için NDK derleyicisi kırılıyor, `flutter build appbundle --release` denenmedi. Çözüm: SDK'yı boşluksuz bir yola taşı (kullanıcı onayı gerekir, riskli değil ama sistem kurulumuna dokunuyor). |
+| 5 | Supabase deploy adımları | `supabase/functions/chat` ve `supabase/functions/tts` deploy edilmedi, `ANTHROPIC_API_KEY`/`ELEVENLABS_API_KEY` secret'ları girilmedi, `supabase/clan_chat.sql` ve `supabase/security_hardening.sql` apply edilmedi — hepsi kullanıcının Supabase CLI ile yapması gereken adımlar |
+| 6 | Meşru ASO (App Store Optimization) | Anahtar kelime araştırması, mağaza ekran görüntüleri/video, yerelleştirilmiş mağaza metni — henüz başlanmadı. Sahte yorum/bot indirme gibi yöntemler kullanılmayacak (mağaza politikası ihlali + ban riski). |
 
-**Not (24 Ağustos):** Eski madde 3 ("Premium sesi diğer ekranlara bağla") ve madde 2 ("Kitaplığı kalan 15 dile genişlet") tamamlandı — ikisi de yukarıdaki "ZATEN VAR" listesine taşındı, liste numaraları buna göre kaydı.
+**Not (24 Ağustos):** Şu maddeler tamamlandı ve "ZATEN VAR" listesine taşındı: eski madde 3 ("Premium sesi diğer ekranlara bağla"), eski madde 2 ("Kitaplığı kalan 15 dile genişlet"), ve "Akıllı Plus zamanlaması" — `speak_screens.dart`'ta kalan süre göstergesi artık ≤15sn'de altın, ≤5sn'de kırmızı renge dönüyor (ani kesilme hissini azaltmak için), `ad_gate_screen.dart`'ın metni artık o gün pratik yapılan dakikayı övgüyle belirtiyor (jenerik "sınıra ulaştın" yerine). Liste numaraları buna göre kaydı.
 
 ## 💾 YEDEKLEME KURALI (HER OTURUMDA ZORUNLU)
 
