@@ -1,16 +1,18 @@
 # NURA Store Release Checklist
 
 ## Zorunlu
-- [ ] İmza keystore üretildi
-- [ ] keystore yedeği güvenli ortamda
-- [ ] flutter build appbundle --release başarılı
-- [ ] flutter build apk --release başarılı
+- [x] İmza keystore üretildi
+- [ ] keystore yedeği güvenli ortamda (sadece bu makinede — bkz. `android/app/upload-keystore.jks` + `android/key.properties`, ikisi de gitignore'da, ayrıca yedekle)
+- [x] flutter build appbundle --release başarılı (24 Ağustos — bkz. `docs/DEVAM_SAYFASI.md`)
+- [x] flutter build apk --release başarılı (24 Ağustos)
 - [ ] App icon 1024x1024
 - [ ] Adaptive icon
 - [ ] Splash ekranı
 - [ ] 6 store screenshot
-- [ ] Short description (30 dil)
-- [ ] Long description (30 dil)
+- [x] Short description (TR) — `docs/STORE_METADATA_TR.md`
+- [ ] Short description (kalan 29 dil)
+- [x] Long description (TR) — `docs/STORE_METADATA_TR.md`
+- [ ] Long description (kalan 29 dil)
 - [ ] Privacy policy URL
 - [ ] Terms URL
 - [ ] Support e-posta
