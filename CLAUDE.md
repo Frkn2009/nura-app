@@ -21,7 +21,7 @@ flutter build appbundle --release
 flutter build apk --release --no-tree-shake-icons
 ```
 
-Windows note: this repo has been developed against `C:\nura-app` with `PUB_CACHE=C:\pub-cache` set, to avoid pub cache issues caused by non-ASCII characters in Windows user profile paths.
+Windows note: this repo has been developed against `C:\nura-app` with `PUB_CACHE=C:\pub-cache` set, to avoid pub cache issues caused by non-ASCII characters in Windows user profile paths. **This applies to `flutter build` too, not just `flutter test`** — the Dart AOT snapshotter fails to read `.dart_tool/flutter_build/.../app.dill` when the project's own path contains non-ASCII characters, so `flutter build apk/appbundle --release` must also be run from an ASCII-only clone (e.g. `git clone` the repo into `C:\nura-build`). The Android SDK must also live at an ASCII path (`ANDROID_HOME`/`ANDROID_SDK_ROOT` + `android/local.properties`'s `sdk.dir`), and `android/gradle.properties` needs `android.overridePathCheck=true` since AGP itself also rejects non-ASCII project paths independently of the AOT issue. `pubspec.yaml` pins `path_provider_foundation: 2.5.1` via `dependency_overrides` — newer versions depend on the `objective_c` package's native-assets build hook, which fails to compile under the currently-pinned Flutter SDK's hooks/code_assets protocol regardless of target platform (a real upstream bug, not a path issue) — don't remove this override without confirming upstream is fixed. `key.properties` and `android/app/upload-keystore.jks` are gitignored and won't come along with a fresh clone; copy them manually before a release build.
 
 There is no CI config in this repo; `flutter analyze` and `flutter test` are the only correctness gates.
 
