@@ -1,7 +1,9 @@
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'billing_service.dart';
 import '../domain/entitlement.dart';
+import '../../../core/supabase_config.dart';
 
 /// Gerçek RevenueCat entegrasyonu. `NURA_REVENUECAT_API_KEY` dart-define'ı
 /// girilmediyse [isConfigured] false döner ve `PlusController`
@@ -22,7 +24,16 @@ class RevenueCatBillingService implements BillingService {
 
   static Future<void> configureIfNeeded() async {
     if (!isConfigured) return;
-    await Purchases.configure(PurchasesConfiguration(_apiKey));
+    final configuration = PurchasesConfiguration(_apiKey);
+    // RevenueCat'in appUserID'sini Supabase auth uid'iyle aynı tutuyoruz ki
+    // ödeme webhook'u (supabase/functions/revenuecat-webhook) satın almayı
+    // doğru kullanıcının subscriptions satırına yazabilsin. main.dart bu
+    // noktaya gelmeden önce anonim girişi garanti ediyor.
+    final supaUserId = SupaConfig.isSet
+        ? Supabase.instance.client.auth.currentUser?.id
+        : null;
+    if (supaUserId != null) configuration.appUserID = supaUserId;
+    await Purchases.configure(configuration);
   }
 
   final Map<String, Package> _packagesById = {};

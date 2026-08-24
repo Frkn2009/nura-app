@@ -19,6 +19,17 @@ Future<void> main() async {
       url: SupaConfig.url,
       publishableKey: SupaConfig.publishableKey,
     );
+    // Her kullanıcının (e-posta ile hiç kayıt olmasa bile) kararlı bir
+    // Supabase auth uid'i olsun diye — bu uid, RevenueCat'in appUserID'si
+    // olarak kullanılıyor (bkz. RevenueCatBillingService), böylece ödeme
+    // webhook'u satın alımı doğru kullanıcıya yazabiliyor.
+    if (Supabase.instance.client.auth.currentSession == null) {
+      try {
+        await Supabase.instance.client.auth.signInAnonymously();
+      } catch (_) {
+        // Anonim giriş projede kapalıysa uygulama yerel modda çalışmaya devam eder.
+      }
+    }
   }
 
   // NURA_REVENUECAT_API_KEY dart-define'ı girilmediyse hiçbir şey yapmaz —
