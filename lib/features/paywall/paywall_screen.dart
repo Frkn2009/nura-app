@@ -8,8 +8,8 @@ import '../../ui/widgets.dart';
 import '../plus/domain/entitlement.dart';
 import '../plus/state/plus_controller.dart';
 
-const _plusPlans = [nuraPlusMonthly, nuraPlusYearly, nuraPlusFamily];
-const _businessPlans = [nuraBusinessMonthly, nuraBusinessYearly];
+const _plusPlans = [voxeloPlusMonthly, voxeloPlusYearly, voxeloPlusFamily];
+const _businessPlans = [voxeloBusinessMonthly, voxeloBusinessYearly];
 
 class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({super.key, this.business = false});
@@ -37,8 +37,8 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     setState(() => _restoring = false);
     final entitlement = ref.read(plusControllerProvider);
     final restored =
-        entitlement == NuraEntitlement.plus ||
-        entitlement == NuraEntitlement.business;
+        entitlement == VoxeloEntitlement.plus ||
+        entitlement == VoxeloEntitlement.business;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -55,7 +55,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
     return Scaffold(
-      appBar: NuraAppBar(
+      appBar: VoxeloAppBar(
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => context.pop(),
@@ -66,10 +66,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
           padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
           children: [
             Text(
-              'NURA',
+              'VOXELO',
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Nura.forest,
+                color: Voxelo.forest,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2,
               ),
@@ -84,7 +84,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             const Text(
               'Sınırsız AI konuşma, telaffuz, çevrimdışı klip.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Nura.muted),
+              style: TextStyle(color: Voxelo.muted),
             ),
             const SizedBox(height: 18),
             SegmentedButton<bool>(
@@ -115,7 +115,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 'Sınırsız konuşma',
                 'CEFR yolu A1–B2',
                 '30 dilin tamamı',
-                'Nura ile canlı sohbet',
+                'Voxelo ile canlı sohbet',
                 'Çevir + SRS kaydet',
                 'Toplantı Çevirmeni · günde 2 saat',
                 'Reklamsız',
@@ -126,7 +126,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     children: [
                       const Icon(
                         Icons.check_circle,
-                        color: Nura.forest,
+                        color: Voxelo.forest,
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -165,7 +165,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     children: [
                       const Icon(
                         Icons.check_circle,
-                        color: Nura.forest,
+                        color: Voxelo.forest,
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -201,7 +201,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             const Text(
               'İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Nura.soft, fontSize: 12),
+              style: TextStyle(color: Voxelo.soft, fontSize: 12),
             ),
             const SizedBox(height: 6),
             Row(
@@ -214,7 +214,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     style: TextStyle(fontSize: 12),
                   ),
                 ),
-                const Text('·', style: TextStyle(color: Nura.soft)),
+                const Text('·', style: TextStyle(color: Voxelo.soft)),
                 TextButton(
                   onPressed: () => context.push('/privacy'),
                   child: const Text('Gizlilik', style: TextStyle(fontSize: 12)),
@@ -231,9 +231,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final sel = businessPlan == i;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: NuraCard(
+      child: VoxeloCard(
         onTap: () => setState(() => businessPlan = i),
-        color: sel ? Nura.cream2 : Nura.card,
+        color: sel ? Voxelo.cream2 : Voxelo.card,
         child: Row(
           children: [
             Expanded(
@@ -244,12 +244,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     t,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: sel ? Nura.forest : Nura.ink,
+                      color: sel ? Voxelo.forest : Voxelo.ink,
                     ),
                   ),
                   Text(
                     sub,
-                    style: const TextStyle(color: Nura.muted, fontSize: 12),
+                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
                   ),
                 ],
               ),
@@ -265,9 +265,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final sel = plan == i;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: NuraCard(
+      child: VoxeloCard(
         onTap: () => setState(() => plan = i),
-        color: sel ? Nura.cream2 : Nura.card,
+        color: sel ? Voxelo.cream2 : Voxelo.card,
         child: Row(
           children: [
             Expanded(
@@ -278,12 +278,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     t,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: sel ? Nura.forest : Nura.ink,
+                      color: sel ? Voxelo.forest : Voxelo.ink,
                     ),
                   ),
                   Text(
                     sub,
-                    style: const TextStyle(color: Nura.muted, fontSize: 12),
+                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
                   ),
                 ],
               ),

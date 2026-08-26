@@ -1,4 +1,4 @@
-# NURA Deployment Status — 21 Ağustos 2026
+# VOXELO Deployment Status — 21 Ağustos 2026
 
 ## Supabase
 

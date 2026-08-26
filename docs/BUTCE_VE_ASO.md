@@ -1,4 +1,4 @@
-# NURA — Gerçekçi bütçe ve mağaza planı (Ağustos 2026)
+# VOXELO — Gerçekçi bütçe ve mağaza planı (Ağustos 2026)
 
 İç para birimi **USD**. TL fiyatı vitrindir.
 
@@ -42,7 +42,7 @@ Tek ülke patlaması o ülkeyi kaldırır. TR’de hız = TR sıralaması.
 
 ---
 
-## 2) NURA kelime stratejisi (TR önce)
+## 2) VOXELO kelime stratejisi (TR önce)
 
 Kazanılamaz (şimdilik): `duolingo`, `ingilizce öğren` (devler).
 
@@ -56,11 +56,11 @@ Kazanılabilir (ilk 90 gün):
 | 4 | almanca konuşma | klasik TR talep |
 | 5 | AI ingilizce öğretmen | 2025–26 yükselen |
 
-iOS başlık (30): `NURA: İngilizce Konuş`  
+iOS başlık (30): `VOXELO: İngilizce Konuş`  
 iOS alt başlık: `İspanyolca Almanca AI`  
 iOS keywords: `konuşma,ispanyolca,almanca,fransızca,flemenkce,NIE,telaffuz,ogretmen,pratik,seyahat`
 
-Play başlık (30): `NURA: İngilizce Konuşma`  
+Play başlık (30): `VOXELO: İngilizce Konuşma`  
 Play kısa (80): `Günde 1 dk konuş. İspanyolca, Almanca, Fransızca, Flemenkçe. NIE ve kira sahneleri.`
 
 Ekran 1–3 metni (arama önizlemesi):

@@ -152,7 +152,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
           end: Alignment.bottomCenter,
           stops: const [0.0, 0.4],
           colors: [
-            Nura.accent.withValues(alpha: .07),
+            Voxelo.accent.withValues(alpha: .07),
             Theme.of(context).scaffoldBackgroundColor,
           ],
         ),
@@ -187,13 +187,13 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                     const Icon(
                       Icons.error_outline,
                       size: 16,
-                      color: Nura.coral,
+                      color: Voxelo.coral,
                     ),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         _error!,
-                        style: const TextStyle(color: Nura.coral, fontSize: 13),
+                        style: const TextStyle(color: Voxelo.coral, fontSize: 13),
                       ),
                     ),
                   ],
@@ -222,14 +222,14 @@ class _LockedChatView extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(28),
-        child: NuraCard(
+        child: VoxeloCard(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const NuraMascot(size: 76, mood: MascotMood.wave),
+              const VoxeloMascot(size: 76, mood: MascotMood.wave),
               const SizedBox(height: 12),
               const Text(
-                'Nura ile serbest konuş',
+                'Voxelo ile serbest konuş',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
               ),
@@ -237,7 +237,7 @@ class _LockedChatView extends StatelessWidget {
               const Text(
                 'Script yok, kural yok — gerçek zamanlı serbest sohbet Plus üyelere özel.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Nura.muted),
+                style: TextStyle(color: Voxelo.muted),
               ),
               const SizedBox(height: 16),
               FilledButton(
@@ -279,19 +279,19 @@ class _ChatHeaderState extends State<_ChatHeader>
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Row(
         children: [
-          const NuraMascot(size: 38),
+          const VoxeloMascot(size: 38),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Nura',
+                  'Voxelo',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                 ),
                 Text(
                   '${widget.learnLabel} pratiği · çevrimiçi',
-                  style: const TextStyle(fontSize: 12, color: Nura.muted),
+                  style: const TextStyle(fontSize: 12, color: Voxelo.muted),
                 ),
               ],
             ),
@@ -303,10 +303,10 @@ class _ChatHeaderState extends State<_ChatHeader>
               height: 9,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Nura.primary,
+                color: Voxelo.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: Nura.primary.withValues(
+                    color: Voxelo.primary.withValues(
                       alpha: .15 + .35 * _pulse.value,
                     ),
                     blurRadius: 6 + 6 * _pulse.value,
@@ -334,18 +334,18 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const NuraMascot(size: 88, mood: MascotMood.encourage),
+            const VoxeloMascot(size: 88, mood: MascotMood.encourage),
             const SizedBox(height: 18),
             Text(
               '$learnLabel pratiği için bir şeyler yaz\nveya mikrofona konuş.',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Nura.muted, height: 1.4),
+              style: const TextStyle(color: Voxelo.muted, height: 1.4),
             ),
             const SizedBox(height: 10),
             const Text(
               'Uygunsuz bir cevap görürsen, üzerine basılı tutarak bildirebilirsin.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Nura.soft, fontSize: 12, height: 1.4),
+              style: TextStyle(color: Voxelo.soft, fontSize: 12, height: 1.4),
             ),
           ],
         ),
@@ -390,7 +390,7 @@ class _ChatBubble extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 280),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       decoration: BoxDecoration(
-        gradient: fromUser ? Nura.heroGradient : null,
+        gradient: fromUser ? Voxelo.heroGradient : null,
         color: fromUser ? null : Theme.of(context).cardColor,
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(18),
@@ -405,7 +405,7 @@ class _ChatBubble extends StatelessWidget {
             ? null
             : [
                 BoxShadow(
-                  color: (fromUser ? Nura.accent : Colors.black).withValues(
+                  color: (fromUser ? Voxelo.accent : Colors.black).withValues(
                     alpha: fromUser ? .22 : .07,
                   ),
                   blurRadius: fromUser ? 14 : 10,
@@ -432,7 +432,7 @@ class _ChatBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!fromUser) ...[
-            const NuraMascot(size: 26, animate: false),
+            const VoxeloMascot(size: 26, animate: false),
             const SizedBox(width: 6),
           ],
           Flexible(
@@ -477,9 +477,9 @@ Future<void> _reportAiMessage(BuildContext context, String text) async {
   if (confirmed != true || !context.mounted) return;
   final uri = Uri(
     scheme: 'mailto',
-    path: 'destek@nura.app',
+    path: 'destek@voxelo.app',
     query:
-        'subject=${Uri.encodeComponent('NURA Sohbet - içerik bildirimi')}'
+        'subject=${Uri.encodeComponent('VOXELO Sohbet - içerik bildirimi')}'
         '&body=${Uri.encodeComponent('Bildirilen AI cevabı:\n\n$text')}',
   );
   await launchUrl(uri);
@@ -512,7 +512,7 @@ class _TypingBubbleState extends State<_TypingBubble>
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          const NuraMascot(size: 26, animate: false),
+          const VoxeloMascot(size: 26, animate: false),
           const SizedBox(width: 6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -553,7 +553,7 @@ class _TypingBubbleState extends State<_TypingBubble>
                         height: 6,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Nura.muted,
+                          color: Voxelo.muted,
                         ),
                       ),
                     ),
@@ -657,7 +657,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
             AnimatedBuilder(
               animation: _breathe,
               builder: (_, _) {
-                final glowColor = widget.listening ? Nura.coral : Nura.mintDark;
+                final glowColor = widget.listening ? Voxelo.coral : Voxelo.mintDark;
                 final t = widget.listening
                     ? _breathe.value
                     : _breathe.value * .35;
@@ -665,7 +665,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
                   size: 46,
                   onTap: widget.onMic,
                   color: widget.listening
-                      ? Nura.coral.withValues(alpha: .12)
+                      ? Voxelo.coral.withValues(alpha: .12)
                       : Theme.of(context).cardColor,
                   shadow: [
                     BoxShadow(
@@ -676,7 +676,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
                   ],
                   child: Icon(
                     widget.listening ? Icons.mic : Icons.mic_none,
-                    color: widget.listening ? Nura.coral : Nura.mintDark,
+                    color: widget.listening ? Voxelo.coral : Voxelo.mintDark,
                   ),
                 );
               },
@@ -730,13 +730,13 @@ class _ChatInputBarState extends State<_ChatInputBar>
                 child: _CircleButton(
                   size: 46,
                   onTap: widget.sending ? null : widget.onSend,
-                  color: widget.sending ? Nura.fog : null,
-                  gradient: widget.sending ? null : Nura.heroGradient,
+                  color: widget.sending ? Voxelo.fog : null,
+                  gradient: widget.sending ? null : Voxelo.heroGradient,
                   shadow: widget.sending
                       ? null
                       : [
                           BoxShadow(
-                            color: Nura.accent.withValues(alpha: .35),
+                            color: Voxelo.accent.withValues(alpha: .35),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -747,7 +747,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
                           height: 18,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: Nura.muted,
+                            color: Voxelo.muted,
                           ),
                         )
                       : const Icon(

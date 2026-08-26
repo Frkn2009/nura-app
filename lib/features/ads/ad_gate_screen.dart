@@ -52,19 +52,19 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
     final i18n = ref.watch(i18nProvider);
     final profile = ref.watch(sessionProvider);
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Ödüllü video')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Ödüllü video')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 18, 22, 28),
           children: [
-            NuraCard(
-              color: Nura.forest,
+            VoxeloCard(
+              color: Voxelo.forest,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     i18n.freeMinute,
-                    style: const TextStyle(color: Nura.terrSoft),
+                    style: const TextStyle(color: Voxelo.terrSoft),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -72,7 +72,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
                         ? 'Bugün ${profile.speakSecondsUsed ~/ 60} dakika konuşma pratiği yaptın, harika gidiyorsun! Devam etmek için kısa bir video izle ve ödülünü seç.'
                         : 'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
                     style: const TextStyle(
-                      color: Nura.cream,
+                      color: Voxelo.cream,
                       fontSize: 18,
                       height: 1.4,
                     ),
@@ -85,7 +85,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
               profile.canWatchAd
                   ? 'Bugün kalan video: ${UserProfile.maxRewardedAdsPerDay - profile.adsWatchedToday} / ${UserProfile.maxRewardedAdsPerDay}'
                   : 'Bugünkü 5 video sınırına ulaştın.',
-              style: const TextStyle(color: Nura.muted),
+              style: const TextStyle(color: Voxelo.muted),
             ),
             const SizedBox(height: 20),
             const Eyebrow('Ödülünü seç'),
@@ -118,7 +118,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
               Text(
                 error!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Nura.coral),
+                style: const TextStyle(color: Voxelo.coral),
               ),
             ],
             const SizedBox(height: 28),

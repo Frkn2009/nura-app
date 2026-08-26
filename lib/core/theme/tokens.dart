@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// NURA Tema Tokenleri — Duolingo/Drops tarzı canlı, oyunsu, samimi
-class NuraTokens {
-  NuraTokens._();
+/// VOXELO Tema Tokenleri — Duolingo/Drops tarzı canlı, oyunsu, samimi
+class VoxeloTokens {
+  VoxeloTokens._();
 
   // Arka plan
   static const background = Color(0xFFF7F7F7);
@@ -85,5 +85,5 @@ class NuraTokens {
   static const radiusLg = radiusLarge;
 }
 
-// Nura alias — eski kodla uyum
-typedef Nura = NuraTokens;
+// Voxelo alias — eski kodla uyum
+typedef Voxelo = VoxeloTokens;

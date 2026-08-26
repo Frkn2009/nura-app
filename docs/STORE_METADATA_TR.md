@@ -1,4 +1,4 @@
-# NURA — Mağaza Metinleri (Türkçe, kopyala-yapıştır hazır)
+# VOXELO — Mağaza Metinleri (Türkçe, kopyala-yapıştır hazır)
 
 `docs/BUTCE_VE_ASO.md`'deki kelime stratejisiyle uyumlu, gerçek ve doğrulanmış
 özelliklere dayanır (bkz. `docs/DEVAM_SAYFASI.md` "ZATEN VAR" listesi) —
@@ -8,7 +8,7 @@ olmayan bir özellik iddia edilmiyor.
 
 ## Google Play
 
-**Başlık (30 karakter):** `NURA: İngilizce Konuşma`
+**Başlık (30 karakter):** `VOXELO: İngilizce Konuşma`
 
 **Kısa açıklama (80 karakter):**
 `Günde 1 dk konuş. İspanyolca, Almanca, Fransızca, Flemenkçe. NIE ve kira sahneleri.`
@@ -16,7 +16,7 @@ olmayan bir özellik iddia edilmiyor.
 **Uzun açıklama (4000 karakter sınırı, aşağıdaki ~1400 karakter):**
 
 ```
-NURA ile konuşarak öğren — ezberle değil.
+VOXELO ile konuşarak öğren — ezberle değil.
 
 Her gün sana özel kısa bir konuşma sahnesi: dinle, gölgele (shadowing), konuş.
 Telaffuzunu gerçek zamanlı değerlendiren yapay zeka sana anında geri bildirim
@@ -36,7 +36,7 @@ NELER VAR:
   zorlandığını gösterir
 • Klan sistemi: arkadaşlarınla haftalık XP yarışması
 • Günlük hedefler, seri (streak) takibi, rozetler
-• NURA Plus: sınırsız konuşma pratiği, reklamsız, premium doğal ses,
+• VOXELO Plus: sınırsız konuşma pratiği, reklamsız, premium doğal ses,
   canlı AI sohbet partneri
 
 30 arayüz dili, öğrenmek istediğin herhangi bir dille eşleştirilebilir.
@@ -44,7 +44,7 @@ NELER VAR:
 isteğe bağlı bir ek özelliktir.
 
 Ücretsiz kullanımda günde 60 saniye konuşma pratiği (ödüllü video ile
-uzatılabilir). NURA Plus ile sınırsız.
+uzatılabilir). VOXELO Plus ile sınırsız.
 
 Gizliliğin bizim için önemli — sahte yorum ya da teşvikli puan
 kullanmıyoruz, gerçek geri bildirimlerle büyüyoruz.
@@ -54,7 +54,7 @@ kullanmıyoruz, gerçek geri bildirimlerle büyüyoruz.
 
 ## App Store (iOS)
 
-**Başlık (30 karakter):** `NURA: İngilizce Konuş`
+**Başlık (30 karakter):** `VOXELO: İngilizce Konuş`
 
 **Alt başlık (30 karakter):** `İspanyolca Almanca AI`
 
@@ -65,7 +65,7 @@ kullanmıyoruz, gerçek geri bildirimlerle büyüyoruz.
 yazılmış, anahtar kelime yığını değil):**
 
 ```
-Dil öğrenmeyi konuşarak öğren. NURA, her gün sana özel bir konuşma sahnesi
+Dil öğrenmeyi konuşarak öğren. VOXELO, her gün sana özel bir konuşma sahnesi
 sunar: dinle, tekrar et (shadowing), kendi sesinle konuş. Yapay zeka
 telaffuzunu anında değerlendirir.
 
@@ -79,7 +79,7 @@ sahneleri var — turist İspanyolcası değil, ihtiyacın olan İspanyolca.
 Arkadaşlarınla klan kur, haftalık XP yarışmasına katıl. Günlük hedeflerle
 seriyi (streak) sürdür.
 
-NURA Plus: sınırsız konuşma pratiği, reklamsız deneyim, doğal premium ses,
+VOXELO Plus: sınırsız konuşma pratiği, reklamsız deneyim, doğal premium ses,
 canlı AI sohbet partneri ile serbest konuşma.
 
 Çevrimdışı çalışır. Verilerin sana ait — gerçek kullanıcı geri bildirimiyle

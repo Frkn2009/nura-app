@@ -102,21 +102,21 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   // Beklenen vs Senin cevabın
                   const Eyebrow('Beklenen cevap'),
                   const SizedBox(height: 8),
-                  NuraCard(
-                    color: Nura.mint.withValues(alpha: 0.1),
+                  VoxeloCard(
+                    color: Voxelo.mint.withValues(alpha: 0.1),
                     child: Text(
                       feedback!.correctedAnswer,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Nura.ink,
+                        color: Voxelo.ink,
                       ),
                     ),
                   ),
                   const SizedBox(height: 12),
                   const Eyebrow('Senin cevabın'),
                   const SizedBox(height: 8),
-                  NuraCard(
+                  VoxeloCard(
                     child: Text(
                       feedback!.userAnswer.isEmpty
                           ? '(ses algılanamadı)'
@@ -124,7 +124,7 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: feedback!.score >= 70 ? Nura.mint : Nura.coral,
+                        color: feedback!.score >= 70 ? Voxelo.mint : Voxelo.coral,
                       ),
                     ),
                   ),
@@ -136,14 +136,14 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   for (final tip in feedback!.tips)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: NuraCard(
+                      child: VoxeloCard(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
                               '→ ',
                               style: TextStyle(
-                                color: Nura.mint,
+                                color: Voxelo.mint,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -170,8 +170,8 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
   }
 
   Color _scoreColor(int score) {
-    if (score >= 80) return Nura.mint;
-    if (score >= 60) return Nura.peach;
-    return Nura.coral;
+    if (score >= 80) return Voxelo.mint;
+    if (score >= 60) return Voxelo.peach;
+    return Voxelo.coral;
   }
 }

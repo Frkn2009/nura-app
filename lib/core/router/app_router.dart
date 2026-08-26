@@ -120,7 +120,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/library/:storyId',
         parentNavigatorKey: _root,
         builder: (_, s) {
-          final story = NuraLibrary.byId(s.pathParameters['storyId'] ?? '');
+          final story = VoxeloLibrary.byId(s.pathParameters['storyId'] ?? '');
           if (story == null) return const LibraryScreen();
           return StoryReaderScreen(story: story);
         },

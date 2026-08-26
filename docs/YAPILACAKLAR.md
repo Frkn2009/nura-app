@@ -1,11 +1,11 @@
-# NURA — YAPILACAKLAR LİSTESİ (22 Ağustos 2026 — GÜNCEL)
+# VOXELO — YAPILACAKLAR LİSTESİ (22 Ağustos 2026 — GÜNCEL)
 
 ## ✅ TAMAMLANAN MADDELER
 
-### 1. Logo — Sol üste NURA logosu ✅
-- [x] `lib/ui/brand.dart` — NuraMark (CustomPaint)
-- [x] `lib/ui/nura_logo.dart` — NuraLogo + NuraAppBar widget
-- [x] `assets/nura_logo.png` — logo görseli
+### 1. Logo — Sol üste VOXELO logosu ✅
+- [x] `lib/ui/brand.dart` — VoxeloMark (CustomPaint)
+- [x] `lib/ui/voxelo_logo.dart` — VoxeloLogo + VoxeloAppBar widget
+- [x] `assets/voxelo_logo.png` — logo görseli
 - [x] AppBar'da her sayfada görünüyor
 
 ### 2. Konuş Butonu — Mikrofon aktif ✅
@@ -25,7 +25,7 @@
 
 ### 5. Tema — Profesyonel ✅
 - [x] `lib/core/theme/tokens.dart` — Mint/Coral/Lavanta palette
-- [x] `lib/core/theme/nura_theme.dart` — light theme
+- [x] `lib/core/theme/voxelo_theme.dart` — light theme
 - [x] `lib/core/theme/dark_theme.dart` — dark theme
 - [x] Tutarlı border-radius, spacing, tipografi
 
@@ -56,7 +56,7 @@
 
 ### 11. Maskot / Karakter ✅
 - [x] `lib/ui/mascot.dart` — animasyonlu maskot (neutral, wave, celebrate, encourage, streak)
-- [x] `assets/mascot_nura.png` — maskot görseli
+- [x] `assets/mascot_voxelo.png` — maskot görseli
 - [x] Ana sayfada ve onboarding'de kullanılıyor
 
 ### 12. Süreli Etkinlikler + Video Reklam ✅
@@ -98,7 +98,7 @@
 - [x] `lib/data/widgets/home_widget_service.dart` — Android/iOS widget
 - [x] 30 dil rehberi, 242 sahne, 726 kalıp
 - [x] Supabase auth + profil senkron + RLS + hesap silme
-- [x] NURA_CODING_CONTRACT.md (10 kural)
+- [x] VOXELO_CODING_CONTRACT.md (10 kural)
 - [x] Store checklist + release script
 
 ---
@@ -137,9 +137,9 @@
 ## 💡 DEVAM İÇİN
 
 ```
-nura-app projesine devam et.
-GitHub: https://github.com/Frkn2009/nura-app
+voxelo-app projesine devam et.
+GitHub: https://github.com/Frkn2009/voxelo-app
 docs/YAPILACAKLAR.md oku — 18 madde tamamlandı.
 Mağazaya çıkış için kalan: RevenueCat, AdMob, keystore, release build.
-Windows'ta test: C:\nura-app, PUB_CACHE=C:\pub-cache
+Windows'ta test: C:\voxelo-app, PUB_CACHE=C:\pub-cache
 ```

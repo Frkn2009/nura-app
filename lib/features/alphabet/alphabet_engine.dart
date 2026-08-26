@@ -4,8 +4,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 enum AlphabetDirection { ltr, rtl }
 
 @immutable
-class NuraLetter {
-  const NuraLetter({
+class VoxeloLetter {
+  const VoxeloLetter({
     required this.character,
     required this.nameTr,
     required this.nameEn,
@@ -24,8 +24,8 @@ class NuraLetter {
 }
 
 @immutable
-class NuraAlphabet {
-  const NuraAlphabet({
+class VoxeloAlphabet {
+  const VoxeloAlphabet({
     required this.languageCode,
     required this.name,
     required this.direction,
@@ -34,7 +34,7 @@ class NuraAlphabet {
   final String languageCode;
   final String name;
   final AlphabetDirection direction;
-  final List<NuraLetter> letters;
+  final List<VoxeloLetter> letters;
 }
 
 class AlphabetEngine {
@@ -73,10 +73,10 @@ class AlphabetEngine {
     await _tts.speak(text);
   }
 
-  static NuraAlphabet getAlphabet(String langCode) =>
+  static VoxeloAlphabet getAlphabet(String langCode) =>
       _alphabets[langCode] ?? _latin(langCode);
 
-  static final Map<String, NuraAlphabet> _alphabets = {
+  static final Map<String, VoxeloAlphabet> _alphabets = {
     'ar': _arabic,
     'ru': _russian,
     'ja': _japanese,
@@ -109,12 +109,12 @@ class AlphabetEngine {
     'sw': _latin('sw'),
   };
 
-  static const _polish = NuraAlphabet(
+  static const _polish = VoxeloAlphabet(
     languageCode: 'pl',
     name: 'Lehçe Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -123,7 +123,7 @@ class AlphabetEngine {
         exampleMeaning: 'Anne',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ą',
         nameTr: 'Burun A',
         nameEn: 'Nasal A',
@@ -132,7 +132,7 @@ class AlphabetEngine {
         exampleMeaning: 'Un',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -140,7 +140,7 @@ class AlphabetEngine {
         exampleWord: 'Brat',
         exampleMeaning: 'Erkek kardeş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Tse',
         nameEn: 'Tse',
@@ -148,7 +148,7 @@ class AlphabetEngine {
         exampleWord: 'Co',
         exampleMeaning: 'Ne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ć',
         nameTr: 'Yumuşak Tse',
         nameEn: 'Soft Tse',
@@ -156,7 +156,7 @@ class AlphabetEngine {
         exampleWord: 'Ćma',
         exampleMeaning: 'Güve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -164,7 +164,7 @@ class AlphabetEngine {
         exampleWord: 'Dom',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -173,7 +173,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ekran',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ę',
         nameTr: 'Burun E',
         nameEn: 'Nasal E',
@@ -182,7 +182,7 @@ class AlphabetEngine {
         exampleMeaning: 'El',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -190,7 +190,7 @@ class AlphabetEngine {
         exampleWord: 'Fala',
         exampleMeaning: 'Dalga',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -198,7 +198,7 @@ class AlphabetEngine {
         exampleWord: 'Gwiazda',
         exampleMeaning: 'Yıldız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -206,7 +206,7 @@ class AlphabetEngine {
         exampleWord: 'Herbata',
         exampleMeaning: 'Çay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -215,7 +215,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kıvılcım',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yot',
         nameEn: 'Yot',
@@ -223,7 +223,7 @@ class AlphabetEngine {
         exampleWord: 'Jabłko',
         exampleMeaning: 'Elma',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -231,7 +231,7 @@ class AlphabetEngine {
         exampleWord: 'Kot',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -239,7 +239,7 @@ class AlphabetEngine {
         exampleWord: 'Lato',
         exampleMeaning: 'Yaz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ł',
         nameTr: 'Kalın L',
         nameEn: 'Dark L',
@@ -247,7 +247,7 @@ class AlphabetEngine {
         exampleWord: 'Łza',
         exampleMeaning: 'Gözyaşı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -255,7 +255,7 @@ class AlphabetEngine {
         exampleWord: 'Miłość',
         exampleMeaning: 'Aşk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -263,7 +263,7 @@ class AlphabetEngine {
         exampleWord: 'Noc',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ń',
         nameTr: 'Yumuşak N',
         nameEn: 'Soft N',
@@ -271,7 +271,7 @@ class AlphabetEngine {
         exampleWord: 'Koń',
         exampleMeaning: 'At',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -280,7 +280,7 @@ class AlphabetEngine {
         exampleMeaning: 'Pencere',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ó',
         nameTr: 'Kapalı O',
         nameEn: 'Closed O',
@@ -289,7 +289,7 @@ class AlphabetEngine {
         exampleMeaning: 'Benim',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -297,7 +297,7 @@ class AlphabetEngine {
         exampleWord: 'Pies',
         exampleMeaning: 'Köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -305,7 +305,7 @@ class AlphabetEngine {
         exampleWord: 'Ryba',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -313,7 +313,7 @@ class AlphabetEngine {
         exampleWord: 'Słońce',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ś',
         nameTr: 'Yumuşak Ş',
         nameEn: 'Soft Sh',
@@ -321,7 +321,7 @@ class AlphabetEngine {
         exampleWord: 'Śnieg',
         exampleMeaning: 'Kar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -329,7 +329,7 @@ class AlphabetEngine {
         exampleWord: 'Tak',
         exampleMeaning: 'Evet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -338,7 +338,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kulak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'W',
         nameTr: 'Vu',
         nameEn: 'Vu',
@@ -346,7 +346,7 @@ class AlphabetEngine {
         exampleWord: 'Woda',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'İgrek',
         nameEn: 'Igrek',
@@ -355,7 +355,7 @@ class AlphabetEngine {
         exampleMeaning: 'Oğul',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zet',
         nameEn: 'Zet',
@@ -363,7 +363,7 @@ class AlphabetEngine {
         exampleWord: 'Zima',
         exampleMeaning: 'Kış',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ź',
         nameTr: 'Yumuşak Zet',
         nameEn: 'Soft Zet',
@@ -371,7 +371,7 @@ class AlphabetEngine {
         exampleWord: 'Źródło',
         exampleMeaning: 'Kaynak/pınar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ż',
         nameTr: 'Nokta Zet',
         nameEn: 'Dotted Zet',
@@ -382,12 +382,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _czech = NuraAlphabet(
+  static const _czech = VoxeloAlphabet(
     languageCode: 'cs',
     name: 'Çek Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -396,7 +396,7 @@ class AlphabetEngine {
         exampleMeaning: 'Araba',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Á',
         nameTr: 'Uzun A',
         nameEn: 'Long A',
@@ -405,7 +405,7 @@ class AlphabetEngine {
         exampleMeaning: 'Anne',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -413,7 +413,7 @@ class AlphabetEngine {
         exampleWord: 'Brambora',
         exampleMeaning: 'Patates',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Tse',
         nameEn: 'Tse',
@@ -421,7 +421,7 @@ class AlphabetEngine {
         exampleWord: 'Cukr',
         exampleMeaning: 'Şeker',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Č',
         nameTr: 'Çe',
         nameEn: 'Che',
@@ -429,7 +429,7 @@ class AlphabetEngine {
         exampleWord: 'Čas',
         exampleMeaning: 'Zaman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -437,7 +437,7 @@ class AlphabetEngine {
         exampleWord: 'Dům',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -446,7 +446,7 @@ class AlphabetEngine {
         exampleMeaning: 'Etki',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'É',
         nameTr: 'Uzun E',
         nameEn: 'Long E',
@@ -455,7 +455,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yaz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ě',
         nameTr: 'Yumuşak E',
         nameEn: 'Soft E',
@@ -464,7 +464,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ay',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -472,7 +472,7 @@ class AlphabetEngine {
         exampleWord: 'Film',
         exampleMeaning: 'Film',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -480,7 +480,7 @@ class AlphabetEngine {
         exampleWord: 'Guma',
         exampleMeaning: 'Lastik',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -488,7 +488,7 @@ class AlphabetEngine {
         exampleWord: 'Hlava',
         exampleMeaning: 'Baş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ch',
         nameTr: 'Ha (kalın)',
         nameEn: 'Kh',
@@ -496,7 +496,7 @@ class AlphabetEngine {
         exampleWord: 'Chleba',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -505,7 +505,7 @@ class AlphabetEngine {
         exampleMeaning: 'İnternet',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Í',
         nameTr: 'Uzun İ',
         nameEn: 'Long I',
@@ -514,7 +514,7 @@ class AlphabetEngine {
         exampleMeaning: 'Top',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yot',
         nameEn: 'Yot',
@@ -522,7 +522,7 @@ class AlphabetEngine {
         exampleWord: 'Jaro',
         exampleMeaning: 'İlkbahar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -530,7 +530,7 @@ class AlphabetEngine {
         exampleWord: 'Kočka',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -538,7 +538,7 @@ class AlphabetEngine {
         exampleWord: 'Les',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -546,7 +546,7 @@ class AlphabetEngine {
         exampleWord: 'Moře',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -554,7 +554,7 @@ class AlphabetEngine {
         exampleWord: 'Noc',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ň',
         nameTr: 'Yumuşak N',
         nameEn: 'Soft N',
@@ -562,7 +562,7 @@ class AlphabetEngine {
         exampleWord: 'Kůň',
         exampleMeaning: 'At',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -571,7 +571,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -579,7 +579,7 @@ class AlphabetEngine {
         exampleWord: 'Pes',
         exampleMeaning: 'Köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -587,7 +587,7 @@ class AlphabetEngine {
         exampleWord: 'Ruka',
         exampleMeaning: 'El',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ř',
         nameTr: 'Titrek R',
         nameEn: 'Trilled Rzh',
@@ -595,7 +595,7 @@ class AlphabetEngine {
         exampleWord: 'Řeka',
         exampleMeaning: 'Nehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -603,7 +603,7 @@ class AlphabetEngine {
         exampleWord: 'Slunce',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Š',
         nameTr: 'Şe',
         nameEn: 'Sh',
@@ -611,7 +611,7 @@ class AlphabetEngine {
         exampleWord: 'Škola',
         exampleMeaning: 'Okul',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -619,7 +619,7 @@ class AlphabetEngine {
         exampleWord: 'Táta',
         exampleMeaning: 'Baba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -628,7 +628,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kulak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ů',
         nameTr: 'Uzun U',
         nameEn: 'Long U',
@@ -637,7 +637,7 @@ class AlphabetEngine {
         exampleMeaning: 'Gül',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -645,7 +645,7 @@ class AlphabetEngine {
         exampleWord: 'Voda',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'İpsilon',
         nameEn: 'Ypsilon',
@@ -654,7 +654,7 @@ class AlphabetEngine {
         exampleMeaning: 'Balık',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ý',
         nameTr: 'Uzun İpsilon',
         nameEn: 'Long Ypsilon',
@@ -663,7 +663,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yaşlı/eski',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zet',
         nameEn: 'Zet',
@@ -671,7 +671,7 @@ class AlphabetEngine {
         exampleWord: 'Zima',
         exampleMeaning: 'Kış',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ž',
         nameTr: 'Je',
         nameEn: 'Zh',
@@ -682,12 +682,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _romanian = NuraAlphabet(
+  static const _romanian = VoxeloAlphabet(
     languageCode: 'ro',
     name: 'Rumence Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -696,7 +696,7 @@ class AlphabetEngine {
         exampleMeaning: 'Su',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ă',
         nameTr: 'Kapalı A',
         nameEn: 'Schwa A',
@@ -705,7 +705,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Â',
         nameTr: 'Kalın I',
         nameEn: 'Central I',
@@ -714,7 +714,7 @@ class AlphabetEngine {
         exampleMeaning: 'Köpek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -722,7 +722,7 @@ class AlphabetEngine {
         exampleWord: 'Bunica',
         exampleMeaning: 'Büyükanne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Ce',
         nameEn: 'Ce',
@@ -730,7 +730,7 @@ class AlphabetEngine {
         exampleWord: 'Casă',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -738,7 +738,7 @@ class AlphabetEngine {
         exampleWord: 'Drum',
         exampleMeaning: 'Yol',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -747,7 +747,7 @@ class AlphabetEngine {
         exampleMeaning: 'Öğrenci',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Fe',
         nameEn: 'Fe',
@@ -755,7 +755,7 @@ class AlphabetEngine {
         exampleWord: 'Floare',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -763,7 +763,7 @@ class AlphabetEngine {
         exampleWord: 'Gură',
         exampleMeaning: 'Ağız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -771,7 +771,7 @@ class AlphabetEngine {
         exampleWord: 'Haină',
         exampleMeaning: 'Kıyafet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -780,7 +780,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kalp',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Î',
         nameTr: 'Kalın I (baş)',
         nameEn: 'Central I (initial)',
@@ -789,7 +789,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yüzme',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Je',
         nameEn: 'Zhe',
@@ -797,7 +797,7 @@ class AlphabetEngine {
         exampleWord: 'Joc',
         exampleMeaning: 'Oyun',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -805,7 +805,7 @@ class AlphabetEngine {
         exampleWord: 'Lapte',
         exampleMeaning: 'Süt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -813,7 +813,7 @@ class AlphabetEngine {
         exampleWord: 'Masă',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -821,7 +821,7 @@ class AlphabetEngine {
         exampleWord: 'Noapte',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -830,7 +830,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -838,7 +838,7 @@ class AlphabetEngine {
         exampleWord: 'Pâine',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -846,7 +846,7 @@ class AlphabetEngine {
         exampleWord: 'Rochie',
         exampleMeaning: 'Elbise',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -854,7 +854,7 @@ class AlphabetEngine {
         exampleWord: 'Soare',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ș',
         nameTr: 'Şe',
         nameEn: 'Sh',
@@ -862,7 +862,7 @@ class AlphabetEngine {
         exampleWord: 'Șapte',
         exampleMeaning: 'Yedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -870,7 +870,7 @@ class AlphabetEngine {
         exampleWord: 'Timp',
         exampleMeaning: 'Zaman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ț',
         nameTr: 'Tse',
         nameEn: 'Tse',
@@ -878,7 +878,7 @@ class AlphabetEngine {
         exampleWord: 'Țară',
         exampleMeaning: 'Ülke',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -887,7 +887,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kulak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -895,7 +895,7 @@ class AlphabetEngine {
         exampleWord: 'Vânt',
         exampleMeaning: 'Rüzgar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zet',
         nameEn: 'Zet',
@@ -906,12 +906,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _hungarian = NuraAlphabet(
+  static const _hungarian = VoxeloAlphabet(
     languageCode: 'hu',
     name: 'Macarca Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -920,7 +920,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Á',
         nameTr: 'Uzun A',
         nameEn: 'Long A',
@@ -929,7 +929,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yatak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -937,7 +937,7 @@ class AlphabetEngine {
         exampleWord: 'Béka',
         exampleMeaning: 'Kurbağa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Tse',
         nameEn: 'Tse',
@@ -945,7 +945,7 @@ class AlphabetEngine {
         exampleWord: 'Cica',
         exampleMeaning: 'Kedicik',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Cs',
         nameTr: 'Çe',
         nameEn: 'Che',
@@ -953,7 +953,7 @@ class AlphabetEngine {
         exampleWord: 'Csillag',
         exampleMeaning: 'Yıldız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -961,7 +961,7 @@ class AlphabetEngine {
         exampleWord: 'Dal',
         exampleMeaning: 'Şarkı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -970,7 +970,7 @@ class AlphabetEngine {
         exampleMeaning: 'Fare',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'É',
         nameTr: 'Uzun E',
         nameEn: 'Long E',
@@ -979,7 +979,7 @@ class AlphabetEngine {
         exampleMeaning: 'Madalya',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -987,7 +987,7 @@ class AlphabetEngine {
         exampleWord: 'Fa',
         exampleMeaning: 'Ağaç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -995,7 +995,7 @@ class AlphabetEngine {
         exampleWord: 'Gomba',
         exampleMeaning: 'Mantar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Gy',
         nameTr: 'Dye',
         nameEn: 'Dye',
@@ -1003,7 +1003,7 @@ class AlphabetEngine {
         exampleWord: 'Gyerek',
         exampleMeaning: 'Çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -1011,7 +1011,7 @@ class AlphabetEngine {
         exampleWord: 'Ház',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -1020,7 +1020,7 @@ class AlphabetEngine {
         exampleMeaning: 'Zaman/hava',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Í',
         nameTr: 'Uzun İ',
         nameEn: 'Long I',
@@ -1029,7 +1029,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yay',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yot',
         nameEn: 'Yot',
@@ -1037,7 +1037,7 @@ class AlphabetEngine {
         exampleWord: 'Jég',
         exampleMeaning: 'Buz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -1045,7 +1045,7 @@ class AlphabetEngine {
         exampleWord: 'Kutya',
         exampleMeaning: 'Köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -1053,7 +1053,7 @@ class AlphabetEngine {
         exampleWord: 'Level',
         exampleMeaning: 'Yaprak/mektup',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -1061,7 +1061,7 @@ class AlphabetEngine {
         exampleWord: 'Macska',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -1069,7 +1069,7 @@ class AlphabetEngine {
         exampleWord: 'Nap',
         exampleMeaning: 'Güneş/gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ny',
         nameTr: 'Nye',
         nameEn: 'Nye',
@@ -1077,7 +1077,7 @@ class AlphabetEngine {
         exampleWord: 'Nyár',
         exampleMeaning: 'Yaz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -1086,7 +1086,7 @@ class AlphabetEngine {
         exampleMeaning: 'Burun',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ó',
         nameTr: 'Uzun O',
         nameEn: 'Long O',
@@ -1095,7 +1095,7 @@ class AlphabetEngine {
         exampleMeaning: 'Saat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ö',
         nameTr: 'Ö',
         nameEn: 'Oe',
@@ -1104,7 +1104,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sevinç',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ő',
         nameTr: 'Uzun Ö',
         nameEn: 'Long Oe',
@@ -1113,7 +1113,7 @@ class AlphabetEngine {
         exampleMeaning: 'Karaca',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -1121,7 +1121,7 @@ class AlphabetEngine {
         exampleWord: 'Pék',
         exampleMeaning: 'Fırıncı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -1129,7 +1129,7 @@ class AlphabetEngine {
         exampleWord: 'Róka',
         exampleMeaning: 'Tilki',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Ş',
         nameEn: 'Sh',
@@ -1137,7 +1137,7 @@ class AlphabetEngine {
         exampleWord: 'Sör',
         exampleMeaning: 'Bira',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Sz',
         nameTr: 'Es',
         nameEn: 'S',
@@ -1145,7 +1145,7 @@ class AlphabetEngine {
         exampleWord: 'Szív',
         exampleMeaning: 'Kalp',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -1153,7 +1153,7 @@ class AlphabetEngine {
         exampleWord: 'Tenger',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ty',
         nameTr: 'Tye',
         nameEn: 'Tye',
@@ -1161,7 +1161,7 @@ class AlphabetEngine {
         exampleWord: 'Tyúk',
         exampleMeaning: 'Tavuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -1170,7 +1170,7 @@ class AlphabetEngine {
         exampleMeaning: 'Salatalık',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ú',
         nameTr: 'Uzun U',
         nameEn: 'Long U',
@@ -1179,7 +1179,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yol',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ü',
         nameTr: 'Ü',
         nameEn: 'Ue',
@@ -1188,7 +1188,7 @@ class AlphabetEngine {
         exampleMeaning: 'Cam/şişe',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ű',
         nameTr: 'Uzun Ü',
         nameEn: 'Long Ue',
@@ -1197,7 +1197,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ateş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -1205,7 +1205,7 @@ class AlphabetEngine {
         exampleWord: 'Víz',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zet',
         nameEn: 'Zet',
@@ -1213,7 +1213,7 @@ class AlphabetEngine {
         exampleWord: 'Zöld',
         exampleMeaning: 'Yeşil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Zs',
         nameTr: 'Je',
         nameEn: 'Zhe',
@@ -1224,12 +1224,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _swedish = NuraAlphabet(
+  static const _swedish = VoxeloAlphabet(
     languageCode: 'sv',
     name: 'İsveççe Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -1238,7 +1238,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ördek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -1246,7 +1246,7 @@ class AlphabetEngine {
         exampleWord: 'Bok',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Se',
@@ -1254,7 +1254,7 @@ class AlphabetEngine {
         exampleWord: 'Cykel',
         exampleMeaning: 'Bisiklet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -1262,7 +1262,7 @@ class AlphabetEngine {
         exampleWord: 'Dag',
         exampleMeaning: 'Gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -1271,7 +1271,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sonra',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -1279,7 +1279,7 @@ class AlphabetEngine {
         exampleWord: 'Flicka',
         exampleMeaning: 'Kız çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -1287,7 +1287,7 @@ class AlphabetEngine {
         exampleWord: 'Gata',
         exampleMeaning: 'Sokak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -1295,7 +1295,7 @@ class AlphabetEngine {
         exampleWord: 'Hus',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -1304,7 +1304,7 @@ class AlphabetEngine {
         exampleMeaning: 'Buz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yi',
         nameEn: 'Yi',
@@ -1312,7 +1312,7 @@ class AlphabetEngine {
         exampleWord: 'Jul',
         exampleMeaning: 'Noel',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -1320,7 +1320,7 @@ class AlphabetEngine {
         exampleWord: 'Katt',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -1328,7 +1328,7 @@ class AlphabetEngine {
         exampleWord: 'Lampa',
         exampleMeaning: 'Lamba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -1336,7 +1336,7 @@ class AlphabetEngine {
         exampleWord: 'Mat',
         exampleMeaning: 'Yemek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -1344,7 +1344,7 @@ class AlphabetEngine {
         exampleWord: 'Natt',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -1353,7 +1353,7 @@ class AlphabetEngine {
         exampleMeaning: 'Peynir',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -1361,7 +1361,7 @@ class AlphabetEngine {
         exampleWord: 'Pojke',
         exampleMeaning: 'Erkek çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -1369,7 +1369,7 @@ class AlphabetEngine {
         exampleWord: 'Regn',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -1377,7 +1377,7 @@ class AlphabetEngine {
         exampleWord: 'Sol',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -1385,7 +1385,7 @@ class AlphabetEngine {
         exampleWord: 'Träd',
         exampleMeaning: 'Ağaç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -1394,7 +1394,7 @@ class AlphabetEngine {
         exampleMeaning: 'Saat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -1402,7 +1402,7 @@ class AlphabetEngine {
         exampleWord: 'Vatten',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Y',
         nameEn: 'Y',
@@ -1411,7 +1411,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yüzey',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Å',
         nameTr: 'Yuvarlak A',
         nameEn: 'Ring A',
@@ -1420,7 +1420,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sekiz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ä',
         nameTr: 'Ä',
         nameEn: 'Ae',
@@ -1429,7 +1429,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ö',
         nameTr: 'Ö',
         nameEn: 'Oe',
@@ -1441,12 +1441,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _danish = NuraAlphabet(
+  static const _danish = VoxeloAlphabet(
     languageCode: 'da',
     name: 'Danca Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -1455,7 +1455,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ördek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -1463,7 +1463,7 @@ class AlphabetEngine {
         exampleWord: 'Bog',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Se',
@@ -1471,7 +1471,7 @@ class AlphabetEngine {
         exampleWord: 'Cykel',
         exampleMeaning: 'Bisiklet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -1479,7 +1479,7 @@ class AlphabetEngine {
         exampleWord: 'Dag',
         exampleMeaning: 'Gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -1488,7 +1488,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sonra',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -1496,7 +1496,7 @@ class AlphabetEngine {
         exampleWord: 'Fisk',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -1504,7 +1504,7 @@ class AlphabetEngine {
         exampleWord: 'Glas',
         exampleMeaning: 'Bardak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -1512,7 +1512,7 @@ class AlphabetEngine {
         exampleWord: 'Hus',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -1521,7 +1521,7 @@ class AlphabetEngine {
         exampleMeaning: 'Buz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yod',
         nameEn: 'Yod',
@@ -1529,7 +1529,7 @@ class AlphabetEngine {
         exampleWord: 'Jul',
         exampleMeaning: 'Noel',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -1537,7 +1537,7 @@ class AlphabetEngine {
         exampleWord: 'Kat',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -1545,7 +1545,7 @@ class AlphabetEngine {
         exampleWord: 'Lampe',
         exampleMeaning: 'Lamba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -1553,7 +1553,7 @@ class AlphabetEngine {
         exampleWord: 'Mand',
         exampleMeaning: 'Adam',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -1561,7 +1561,7 @@ class AlphabetEngine {
         exampleWord: 'Nat',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -1570,7 +1570,7 @@ class AlphabetEngine {
         exampleMeaning: 'Peynir',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -1578,7 +1578,7 @@ class AlphabetEngine {
         exampleWord: 'Pige',
         exampleMeaning: 'Kız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -1586,7 +1586,7 @@ class AlphabetEngine {
         exampleWord: 'Regn',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -1594,7 +1594,7 @@ class AlphabetEngine {
         exampleWord: 'Sol',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -1602,7 +1602,7 @@ class AlphabetEngine {
         exampleWord: 'Træ',
         exampleMeaning: 'Ağaç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -1611,7 +1611,7 @@ class AlphabetEngine {
         exampleMeaning: 'Saat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -1619,7 +1619,7 @@ class AlphabetEngine {
         exampleWord: 'Vand',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Y',
         nameEn: 'Y',
@@ -1628,7 +1628,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yavru',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Æ',
         nameTr: 'Ae',
         nameEn: 'Ae',
@@ -1637,7 +1637,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ø',
         nameTr: 'Ö',
         nameEn: 'Oe',
@@ -1646,7 +1646,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Å',
         nameTr: 'Yuvarlak A',
         nameEn: 'Ring A',
@@ -1658,12 +1658,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _norwegian = NuraAlphabet(
+  static const _norwegian = VoxeloAlphabet(
     languageCode: 'no',
     name: 'Norveççe Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -1672,7 +1672,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ördek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -1680,7 +1680,7 @@ class AlphabetEngine {
         exampleWord: 'Bok',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Se',
@@ -1688,7 +1688,7 @@ class AlphabetEngine {
         exampleWord: 'Cykel',
         exampleMeaning: 'Bisiklet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -1696,7 +1696,7 @@ class AlphabetEngine {
         exampleWord: 'Dag',
         exampleMeaning: 'Gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -1705,7 +1705,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -1713,7 +1713,7 @@ class AlphabetEngine {
         exampleWord: 'Fisk',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -1721,7 +1721,7 @@ class AlphabetEngine {
         exampleWord: 'Gutt',
         exampleMeaning: 'Erkek çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -1729,7 +1729,7 @@ class AlphabetEngine {
         exampleWord: 'Hus',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -1738,7 +1738,7 @@ class AlphabetEngine {
         exampleMeaning: 'Buz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yod',
         nameEn: 'Yod',
@@ -1746,7 +1746,7 @@ class AlphabetEngine {
         exampleWord: 'Jul',
         exampleMeaning: 'Noel',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -1754,7 +1754,7 @@ class AlphabetEngine {
         exampleWord: 'Katt',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -1762,7 +1762,7 @@ class AlphabetEngine {
         exampleWord: 'Lampe',
         exampleMeaning: 'Lamba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -1770,7 +1770,7 @@ class AlphabetEngine {
         exampleWord: 'Mann',
         exampleMeaning: 'Adam',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -1778,7 +1778,7 @@ class AlphabetEngine {
         exampleWord: 'Natt',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -1787,7 +1787,7 @@ class AlphabetEngine {
         exampleMeaning: 'Peynir',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -1795,7 +1795,7 @@ class AlphabetEngine {
         exampleWord: 'Pike',
         exampleMeaning: 'Kız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -1803,7 +1803,7 @@ class AlphabetEngine {
         exampleWord: 'Regn',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -1811,7 +1811,7 @@ class AlphabetEngine {
         exampleWord: 'Sol',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -1819,7 +1819,7 @@ class AlphabetEngine {
         exampleWord: 'Tre',
         exampleMeaning: 'Ağaç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -1828,7 +1828,7 @@ class AlphabetEngine {
         exampleMeaning: 'Saat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -1836,7 +1836,7 @@ class AlphabetEngine {
         exampleWord: 'Vann',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Y',
         nameEn: 'Y',
@@ -1845,7 +1845,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yavru',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Æ',
         nameTr: 'Ae',
         nameEn: 'Ae',
@@ -1854,7 +1854,7 @@ class AlphabetEngine {
         exampleMeaning: 'Feribot',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ø',
         nameTr: 'Ö',
         nameEn: 'Oe',
@@ -1863,7 +1863,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Å',
         nameTr: 'Yuvarlak A',
         nameEn: 'Ring A',
@@ -1875,12 +1875,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _finnish = NuraAlphabet(
+  static const _finnish = VoxeloAlphabet(
     languageCode: 'fi',
     name: 'Fince Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -1889,7 +1889,7 @@ class AlphabetEngine {
         exampleMeaning: 'Araba',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -1897,7 +1897,7 @@ class AlphabetEngine {
         exampleWord: 'Radio',
         exampleMeaning: 'Radyo',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -1906,7 +1906,7 @@ class AlphabetEngine {
         exampleMeaning: 'Film',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -1914,7 +1914,7 @@ class AlphabetEngine {
         exampleWord: 'Hattu',
         exampleMeaning: 'Şapka',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'I',
@@ -1923,7 +1923,7 @@ class AlphabetEngine {
         exampleMeaning: 'Akşam',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yi',
         nameEn: 'Yi',
@@ -1931,7 +1931,7 @@ class AlphabetEngine {
         exampleWord: 'Joki',
         exampleMeaning: 'Nehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -1939,7 +1939,7 @@ class AlphabetEngine {
         exampleWord: 'Kala',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -1947,7 +1947,7 @@ class AlphabetEngine {
         exampleWord: 'Lintu',
         exampleMeaning: 'Kuş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -1955,7 +1955,7 @@ class AlphabetEngine {
         exampleWord: 'Maito',
         exampleMeaning: 'Süt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -1963,7 +1963,7 @@ class AlphabetEngine {
         exampleWord: 'Nukke',
         exampleMeaning: 'Bebek/oyuncak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -1972,7 +1972,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kapı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -1980,7 +1980,7 @@ class AlphabetEngine {
         exampleWord: 'Poika',
         exampleMeaning: 'Erkek çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -1988,7 +1988,7 @@ class AlphabetEngine {
         exampleWord: 'Ruoka',
         exampleMeaning: 'Yemek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -1996,7 +1996,7 @@ class AlphabetEngine {
         exampleWord: 'Sade',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -2004,7 +2004,7 @@ class AlphabetEngine {
         exampleWord: 'Talo',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -2013,7 +2013,7 @@ class AlphabetEngine {
         exampleMeaning: 'Uyku',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -2021,7 +2021,7 @@ class AlphabetEngine {
         exampleWord: 'Vesi',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Y',
         nameEn: 'Y',
@@ -2030,7 +2030,7 @@ class AlphabetEngine {
         exampleMeaning: 'Gece',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ä',
         nameTr: 'Ä',
         nameEn: 'Ae',
@@ -2039,7 +2039,7 @@ class AlphabetEngine {
         exampleMeaning: 'Anne',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ö',
         nameTr: 'Ö',
         nameEn: 'Oe',
@@ -2051,12 +2051,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _pinyin = NuraAlphabet(
+  static const _pinyin = VoxeloAlphabet(
     languageCode: 'zh',
     name: 'Pinyin (Çince Okuma Sistemi)',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'b',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -2064,7 +2064,7 @@ class AlphabetEngine {
         exampleWord: '爸 (bà)',
         exampleMeaning: 'Baba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'p',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -2072,7 +2072,7 @@ class AlphabetEngine {
         exampleWord: '怕 (pà)',
         exampleMeaning: 'Korkmak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'm',
         nameTr: 'Me',
         nameEn: 'Me',
@@ -2080,7 +2080,7 @@ class AlphabetEngine {
         exampleWord: '妈 (mā)',
         exampleMeaning: 'Anne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'f',
         nameTr: 'Fe',
         nameEn: 'Fe',
@@ -2088,7 +2088,7 @@ class AlphabetEngine {
         exampleWord: '饭 (fàn)',
         exampleMeaning: 'Yemek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'd',
         nameTr: 'De',
         nameEn: 'De',
@@ -2096,7 +2096,7 @@ class AlphabetEngine {
         exampleWord: '大 (dà)',
         exampleMeaning: 'Büyük',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 't',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -2104,7 +2104,7 @@ class AlphabetEngine {
         exampleWord: '他 (tā)',
         exampleMeaning: 'O (erkek)',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'n',
         nameTr: 'Ne',
         nameEn: 'Ne',
@@ -2112,7 +2112,7 @@ class AlphabetEngine {
         exampleWord: '你 (nǐ)',
         exampleMeaning: 'Sen',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'l',
         nameTr: 'Le',
         nameEn: 'Le',
@@ -2120,7 +2120,7 @@ class AlphabetEngine {
         exampleWord: '绿 (lǜ)',
         exampleMeaning: 'Yeşil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'g',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -2128,7 +2128,7 @@ class AlphabetEngine {
         exampleWord: '狗 (gǒu)',
         exampleMeaning: 'Köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'k',
         nameTr: 'Ke',
         nameEn: 'Ke',
@@ -2136,7 +2136,7 @@ class AlphabetEngine {
         exampleWord: '渴 (kě)',
         exampleMeaning: 'Susamış',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'h',
         nameTr: 'He',
         nameEn: 'He',
@@ -2144,7 +2144,7 @@ class AlphabetEngine {
         exampleWord: '好 (hǎo)',
         exampleMeaning: 'İyi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'j',
         nameTr: 'Ci',
         nameEn: 'Ji',
@@ -2152,7 +2152,7 @@ class AlphabetEngine {
         exampleWord: '家 (jiā)',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'q',
         nameTr: 'Çi',
         nameEn: 'Qi',
@@ -2160,7 +2160,7 @@ class AlphabetEngine {
         exampleWord: '去 (qù)',
         exampleMeaning: 'Gitmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'x',
         nameTr: 'Si (ince)',
         nameEn: 'Xi',
@@ -2168,7 +2168,7 @@ class AlphabetEngine {
         exampleWord: '谢 (xiè)',
         exampleMeaning: 'Teşekkür',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'zh',
         nameTr: 'Cı',
         nameEn: 'Zhi',
@@ -2176,7 +2176,7 @@ class AlphabetEngine {
         exampleWord: '中 (zhōng)',
         exampleMeaning: 'Orta',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ch',
         nameTr: 'Çı',
         nameEn: 'Chi',
@@ -2184,7 +2184,7 @@ class AlphabetEngine {
         exampleWord: '吃 (chī)',
         exampleMeaning: 'Yemek yemek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'sh',
         nameTr: 'Şı',
         nameEn: 'Shi',
@@ -2192,7 +2192,7 @@ class AlphabetEngine {
         exampleWord: '山 (shān)',
         exampleMeaning: 'Dağ',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'r',
         nameTr: 'Rı',
         nameEn: 'Ri',
@@ -2200,7 +2200,7 @@ class AlphabetEngine {
         exampleWord: '人 (rén)',
         exampleMeaning: 'İnsan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'z',
         nameTr: 'Dzı',
         nameEn: 'Zi',
@@ -2208,7 +2208,7 @@ class AlphabetEngine {
         exampleWord: '在 (zài)',
         exampleMeaning: '(yer belirteci)',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'c',
         nameTr: 'Tsı',
         nameEn: 'Ci',
@@ -2216,7 +2216,7 @@ class AlphabetEngine {
         exampleWord: '菜 (cài)',
         exampleMeaning: 'Sebze',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 's',
         nameTr: 'Sı',
         nameEn: 'Si',
@@ -2224,7 +2224,7 @@ class AlphabetEngine {
         exampleWord: '三 (sān)',
         exampleMeaning: 'Üç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'a',
         nameTr: 'A',
         nameEn: 'A',
@@ -2233,7 +2233,7 @@ class AlphabetEngine {
         exampleMeaning: '(ünlem)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'o',
         nameTr: 'O',
         nameEn: 'O',
@@ -2242,7 +2242,7 @@ class AlphabetEngine {
         exampleMeaning: '(ünlem)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'e',
         nameTr: 'I/E',
         nameEn: 'E',
@@ -2251,7 +2251,7 @@ class AlphabetEngine {
         exampleMeaning: 'Aç',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'i',
         nameTr: 'İ',
         nameEn: 'I',
@@ -2260,7 +2260,7 @@ class AlphabetEngine {
         exampleMeaning: 'Bir',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'u',
         nameTr: 'U',
         nameEn: 'U',
@@ -2269,7 +2269,7 @@ class AlphabetEngine {
         exampleMeaning: 'Beş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ü',
         nameTr: 'Ü',
         nameEn: 'Yu',
@@ -2281,12 +2281,12 @@ class AlphabetEngine {
     ],
   );
 
-  static NuraAlphabet _latin(String lang) => NuraAlphabet(
+  static VoxeloAlphabet _latin(String lang) => VoxeloAlphabet(
     languageCode: lang,
     name: 'Latin Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: const [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -2295,7 +2295,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Bee',
@@ -2303,7 +2303,7 @@ class AlphabetEngine {
         exampleWord: 'Book',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Ce',
         nameEn: 'See',
@@ -2311,7 +2311,7 @@ class AlphabetEngine {
         exampleWord: 'Cat',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'Dee',
@@ -2319,7 +2319,7 @@ class AlphabetEngine {
         exampleWord: 'Dog',
         exampleMeaning: 'Köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'Ee',
@@ -2328,7 +2328,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yumurta',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Fe',
         nameEn: 'Ef',
@@ -2336,7 +2336,7 @@ class AlphabetEngine {
         exampleWord: 'Fish',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Jee',
@@ -2344,7 +2344,7 @@ class AlphabetEngine {
         exampleWord: 'Good',
         exampleMeaning: 'İyi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'He',
         nameEn: 'Aych',
@@ -2352,7 +2352,7 @@ class AlphabetEngine {
         exampleWord: 'Hello',
         exampleMeaning: 'Merhaba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'I',
         nameEn: 'Ay',
@@ -2361,7 +2361,7 @@ class AlphabetEngine {
         exampleMeaning: 'Buz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Je',
         nameEn: 'Jay',
@@ -2369,7 +2369,7 @@ class AlphabetEngine {
         exampleWord: 'Juice',
         exampleMeaning: 'Meyve suyu',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ke',
         nameEn: 'Kay',
@@ -2377,7 +2377,7 @@ class AlphabetEngine {
         exampleWord: 'Key',
         exampleMeaning: 'Anahtar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'Le',
         nameEn: 'El',
@@ -2385,7 +2385,7 @@ class AlphabetEngine {
         exampleWord: 'Love',
         exampleMeaning: 'Aşk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Me',
         nameEn: 'Em',
@@ -2393,7 +2393,7 @@ class AlphabetEngine {
         exampleWord: 'Moon',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'Ne',
         nameEn: 'En',
@@ -2401,7 +2401,7 @@ class AlphabetEngine {
         exampleWord: 'Name',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'Oh',
@@ -2410,7 +2410,7 @@ class AlphabetEngine {
         exampleMeaning: 'Açmak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pee',
@@ -2418,7 +2418,7 @@ class AlphabetEngine {
         exampleWord: 'Pen',
         exampleMeaning: 'Kalem',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Qu',
         nameEn: 'Kyu',
@@ -2426,7 +2426,7 @@ class AlphabetEngine {
         exampleWord: 'Queen',
         exampleMeaning: 'Kraliçe',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Re',
         nameEn: 'Ar',
@@ -2434,7 +2434,7 @@ class AlphabetEngine {
         exampleWord: 'Rain',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Se',
         nameEn: 'Es',
@@ -2442,7 +2442,7 @@ class AlphabetEngine {
         exampleWord: 'Sun',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Tee',
@@ -2450,7 +2450,7 @@ class AlphabetEngine {
         exampleWord: 'Tree',
         exampleMeaning: 'Ağaç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'Yu',
@@ -2459,7 +2459,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yukarı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Vee',
@@ -2467,7 +2467,7 @@ class AlphabetEngine {
         exampleWord: 'Very',
         exampleMeaning: 'Çok',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'W',
         nameTr: 'W',
         nameEn: 'Double-yu',
@@ -2475,7 +2475,7 @@ class AlphabetEngine {
         exampleWord: 'Water',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'X',
         nameTr: 'X',
         nameEn: 'Eks',
@@ -2483,7 +2483,7 @@ class AlphabetEngine {
         exampleWord: 'Box',
         exampleMeaning: 'Kutu',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Ye',
         nameEn: 'Way',
@@ -2491,7 +2491,7 @@ class AlphabetEngine {
         exampleWord: 'Yes',
         exampleMeaning: 'Evet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Ze',
         nameEn: 'Zee',
@@ -2502,12 +2502,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _arabic = NuraAlphabet(
+  static const _arabic = VoxeloAlphabet(
     languageCode: 'ar',
     name: 'Arap Alfabesi',
     direction: AlphabetDirection.rtl,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'ا',
         nameTr: 'Elif',
         nameEn: 'Alif',
@@ -2516,7 +2516,7 @@ class AlphabetEngine {
         exampleMeaning: 'Tavşan',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ب',
         nameTr: 'Be',
         nameEn: 'Ba',
@@ -2524,7 +2524,7 @@ class AlphabetEngine {
         exampleWord: 'باب',
         exampleMeaning: 'Kapı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ت',
         nameTr: 'Te',
         nameEn: 'Ta',
@@ -2532,7 +2532,7 @@ class AlphabetEngine {
         exampleWord: 'تمر',
         exampleMeaning: 'Hurma',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ث',
         nameTr: 'Se',
         nameEn: 'Tha',
@@ -2540,7 +2540,7 @@ class AlphabetEngine {
         exampleWord: 'ثعلب',
         exampleMeaning: 'Tilki',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ج',
         nameTr: 'Cim',
         nameEn: 'Jim',
@@ -2548,7 +2548,7 @@ class AlphabetEngine {
         exampleWord: 'جمل',
         exampleMeaning: 'Deve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ح',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -2556,7 +2556,7 @@ class AlphabetEngine {
         exampleWord: 'حب',
         exampleMeaning: 'Sevgi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'خ',
         nameTr: 'Hı',
         nameEn: 'Kha',
@@ -2564,7 +2564,7 @@ class AlphabetEngine {
         exampleWord: 'خبز',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'د',
         nameTr: 'Dal',
         nameEn: 'Dal',
@@ -2572,7 +2572,7 @@ class AlphabetEngine {
         exampleWord: 'دب',
         exampleMeaning: 'Ayı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ذ',
         nameTr: 'Zel',
         nameEn: 'Dhal',
@@ -2580,7 +2580,7 @@ class AlphabetEngine {
         exampleWord: 'ذهب',
         exampleMeaning: 'Altın',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ر',
         nameTr: 'Ra',
         nameEn: 'Ra',
@@ -2588,7 +2588,7 @@ class AlphabetEngine {
         exampleWord: 'رمان',
         exampleMeaning: 'Nar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ز',
         nameTr: 'Ze',
         nameEn: 'Zay',
@@ -2596,7 +2596,7 @@ class AlphabetEngine {
         exampleWord: 'زهرة',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'س',
         nameTr: 'Sin',
         nameEn: 'Sin',
@@ -2604,7 +2604,7 @@ class AlphabetEngine {
         exampleWord: 'سمك',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ش',
         nameTr: 'Şın',
         nameEn: 'Shin',
@@ -2612,7 +2612,7 @@ class AlphabetEngine {
         exampleWord: 'شمس',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ص',
         nameTr: 'Sad',
         nameEn: 'Sad',
@@ -2620,7 +2620,7 @@ class AlphabetEngine {
         exampleWord: 'صباح',
         exampleMeaning: 'Sabah',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ض',
         nameTr: 'Dad',
         nameEn: 'Dad',
@@ -2628,7 +2628,7 @@ class AlphabetEngine {
         exampleWord: 'ضوء',
         exampleMeaning: 'Işık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ط',
         nameTr: 'Tı',
         nameEn: 'Ta',
@@ -2636,7 +2636,7 @@ class AlphabetEngine {
         exampleWord: 'طبيب',
         exampleMeaning: 'Doktor',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ظ',
         nameTr: 'Zı',
         nameEn: 'Dha',
@@ -2644,7 +2644,7 @@ class AlphabetEngine {
         exampleWord: 'ظهر',
         exampleMeaning: 'Öğle',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ع',
         nameTr: 'Ayn',
         nameEn: 'Ayn',
@@ -2652,7 +2652,7 @@ class AlphabetEngine {
         exampleWord: 'عين',
         exampleMeaning: 'Göz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'غ',
         nameTr: 'Gayn',
         nameEn: 'Ghayn',
@@ -2660,7 +2660,7 @@ class AlphabetEngine {
         exampleWord: 'غابة',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ف',
         nameTr: 'Fe',
         nameEn: 'Fa',
@@ -2668,7 +2668,7 @@ class AlphabetEngine {
         exampleWord: 'فيل',
         exampleMeaning: 'Fil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ق',
         nameTr: 'Kaf',
         nameEn: 'Qaf',
@@ -2676,7 +2676,7 @@ class AlphabetEngine {
         exampleWord: 'قمر',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ك',
         nameTr: 'Kef',
         nameEn: 'Kaf',
@@ -2684,7 +2684,7 @@ class AlphabetEngine {
         exampleWord: 'كتاب',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ل',
         nameTr: 'Lam',
         nameEn: 'Lam',
@@ -2692,7 +2692,7 @@ class AlphabetEngine {
         exampleWord: 'ليمون',
         exampleMeaning: 'Limon',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'م',
         nameTr: 'Mim',
         nameEn: 'Mim',
@@ -2700,7 +2700,7 @@ class AlphabetEngine {
         exampleWord: 'ماء',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ن',
         nameTr: 'Nun',
         nameEn: 'Nun',
@@ -2708,7 +2708,7 @@ class AlphabetEngine {
         exampleWord: 'نجمة',
         exampleMeaning: 'Yıldız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ه',
         nameTr: 'He',
         nameEn: 'Ha',
@@ -2716,7 +2716,7 @@ class AlphabetEngine {
         exampleWord: 'هدية',
         exampleMeaning: 'Hediye',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'و',
         nameTr: 'Vav',
         nameEn: 'Waw',
@@ -2725,7 +2725,7 @@ class AlphabetEngine {
         exampleMeaning: 'Gül',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ي',
         nameTr: 'Ye',
         nameEn: 'Ya',
@@ -2737,12 +2737,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _russian = NuraAlphabet(
+  static const _russian = VoxeloAlphabet(
     languageCode: 'ru',
     name: 'Kiril Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'А',
         nameTr: 'A',
         nameEn: 'A',
@@ -2751,7 +2751,7 @@ class AlphabetEngine {
         exampleMeaning: 'Otobüs',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Б',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -2759,7 +2759,7 @@ class AlphabetEngine {
         exampleWord: 'Банан',
         exampleMeaning: 'Muz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'В',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -2767,7 +2767,7 @@ class AlphabetEngine {
         exampleWord: 'Вода',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Г',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -2775,7 +2775,7 @@ class AlphabetEngine {
         exampleWord: 'Город',
         exampleMeaning: 'Şehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Д',
         nameTr: 'De',
         nameEn: 'De',
@@ -2783,7 +2783,7 @@ class AlphabetEngine {
         exampleWord: 'Дом',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Е',
         nameTr: 'Ye',
         nameEn: 'Ye',
@@ -2792,7 +2792,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yemek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ж',
         nameTr: 'Je',
         nameEn: 'Zhe',
@@ -2800,7 +2800,7 @@ class AlphabetEngine {
         exampleWord: 'Жизнь',
         exampleMeaning: 'Hayat',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'З',
         nameTr: 'Ze',
         nameEn: 'Ze',
@@ -2808,7 +2808,7 @@ class AlphabetEngine {
         exampleWord: 'Звезда',
         exampleMeaning: 'Yıldız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'И',
         nameTr: 'İ',
         nameEn: 'Ee',
@@ -2817,7 +2817,7 @@ class AlphabetEngine {
         exampleMeaning: 'Oyun',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'К',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -2825,7 +2825,7 @@ class AlphabetEngine {
         exampleWord: 'Кот',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Л',
         nameTr: 'El',
         nameEn: 'El',
@@ -2833,7 +2833,7 @@ class AlphabetEngine {
         exampleWord: 'Лес',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'М',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -2841,7 +2841,7 @@ class AlphabetEngine {
         exampleWord: 'Море',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Н',
         nameTr: 'En',
         nameEn: 'En',
@@ -2849,7 +2849,7 @@ class AlphabetEngine {
         exampleWord: 'Ночь',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'О',
         nameTr: 'O',
         nameEn: 'O',
@@ -2858,7 +2858,7 @@ class AlphabetEngine {
         exampleMeaning: 'Pencere',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'П',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -2866,7 +2866,7 @@ class AlphabetEngine {
         exampleWord: 'Парк',
         exampleMeaning: 'Park',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Р',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -2874,7 +2874,7 @@ class AlphabetEngine {
         exampleWord: 'Рука',
         exampleMeaning: 'El',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'С',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -2882,7 +2882,7 @@ class AlphabetEngine {
         exampleWord: 'Слон',
         exampleMeaning: 'Fil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Т',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -2890,7 +2890,7 @@ class AlphabetEngine {
         exampleWord: 'Стол',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'У',
         nameTr: 'U',
         nameEn: 'U',
@@ -2899,7 +2899,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sabah',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ф',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -2907,7 +2907,7 @@ class AlphabetEngine {
         exampleWord: 'Флаг',
         exampleMeaning: 'Bayrak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Х',
         nameTr: 'Ha',
         nameEn: 'Kha',
@@ -2915,7 +2915,7 @@ class AlphabetEngine {
         exampleWord: 'Хлеб',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ц',
         nameTr: 'Tse',
         nameEn: 'Tse',
@@ -2923,7 +2923,7 @@ class AlphabetEngine {
         exampleWord: 'Цветок',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ч',
         nameTr: 'Çe',
         nameEn: 'Che',
@@ -2931,7 +2931,7 @@ class AlphabetEngine {
         exampleWord: 'Час',
         exampleMeaning: 'Saat',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ш',
         nameTr: 'Şa',
         nameEn: 'Sha',
@@ -2939,7 +2939,7 @@ class AlphabetEngine {
         exampleWord: 'Школа',
         exampleMeaning: 'Okul',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Щ',
         nameTr: 'Şça',
         nameEn: 'Shcha',
@@ -2947,7 +2947,7 @@ class AlphabetEngine {
         exampleWord: 'Щенок',
         exampleMeaning: 'Yavru köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ъ',
         nameTr: 'Sert işaret',
         nameEn: 'Hard sign',
@@ -2955,7 +2955,7 @@ class AlphabetEngine {
         exampleWord: 'Объект',
         exampleMeaning: 'Nesne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ы',
         nameTr: 'I',
         nameEn: 'Y',
@@ -2964,7 +2964,7 @@ class AlphabetEngine {
         exampleMeaning: 'Oğul',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ь',
         nameTr: 'Yumuşak işaret',
         nameEn: 'Soft sign',
@@ -2972,7 +2972,7 @@ class AlphabetEngine {
         exampleWord: 'День',
         exampleMeaning: 'Gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Э',
         nameTr: 'E',
         nameEn: 'E',
@@ -2981,7 +2981,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ю',
         nameTr: 'Yu',
         nameEn: 'Yu',
@@ -2990,7 +2990,7 @@ class AlphabetEngine {
         exampleMeaning: 'Etek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Я',
         nameTr: 'Ya',
         nameEn: 'Ya',
@@ -3002,12 +3002,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _vietnamese = NuraAlphabet(
+  static const _vietnamese = VoxeloAlphabet(
     languageCode: 'vi',
     name: 'Vietnam Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -3016,7 +3016,7 @@ class AlphabetEngine {
         exampleMeaning: 'Abi / sen (erkek)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ă',
         nameTr: 'Kısa A',
         nameEn: 'Short A',
@@ -3025,7 +3025,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yemek yemek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Â',
         nameTr: 'Şapkalı A',
         nameEn: 'A-circumflex',
@@ -3034,7 +3034,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sıcak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -3042,7 +3042,7 @@ class AlphabetEngine {
         exampleWord: 'Bàn',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Se',
@@ -3050,7 +3050,7 @@ class AlphabetEngine {
         exampleWord: 'Cá',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -3058,7 +3058,7 @@ class AlphabetEngine {
         exampleWord: 'Dao',
         exampleMeaning: 'Bıçak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Đ',
         nameTr: 'De (çizgili)',
         nameEn: 'D-bar',
@@ -3066,7 +3066,7 @@ class AlphabetEngine {
         exampleWord: 'Đèn',
         exampleMeaning: 'Lamba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -3075,7 +3075,7 @@ class AlphabetEngine {
         exampleMeaning: 'Küçük kardeş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ê',
         nameTr: 'Şapkalı E',
         nameEn: 'E-circumflex',
@@ -3084,7 +3084,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yumuşak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -3092,7 +3092,7 @@ class AlphabetEngine {
         exampleWord: 'Gà',
         exampleMeaning: 'Tavuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Haş',
         nameEn: 'Hash',
@@ -3100,7 +3100,7 @@ class AlphabetEngine {
         exampleWord: 'Hoa',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ kısa',
         nameEn: 'Short I',
@@ -3109,7 +3109,7 @@ class AlphabetEngine {
         exampleMeaning: 'Az',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -3117,7 +3117,7 @@ class AlphabetEngine {
         exampleWord: 'Kem',
         exampleMeaning: 'Dondurma',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'El',
@@ -3125,7 +3125,7 @@ class AlphabetEngine {
         exampleWord: 'Lá',
         exampleMeaning: 'Yaprak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -3133,7 +3133,7 @@ class AlphabetEngine {
         exampleWord: 'Mưa',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'En',
@@ -3141,7 +3141,7 @@ class AlphabetEngine {
         exampleWord: 'Nước',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -3150,7 +3150,7 @@ class AlphabetEngine {
         exampleMeaning: 'Arı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ô',
         nameTr: 'Şapkalı O',
         nameEn: 'O-circumflex',
@@ -3159,7 +3159,7 @@ class AlphabetEngine {
         exampleMeaning: 'Şemsiye',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ơ',
         nameTr: 'Kancalı O',
         nameEn: 'O-horn',
@@ -3168,7 +3168,7 @@ class AlphabetEngine {
         exampleMeaning: 'Tereyağı / avokado',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -3176,7 +3176,7 @@ class AlphabetEngine {
         exampleWord: 'Pin',
         exampleMeaning: 'Pil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Ku',
         nameEn: 'Qu',
@@ -3184,7 +3184,7 @@ class AlphabetEngine {
         exampleWord: 'Quả',
         exampleMeaning: 'Meyve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -3192,7 +3192,7 @@ class AlphabetEngine {
         exampleWord: 'Rừng',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -3200,7 +3200,7 @@ class AlphabetEngine {
         exampleWord: 'Sông',
         exampleMeaning: 'Nehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -3208,7 +3208,7 @@ class AlphabetEngine {
         exampleWord: 'Táo',
         exampleMeaning: 'Elma',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -3217,7 +3217,7 @@ class AlphabetEngine {
         exampleMeaning: 'En küçük çocuk',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ư',
         nameTr: 'Kancalı U',
         nameEn: 'U-horn',
@@ -3226,7 +3226,7 @@ class AlphabetEngine {
         exampleMeaning: 'Islak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -3234,7 +3234,7 @@ class AlphabetEngine {
         exampleWord: 'Voi',
         exampleMeaning: 'Fil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'X',
         nameTr: 'İks',
         nameEn: 'Iks',
@@ -3242,7 +3242,7 @@ class AlphabetEngine {
         exampleWord: 'Xe',
         exampleMeaning: 'Araç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'İ Grek',
         nameEn: 'Y',
@@ -3254,12 +3254,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _ukrainian = NuraAlphabet(
+  static const _ukrainian = VoxeloAlphabet(
     languageCode: 'uk',
     name: 'Ukrayna Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'А',
         nameTr: 'A',
         nameEn: 'A',
@@ -3268,7 +3268,7 @@ class AlphabetEngine {
         exampleMeaning: 'Otobüs',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Б',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -3276,7 +3276,7 @@ class AlphabetEngine {
         exampleWord: 'Батько',
         exampleMeaning: 'Baba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'В',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -3284,7 +3284,7 @@ class AlphabetEngine {
         exampleWord: 'Вода',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Г',
         nameTr: 'He',
         nameEn: 'He',
@@ -3292,7 +3292,7 @@ class AlphabetEngine {
         exampleWord: 'Голова',
         exampleMeaning: 'Baş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ґ',
         nameTr: 'Ge (sert)',
         nameEn: 'Ge',
@@ -3300,7 +3300,7 @@ class AlphabetEngine {
         exampleWord: 'Ґанок',
         exampleMeaning: 'Veranda',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Д',
         nameTr: 'De',
         nameEn: 'De',
@@ -3308,7 +3308,7 @@ class AlphabetEngine {
         exampleWord: 'Дім',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Е',
         nameTr: 'E',
         nameEn: 'E',
@@ -3317,7 +3317,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ekran',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Є',
         nameTr: 'Ye',
         nameEn: 'Ye',
@@ -3326,7 +3326,7 @@ class AlphabetEngine {
         exampleMeaning: 'Avrupa',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ж',
         nameTr: 'Je',
         nameEn: 'Zhe',
@@ -3334,7 +3334,7 @@ class AlphabetEngine {
         exampleWord: 'Жовтий',
         exampleMeaning: 'Sarı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'З',
         nameTr: 'Ze',
         nameEn: 'Ze',
@@ -3342,7 +3342,7 @@ class AlphabetEngine {
         exampleWord: 'Зима',
         exampleMeaning: 'Kış',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'И',
         nameTr: 'I (kalın)',
         nameEn: 'Y',
@@ -3351,7 +3351,7 @@ class AlphabetEngine {
         exampleMeaning: 'Balık',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'І',
         nameTr: 'İ (ince)',
         nameEn: 'I',
@@ -3360,7 +3360,7 @@ class AlphabetEngine {
         exampleMeaning: 'İsim',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ї',
         nameTr: 'Yi',
         nameEn: 'Yi',
@@ -3369,7 +3369,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yemek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Й',
         nameTr: 'Kısa İ',
         nameEn: 'Short I',
@@ -3377,7 +3377,7 @@ class AlphabetEngine {
         exampleWord: 'Йогурт',
         exampleMeaning: 'Yoğurt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'К',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -3385,7 +3385,7 @@ class AlphabetEngine {
         exampleWord: 'Кіт',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Л',
         nameTr: 'El',
         nameEn: 'El',
@@ -3393,7 +3393,7 @@ class AlphabetEngine {
         exampleWord: 'Ліс',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'М',
         nameTr: 'Em',
         nameEn: 'Em',
@@ -3401,7 +3401,7 @@ class AlphabetEngine {
         exampleWord: 'Море',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Н',
         nameTr: 'En',
         nameEn: 'En',
@@ -3409,7 +3409,7 @@ class AlphabetEngine {
         exampleWord: 'Ніч',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'О',
         nameTr: 'O',
         nameEn: 'O',
@@ -3418,7 +3418,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'П',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -3426,7 +3426,7 @@ class AlphabetEngine {
         exampleWord: 'Парк',
         exampleMeaning: 'Park',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Р',
         nameTr: 'Er',
         nameEn: 'Er',
@@ -3434,7 +3434,7 @@ class AlphabetEngine {
         exampleWord: 'Річка',
         exampleMeaning: 'Nehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'С',
         nameTr: 'Es',
         nameEn: 'Es',
@@ -3442,7 +3442,7 @@ class AlphabetEngine {
         exampleWord: 'Сонце',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Т',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -3450,7 +3450,7 @@ class AlphabetEngine {
         exampleWord: 'Стіл',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'У',
         nameTr: 'U',
         nameEn: 'U',
@@ -3459,7 +3459,7 @@ class AlphabetEngine {
         exampleMeaning: 'Öğrenci',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ф',
         nameTr: 'Ef',
         nameEn: 'Ef',
@@ -3467,7 +3467,7 @@ class AlphabetEngine {
         exampleWord: 'Фото',
         exampleMeaning: 'Fotoğraf',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Х',
         nameTr: 'Ha',
         nameEn: 'Kha',
@@ -3475,7 +3475,7 @@ class AlphabetEngine {
         exampleWord: 'Хліб',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ц',
         nameTr: 'Tse',
         nameEn: 'Tse',
@@ -3483,7 +3483,7 @@ class AlphabetEngine {
         exampleWord: 'Цукор',
         exampleMeaning: 'Şeker',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ч',
         nameTr: 'Çe',
         nameEn: 'Che',
@@ -3491,7 +3491,7 @@ class AlphabetEngine {
         exampleWord: 'Час',
         exampleMeaning: 'Zaman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ш',
         nameTr: 'Şa',
         nameEn: 'Sha',
@@ -3499,7 +3499,7 @@ class AlphabetEngine {
         exampleWord: 'Школа',
         exampleMeaning: 'Okul',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Щ',
         nameTr: 'Şça',
         nameEn: 'Shcha',
@@ -3507,7 +3507,7 @@ class AlphabetEngine {
         exampleWord: 'Щастя',
         exampleMeaning: 'Mutluluk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ь',
         nameTr: 'Yumuşak işaret',
         nameEn: 'Soft sign',
@@ -3515,7 +3515,7 @@ class AlphabetEngine {
         exampleWord: 'День',
         exampleMeaning: 'Gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ю',
         nameTr: 'Yu',
         nameEn: 'Yu',
@@ -3524,7 +3524,7 @@ class AlphabetEngine {
         exampleMeaning: 'Avukat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Я',
         nameTr: 'Ya',
         nameEn: 'Ya',
@@ -3536,12 +3536,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _persian = NuraAlphabet(
+  static const _persian = VoxeloAlphabet(
     languageCode: 'fa',
     name: 'Fars Alfabesi',
     direction: AlphabetDirection.rtl,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'ا',
         nameTr: 'Elif',
         nameEn: 'Alef',
@@ -3550,7 +3550,7 @@ class AlphabetEngine {
         exampleMeaning: 'Su',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ب',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -3558,7 +3558,7 @@ class AlphabetEngine {
         exampleWord: 'باد',
         exampleMeaning: 'Rüzgar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'پ',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -3566,7 +3566,7 @@ class AlphabetEngine {
         exampleWord: 'پدر',
         exampleMeaning: 'Baba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ت',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -3574,7 +3574,7 @@ class AlphabetEngine {
         exampleWord: 'توپ',
         exampleMeaning: 'Top',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ج',
         nameTr: 'Cim',
         nameEn: 'Jim',
@@ -3582,7 +3582,7 @@ class AlphabetEngine {
         exampleWord: 'جنگل',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'چ',
         nameTr: 'Çe',
         nameEn: 'Che',
@@ -3590,7 +3590,7 @@ class AlphabetEngine {
         exampleWord: 'چای',
         exampleMeaning: 'Çay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'د',
         nameTr: 'Dal',
         nameEn: 'Dal',
@@ -3598,7 +3598,7 @@ class AlphabetEngine {
         exampleWord: 'در',
         exampleMeaning: 'Kapı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ر',
         nameTr: 'Re',
         nameEn: 'Re',
@@ -3606,7 +3606,7 @@ class AlphabetEngine {
         exampleWord: 'روز',
         exampleMeaning: 'Gün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ز',
         nameTr: 'Ze',
         nameEn: 'Ze',
@@ -3614,7 +3614,7 @@ class AlphabetEngine {
         exampleWord: 'زن',
         exampleMeaning: 'Kadın',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ژ',
         nameTr: 'Je',
         nameEn: 'Zhe',
@@ -3622,7 +3622,7 @@ class AlphabetEngine {
         exampleWord: 'ژاله',
         exampleMeaning: 'Çiy (kadın adı)',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'س',
         nameTr: 'Sin',
         nameEn: 'Sin',
@@ -3630,7 +3630,7 @@ class AlphabetEngine {
         exampleWord: 'سیب',
         exampleMeaning: 'Elma',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ش',
         nameTr: 'Şın',
         nameEn: 'Shin',
@@ -3638,7 +3638,7 @@ class AlphabetEngine {
         exampleWord: 'شب',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ف',
         nameTr: 'Fe',
         nameEn: 'Fe',
@@ -3646,7 +3646,7 @@ class AlphabetEngine {
         exampleWord: 'فیل',
         exampleMeaning: 'Fil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ک',
         nameTr: 'Kaf',
         nameEn: 'Kaf',
@@ -3654,7 +3654,7 @@ class AlphabetEngine {
         exampleWord: 'کتاب',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'گ',
         nameTr: 'Gaf',
         nameEn: 'Gaf',
@@ -3662,7 +3662,7 @@ class AlphabetEngine {
         exampleWord: 'گل',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ل',
         nameTr: 'Lam',
         nameEn: 'Lam',
@@ -3670,7 +3670,7 @@ class AlphabetEngine {
         exampleWord: 'لب',
         exampleMeaning: 'Dudak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'م',
         nameTr: 'Mim',
         nameEn: 'Mim',
@@ -3678,7 +3678,7 @@ class AlphabetEngine {
         exampleWord: 'ماه',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ن',
         nameTr: 'Nun',
         nameEn: 'Nun',
@@ -3686,7 +3686,7 @@ class AlphabetEngine {
         exampleWord: 'نان',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'و',
         nameTr: 'Vav',
         nameEn: 'Vav',
@@ -3695,7 +3695,7 @@ class AlphabetEngine {
         exampleMeaning: 'Spor',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ه',
         nameTr: 'He',
         nameEn: 'He',
@@ -3703,7 +3703,7 @@ class AlphabetEngine {
         exampleWord: 'هوا',
         exampleMeaning: 'Hava',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ی',
         nameTr: 'Ye',
         nameEn: 'Ye',
@@ -3715,12 +3715,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _japanese = NuraAlphabet(
+  static const _japanese = VoxeloAlphabet(
     languageCode: 'ja',
     name: 'Hiragana',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'あ',
         nameTr: 'A',
         nameEn: 'A',
@@ -3729,7 +3729,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yağmur',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'い',
         nameTr: 'İ',
         nameEn: 'I',
@@ -3738,7 +3738,7 @@ class AlphabetEngine {
         exampleMeaning: 'Köpek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'う',
         nameTr: 'U',
         nameEn: 'U',
@@ -3747,7 +3747,7 @@ class AlphabetEngine {
         exampleMeaning: 'Deniz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'え',
         nameTr: 'E',
         nameEn: 'E',
@@ -3756,7 +3756,7 @@ class AlphabetEngine {
         exampleMeaning: 'İstasyon',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'お',
         nameTr: 'O',
         nameEn: 'O',
@@ -3765,7 +3765,7 @@ class AlphabetEngine {
         exampleMeaning: 'Çay',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'か',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -3773,7 +3773,7 @@ class AlphabetEngine {
         exampleWord: 'かさ',
         exampleMeaning: 'Şemsiye',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'き',
         nameTr: 'Ki',
         nameEn: 'Ki',
@@ -3781,7 +3781,7 @@ class AlphabetEngine {
         exampleWord: 'きく',
         exampleMeaning: 'Dinlemek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'く',
         nameTr: 'Ku',
         nameEn: 'Ku',
@@ -3789,7 +3789,7 @@ class AlphabetEngine {
         exampleWord: 'くも',
         exampleMeaning: 'Bulut',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'け',
         nameTr: 'Ke',
         nameEn: 'Ke',
@@ -3797,7 +3797,7 @@ class AlphabetEngine {
         exampleWord: 'けさ',
         exampleMeaning: 'Bu sabah',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'こ',
         nameTr: 'Ko',
         nameEn: 'Ko',
@@ -3805,7 +3805,7 @@ class AlphabetEngine {
         exampleWord: 'こども',
         exampleMeaning: 'Çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'さ',
         nameTr: 'Sa',
         nameEn: 'Sa',
@@ -3813,7 +3813,7 @@ class AlphabetEngine {
         exampleWord: 'さかな',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'し',
         nameTr: 'Şi',
         nameEn: 'Shi',
@@ -3821,7 +3821,7 @@ class AlphabetEngine {
         exampleWord: 'しろ',
         exampleMeaning: 'Beyaz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'す',
         nameTr: 'Su',
         nameEn: 'Su',
@@ -3829,7 +3829,7 @@ class AlphabetEngine {
         exampleWord: 'すし',
         exampleMeaning: 'Suşi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'せ',
         nameTr: 'Se',
         nameEn: 'Se',
@@ -3837,7 +3837,7 @@ class AlphabetEngine {
         exampleWord: 'せんせい',
         exampleMeaning: 'Öğretmen',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'そ',
         nameTr: 'So',
         nameEn: 'So',
@@ -3845,7 +3845,7 @@ class AlphabetEngine {
         exampleWord: 'そら',
         exampleMeaning: 'Gökyüzü',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'た',
         nameTr: 'Ta',
         nameEn: 'Ta',
@@ -3853,7 +3853,7 @@ class AlphabetEngine {
         exampleWord: 'たべる',
         exampleMeaning: 'Yemek yemek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ち',
         nameTr: 'Çi',
         nameEn: 'Chi',
@@ -3861,7 +3861,7 @@ class AlphabetEngine {
         exampleWord: 'ちず',
         exampleMeaning: 'Harita',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'つ',
         nameTr: 'Tsu',
         nameEn: 'Tsu',
@@ -3869,7 +3869,7 @@ class AlphabetEngine {
         exampleWord: 'つき',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'て',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -3877,7 +3877,7 @@ class AlphabetEngine {
         exampleWord: 'て',
         exampleMeaning: 'El',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'と',
         nameTr: 'To',
         nameEn: 'To',
@@ -3885,7 +3885,7 @@ class AlphabetEngine {
         exampleWord: 'とり',
         exampleMeaning: 'Kuş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'な',
         nameTr: 'Na',
         nameEn: 'Na',
@@ -3893,7 +3893,7 @@ class AlphabetEngine {
         exampleWord: 'なまえ',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'に',
         nameTr: 'Ni',
         nameEn: 'Ni',
@@ -3901,7 +3901,7 @@ class AlphabetEngine {
         exampleWord: 'にほん',
         exampleMeaning: 'Japonya',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ぬ',
         nameTr: 'Nu',
         nameEn: 'Nu',
@@ -3909,7 +3909,7 @@ class AlphabetEngine {
         exampleWord: 'ぬの',
         exampleMeaning: 'Kumaş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ね',
         nameTr: 'Ne',
         nameEn: 'Ne',
@@ -3917,7 +3917,7 @@ class AlphabetEngine {
         exampleWord: 'ねこ',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'の',
         nameTr: 'No',
         nameEn: 'No',
@@ -3925,7 +3925,7 @@ class AlphabetEngine {
         exampleWord: 'のむ',
         exampleMeaning: 'İçmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'は',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -3933,7 +3933,7 @@ class AlphabetEngine {
         exampleWord: 'はな',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ひ',
         nameTr: 'Hi',
         nameEn: 'Hi',
@@ -3941,7 +3941,7 @@ class AlphabetEngine {
         exampleWord: 'ひと',
         exampleMeaning: 'İnsan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ふ',
         nameTr: 'Fu',
         nameEn: 'Fu',
@@ -3949,7 +3949,7 @@ class AlphabetEngine {
         exampleWord: 'ふね',
         exampleMeaning: 'Gemi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'へ',
         nameTr: 'He',
         nameEn: 'He',
@@ -3957,7 +3957,7 @@ class AlphabetEngine {
         exampleWord: 'へや',
         exampleMeaning: 'Oda',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ほ',
         nameTr: 'Ho',
         nameEn: 'Ho',
@@ -3965,7 +3965,7 @@ class AlphabetEngine {
         exampleWord: 'ほん',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ま',
         nameTr: 'Ma',
         nameEn: 'Ma',
@@ -3973,7 +3973,7 @@ class AlphabetEngine {
         exampleWord: 'まど',
         exampleMeaning: 'Pencere',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'み',
         nameTr: 'Mi',
         nameEn: 'Mi',
@@ -3981,7 +3981,7 @@ class AlphabetEngine {
         exampleWord: 'みず',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'む',
         nameTr: 'Mu',
         nameEn: 'Mu',
@@ -3989,7 +3989,7 @@ class AlphabetEngine {
         exampleWord: 'むし',
         exampleMeaning: 'Böcek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'め',
         nameTr: 'Me',
         nameEn: 'Me',
@@ -3997,7 +3997,7 @@ class AlphabetEngine {
         exampleWord: 'め',
         exampleMeaning: 'Göz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'も',
         nameTr: 'Mo',
         nameEn: 'Mo',
@@ -4005,7 +4005,7 @@ class AlphabetEngine {
         exampleWord: 'もも',
         exampleMeaning: 'Şeftali',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'や',
         nameTr: 'Ya',
         nameEn: 'Ya',
@@ -4013,7 +4013,7 @@ class AlphabetEngine {
         exampleWord: 'やま',
         exampleMeaning: 'Dağ',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ゆ',
         nameTr: 'Yu',
         nameEn: 'Yu',
@@ -4021,7 +4021,7 @@ class AlphabetEngine {
         exampleWord: 'ゆき',
         exampleMeaning: 'Kar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'よ',
         nameTr: 'Yo',
         nameEn: 'Yo',
@@ -4029,7 +4029,7 @@ class AlphabetEngine {
         exampleWord: 'よる',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ら',
         nameTr: 'Ra',
         nameEn: 'Ra',
@@ -4037,7 +4037,7 @@ class AlphabetEngine {
         exampleWord: 'らいねん',
         exampleMeaning: 'Gelecek yıl',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'り',
         nameTr: 'Ri',
         nameEn: 'Ri',
@@ -4045,7 +4045,7 @@ class AlphabetEngine {
         exampleWord: 'りんご',
         exampleMeaning: 'Elma',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'る',
         nameTr: 'Ru',
         nameEn: 'Ru',
@@ -4053,7 +4053,7 @@ class AlphabetEngine {
         exampleWord: 'るす',
         exampleMeaning: 'Evde olmama',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'れ',
         nameTr: 'Re',
         nameEn: 'Re',
@@ -4061,7 +4061,7 @@ class AlphabetEngine {
         exampleWord: 'れいぞうこ',
         exampleMeaning: 'Buzdolabı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ろ',
         nameTr: 'Ro',
         nameEn: 'Ro',
@@ -4069,7 +4069,7 @@ class AlphabetEngine {
         exampleWord: 'ろく',
         exampleMeaning: 'Altı (sayı)',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'わ',
         nameTr: 'Wa',
         nameEn: 'Wa',
@@ -4077,7 +4077,7 @@ class AlphabetEngine {
         exampleWord: 'わたし',
         exampleMeaning: 'Ben',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'を',
         nameTr: 'Wo',
         nameEn: 'Wo',
@@ -4085,7 +4085,7 @@ class AlphabetEngine {
         exampleWord: 'を',
         exampleMeaning: '(nesne eki)',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ん',
         nameTr: 'N',
         nameEn: 'N',
@@ -4096,12 +4096,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _korean = NuraAlphabet(
+  static const _korean = VoxeloAlphabet(
     languageCode: 'ko',
     name: 'Hangul',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㄱ',
         nameTr: 'Giyeok',
         nameEn: 'Giyeok',
@@ -4109,7 +4109,7 @@ class AlphabetEngine {
         exampleWord: '가방',
         exampleMeaning: 'Çanta',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㄴ',
         nameTr: 'Nieun',
         nameEn: 'Nieun',
@@ -4117,7 +4117,7 @@ class AlphabetEngine {
         exampleWord: '나라',
         exampleMeaning: 'Ülke',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㄷ',
         nameTr: 'Digeut',
         nameEn: 'Digeut',
@@ -4125,7 +4125,7 @@ class AlphabetEngine {
         exampleWord: '다리',
         exampleMeaning: 'Köprü',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㄹ',
         nameTr: 'Rieul',
         nameEn: 'Rieul',
@@ -4133,7 +4133,7 @@ class AlphabetEngine {
         exampleWord: '라면',
         exampleMeaning: 'Ramen',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅁ',
         nameTr: 'Mieum',
         nameEn: 'Mieum',
@@ -4141,7 +4141,7 @@ class AlphabetEngine {
         exampleWord: '마을',
         exampleMeaning: 'Köy',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅂ',
         nameTr: 'Bieup',
         nameEn: 'Bieup',
@@ -4149,7 +4149,7 @@ class AlphabetEngine {
         exampleWord: '바다',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅅ',
         nameTr: 'Siot',
         nameEn: 'Siot',
@@ -4157,7 +4157,7 @@ class AlphabetEngine {
         exampleWord: '사람',
         exampleMeaning: 'İnsan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅇ',
         nameTr: 'İeung',
         nameEn: 'Ieung',
@@ -4165,7 +4165,7 @@ class AlphabetEngine {
         exampleWord: '아이',
         exampleMeaning: 'Çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅈ',
         nameTr: 'Cieut',
         nameEn: 'Jieut',
@@ -4173,7 +4173,7 @@ class AlphabetEngine {
         exampleWord: '자전거',
         exampleMeaning: 'Bisiklet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅊ',
         nameTr: 'Çieut',
         nameEn: 'Chieut',
@@ -4181,7 +4181,7 @@ class AlphabetEngine {
         exampleWord: '차',
         exampleMeaning: 'Çay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅋ',
         nameTr: 'Kieuk',
         nameEn: 'Kieuk',
@@ -4189,7 +4189,7 @@ class AlphabetEngine {
         exampleWord: '코',
         exampleMeaning: 'Burun',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅌ',
         nameTr: 'Tieut',
         nameEn: 'Tieut',
@@ -4197,7 +4197,7 @@ class AlphabetEngine {
         exampleWord: '타다',
         exampleMeaning: 'Binmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅍ',
         nameTr: 'Pieup',
         nameEn: 'Pieup',
@@ -4205,7 +4205,7 @@ class AlphabetEngine {
         exampleWord: '파',
         exampleMeaning: 'Pırasa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅎ',
         nameTr: 'Hieut',
         nameEn: 'Hieut',
@@ -4213,7 +4213,7 @@ class AlphabetEngine {
         exampleWord: '하나',
         exampleMeaning: 'Bir (sayı)',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅏ',
         nameTr: 'A',
         nameEn: 'A',
@@ -4222,7 +4222,7 @@ class AlphabetEngine {
         exampleMeaning: 'Bebek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅑ',
         nameTr: 'Ya',
         nameEn: 'Ya',
@@ -4231,7 +4231,7 @@ class AlphabetEngine {
         exampleMeaning: 'Beyzbol',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅓ',
         nameTr: 'Eo',
         nameEn: 'Eo',
@@ -4240,7 +4240,7 @@ class AlphabetEngine {
         exampleMeaning: 'Anne',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅕ',
         nameTr: 'Yeo',
         nameEn: 'Yeo',
@@ -4249,7 +4249,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kadın',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅗ',
         nameTr: 'O',
         nameEn: 'O',
@@ -4258,7 +4258,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ördek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅛ',
         nameTr: 'Yo',
         nameEn: 'Yo',
@@ -4267,7 +4267,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yemek pişirme',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅜ',
         nameTr: 'U',
         nameEn: 'U',
@@ -4276,7 +4276,7 @@ class AlphabetEngine {
         exampleMeaning: 'Süt',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅠ',
         nameTr: 'Yu',
         nameEn: 'Yu',
@@ -4285,7 +4285,7 @@ class AlphabetEngine {
         exampleMeaning: 'Cam',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅡ',
         nameTr: 'Eu',
         nameEn: 'Eu',
@@ -4294,7 +4294,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yemek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅣ',
         nameTr: 'İ',
         nameEn: 'I',
@@ -4303,7 +4303,7 @@ class AlphabetEngine {
         exampleMeaning: 'İsim',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅐ',
         nameTr: 'Ae',
         nameEn: 'Ae',
@@ -4312,7 +4312,7 @@ class AlphabetEngine {
         exampleMeaning: 'Köpek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅔ',
         nameTr: 'E',
         nameEn: 'E',
@@ -4321,7 +4321,7 @@ class AlphabetEngine {
         exampleMeaning: 'Evet',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅒ',
         nameTr: 'Yae',
         nameEn: 'Yae',
@@ -4330,7 +4330,7 @@ class AlphabetEngine {
         exampleMeaning: 'Bu çocuk',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅖ',
         nameTr: 'Ye',
         nameEn: 'Ye',
@@ -4339,7 +4339,7 @@ class AlphabetEngine {
         exampleMeaning: 'Evet (resmi)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅘ',
         nameTr: 'Wa',
         nameEn: 'Wa',
@@ -4348,7 +4348,7 @@ class AlphabetEngine {
         exampleMeaning: 'Vay',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅙ',
         nameTr: 'Wae',
         nameEn: 'Wae',
@@ -4357,7 +4357,7 @@ class AlphabetEngine {
         exampleMeaning: 'Neden',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅚ',
         nameTr: 'Oe',
         nameEn: 'Oe',
@@ -4366,7 +4366,7 @@ class AlphabetEngine {
         exampleMeaning: 'Dış',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅝ',
         nameTr: 'Wo',
         nameEn: 'Wo',
@@ -4375,7 +4375,7 @@ class AlphabetEngine {
         exampleMeaning: '(ünlem)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅞ',
         nameTr: 'We',
         nameEn: 'We',
@@ -4384,7 +4384,7 @@ class AlphabetEngine {
         exampleMeaning: '(ünlem)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅟ',
         nameTr: 'Wi',
         nameEn: 'Wi',
@@ -4393,7 +4393,7 @@ class AlphabetEngine {
         exampleMeaning: 'Üst/yukarı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅢ',
         nameTr: 'Ui',
         nameEn: 'Ui',
@@ -4402,7 +4402,7 @@ class AlphabetEngine {
         exampleMeaning: '-ın/-in eki',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㄲ',
         nameTr: 'Ssang-giyeok',
         nameEn: 'Kk',
@@ -4410,7 +4410,7 @@ class AlphabetEngine {
         exampleWord: '꼬리',
         exampleMeaning: 'Kuyruk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㄸ',
         nameTr: 'Ssang-digeut',
         nameEn: 'Tt',
@@ -4418,7 +4418,7 @@ class AlphabetEngine {
         exampleWord: '땅',
         exampleMeaning: 'Toprak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅃ',
         nameTr: 'Ssang-bieup',
         nameEn: 'Pp',
@@ -4426,7 +4426,7 @@ class AlphabetEngine {
         exampleWord: '빵',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅆ',
         nameTr: 'Ssang-siot',
         nameEn: 'Ss',
@@ -4434,7 +4434,7 @@ class AlphabetEngine {
         exampleWord: '쌀',
         exampleMeaning: 'Pirinç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ㅉ',
         nameTr: 'Ssang-jieut',
         nameEn: 'Jj',
@@ -4445,12 +4445,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _greek = NuraAlphabet(
+  static const _greek = VoxeloAlphabet(
     languageCode: 'el',
     name: 'Yunan Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'Α',
         nameTr: 'Alfa',
         nameEn: 'Alpha',
@@ -4459,7 +4459,7 @@ class AlphabetEngine {
         exampleMeaning: 'Atina',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Β',
         nameTr: 'Vita',
         nameEn: 'Beta',
@@ -4467,7 +4467,7 @@ class AlphabetEngine {
         exampleWord: 'Βιβλίο',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Γ',
         nameTr: 'Gamma',
         nameEn: 'Gamma',
@@ -4475,7 +4475,7 @@ class AlphabetEngine {
         exampleWord: 'Γάλα',
         exampleMeaning: 'Süt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Δ',
         nameTr: 'Delta',
         nameEn: 'Delta',
@@ -4483,7 +4483,7 @@ class AlphabetEngine {
         exampleWord: 'Δρόμος',
         exampleMeaning: 'Yol',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ε',
         nameTr: 'Epsilon',
         nameEn: 'Epsilon',
@@ -4492,7 +4492,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ben',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ζ',
         nameTr: 'Zita',
         nameEn: 'Zeta',
@@ -4500,7 +4500,7 @@ class AlphabetEngine {
         exampleWord: 'Ζωή',
         exampleMeaning: 'Hayat',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Η',
         nameTr: 'İta',
         nameEn: 'Eta',
@@ -4509,7 +4509,7 @@ class AlphabetEngine {
         exampleMeaning: 'Güneş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Θ',
         nameTr: 'Thita',
         nameEn: 'Theta',
@@ -4517,7 +4517,7 @@ class AlphabetEngine {
         exampleWord: 'Θάλασσα',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ι',
         nameTr: 'İota',
         nameEn: 'Iota',
@@ -4526,7 +4526,7 @@ class AlphabetEngine {
         exampleMeaning: 'Fikir',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Κ',
         nameTr: 'Kappa',
         nameEn: 'Kappa',
@@ -4534,7 +4534,7 @@ class AlphabetEngine {
         exampleWord: 'Καφές',
         exampleMeaning: 'Kahve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Λ',
         nameTr: 'Lambda',
         nameEn: 'Lambda',
@@ -4542,7 +4542,7 @@ class AlphabetEngine {
         exampleWord: 'Λόγος',
         exampleMeaning: 'Söz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Μ',
         nameTr: 'Mi',
         nameEn: 'Mu',
@@ -4550,7 +4550,7 @@ class AlphabetEngine {
         exampleWord: 'Μάνα',
         exampleMeaning: 'Anne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ν',
         nameTr: 'Ni',
         nameEn: 'Nu',
@@ -4558,7 +4558,7 @@ class AlphabetEngine {
         exampleWord: 'Νερό',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ξ',
         nameTr: 'Ksi',
         nameEn: 'Xi',
@@ -4566,7 +4566,7 @@ class AlphabetEngine {
         exampleWord: 'Ξένος',
         exampleMeaning: 'Yabancı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ο',
         nameTr: 'Omikron',
         nameEn: 'Omicron',
@@ -4575,7 +4575,7 @@ class AlphabetEngine {
         exampleMeaning: 'İsim',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Π',
         nameTr: 'Pi',
         nameEn: 'Pi',
@@ -4583,7 +4583,7 @@ class AlphabetEngine {
         exampleWord: 'Πόλη',
         exampleMeaning: 'Şehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ρ',
         nameTr: 'Ro',
         nameEn: 'Rho',
@@ -4591,7 +4591,7 @@ class AlphabetEngine {
         exampleWord: 'Ρόδο',
         exampleMeaning: 'Gül',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Σ',
         nameTr: 'Sigma',
         nameEn: 'Sigma',
@@ -4599,7 +4599,7 @@ class AlphabetEngine {
         exampleWord: 'Σπίτι',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Τ',
         nameTr: 'Taf',
         nameEn: 'Tau',
@@ -4607,7 +4607,7 @@ class AlphabetEngine {
         exampleWord: 'Τραπέζι',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Υ',
         nameTr: 'İpsilon',
         nameEn: 'Upsilon',
@@ -4616,7 +4616,7 @@ class AlphabetEngine {
         exampleMeaning: 'Uyku',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Φ',
         nameTr: 'Fi',
         nameEn: 'Phi',
@@ -4624,7 +4624,7 @@ class AlphabetEngine {
         exampleWord: 'Φως',
         exampleMeaning: 'Işık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Χ',
         nameTr: 'Hi',
         nameEn: 'Chi',
@@ -4632,7 +4632,7 @@ class AlphabetEngine {
         exampleWord: 'Χέρι',
         exampleMeaning: 'El',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ψ',
         nameTr: 'Psi',
         nameEn: 'Psi',
@@ -4640,7 +4640,7 @@ class AlphabetEngine {
         exampleWord: 'Ψωμί',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ω',
         nameTr: 'Omega',
         nameEn: 'Omega',
@@ -4652,12 +4652,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _hebrew = NuraAlphabet(
+  static const _hebrew = VoxeloAlphabet(
     languageCode: 'he',
     name: 'İbrani Alfabesi',
     direction: AlphabetDirection.rtl,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'א',
         nameTr: 'Alef',
         nameEn: 'Alef',
@@ -4665,7 +4665,7 @@ class AlphabetEngine {
         exampleWord: 'אבא',
         exampleMeaning: 'Baba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ב',
         nameTr: 'Bet',
         nameEn: 'Bet',
@@ -4673,7 +4673,7 @@ class AlphabetEngine {
         exampleWord: 'בית',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ג',
         nameTr: 'Gimel',
         nameEn: 'Gimel',
@@ -4681,7 +4681,7 @@ class AlphabetEngine {
         exampleWord: 'גמל',
         exampleMeaning: 'Deve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ד',
         nameTr: 'Dalet',
         nameEn: 'Dalet',
@@ -4689,7 +4689,7 @@ class AlphabetEngine {
         exampleWord: 'דג',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ה',
         nameTr: 'He',
         nameEn: 'He',
@@ -4697,7 +4697,7 @@ class AlphabetEngine {
         exampleWord: 'הר',
         exampleMeaning: 'Dağ',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ו',
         nameTr: 'Vav',
         nameEn: 'Vav',
@@ -4706,7 +4706,7 @@ class AlphabetEngine {
         exampleMeaning: 'Gül',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ז',
         nameTr: 'Zayin',
         nameEn: 'Zayin',
@@ -4714,7 +4714,7 @@ class AlphabetEngine {
         exampleWord: 'זהב',
         exampleMeaning: 'Altın',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ח',
         nameTr: 'Het',
         nameEn: 'Het',
@@ -4722,7 +4722,7 @@ class AlphabetEngine {
         exampleWord: 'חלון',
         exampleMeaning: 'Pencere',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ט',
         nameTr: 'Tet',
         nameEn: 'Tet',
@@ -4730,7 +4730,7 @@ class AlphabetEngine {
         exampleWord: 'טל',
         exampleMeaning: 'Çiy',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'י',
         nameTr: 'Yod',
         nameEn: 'Yod',
@@ -4739,7 +4739,7 @@ class AlphabetEngine {
         exampleMeaning: 'El',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'כ',
         nameTr: 'Kaf',
         nameEn: 'Kaf',
@@ -4747,7 +4747,7 @@ class AlphabetEngine {
         exampleWord: 'כלב',
         exampleMeaning: 'Köpek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ל',
         nameTr: 'Lamed',
         nameEn: 'Lamed',
@@ -4755,7 +4755,7 @@ class AlphabetEngine {
         exampleWord: 'לב',
         exampleMeaning: 'Kalp',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'מ',
         nameTr: 'Mem',
         nameEn: 'Mem',
@@ -4763,7 +4763,7 @@ class AlphabetEngine {
         exampleWord: 'מים',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'נ',
         nameTr: 'Nun',
         nameEn: 'Nun',
@@ -4771,7 +4771,7 @@ class AlphabetEngine {
         exampleWord: 'נהר',
         exampleMeaning: 'Nehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ס',
         nameTr: 'Samekh',
         nameEn: 'Samekh',
@@ -4779,7 +4779,7 @@ class AlphabetEngine {
         exampleWord: 'סוס',
         exampleMeaning: 'At',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ע',
         nameTr: 'Ayin',
         nameEn: 'Ayin',
@@ -4787,7 +4787,7 @@ class AlphabetEngine {
         exampleWord: 'עין',
         exampleMeaning: 'Göz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'פ',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -4795,7 +4795,7 @@ class AlphabetEngine {
         exampleWord: 'פה',
         exampleMeaning: 'Ağız',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'צ',
         nameTr: 'Tsadi',
         nameEn: 'Tsadi',
@@ -4803,7 +4803,7 @@ class AlphabetEngine {
         exampleWord: 'ציפור',
         exampleMeaning: 'Kuş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ק',
         nameTr: 'Qof',
         nameEn: 'Qof',
@@ -4811,7 +4811,7 @@ class AlphabetEngine {
         exampleWord: 'קול',
         exampleMeaning: 'Ses',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ר',
         nameTr: 'Resh',
         nameEn: 'Resh',
@@ -4819,7 +4819,7 @@ class AlphabetEngine {
         exampleWord: 'ראש',
         exampleMeaning: 'Baş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ש',
         nameTr: 'Shin',
         nameEn: 'Shin',
@@ -4827,7 +4827,7 @@ class AlphabetEngine {
         exampleWord: 'שמש',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ת',
         nameTr: 'Tav',
         nameEn: 'Tav',
@@ -4838,12 +4838,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _hindi = NuraAlphabet(
+  static const _hindi = VoxeloAlphabet(
     languageCode: 'hi',
     name: 'Devanagari',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'अ',
         nameTr: 'A',
         nameEn: 'A',
@@ -4852,7 +4852,7 @@ class AlphabetEngine {
         exampleMeaning: 'Nar',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'आ',
         nameTr: 'Aa',
         nameEn: 'Aa',
@@ -4861,7 +4861,7 @@ class AlphabetEngine {
         exampleMeaning: 'Mango',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'क',
         nameTr: 'Ka',
         nameEn: 'Ka',
@@ -4869,7 +4869,7 @@ class AlphabetEngine {
         exampleWord: 'कमल',
         exampleMeaning: 'Nilüfer',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ख',
         nameTr: 'Kha',
         nameEn: 'Kha',
@@ -4877,7 +4877,7 @@ class AlphabetEngine {
         exampleWord: 'खरगोश',
         exampleMeaning: 'Tavşan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'इ',
         nameTr: 'İ',
         nameEn: 'I',
@@ -4886,7 +4886,7 @@ class AlphabetEngine {
         exampleMeaning: 'Demirhindi',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ई',
         nameTr: 'İi',
         nameEn: 'Ii',
@@ -4895,7 +4895,7 @@ class AlphabetEngine {
         exampleMeaning: 'Şeker kamışı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'उ',
         nameTr: 'U',
         nameEn: 'U',
@@ -4904,7 +4904,7 @@ class AlphabetEngine {
         exampleMeaning: 'Baykuş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ऊ',
         nameTr: 'Uu',
         nameEn: 'Uu',
@@ -4913,7 +4913,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yün',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ए',
         nameTr: 'E',
         nameEn: 'E',
@@ -4922,7 +4922,7 @@ class AlphabetEngine {
         exampleMeaning: 'Bir (sayı)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ऐ',
         nameTr: 'Ai',
         nameEn: 'Ai',
@@ -4931,7 +4931,7 @@ class AlphabetEngine {
         exampleMeaning: 'Gözlük',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ओ',
         nameTr: 'O',
         nameEn: 'O',
@@ -4940,7 +4940,7 @@ class AlphabetEngine {
         exampleMeaning: 'Havan',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'औ',
         nameTr: 'Au',
         nameEn: 'Au',
@@ -4949,7 +4949,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kadın',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ग',
         nameTr: 'Ga',
         nameEn: 'Ga',
@@ -4957,7 +4957,7 @@ class AlphabetEngine {
         exampleWord: 'घर',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'घ',
         nameTr: 'Gha',
         nameEn: 'Gha',
@@ -4965,7 +4965,7 @@ class AlphabetEngine {
         exampleWord: 'घड़ी',
         exampleMeaning: 'Saat',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'च',
         nameTr: 'Ça',
         nameEn: 'Cha',
@@ -4973,7 +4973,7 @@ class AlphabetEngine {
         exampleWord: 'चाय',
         exampleMeaning: 'Çay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'छ',
         nameTr: 'Çha',
         nameEn: 'Chha',
@@ -4981,7 +4981,7 @@ class AlphabetEngine {
         exampleWord: 'छत',
         exampleMeaning: 'Çatı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ज',
         nameTr: 'Ca',
         nameEn: 'Ja',
@@ -4989,7 +4989,7 @@ class AlphabetEngine {
         exampleWord: 'जल',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'झ',
         nameTr: 'Cha',
         nameEn: 'Jha',
@@ -4997,7 +4997,7 @@ class AlphabetEngine {
         exampleWord: 'झाड़ू',
         exampleMeaning: 'Süpürge',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ट',
         nameTr: 'Tı',
         nameEn: 'Ta (retro)',
@@ -5005,7 +5005,7 @@ class AlphabetEngine {
         exampleWord: 'टमाटर',
         exampleMeaning: 'Domates',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ठ',
         nameTr: 'Thı',
         nameEn: 'Tha (retro)',
@@ -5013,7 +5013,7 @@ class AlphabetEngine {
         exampleWord: 'ठंडा',
         exampleMeaning: 'Soğuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ड',
         nameTr: 'Dı',
         nameEn: 'Da (retro)',
@@ -5021,7 +5021,7 @@ class AlphabetEngine {
         exampleWord: 'डमरू',
         exampleMeaning: 'Küçük davul',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ढ',
         nameTr: 'Dhı',
         nameEn: 'Dha (retro)',
@@ -5029,7 +5029,7 @@ class AlphabetEngine {
         exampleWord: 'ढोल',
         exampleMeaning: 'Davul',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'त',
         nameTr: 'Ta',
         nameEn: 'Ta',
@@ -5037,7 +5037,7 @@ class AlphabetEngine {
         exampleWord: 'तल',
         exampleMeaning: 'Alt/taban',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'थ',
         nameTr: 'Tha',
         nameEn: 'Tha',
@@ -5045,7 +5045,7 @@ class AlphabetEngine {
         exampleWord: 'थाली',
         exampleMeaning: 'Tabak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'द',
         nameTr: 'Da',
         nameEn: 'Da',
@@ -5053,7 +5053,7 @@ class AlphabetEngine {
         exampleWord: 'दूध',
         exampleMeaning: 'Süt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ध',
         nameTr: 'Dha',
         nameEn: 'Dha',
@@ -5061,7 +5061,7 @@ class AlphabetEngine {
         exampleWord: 'धन',
         exampleMeaning: 'Servet',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'न',
         nameTr: 'Na',
         nameEn: 'Na',
@@ -5069,7 +5069,7 @@ class AlphabetEngine {
         exampleWord: 'नल',
         exampleMeaning: 'Musluk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'प',
         nameTr: 'Pa',
         nameEn: 'Pa',
@@ -5077,7 +5077,7 @@ class AlphabetEngine {
         exampleWord: 'पानी',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'फ',
         nameTr: 'Pha',
         nameEn: 'Pha',
@@ -5085,7 +5085,7 @@ class AlphabetEngine {
         exampleWord: 'फल',
         exampleMeaning: 'Meyve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ब',
         nameTr: 'Ba',
         nameEn: 'Ba',
@@ -5093,7 +5093,7 @@ class AlphabetEngine {
         exampleWord: 'बकरी',
         exampleMeaning: 'Keçi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'भ',
         nameTr: 'Bha',
         nameEn: 'Bha',
@@ -5101,7 +5101,7 @@ class AlphabetEngine {
         exampleWord: 'भारत',
         exampleMeaning: 'Hindistan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'म',
         nameTr: 'Ma',
         nameEn: 'Ma',
@@ -5109,7 +5109,7 @@ class AlphabetEngine {
         exampleWord: 'माता',
         exampleMeaning: 'Anne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'य',
         nameTr: 'Ya',
         nameEn: 'Ya',
@@ -5117,7 +5117,7 @@ class AlphabetEngine {
         exampleWord: 'योग',
         exampleMeaning: 'Yoga',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'र',
         nameTr: 'Ra',
         nameEn: 'Ra',
@@ -5125,7 +5125,7 @@ class AlphabetEngine {
         exampleWord: 'रात',
         exampleMeaning: 'Gece',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ल',
         nameTr: 'La',
         nameEn: 'La',
@@ -5133,7 +5133,7 @@ class AlphabetEngine {
         exampleWord: 'लड़का',
         exampleMeaning: 'Erkek çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'व',
         nameTr: 'Va',
         nameEn: 'Va',
@@ -5141,7 +5141,7 @@ class AlphabetEngine {
         exampleWord: 'वन',
         exampleMeaning: 'Orman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'श',
         nameTr: 'Şa',
         nameEn: 'Sha',
@@ -5149,7 +5149,7 @@ class AlphabetEngine {
         exampleWord: 'शहर',
         exampleMeaning: 'Şehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ष',
         nameTr: 'Şha',
         nameEn: 'Ssha',
@@ -5157,7 +5157,7 @@ class AlphabetEngine {
         exampleWord: 'षट्कोण',
         exampleMeaning: 'Altıgen',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'स',
         nameTr: 'Sa',
         nameEn: 'Sa',
@@ -5165,7 +5165,7 @@ class AlphabetEngine {
         exampleWord: 'सब',
         exampleMeaning: 'Hepsi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ह',
         nameTr: 'Ha',
         nameEn: 'Ha',
@@ -5176,12 +5176,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _thai = NuraAlphabet(
+  static const _thai = VoxeloAlphabet(
     languageCode: 'th',
     name: 'Tay Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'ก',
         nameTr: 'Ko Kai',
         nameEn: 'Ko Kai',
@@ -5189,7 +5189,7 @@ class AlphabetEngine {
         exampleWord: 'ไก่',
         exampleMeaning: 'Tavuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ข',
         nameTr: 'Kho Khai',
         nameEn: 'Kho Khai',
@@ -5197,7 +5197,7 @@ class AlphabetEngine {
         exampleWord: 'ไข่',
         exampleMeaning: 'Yumurta',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ค',
         nameTr: 'Kho Khwai',
         nameEn: 'Kho Khwai',
@@ -5205,7 +5205,7 @@ class AlphabetEngine {
         exampleWord: 'ควาย',
         exampleMeaning: 'Bufalo',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ง',
         nameTr: 'Ngo Ngu',
         nameEn: 'Ngo Ngu',
@@ -5213,7 +5213,7 @@ class AlphabetEngine {
         exampleWord: 'งู',
         exampleMeaning: 'Yılan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'จ',
         nameTr: 'Cho Chan',
         nameEn: 'Cho Chan',
@@ -5221,7 +5221,7 @@ class AlphabetEngine {
         exampleWord: 'จาน',
         exampleMeaning: 'Tabak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ช',
         nameTr: 'Cho Chang',
         nameEn: 'Cho Chang',
@@ -5229,7 +5229,7 @@ class AlphabetEngine {
         exampleWord: 'ช้าง',
         exampleMeaning: 'Fil',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ซ',
         nameTr: 'So So',
         nameEn: 'So So',
@@ -5237,7 +5237,7 @@ class AlphabetEngine {
         exampleWord: 'โซ่',
         exampleMeaning: 'Zincir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ญ',
         nameTr: 'Yo Ying',
         nameEn: 'Yo Ying',
@@ -5245,7 +5245,7 @@ class AlphabetEngine {
         exampleWord: 'หญิง',
         exampleMeaning: 'Kadın',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ด',
         nameTr: 'Do Dek',
         nameEn: 'Do Dek',
@@ -5253,7 +5253,7 @@ class AlphabetEngine {
         exampleWord: 'เด็ก',
         exampleMeaning: 'Çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ต',
         nameTr: 'To Tao',
         nameEn: 'To Tao',
@@ -5261,7 +5261,7 @@ class AlphabetEngine {
         exampleWord: 'เต่า',
         exampleMeaning: 'Kaplumbağa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ท',
         nameTr: 'Tho Thahan',
         nameEn: 'Tho Thahan',
@@ -5269,7 +5269,7 @@ class AlphabetEngine {
         exampleWord: 'ทหาร',
         exampleMeaning: 'Asker',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'น',
         nameTr: 'No Nu',
         nameEn: 'No Nu',
@@ -5277,7 +5277,7 @@ class AlphabetEngine {
         exampleWord: 'หนู',
         exampleMeaning: 'Fare',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'บ',
         nameTr: 'Bo Baimai',
         nameEn: 'Bo Baimai',
@@ -5285,7 +5285,7 @@ class AlphabetEngine {
         exampleWord: 'ใบไม้',
         exampleMeaning: 'Yaprak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ป',
         nameTr: 'Po Pla',
         nameEn: 'Po Pla',
@@ -5293,7 +5293,7 @@ class AlphabetEngine {
         exampleWord: 'ปลา',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'พ',
         nameTr: 'Pho Phan',
         nameEn: 'Pho Phan',
@@ -5301,7 +5301,7 @@ class AlphabetEngine {
         exampleWord: 'พาน',
         exampleMeaning: 'Tepsi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ฟ',
         nameTr: 'Fo Fan',
         nameEn: 'Fo Fan',
@@ -5309,7 +5309,7 @@ class AlphabetEngine {
         exampleWord: 'ฟัน',
         exampleMeaning: 'Diş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ม',
         nameTr: 'Mo Ma',
         nameEn: 'Mo Ma',
@@ -5317,7 +5317,7 @@ class AlphabetEngine {
         exampleWord: 'ม้า',
         exampleMeaning: 'At',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ย',
         nameTr: 'Yo Yak',
         nameEn: 'Yo Yak',
@@ -5325,7 +5325,7 @@ class AlphabetEngine {
         exampleWord: 'ยักษ์',
         exampleMeaning: 'Dev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ร',
         nameTr: 'Ro Ruea',
         nameEn: 'Ro Ruea',
@@ -5333,7 +5333,7 @@ class AlphabetEngine {
         exampleWord: 'เรือ',
         exampleMeaning: 'Tekne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ล',
         nameTr: 'Lo Ling',
         nameEn: 'Lo Ling',
@@ -5341,7 +5341,7 @@ class AlphabetEngine {
         exampleWord: 'ลิง',
         exampleMeaning: 'Maymun',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ว',
         nameTr: 'Wo Waen',
         nameEn: 'Wo Waen',
@@ -5349,7 +5349,7 @@ class AlphabetEngine {
         exampleWord: 'แหวน',
         exampleMeaning: 'Yüzük',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ส',
         nameTr: 'So Suea',
         nameEn: 'So Suea',
@@ -5357,7 +5357,7 @@ class AlphabetEngine {
         exampleWord: 'เสือ',
         exampleMeaning: 'Kaplan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ห',
         nameTr: 'Ho Hip',
         nameEn: 'Ho Hip',
@@ -5365,7 +5365,7 @@ class AlphabetEngine {
         exampleWord: 'หีบ',
         exampleMeaning: 'Sandık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'อ',
         nameTr: 'O Ang',
         nameEn: 'O Ang',
@@ -5374,7 +5374,7 @@ class AlphabetEngine {
         exampleMeaning: 'Leğen',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ะ',
         nameTr: 'Kısa A',
         nameEn: 'Short A',
@@ -5383,7 +5383,7 @@ class AlphabetEngine {
         exampleMeaning: '(kısa ünlü)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'า',
         nameTr: 'Aa',
         nameEn: 'Aa',
@@ -5392,7 +5392,7 @@ class AlphabetEngine {
         exampleMeaning: 'Gelmek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ิ',
         nameTr: 'İ',
         nameEn: 'I',
@@ -5401,7 +5401,7 @@ class AlphabetEngine {
         exampleMeaning: '(olumsuzluk eki)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ี',
         nameTr: 'İi',
         nameEn: 'Ii',
@@ -5410,7 +5410,7 @@ class AlphabetEngine {
         exampleMeaning: 'Sahip olmak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ุ',
         nameTr: 'U',
         nameEn: 'U',
@@ -5419,7 +5419,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yumuşak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ู',
         nameTr: 'Uu',
         nameEn: 'Uu',
@@ -5428,7 +5428,7 @@ class AlphabetEngine {
         exampleMeaning: 'Bakmak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'เ',
         nameTr: 'E',
         nameEn: 'E',
@@ -5437,7 +5437,7 @@ class AlphabetEngine {
         exampleMeaning: '(ön ünlü işareti)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'โ',
         nameTr: 'O',
         nameEn: 'O',
@@ -5446,7 +5446,7 @@ class AlphabetEngine {
         exampleMeaning: 'Büyük',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ไ',
         nameTr: 'Ai',
         nameEn: 'Ai',
@@ -5458,12 +5458,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _german = NuraAlphabet(
+  static const _german = VoxeloAlphabet(
     languageCode: 'de',
     name: 'Alman Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'Ah',
@@ -5472,7 +5472,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Bay',
@@ -5480,7 +5480,7 @@ class AlphabetEngine {
         exampleWord: 'Buch',
         exampleMeaning: 'Kitap',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Tse',
         nameEn: 'Tsay',
@@ -5488,7 +5488,7 @@ class AlphabetEngine {
         exampleWord: 'Computer',
         exampleMeaning: 'Bilgisayar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'Day',
@@ -5496,7 +5496,7 @@ class AlphabetEngine {
         exampleWord: 'Dorf',
         exampleMeaning: 'Köy',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'Eh',
@@ -5505,7 +5505,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ördek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Eff',
@@ -5513,7 +5513,7 @@ class AlphabetEngine {
         exampleWord: 'Fisch',
         exampleMeaning: 'Balık',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Gay',
@@ -5521,7 +5521,7 @@ class AlphabetEngine {
         exampleWord: 'Garten',
         exampleMeaning: 'Bahçe',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Ha',
         nameEn: 'Hah',
@@ -5529,7 +5529,7 @@ class AlphabetEngine {
         exampleWord: 'Haus',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'Ee',
@@ -5538,7 +5538,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ada',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Yot',
         nameEn: 'Yot',
@@ -5546,7 +5546,7 @@ class AlphabetEngine {
         exampleWord: 'Junge',
         exampleMeaning: 'Erkek çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Kah',
@@ -5554,7 +5554,7 @@ class AlphabetEngine {
         exampleWord: 'Katze',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'Ell',
@@ -5562,7 +5562,7 @@ class AlphabetEngine {
         exampleWord: 'Liebe',
         exampleMeaning: 'Aşk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Emm',
@@ -5570,7 +5570,7 @@ class AlphabetEngine {
         exampleWord: 'Mond',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'Enn',
@@ -5578,7 +5578,7 @@ class AlphabetEngine {
         exampleWord: 'Name',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'Oh',
@@ -5587,7 +5587,7 @@ class AlphabetEngine {
         exampleMeaning: 'Fırın',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pay',
@@ -5595,7 +5595,7 @@ class AlphabetEngine {
         exampleWord: 'Papier',
         exampleMeaning: 'Kağıt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Ku',
         nameEn: 'Koo',
@@ -5603,7 +5603,7 @@ class AlphabetEngine {
         exampleWord: 'Quelle',
         exampleMeaning: 'Kaynak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Air',
@@ -5611,7 +5611,7 @@ class AlphabetEngine {
         exampleWord: 'Regen',
         exampleMeaning: 'Yağmur',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Ess',
@@ -5619,7 +5619,7 @@ class AlphabetEngine {
         exampleWord: 'Sonne',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Tay',
@@ -5627,7 +5627,7 @@ class AlphabetEngine {
         exampleWord: 'Tisch',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'Oo',
@@ -5636,7 +5636,7 @@ class AlphabetEngine {
         exampleMeaning: 'Saat',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Fau',
         nameEn: 'Fow',
@@ -5644,7 +5644,7 @@ class AlphabetEngine {
         exampleWord: 'Vogel',
         exampleMeaning: 'Kuş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'W',
         nameTr: 'Ve',
         nameEn: 'Vay',
@@ -5652,7 +5652,7 @@ class AlphabetEngine {
         exampleWord: 'Wasser',
         exampleMeaning: 'Su',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'X',
         nameTr: 'İks',
         nameEn: 'Iks',
@@ -5660,7 +5660,7 @@ class AlphabetEngine {
         exampleWord: 'Taxi',
         exampleMeaning: 'Taksi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Üpsilon',
         nameEn: 'Upsilon',
@@ -5668,7 +5668,7 @@ class AlphabetEngine {
         exampleWord: 'Yoga',
         exampleMeaning: 'Yoga',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Tset',
         nameEn: 'Tsett',
@@ -5676,7 +5676,7 @@ class AlphabetEngine {
         exampleWord: 'Zeit',
         exampleMeaning: 'Zaman',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ä',
         nameTr: 'Umlaut A',
         nameEn: 'A-umlaut',
@@ -5685,7 +5685,7 @@ class AlphabetEngine {
         exampleMeaning: 'Elmalar',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ö',
         nameTr: 'Umlaut O',
         nameEn: 'O-umlaut',
@@ -5694,7 +5694,7 @@ class AlphabetEngine {
         exampleMeaning: 'Yağ',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ü',
         nameTr: 'Umlaut U',
         nameEn: 'U-umlaut',
@@ -5703,7 +5703,7 @@ class AlphabetEngine {
         exampleMeaning: 'Alıştırma',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'ß',
         nameTr: 'Eszett',
         nameEn: 'Eszett',
@@ -5714,12 +5714,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _french = NuraAlphabet(
+  static const _french = VoxeloAlphabet(
     languageCode: 'fr',
     name: 'Fransız Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'Ah',
@@ -5728,7 +5728,7 @@ class AlphabetEngine {
         exampleMeaning: 'Arkadaş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Bay',
@@ -5736,7 +5736,7 @@ class AlphabetEngine {
         exampleWord: 'Bonjour',
         exampleMeaning: 'Merhaba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Say',
@@ -5744,7 +5744,7 @@ class AlphabetEngine {
         exampleWord: 'Chat',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'Day',
@@ -5752,7 +5752,7 @@ class AlphabetEngine {
         exampleWord: 'Danse',
         exampleMeaning: 'Dans',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'Uh',
@@ -5761,7 +5761,7 @@ class AlphabetEngine {
         exampleMeaning: 'Okul',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Ef',
         nameEn: 'Eff',
@@ -5769,7 +5769,7 @@ class AlphabetEngine {
         exampleWord: 'Fleur',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Je',
         nameEn: 'Zhay',
@@ -5777,7 +5777,7 @@ class AlphabetEngine {
         exampleWord: 'Garçon',
         exampleMeaning: 'Erkek çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Aş',
         nameEn: 'Ash',
@@ -5785,7 +5785,7 @@ class AlphabetEngine {
         exampleWord: 'Hôtel',
         exampleMeaning: 'Otel',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'Ee',
@@ -5794,7 +5794,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ada',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Ji',
         nameEn: 'Zhee',
@@ -5802,7 +5802,7 @@ class AlphabetEngine {
         exampleWord: 'Jardin',
         exampleMeaning: 'Bahçe',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Kah',
@@ -5810,7 +5810,7 @@ class AlphabetEngine {
         exampleWord: 'Kilo',
         exampleMeaning: 'Kilo',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'El',
         nameEn: 'Ell',
@@ -5818,7 +5818,7 @@ class AlphabetEngine {
         exampleWord: 'Lune',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Em',
         nameEn: 'Emm',
@@ -5826,7 +5826,7 @@ class AlphabetEngine {
         exampleWord: 'Maison',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'En',
         nameEn: 'Enn',
@@ -5834,7 +5834,7 @@ class AlphabetEngine {
         exampleWord: 'Nom',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'Oh',
@@ -5843,7 +5843,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kuş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pay',
@@ -5851,7 +5851,7 @@ class AlphabetEngine {
         exampleWord: 'Pain',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Kü',
         nameEn: 'Kew',
@@ -5859,7 +5859,7 @@ class AlphabetEngine {
         exampleWord: 'Quoi',
         exampleMeaning: 'Ne',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Er',
         nameEn: 'Air',
@@ -5867,7 +5867,7 @@ class AlphabetEngine {
         exampleWord: 'Rouge',
         exampleMeaning: 'Kırmızı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Es',
         nameEn: 'Ess',
@@ -5875,7 +5875,7 @@ class AlphabetEngine {
         exampleWord: 'Soleil',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Tay',
@@ -5883,7 +5883,7 @@ class AlphabetEngine {
         exampleWord: 'Table',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'Ü',
         nameEn: 'Ew',
@@ -5892,7 +5892,7 @@ class AlphabetEngine {
         exampleMeaning: 'Bir (dişil)',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Vay',
@@ -5900,7 +5900,7 @@ class AlphabetEngine {
         exampleWord: 'Ville',
         exampleMeaning: 'Şehir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'W',
         nameTr: 'Dubl Ve',
         nameEn: 'Double-V',
@@ -5908,7 +5908,7 @@ class AlphabetEngine {
         exampleWord: 'Wagon',
         exampleMeaning: 'Vagon',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'X',
         nameTr: 'İks',
         nameEn: 'Iks',
@@ -5916,7 +5916,7 @@ class AlphabetEngine {
         exampleWord: 'Xylophone',
         exampleMeaning: 'Ksilofon',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'İgrek',
         nameEn: 'Igrek',
@@ -5924,7 +5924,7 @@ class AlphabetEngine {
         exampleWord: 'Yaourt',
         exampleMeaning: 'Yoğurt',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zed',
         nameEn: 'Zed',
@@ -5935,12 +5935,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _spanish = NuraAlphabet(
+  static const _spanish = VoxeloAlphabet(
     languageCode: 'es',
     name: 'İspanyol Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'Ah',
@@ -5949,7 +5949,7 @@ class AlphabetEngine {
         exampleMeaning: 'Arkadaş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Bay',
@@ -5957,7 +5957,7 @@ class AlphabetEngine {
         exampleWord: 'Barco',
         exampleMeaning: 'Gemi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Say',
@@ -5965,7 +5965,7 @@ class AlphabetEngine {
         exampleWord: 'Casa',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'Day',
@@ -5973,7 +5973,7 @@ class AlphabetEngine {
         exampleWord: 'Dedo',
         exampleMeaning: 'Parmak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'Eh',
@@ -5982,7 +5982,7 @@ class AlphabetEngine {
         exampleMeaning: 'Fil',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Efe',
         nameEn: 'Effay',
@@ -5990,7 +5990,7 @@ class AlphabetEngine {
         exampleWord: 'Flor',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Hay',
@@ -5998,7 +5998,7 @@ class AlphabetEngine {
         exampleWord: 'Gato',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Açe',
         nameEn: 'Achay',
@@ -6006,7 +6006,7 @@ class AlphabetEngine {
         exampleWord: 'Hola',
         exampleMeaning: 'Merhaba',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'Ee',
@@ -6015,7 +6015,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ada',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Jota',
         nameEn: 'Hota',
@@ -6023,7 +6023,7 @@ class AlphabetEngine {
         exampleWord: 'Jamón',
         exampleMeaning: 'Jambon',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ka',
         nameEn: 'Kah',
@@ -6031,7 +6031,7 @@ class AlphabetEngine {
         exampleWord: 'Kilo',
         exampleMeaning: 'Kilo',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'Ele',
         nameEn: 'Ellay',
@@ -6039,7 +6039,7 @@ class AlphabetEngine {
         exampleWord: 'Luna',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Eme',
         nameEn: 'Emmay',
@@ -6047,7 +6047,7 @@ class AlphabetEngine {
         exampleWord: 'Mesa',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'Ene',
         nameEn: 'Ennay',
@@ -6055,7 +6055,7 @@ class AlphabetEngine {
         exampleWord: 'Nombre',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ñ',
         nameTr: 'Enye',
         nameEn: 'Enyay',
@@ -6063,7 +6063,7 @@ class AlphabetEngine {
         exampleWord: 'Niño',
         exampleMeaning: 'Çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'Oh',
@@ -6072,7 +6072,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ayı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pay',
@@ -6080,7 +6080,7 @@ class AlphabetEngine {
         exampleWord: 'Pan',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Ku',
         nameEn: 'Koo',
@@ -6088,7 +6088,7 @@ class AlphabetEngine {
         exampleWord: 'Queso',
         exampleMeaning: 'Peynir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Ere',
         nameEn: 'Erray',
@@ -6096,7 +6096,7 @@ class AlphabetEngine {
         exampleWord: 'Ratón',
         exampleMeaning: 'Fare',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Ese',
         nameEn: 'Essay',
@@ -6104,7 +6104,7 @@ class AlphabetEngine {
         exampleWord: 'Sol',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Tay',
@@ -6112,7 +6112,7 @@ class AlphabetEngine {
         exampleWord: 'Taza',
         exampleMeaning: 'Fincan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'Oo',
@@ -6121,7 +6121,7 @@ class AlphabetEngine {
         exampleMeaning: 'Üzüm',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Uve',
         nameEn: 'Oovay',
@@ -6129,7 +6129,7 @@ class AlphabetEngine {
         exampleWord: 'Vaca',
         exampleMeaning: 'İnek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'W',
         nameTr: 'Uve Doble',
         nameEn: 'Double-U',
@@ -6137,7 +6137,7 @@ class AlphabetEngine {
         exampleWord: 'Web',
         exampleMeaning: 'Web',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'X',
         nameTr: 'Equis',
         nameEn: 'Ekees',
@@ -6145,7 +6145,7 @@ class AlphabetEngine {
         exampleWord: 'Taxi',
         exampleMeaning: 'Taksi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Ye',
         nameEn: 'Yay',
@@ -6153,7 +6153,7 @@ class AlphabetEngine {
         exampleWord: 'Yo',
         exampleMeaning: 'Ben',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zeta',
         nameEn: 'Zayta',
@@ -6164,12 +6164,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _italian = NuraAlphabet(
+  static const _italian = VoxeloAlphabet(
     languageCode: 'it',
     name: 'İtalyan Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'Ah',
@@ -6178,7 +6178,7 @@ class AlphabetEngine {
         exampleMeaning: 'Arkadaş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Bi',
         nameEn: 'Bee',
@@ -6186,7 +6186,7 @@ class AlphabetEngine {
         exampleWord: 'Bambino',
         exampleMeaning: 'Çocuk',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Çi',
         nameEn: 'Chee',
@@ -6194,7 +6194,7 @@ class AlphabetEngine {
         exampleWord: 'Casa',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'Di',
         nameEn: 'Dee',
@@ -6202,7 +6202,7 @@ class AlphabetEngine {
         exampleWord: 'Dolce',
         exampleMeaning: 'Tatlı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'Eh',
@@ -6211,7 +6211,7 @@ class AlphabetEngine {
         exampleMeaning: 'Fil',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Effe',
         nameEn: 'Effay',
@@ -6219,7 +6219,7 @@ class AlphabetEngine {
         exampleWord: 'Fiore',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ci',
         nameEn: 'Jee',
@@ -6227,7 +6227,7 @@ class AlphabetEngine {
         exampleWord: 'Gatto',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Akka',
         nameEn: 'Akka',
@@ -6235,7 +6235,7 @@ class AlphabetEngine {
         exampleWord: 'Hotel',
         exampleMeaning: 'Otel',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'Ee',
@@ -6244,7 +6244,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ada',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'Elle',
         nameEn: 'Ellay',
@@ -6252,7 +6252,7 @@ class AlphabetEngine {
         exampleWord: 'Luna',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Emme',
         nameEn: 'Emmay',
@@ -6260,7 +6260,7 @@ class AlphabetEngine {
         exampleWord: 'Mare',
         exampleMeaning: 'Deniz',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'Enne',
         nameEn: 'Ennay',
@@ -6268,7 +6268,7 @@ class AlphabetEngine {
         exampleWord: 'Nome',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'Oh',
@@ -6277,7 +6277,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pi',
         nameEn: 'Pee',
@@ -6285,7 +6285,7 @@ class AlphabetEngine {
         exampleWord: 'Pane',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Ku',
         nameEn: 'Koo',
@@ -6293,7 +6293,7 @@ class AlphabetEngine {
         exampleWord: 'Quadro',
         exampleMeaning: 'Tablo',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Erre',
         nameEn: 'Erray',
@@ -6301,7 +6301,7 @@ class AlphabetEngine {
         exampleWord: 'Rosso',
         exampleMeaning: 'Kırmızı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Esse',
         nameEn: 'Essay',
@@ -6309,7 +6309,7 @@ class AlphabetEngine {
         exampleWord: 'Sole',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Ti',
         nameEn: 'Tee',
@@ -6317,7 +6317,7 @@ class AlphabetEngine {
         exampleWord: 'Tavolo',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'Oo',
@@ -6326,7 +6326,7 @@ class AlphabetEngine {
         exampleMeaning: 'Üzüm',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Vi',
         nameEn: 'Vee',
@@ -6334,7 +6334,7 @@ class AlphabetEngine {
         exampleWord: 'Vento',
         exampleMeaning: 'Rüzgar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Zeta',
         nameEn: 'Zayta',
@@ -6345,12 +6345,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _portuguese = NuraAlphabet(
+  static const _portuguese = VoxeloAlphabet(
     languageCode: 'pt',
     name: 'Portekiz Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'Ah',
@@ -6359,7 +6359,7 @@ class AlphabetEngine {
         exampleMeaning: 'Arkadaş',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Bay',
@@ -6367,7 +6367,7 @@ class AlphabetEngine {
         exampleWord: 'Bola',
         exampleMeaning: 'Top',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Se',
         nameEn: 'Say',
@@ -6375,7 +6375,7 @@ class AlphabetEngine {
         exampleWord: 'Casa',
         exampleMeaning: 'Ev',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ç',
         nameTr: 'Se Sedilya',
         nameEn: 'C-cedilla',
@@ -6383,7 +6383,7 @@ class AlphabetEngine {
         exampleWord: 'Coração',
         exampleMeaning: 'Kalp',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'Day',
@@ -6391,7 +6391,7 @@ class AlphabetEngine {
         exampleWord: 'Dedo',
         exampleMeaning: 'Parmak',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'Eh',
@@ -6400,7 +6400,7 @@ class AlphabetEngine {
         exampleMeaning: 'Okul',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Efe',
         nameEn: 'Effay',
@@ -6408,7 +6408,7 @@ class AlphabetEngine {
         exampleWord: 'Flor',
         exampleMeaning: 'Çiçek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Zhay',
@@ -6416,7 +6416,7 @@ class AlphabetEngine {
         exampleWord: 'Gato',
         exampleMeaning: 'Kedi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'Aga',
         nameEn: 'Aga',
@@ -6424,7 +6424,7 @@ class AlphabetEngine {
         exampleWord: 'Hoje',
         exampleMeaning: 'Bugün',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'İ',
         nameEn: 'Ee',
@@ -6433,7 +6433,7 @@ class AlphabetEngine {
         exampleMeaning: 'Ada',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Jota',
         nameEn: 'Zhota',
@@ -6441,7 +6441,7 @@ class AlphabetEngine {
         exampleWord: 'Janela',
         exampleMeaning: 'Pencere',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'Ele',
         nameEn: 'Ellay',
@@ -6449,7 +6449,7 @@ class AlphabetEngine {
         exampleWord: 'Lua',
         exampleMeaning: 'Ay',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Eme',
         nameEn: 'Emmay',
@@ -6457,7 +6457,7 @@ class AlphabetEngine {
         exampleWord: 'Mesa',
         exampleMeaning: 'Masa',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'Ene',
         nameEn: 'Ennay',
@@ -6465,7 +6465,7 @@ class AlphabetEngine {
         exampleWord: 'Nome',
         exampleMeaning: 'İsim',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'Oh',
@@ -6474,7 +6474,7 @@ class AlphabetEngine {
         exampleMeaning: 'Göz',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pay',
@@ -6482,7 +6482,7 @@ class AlphabetEngine {
         exampleWord: 'Pão',
         exampleMeaning: 'Ekmek',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Q',
         nameTr: 'Ke',
         nameEn: 'Kay',
@@ -6490,7 +6490,7 @@ class AlphabetEngine {
         exampleWord: 'Queijo',
         exampleMeaning: 'Peynir',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Erre',
         nameEn: 'Erray',
@@ -6498,7 +6498,7 @@ class AlphabetEngine {
         exampleWord: 'Rato',
         exampleMeaning: 'Fare',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Esse',
         nameEn: 'Essay',
@@ -6506,7 +6506,7 @@ class AlphabetEngine {
         exampleWord: 'Sol',
         exampleMeaning: 'Güneş',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Tay',
@@ -6514,7 +6514,7 @@ class AlphabetEngine {
         exampleWord: 'Tigre',
         exampleMeaning: 'Kaplan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'Oo',
@@ -6523,7 +6523,7 @@ class AlphabetEngine {
         exampleMeaning: 'Üzüm',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Vay',
@@ -6531,7 +6531,7 @@ class AlphabetEngine {
         exampleWord: 'Vento',
         exampleMeaning: 'Rüzgar',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'X',
         nameTr: 'Şis',
         nameEn: 'Sheesh',
@@ -6539,7 +6539,7 @@ class AlphabetEngine {
         exampleWord: 'Xadrez',
         exampleMeaning: 'Satranç',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Ze',
         nameEn: 'Zay',
@@ -6550,12 +6550,12 @@ class AlphabetEngine {
     ],
   );
 
-  static const _turkish = NuraAlphabet(
+  static const _turkish = VoxeloAlphabet(
     languageCode: 'tr',
     name: 'Türk Alfabesi',
     direction: AlphabetDirection.ltr,
     letters: [
-      NuraLetter(
+      VoxeloLetter(
         character: 'A',
         nameTr: 'A',
         nameEn: 'A',
@@ -6564,7 +6564,7 @@ class AlphabetEngine {
         exampleMeaning: 'Taşıt',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'B',
         nameTr: 'Be',
         nameEn: 'Be',
@@ -6572,7 +6572,7 @@ class AlphabetEngine {
         exampleWord: 'Balık',
         exampleMeaning: 'Su canlısı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'C',
         nameTr: 'Ce',
         nameEn: 'Je',
@@ -6580,7 +6580,7 @@ class AlphabetEngine {
         exampleWord: 'Ceviz',
         exampleMeaning: 'Sert kabuklu meyve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ç',
         nameTr: 'Çe',
         nameEn: 'Che',
@@ -6588,7 +6588,7 @@ class AlphabetEngine {
         exampleWord: 'Çiçek',
         exampleMeaning: 'Bitki organı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'D',
         nameTr: 'De',
         nameEn: 'De',
@@ -6596,7 +6596,7 @@ class AlphabetEngine {
         exampleWord: 'Deniz',
         exampleMeaning: 'Büyük su kütlesi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'E',
         nameTr: 'E',
         nameEn: 'E',
@@ -6605,7 +6605,7 @@ class AlphabetEngine {
         exampleMeaning: 'Meyve',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'F',
         nameTr: 'Fe',
         nameEn: 'Fe',
@@ -6613,7 +6613,7 @@ class AlphabetEngine {
         exampleWord: 'Fil',
         exampleMeaning: 'Büyük hayvan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'G',
         nameTr: 'Ge',
         nameEn: 'Ge',
@@ -6621,7 +6621,7 @@ class AlphabetEngine {
         exampleWord: 'Gül',
         exampleMeaning: 'Çiçek türü',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ğ',
         nameTr: 'Yumuşak Ge',
         nameEn: 'Soft G',
@@ -6629,7 +6629,7 @@ class AlphabetEngine {
         exampleWord: 'Dağ',
         exampleMeaning: 'Yüksek arazi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'H',
         nameTr: 'He',
         nameEn: 'He',
@@ -6637,7 +6637,7 @@ class AlphabetEngine {
         exampleWord: 'Hava',
         exampleMeaning: 'Atmosfer',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'I',
         nameTr: 'I',
         nameEn: 'I',
@@ -6646,7 +6646,7 @@ class AlphabetEngine {
         exampleMeaning: 'Az sıcak',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'İ',
         nameTr: 'İ',
         nameEn: 'I (noktalı)',
@@ -6655,7 +6655,7 @@ class AlphabetEngine {
         exampleMeaning: 'Kişi',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'J',
         nameTr: 'Je',
         nameEn: 'Je',
@@ -6663,7 +6663,7 @@ class AlphabetEngine {
         exampleWord: 'Jilet',
         exampleMeaning: 'Tıraş bıçağı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'K',
         nameTr: 'Ke',
         nameEn: 'Ke',
@@ -6671,7 +6671,7 @@ class AlphabetEngine {
         exampleWord: 'Kedi',
         exampleMeaning: 'Ev hayvanı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'L',
         nameTr: 'Le',
         nameEn: 'Le',
@@ -6679,7 +6679,7 @@ class AlphabetEngine {
         exampleWord: 'Limon',
         exampleMeaning: 'Ekşi meyve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'M',
         nameTr: 'Me',
         nameEn: 'Me',
@@ -6687,7 +6687,7 @@ class AlphabetEngine {
         exampleWord: 'Masa',
         exampleMeaning: 'Mobilya',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'N',
         nameTr: 'Ne',
         nameEn: 'Ne',
@@ -6695,7 +6695,7 @@ class AlphabetEngine {
         exampleWord: 'Nar',
         exampleMeaning: 'Meyve',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'O',
         nameTr: 'O',
         nameEn: 'O',
@@ -6704,7 +6704,7 @@ class AlphabetEngine {
         exampleMeaning: 'Eğitim yeri',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ö',
         nameTr: 'Ö',
         nameEn: 'Eu',
@@ -6713,7 +6713,7 @@ class AlphabetEngine {
         exampleMeaning: 'Böcek',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'P',
         nameTr: 'Pe',
         nameEn: 'Pe',
@@ -6721,7 +6721,7 @@ class AlphabetEngine {
         exampleWord: 'Papatya',
         exampleMeaning: 'Çiçek türü',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'R',
         nameTr: 'Re',
         nameEn: 'Re',
@@ -6729,7 +6729,7 @@ class AlphabetEngine {
         exampleWord: 'Renk',
         exampleMeaning: 'Görsel özellik',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'S',
         nameTr: 'Se',
         nameEn: 'Se',
@@ -6737,7 +6737,7 @@ class AlphabetEngine {
         exampleWord: 'Su',
         exampleMeaning: 'Sıvı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ş',
         nameTr: 'Şe',
         nameEn: 'She',
@@ -6745,7 +6745,7 @@ class AlphabetEngine {
         exampleWord: 'Şeker',
         exampleMeaning: 'Tatlandırıcı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'T',
         nameTr: 'Te',
         nameEn: 'Te',
@@ -6753,7 +6753,7 @@ class AlphabetEngine {
         exampleWord: 'Tavşan',
         exampleMeaning: 'Hayvan',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'U',
         nameTr: 'U',
         nameEn: 'U',
@@ -6762,7 +6762,7 @@ class AlphabetEngine {
         exampleMeaning: 'Hava taşıtı',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Ü',
         nameTr: 'Ü',
         nameEn: 'Ue',
@@ -6771,7 +6771,7 @@ class AlphabetEngine {
         exampleMeaning: 'Meyve',
         isVowel: true,
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'V',
         nameTr: 'Ve',
         nameEn: 'Ve',
@@ -6779,7 +6779,7 @@ class AlphabetEngine {
         exampleWord: 'Vazo',
         exampleMeaning: 'Çiçek kabı',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Y',
         nameTr: 'Ye',
         nameEn: 'Ye',
@@ -6787,7 +6787,7 @@ class AlphabetEngine {
         exampleWord: 'Yıldız',
         exampleMeaning: 'Gök cismi',
       ),
-      NuraLetter(
+      VoxeloLetter(
         character: 'Z',
         nameTr: 'Ze',
         nameEn: 'Ze',

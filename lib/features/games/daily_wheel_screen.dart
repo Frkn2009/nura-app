@@ -35,12 +35,12 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
   int _wonIndex = 0;
 
   static const _segments = [
-    _WheelPrize(title: '+20 XP', color: NuraTokens.accent, icon: '⚡', xp: 20),
-    _WheelPrize(title: '+40 XP', color: NuraTokens.primary, icon: '🔥', xp: 40),
-    _WheelPrize(title: '+30 XP', color: NuraTokens.purple, icon: '💎', xp: 30),
-    _WheelPrize(title: 'Plus Dene', color: NuraTokens.gold, icon: '👑'),
+    _WheelPrize(title: '+20 XP', color: VoxeloTokens.accent, icon: '⚡', xp: 20),
+    _WheelPrize(title: '+40 XP', color: VoxeloTokens.primary, icon: '🔥', xp: 40),
+    _WheelPrize(title: '+30 XP', color: VoxeloTokens.purple, icon: '💎', xp: 30),
+    _WheelPrize(title: 'Plus Dene', color: VoxeloTokens.gold, icon: '👑'),
     _WheelPrize(title: '+60 XP', color: Colors.teal, icon: '🎁', xp: 60),
-    _WheelPrize(title: '+25 XP', color: NuraTokens.danger, icon: '✨', xp: 25),
+    _WheelPrize(title: '+25 XP', color: VoxeloTokens.danger, icon: '✨', xp: 25),
   ];
 
   String get _todayKey {
@@ -147,7 +147,7 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: NuraTokens.background,
+      backgroundColor: VoxeloTokens.background,
       appBar: AppBar(
         title: const Text(
           '🎡 Günlük Çark',
@@ -163,14 +163,14 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: NuraTokens.textSecondary,
+                color: VoxeloTokens.textSecondary,
               ),
             ),
             const SizedBox(height: 24),
             const Icon(
               Icons.arrow_drop_down,
               size: 48,
-              color: NuraTokens.danger,
+              color: VoxeloTokens.danger,
             ),
             AnimatedBuilder(
               animation: _anim,
@@ -191,7 +191,7 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
               child: ElevatedButton(
                 onPressed: _done ? null : _spin,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: NuraTokens.gold,
+                  backgroundColor: VoxeloTokens.gold,
                 ),
                 child: Text(
                   _spinning
@@ -202,7 +202,7 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w900,
-                    color: NuraTokens.textPrimary,
+                    color: VoxeloTokens.textPrimary,
                   ),
                 ),
               ),
@@ -260,7 +260,7 @@ class _WheelPainter extends CustomPainter {
     }
 
     canvas.drawCircle(center, 20, Paint()..color = Colors.white);
-    canvas.drawCircle(center, 18, Paint()..color = NuraTokens.textPrimary);
+    canvas.drawCircle(center, 18, Paint()..color = VoxeloTokens.textPrimary);
   }
 
   @override

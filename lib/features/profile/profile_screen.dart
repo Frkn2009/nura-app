@@ -24,15 +24,15 @@ class ProfileScreen extends ConsumerWidget {
         children: [
           Text(i18n.you, style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 16),
-          NuraCard(
-            color: Nura.forest,
+          VoxeloCard(
+            color: Voxelo.forest,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  p.isPlus ? 'NURA Plus' : 'NURA Free',
+                  p.isPlus ? 'VOXELO Plus' : 'VOXELO Free',
                   style: const TextStyle(
-                    color: Nura.cream,
+                    color: Voxelo.cream,
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),
@@ -45,7 +45,7 @@ class ProfileScreen extends ConsumerWidget {
                 const SizedBox(height: 14),
                 if (!p.isPlus)
                   FilledButton(
-                    style: FilledButton.styleFrom(backgroundColor: Nura.terr),
+                    style: FilledButton.styleFrom(backgroundColor: Voxelo.terr),
                     onPressed: () => context.push('/paywall'),
                     child: Text(i18n.plusCta),
                   ),
@@ -53,13 +53,13 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 12),
-          NuraCard(
+          VoxeloCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.bolt_rounded, color: Nura.sunflower),
+                    const Icon(Icons.bolt_rounded, color: Voxelo.sunflower),
                     const SizedBox(width: 8),
                     Text(
                       '${p.totalXp} XP',
@@ -72,7 +72,7 @@ class ProfileScreen extends ConsumerWidget {
                     Text(
                       p.xpRank.label,
                       style: const TextStyle(
-                        color: Nura.mintDark,
+                        color: Voxelo.mintDark,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -85,19 +85,19 @@ class ProfileScreen extends ConsumerWidget {
                   p.nextXpRank == null
                       ? 'En yüksek seviye'
                       : '${p.nextXpRank!.label} için ${p.nextXpRank!.minimumXp - p.totalXp} XP',
-                  style: const TextStyle(color: Nura.muted, fontSize: 12),
+                  style: const TextStyle(color: Voxelo.muted, fontSize: 12),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 10),
-          NuraCard(
+          VoxeloCard(
             onTap: () => context.push('/family'),
             child: Row(
               children: [
                 const Icon(
                   Icons.family_restroom_outlined,
-                  color: Nura.mintDark,
+                  color: Voxelo.mintDark,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -106,16 +106,16 @@ class ProfileScreen extends ConsumerWidget {
                     style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Icon(Icons.swap_horiz, color: Nura.soft),
+                const Icon(Icons.swap_horiz, color: Voxelo.soft),
               ],
             ),
           ),
           const SizedBox(height: 10),
-          NuraCard(
+          VoxeloCard(
             onTap: () => context.push('/achievements'),
             child: Row(
               children: [
-                const Icon(Icons.military_tech_outlined, color: Nura.sunflower),
+                const Icon(Icons.military_tech_outlined, color: Voxelo.sunflower),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -123,20 +123,20 @@ class ProfileScreen extends ConsumerWidget {
                     style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Nura.soft),
+                const Icon(Icons.chevron_right, color: Voxelo.soft),
               ],
             ),
           ),
           const SizedBox(height: 18),
           if (cloudOn) ...[
-            const Eyebrow('NURA Hesap'),
+            const Eyebrow('VOXELO Hesap'),
             const SizedBox(height: 8),
             if (email == null)
-              NuraCard(
+              VoxeloCard(
                 onTap: () => context.push('/auth'),
                 child: const Row(
                   children: [
-                    Icon(Icons.cloud_outlined, color: Nura.forest),
+                    Icon(Icons.cloud_outlined, color: Voxelo.forest),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -144,18 +144,18 @@ class ProfileScreen extends ConsumerWidget {
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: Nura.soft),
+                    Icon(Icons.chevron_right, color: Voxelo.soft),
                   ],
                 ),
               )
             else
-              NuraCard(
+              VoxeloCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.cloud_done, color: Nura.forest),
+                        const Icon(Icons.cloud_done, color: Voxelo.forest),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
@@ -168,7 +168,7 @@ class ProfileScreen extends ConsumerWidget {
                     const SizedBox(height: 6),
                     const Text(
                       'İlerlemen buluta yedekleniyor. Yeni cihazda giriş yapınca geri gelir.',
-                      style: TextStyle(color: Nura.muted, fontSize: 13),
+                      style: TextStyle(color: Voxelo.muted, fontSize: 13),
                     ),
                     const SizedBox(height: 10),
                     TextButton(
@@ -191,7 +191,7 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () => ref.read(sessionProvider.notifier).setLearn(l),
             ),
           const SizedBox(height: 8),
-          NuraCard(
+          VoxeloCard(
             onTap: () => context.push('/guide'),
             child: Row(
               children: [
@@ -203,7 +203,7 @@ class ProfileScreen extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Nura.soft),
+                const Icon(Icons.chevron_right, color: Voxelo.soft),
               ],
             ),
           ),
@@ -258,7 +258,7 @@ class ProfileScreen extends ConsumerWidget {
             title: const Text('Günlük pratik bildirimi'),
             subtitle: const Text('Günde yalnızca bir kez'),
             value: p.notificationsEnabled,
-            activeThumbColor: Nura.mintDark,
+            activeThumbColor: Voxelo.mintDark,
             onChanged: (value) => ref
                 .read(sessionProvider.notifier)
                 .setNotificationsEnabled(value),
@@ -292,7 +292,7 @@ class ProfileScreen extends ConsumerWidget {
             title: const Text('Plus’ı aç (geliştirici)'),
             subtitle: const Text('Mağaza bağlanınca RevenueCat alır'),
             value: p.isPlus,
-            activeThumbColor: Nura.forest,
+            activeThumbColor: Voxelo.forest,
             onChanged: (v) => ref.read(sessionProvider.notifier).setPlus(v),
           ),
           ListTile(
@@ -301,7 +301,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/privacy'),
           ),
           ListTile(
-            title: const Text('Hesabı sil', style: TextStyle(color: Nura.terr)),
+            title: const Text('Hesabı sil', style: TextStyle(color: Voxelo.terr)),
             subtitle: Text(
               email != null
                   ? 'Sunucudaki hesabın ve bu cihazdaki ilerleme silinir'
@@ -349,7 +349,7 @@ class ProfileScreen extends ConsumerWidget {
                 ? 'Ekonomi USD kilitli. Ses mümkün olduğunca cihazda.'
                 : 'Bulut senkron kapalı: lib/core/supabase_config.dart içine anahtarları girince açılır.',
             style: const TextStyle(
-              color: Nura.muted,
+              color: Voxelo.muted,
               fontSize: 13,
               height: 1.4,
             ),

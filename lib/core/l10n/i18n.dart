@@ -8,7 +8,7 @@ class I18n {
 
   String t(Map<String, String> m) => m[_c] ?? m['en'] ?? m.values.first;
 
-  String get appName => 'NURA';
+  String get appName => 'VOXELO';
   String get speakToLearn => t({
     'tr': 'Konuşarak öğren',
     'en': 'Learn by speaking',
@@ -127,22 +127,22 @@ class I18n {
   String get storySlide1Body => t({
     'tr':
         'Kelime listeleri unutulur, konuşma cesareti kalıcı olur. '
-        'Nura seni ilk cümleyi kurmaya, oradan devamına götürür.',
+        'Voxelo seni ilk cümleyi kurmaya, oradan devamına götürür.',
     'en':
         'Word lists get forgotten, the courage to speak stays. '
-        'Nura gets you to your first sentence, then keeps you going.',
+        'Voxelo gets you to your first sentence, then keeps you going.',
     'es':
         'Las listas de palabras se olvidan, el valor para hablar '
-        'permanece. Nura te lleva a tu primera frase y luego más allá.',
+        'permanece. Voxelo te lleva a tu primera frase y luego más allá.',
     'de':
         'Wortlisten werden vergessen, der Mut zu sprechen bleibt. '
-        'Nura bringt dich zum ersten Satz — und weiter.',
+        'Voxelo bringt dich zum ersten Satz — und weiter.',
     'fr':
         'Les listes de mots s\'oublient, le courage de parler reste. '
-        'Nura t\'amène à ta première phrase, puis à la suite.',
+        'Voxelo t\'amène à ta première phrase, puis à la suite.',
     'nl':
         'Woordenlijsten worden vergeten, spreekdurf blijft. '
-        'Nura brengt je naar je eerste zin, en verder.',
+        'Voxelo brengt je naar je eerste zin, en verder.',
     'ar':
         'قوائم الكلمات تُنسى، شجاعة الكلام تبقى. '
         'نورا توصلك إلى جملتك الأولى، ثم إلى ما بعدها.',

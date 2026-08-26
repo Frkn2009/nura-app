@@ -1,4 +1,4 @@
-# NURA — Durum Raporu (21 Ağustos 2026)
+# VOXELO — Durum Raporu (21 Ağustos 2026)
 
 ## ✅ 30 DİL — TAMAMLANDI
 

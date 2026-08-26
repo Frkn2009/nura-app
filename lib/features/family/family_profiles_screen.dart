@@ -16,7 +16,7 @@ class FamilyProfilesScreen extends ConsumerWidget {
     final controller = ref.read(sessionProvider.notifier);
     final profiles = controller.familyProfiles();
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Aile profilleri')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Aile profilleri')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 16, 22, 30),
@@ -28,7 +28,7 @@ class FamilyProfilesScreen extends ConsumerWidget {
             const SizedBox(height: 7),
             const Text(
               'Her profil kendi dilini, XP’sini, serisini ve tekrarlarını saklar.',
-              style: TextStyle(color: Nura.muted, height: 1.4),
+              style: TextStyle(color: Voxelo.muted, height: 1.4),
             ),
             const SizedBox(height: 20),
             for (final profile in profiles) ...[
@@ -60,7 +60,7 @@ class FamilyProfilesScreen extends ConsumerWidget {
             Text(
               '${profiles.length} / 4 profil',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Nura.muted, fontSize: 12),
+              style: const TextStyle(color: Voxelo.muted, fontSize: 12),
             ),
           ],
         ),
@@ -73,8 +73,8 @@ class FamilyProfilesScreen extends ConsumerWidget {
     WidgetRef ref,
     UserProfile profile,
     bool selected,
-  ) => NuraCard(
-    color: selected ? Nura.mintLight : null,
+  ) => VoxeloCard(
+    color: selected ? Voxelo.mintLight : null,
     onTap: selected
         ? null
         : () => ref
@@ -84,11 +84,11 @@ class FamilyProfilesScreen extends ConsumerWidget {
       children: [
         CircleAvatar(
           radius: 24,
-          backgroundColor: selected ? Nura.mintDark : Nura.cloud,
+          backgroundColor: selected ? Voxelo.mintDark : Voxelo.cloud,
           child: Text(
             profile.profileName.characters.first.toUpperCase(),
             style: TextStyle(
-              color: selected ? Colors.white : Nura.ink,
+              color: selected ? Colors.white : Voxelo.ink,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -108,20 +108,20 @@ class FamilyProfilesScreen extends ConsumerWidget {
               const SizedBox(height: 3),
               Text(
                 '${profile.learnLang.flag()} ${profile.totalXp} XP · ${profile.streak} gün',
-                style: const TextStyle(color: Nura.muted, fontSize: 12),
+                style: const TextStyle(color: Voxelo.muted, fontSize: 12),
               ),
             ],
           ),
         ),
         if (selected)
-          const Icon(Icons.check_circle, color: Nura.mintDark)
+          const Icon(Icons.check_circle, color: Voxelo.mintDark)
         else if (profile.profileId != 'main')
           IconButton(
             tooltip: 'Profili sil',
             onPressed: () => ref
                 .read(sessionProvider.notifier)
                 .deleteFamilyProfile(profile.profileId),
-            icon: const Icon(Icons.delete_outline, color: Nura.soft),
+            icon: const Icon(Icons.delete_outline, color: Voxelo.soft),
           ),
       ],
     ),

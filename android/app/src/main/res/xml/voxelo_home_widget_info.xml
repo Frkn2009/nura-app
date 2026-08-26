@@ -5,7 +5,7 @@
     android:targetCellWidth="4"
     android:targetCellHeight="2"
     android:updatePeriodMillis="0"
-    android:initialLayout="@layout/nura_home_widget"
+    android:initialLayout="@layout/voxelo_home_widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
-    android:description="@string/nura_widget_description" />
+    android:description="@string/voxelo_widget_description" />

@@ -32,7 +32,7 @@ Future<void> main() async {
     }
   }
 
-  // NURA_REVENUECAT_API_KEY dart-define'ı girilmediyse hiçbir şey yapmaz —
+  // VOXELO_REVENUECAT_API_KEY dart-define'ı girilmediyse hiçbir şey yapmaz —
   // PlusController o zaman FakeBillingService kullanmaya devam eder.
   await RevenueCatBillingService.configureIfNeeded();
 
@@ -46,7 +46,7 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [prefsProvider.overrideWithValue(prefs)],
-      child: const NuraApp(),
+      child: const VoxeloApp(),
     ),
   );
 }

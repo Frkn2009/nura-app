@@ -7,7 +7,7 @@ import 'tokens.dart';
 /// (okunaklı, sıcak) — sistem fontu "Inter" hissini kesen premium çift.
 /// İkisi de assets/fonts altında paketlenir; google_fonts'un çalışma
 /// zamanında internetten font indirmesi offline-first mimariyi bozuyordu.
-TextStyle nuraDisplay({
+TextStyle voxeloDisplay({
   required FontWeight fontWeight,
   required double fontSize,
   double? height,
@@ -22,7 +22,7 @@ TextStyle nuraDisplay({
   color: color,
 );
 
-TextStyle nuraBody({
+TextStyle voxeloBody({
   required FontWeight fontWeight,
   required double fontSize,
   double? height,
@@ -37,126 +37,126 @@ TextStyle nuraBody({
   color: color,
 );
 
-ThemeData buildNuraTheme() {
+ThemeData buildVoxeloTheme() {
   final text = TextTheme(
-    displayLarge: nuraDisplay(
+    displayLarge: voxeloDisplay(
       fontWeight: FontWeight.w700,
       fontSize: 34,
       height: 1.12,
       letterSpacing: -1,
-      color: Nura.ink,
+      color: Voxelo.ink,
     ),
-    displayMedium: nuraDisplay(
+    displayMedium: voxeloDisplay(
       fontWeight: FontWeight.w700,
       fontSize: 28,
       height: 1.16,
       letterSpacing: -.6,
-      color: Nura.ink,
+      color: Voxelo.ink,
     ),
-    headlineMedium: nuraDisplay(
+    headlineMedium: voxeloDisplay(
       fontWeight: FontWeight.w600,
       fontSize: 22,
       height: 1.25,
       letterSpacing: -.25,
-      color: Nura.ink,
+      color: Voxelo.ink,
     ),
-    titleLarge: nuraDisplay(
+    titleLarge: voxeloDisplay(
       fontWeight: FontWeight.w600,
       fontSize: 18,
       height: 1.3,
-      color: Nura.ink,
+      color: Voxelo.ink,
     ),
-    titleMedium: nuraBody(
+    titleMedium: voxeloBody(
       fontWeight: FontWeight.w600,
       fontSize: 16,
       height: 1.35,
-      color: Nura.ink,
+      color: Voxelo.ink,
     ),
-    bodyLarge: nuraBody(
+    bodyLarge: voxeloBody(
       fontWeight: FontWeight.w400,
       fontSize: 16,
       height: 1.5,
-      color: Nura.ink,
+      color: Voxelo.ink,
     ),
-    bodyMedium: nuraBody(
+    bodyMedium: voxeloBody(
       fontWeight: FontWeight.w400,
       fontSize: 14,
       height: 1.5,
-      color: Nura.muted,
+      color: Voxelo.muted,
     ),
-    labelLarge: nuraBody(
+    labelLarge: voxeloBody(
       fontWeight: FontWeight.w600,
       fontSize: 14,
       letterSpacing: .1,
       color: Colors.white,
     ),
-    labelSmall: nuraBody(
+    labelSmall: voxeloBody(
       fontWeight: FontWeight.w600,
       fontSize: 11,
       letterSpacing: .7,
-      color: Nura.mintDark,
+      color: Voxelo.mintDark,
     ),
   );
 
   const scheme = ColorScheme.light(
-    primary: Nura.mint,
+    primary: Voxelo.mint,
     onPrimary: Colors.white,
-    primaryContainer: Nura.mintLight,
-    onPrimaryContainer: Nura.mintDark,
-    secondary: Nura.coral,
+    primaryContainer: Voxelo.mintLight,
+    onPrimaryContainer: Voxelo.mintDark,
+    secondary: Voxelo.coral,
     onSecondary: Colors.white,
-    tertiary: Nura.lavender,
-    surface: Nura.white,
-    onSurface: Nura.ink,
-    surfaceContainerLow: Nura.snow,
-    surfaceContainer: Nura.cloud,
-    outline: Nura.fog,
-    outlineVariant: Nura.fog,
+    tertiary: Voxelo.lavender,
+    surface: Voxelo.white,
+    onSurface: Voxelo.ink,
+    surfaceContainerLow: Voxelo.snow,
+    surfaceContainer: Voxelo.cloud,
+    outline: Voxelo.fog,
+    outlineVariant: Voxelo.fog,
     error: Color(0xFFB4453C),
   );
 
   final controlShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Nura.radius),
+    borderRadius: BorderRadius.circular(Voxelo.radius),
   );
 
   return ThemeData(
     useMaterial3: true,
     fontFamily: 'Manrope',
-    scaffoldBackgroundColor: Nura.snow,
+    scaffoldBackgroundColor: Voxelo.snow,
     colorScheme: scheme,
     textTheme: text,
     visualDensity: VisualDensity.standard,
     splashFactory: InkSparkle.splashFactory,
     appBarTheme: AppBarTheme(
-      backgroundColor: Nura.snow,
-      foregroundColor: Nura.ink,
+      backgroundColor: Voxelo.snow,
+      foregroundColor: Voxelo.ink,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
       toolbarHeight: 60,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
-      titleTextStyle: nuraDisplay(
+      titleTextStyle: voxeloDisplay(
         fontWeight: FontWeight.w600,
         fontSize: 16,
-        color: Nura.ink,
+        color: Voxelo.ink,
       ),
     ),
     cardTheme: CardThemeData(
-      color: Nura.white,
+      color: Voxelo.white,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
-        side: const BorderSide(color: Nura.fog),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
+        side: const BorderSide(color: Voxelo.fog),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: Nura.mintDark,
+        backgroundColor: Voxelo.mintDark,
         foregroundColor: Colors.white,
-        disabledBackgroundColor: Nura.fog,
-        disabledForegroundColor: Nura.soft,
+        disabledBackgroundColor: Voxelo.fog,
+        disabledForegroundColor: Voxelo.soft,
         minimumSize: const Size.fromHeight(52),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         shape: controlShape,
@@ -166,102 +166,102 @@ ThemeData buildNuraTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Nura.mintDark,
+        foregroundColor: Voxelo.mintDark,
         minimumSize: const Size.fromHeight(52),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        side: const BorderSide(color: Nura.fog),
+        side: const BorderSide(color: Voxelo.fog),
         shape: controlShape,
-        textStyle: text.labelLarge?.copyWith(color: Nura.mintDark),
+        textStyle: text.labelLarge?.copyWith(color: Voxelo.mintDark),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Nura.mintDark,
+        foregroundColor: Voxelo.mintDark,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Nura.radiusSm),
+          borderRadius: BorderRadius.circular(Voxelo.radiusSm),
         ),
-        textStyle: nuraBody(fontWeight: FontWeight.w600, fontSize: 14),
+        textStyle: voxeloBody(fontWeight: FontWeight.w600, fontSize: 14),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Nura.white,
+      fillColor: Voxelo.white,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: Nura.fog),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderSide: const BorderSide(color: Voxelo.fog),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: Nura.fog),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderSide: const BorderSide(color: Voxelo.fog),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: Nura.mint, width: 1.5),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderSide: const BorderSide(color: Voxelo.mint, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
-        borderSide: const BorderSide(color: Nura.coral),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderSide: const BorderSide(color: Voxelo.coral),
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
       height: 68,
       elevation: 0,
-      backgroundColor: Nura.white,
+      backgroundColor: Voxelo.white,
       surfaceTintColor: Colors.transparent,
-      indicatorColor: Nura.mintLight,
+      indicatorColor: Voxelo.mintLight,
       indicatorShape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
       ),
       labelTextStyle: WidgetStatePropertyAll(
-        nuraBody(fontWeight: FontWeight.w600, fontSize: 11),
+        voxeloBody(fontWeight: FontWeight.w600, fontSize: 11),
       ),
     ),
     dialogTheme: DialogThemeData(
-      backgroundColor: Nura.white,
+      backgroundColor: Voxelo.white,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radiusLg),
+        borderRadius: BorderRadius.circular(Voxelo.radiusLg),
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: Nura.white,
+      backgroundColor: Voxelo.white,
       surfaceTintColor: Colors.transparent,
       showDragHandle: true,
     ),
-    dividerColor: Nura.fog,
-    dividerTheme: const DividerThemeData(color: Nura.fog, thickness: 1),
+    dividerColor: Voxelo.fog,
+    dividerTheme: const DividerThemeData(color: Voxelo.fog, thickness: 1),
     chipTheme: ChipThemeData(
-      backgroundColor: Nura.white,
-      selectedColor: Nura.mintLight,
-      side: const BorderSide(color: Nura.fog),
+      backgroundColor: Voxelo.white,
+      selectedColor: Voxelo.mintLight,
+      side: const BorderSide(color: Voxelo.fog),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-      labelStyle: nuraBody(
-        color: Nura.ink,
+      labelStyle: voxeloBody(
+        color: Voxelo.ink,
         fontWeight: FontWeight.w500,
         fontSize: 13,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
       ),
     ),
     snackBarTheme: SnackBarThemeData(
-      backgroundColor: Nura.ink,
-      contentTextStyle: nuraBody(
+      backgroundColor: Voxelo.ink,
+      contentTextStyle: voxeloBody(
         fontWeight: FontWeight.w400,
         fontSize: 14,
         color: Colors.white,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
       ),
       behavior: SnackBarBehavior.floating,
       elevation: 0,
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: Nura.mint,
-      linearTrackColor: Nura.fog,
-      circularTrackColor: Nura.fog,
+      color: Voxelo.mint,
+      linearTrackColor: Voxelo.fog,
+      circularTrackColor: Voxelo.fog,
     ),
   );
 }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../core/theme/tokens.dart';
 
-/// NURA'nın özgün marka işareti: bir konuşma balonu içinde ses ritmi.
+/// VOXELO'nın özgün marka işareti: bir konuşma balonu içinde ses ritmi.
 ///
 /// Harf tabanlı bir monogram yerine doğrudan "konuşma"yı temsil eder, bu
 /// yüzden en küçük ölçekte (uygulama simgesi) bile dil bağımsız okunur.
 /// Tamamen Flutter ile çizildiği için ekran yoğunluğundan bağımsız net
 /// kalır ve harici/telifli varlık kullanmaz.
-class NuraMark extends StatelessWidget {
-  const NuraMark({super.key, this.size = 32, this.onDark = false});
+class VoxeloMark extends StatelessWidget {
+  const VoxeloMark({super.key, this.size = 32, this.onDark = false});
 
   final double size;
   final bool onDark;
@@ -17,11 +17,11 @@ class NuraMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'NURA',
+      label: 'VOXELO',
       image: true,
       child: SizedBox.square(
         dimension: size,
-        child: CustomPaint(painter: _NuraMarkPainter(onDark: onDark)),
+        child: CustomPaint(painter: _VoxeloMarkPainter(onDark: onDark)),
       ),
     );
   }
@@ -32,8 +32,8 @@ class NuraMark extends StatelessWidget {
 /// önceki "N" harf monogramından farklı olarak en küçük ölçekte bile
 /// (uygulama simgesi boyutunda) neyi temsil ettiği çeviri gerektirmeden
 /// okunuyor.
-class _NuraMarkPainter extends CustomPainter {
-  const _NuraMarkPainter({required this.onDark});
+class _VoxeloMarkPainter extends CustomPainter {
+  const _VoxeloMarkPainter({required this.onDark});
 
   final bool onDark;
 
@@ -43,13 +43,13 @@ class _NuraMarkPainter extends CustomPainter {
     final rect = Offset.zero & size;
     final radius = Radius.circular(w * .24);
 
-    final backgroundColor = onDark ? Colors.white : Nura.mintDark;
+    final backgroundColor = onDark ? Colors.white : Voxelo.mintDark;
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, radius),
       Paint()..color = backgroundColor,
     );
 
-    final bubbleColor = onDark ? Nura.mintDark : Colors.white;
+    final bubbleColor = onDark ? Voxelo.mintDark : Colors.white;
     final bubbleRect = Rect.fromLTWH(w * .15, w * .19, w * .70, w * .48);
     final bubbleRRect = RRect.fromRectAndRadius(
       bubbleRect,
@@ -67,7 +67,7 @@ class _NuraMarkPainter extends CustomPainter {
 
     // Balonun içindeki 4 çubuklu ekolayzır — sırayla zemin/mercan/
     // zemin/altın renginde, değişen yüksekliklerde bir konuşma ritmi.
-    final barColors = [backgroundColor, Nura.coral, backgroundColor, Nura.gold];
+    final barColors = [backgroundColor, Voxelo.coral, backgroundColor, Voxelo.gold];
     const heightsRatio = [0.15, 0.30, 0.19, 0.25];
     final barWidth = w * .065;
     final gap = w * .05;
@@ -90,29 +90,29 @@ class _NuraMarkPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _NuraMarkPainter oldDelegate) =>
+  bool shouldRepaint(covariant _VoxeloMarkPainter oldDelegate) =>
       oldDelegate.onDark != onDark;
 }
 
-class NuraWordmark extends StatelessWidget {
-  const NuraWordmark({super.key, this.onDark = false, this.compact = false});
+class VoxeloWordmark extends StatelessWidget {
+  const VoxeloWordmark({super.key, this.onDark = false, this.compact = false});
 
   final bool onDark;
   final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    final foreground = onDark ? Colors.white : Nura.ink;
+    final foreground = onDark ? Colors.white : Voxelo.ink;
     return Semantics(
-      label: 'NURA',
+      label: 'VOXELO',
       header: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          NuraMark(size: compact ? 28 : 32, onDark: onDark),
+          VoxeloMark(size: compact ? 28 : 32, onDark: onDark),
           const SizedBox(width: 9),
           Text(
-            'NURA',
+            'VOXELO',
             style: TextStyle(
               color: foreground,
               fontFamily: 'Inter',
@@ -128,8 +128,8 @@ class NuraWordmark extends StatelessWidget {
 }
 
 /// Tüm sayfalarda marka görünürlüğünü ve başlık düzenini standartlaştırır.
-class NuraAppBar extends AppBar {
-  NuraAppBar({
+class VoxeloAppBar extends AppBar {
+  VoxeloAppBar({
     super.key,
     Widget? pageTitle,
     super.leading,
@@ -139,17 +139,17 @@ class NuraAppBar extends AppBar {
     super.automaticallyImplyLeading,
   }) : super(
          titleSpacing: 16,
-         title: _NuraAppBarTitle(
+         title: _VoxeloAppBarTitle(
            pageTitle: pageTitle,
            onDark:
-               backgroundColor == Nura.forest ||
-               backgroundColor == Nura.mintDark,
+               backgroundColor == Voxelo.forest ||
+               backgroundColor == Voxelo.mintDark,
          ),
        );
 }
 
-class _NuraAppBarTitle extends StatelessWidget {
-  const _NuraAppBarTitle({required this.pageTitle, required this.onDark});
+class _VoxeloAppBarTitle extends StatelessWidget {
+  const _VoxeloAppBarTitle({required this.pageTitle, required this.onDark});
 
   final Widget? pageTitle;
   final bool onDark;
@@ -160,7 +160,7 @@ class _NuraAppBarTitle extends StatelessWidget {
         onDark || Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
-        NuraWordmark(onDark: useDarkMark, compact: true),
+        VoxeloWordmark(onDark: useDarkMark, compact: true),
         if (pageTitle != null) ...[
           Container(
             width: 1,

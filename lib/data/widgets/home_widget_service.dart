@@ -4,8 +4,8 @@ import 'package:home_widget/home_widget.dart';
 import '../content/catalog.dart';
 import '../models/models.dart';
 
-class NuraHomeWidgetService {
-  static const appGroupId = 'group.com.nura.nura';
+class VoxeloHomeWidgetService {
+  static const appGroupId = 'group.com.voxelo.voxelo';
 
   static Future<void> sync(UserProfile profile) async {
     if (kIsWeb) return;
@@ -29,8 +29,8 @@ class NuraHomeWidgetService {
       HomeWidget.saveWidgetData('goal', UserProfile.dailyXpGoal),
     ]);
     await HomeWidget.updateWidget(
-      name: 'NuraHomeWidgetProvider',
-      iOSName: 'NuraHomeWidget',
+      name: 'VoxeloHomeWidgetProvider',
+      iOSName: 'VoxeloHomeWidget',
     );
   }
 }

@@ -14,7 +14,7 @@ class AchievementsScreen extends ConsumerWidget {
     final profile = ref.watch(sessionProvider);
     final unlocked = profile.achievements;
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Başarımlar')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Başarımlar')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 16, 22, 30),
@@ -30,7 +30,7 @@ class AchievementsScreen extends ConsumerWidget {
                 Text(
                   '${unlocked.length} / ${Achievement.values.length}',
                   style: const TextStyle(
-                    color: Nura.mintDark,
+                    color: Voxelo.mintDark,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -86,9 +86,9 @@ class _AchievementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = unlocked ? Nura.mintDark : Nura.soft;
-    return NuraCard(
-      color: unlocked ? Nura.mintLight : Nura.cloud,
+    final foreground = unlocked ? Voxelo.mintDark : Voxelo.soft;
+    return VoxeloCard(
+      color: unlocked ? Voxelo.mintLight : Voxelo.cloud,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,12 +97,12 @@ class _AchievementCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: unlocked ? Nura.mintDark : Nura.fog,
+              color: unlocked ? Voxelo.mintDark : Voxelo.fog,
               shape: BoxShape.circle,
             ),
             child: Icon(
               unlocked ? icon : Icons.lock_outline,
-              color: unlocked ? Colors.white : Nura.soft,
+              color: unlocked ? Colors.white : Voxelo.soft,
             ),
           ),
           const Spacer(),
@@ -120,7 +120,7 @@ class _AchievementCard extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              color: Nura.muted,
+              color: Voxelo.muted,
               fontSize: 11,
               height: 1.35,
             ),

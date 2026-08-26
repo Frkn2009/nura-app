@@ -1,4 +1,4 @@
-# NURA birim ekonomi — USD kilitli (Ağustos 2026)
+# VOXELO birim ekonomi — USD kilitli (Ağustos 2026)
 
 İç muhasebe para birimi **USD**. Mağaza fiyatı yerelleşir (TRY, EUR…). TL/USD kuru yalnızca vitrin çevirisidir; kararlar dolara bakarak alınır.
 

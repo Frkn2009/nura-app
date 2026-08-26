@@ -44,12 +44,12 @@ class FSRSCard {
   });
 }
 
-/// NURA Beyin — FSRS-5 tam parametreli SRS motoru
-class NuraBrain {
+/// VOXELO Beyin — FSRS-5 tam parametreli SRS motoru
+class VoxeloBrain {
   final FsrsParameters params;
   final double desiredRetention;
 
-  NuraBrain({FsrsParameters? params, this.desiredRetention = 0.9})
+  VoxeloBrain({FsrsParameters? params, this.desiredRetention = 0.9})
     : params = params ?? FsrsParameters();
 
   double retrievability(FSRSCard card) {

@@ -14,10 +14,10 @@ class LibraryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final p = ref.watch(sessionProvider);
-    final stories = NuraLibrary.forLang(p.learnLang);
+    final stories = VoxeloLibrary.forLang(p.learnLang);
 
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Kitaplık')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Kitaplık')),
       body: SafeArea(
         child: stories.isEmpty
             ? Center(
@@ -26,7 +26,7 @@ class LibraryScreen extends ConsumerWidget {
                   child: Text(
                     '${p.learnLang.label(p.uiLang)} için kitaplık yakında geliyor.',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Nura.muted),
+                    style: const TextStyle(color: Voxelo.muted),
                   ),
                 ),
               )
@@ -35,11 +35,11 @@ class LibraryScreen extends ConsumerWidget {
                 children: [
                   Text(
                     '${p.learnLang.flag()} ${p.learnLang.label(p.uiLang)} · kısa okuma parçaları',
-                    style: const TextStyle(color: Nura.muted),
+                    style: const TextStyle(color: Voxelo.muted),
                   ),
                   const SizedBox(height: 16),
                   for (final story in stories) ...[
-                    NuraCard(
+                    VoxeloCard(
                       onTap: () => context.push('/library/${story.id}'),
                       child: Row(
                         children: [
@@ -47,12 +47,12 @@ class LibraryScreen extends ConsumerWidget {
                             width: 44,
                             height: 44,
                             decoration: BoxDecoration(
-                              color: Nura.mintLight,
-                              borderRadius: BorderRadius.circular(Nura.radius),
+                              color: Voxelo.mintLight,
+                              borderRadius: BorderRadius.circular(Voxelo.radius),
                             ),
                             child: const Icon(
                               Icons.menu_book_outlined,
-                              color: Nura.mintDark,
+                              color: Voxelo.mintDark,
                             ),
                           ),
                           const SizedBox(width: 13),
@@ -70,14 +70,14 @@ class LibraryScreen extends ConsumerWidget {
                                 Text(
                                   '${story.level.name.toUpperCase()} · ${story.sentences.length} cümle',
                                   style: const TextStyle(
-                                    color: Nura.muted,
+                                    color: Voxelo.muted,
                                     fontSize: 12,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const Icon(Icons.chevron_right, color: Nura.soft),
+                          const Icon(Icons.chevron_right, color: Voxelo.soft),
                         ],
                       ),
                     ),

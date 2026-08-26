@@ -1,4 +1,4 @@
-# 🚀 NURA V1.4 GLOBAL HANDOFF PACKET
+# 🚀 VOXELO V1.4 GLOBAL HANDOFF PACKET
 **Tarih:** 22 Ağustos 2026
 **Branch:** main
 **Mimari:** Riverpod, GoRouter, Supabase, FSRS-inspired SRS, Hive-ready
@@ -19,7 +19,7 @@
 | `lib/features/plus/state/plus_controller.dart` | Riverpod billing state |
 | `test/srs_machine_test.dart` | SRS 6 test |
 | `test/plus_controller_test.dart` | Billing 3 test |
-| `NURA_CODING_CONTRACT.md` | 10 kural — kod sözleşmesi |
+| `VOXELO_CODING_CONTRACT.md` | 10 kural — kod sözleşmesi |
 | `docs/STORE_CHECKLIST.md` | Mağaza hazırlık listesi |
 | `scripts/build_release.sh` | Release build scripti |
 

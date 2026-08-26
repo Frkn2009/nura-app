@@ -19,7 +19,7 @@ class LanguageGuideScreen extends ConsumerWidget {
     final g = LanguageGuide.of(lang ?? p.learnLang);
 
     return Scaffold(
-      appBar: NuraAppBar(
+      appBar: VoxeloAppBar(
         pageTitle: Text('${g.lang.flag()}  ${g.lang.label(p.uiLang)}'),
         automaticallyImplyLeading: !onboarding,
       ),
@@ -31,18 +31,18 @@ class LanguageGuideScreen extends ConsumerWidget {
           Text(
             g.intro,
             style: const TextStyle(
-              color: Nura.muted,
+              color: Voxelo.muted,
               height: 1.45,
               fontSize: 15,
             ),
           ),
           const SizedBox(height: 18),
-          NuraCard(
-            color: Nura.forest,
+          VoxeloCard(
+            color: Voxelo.forest,
             child: Text(
               g.firstWeek,
               style: const TextStyle(
-                color: Nura.cream,
+                color: Voxelo.cream,
                 height: 1.4,
                 fontSize: 15,
               ),
@@ -54,19 +54,19 @@ class LanguageGuideScreen extends ConsumerWidget {
           for (final r in g.rules)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: NuraCard(
+              child: VoxeloCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        _pill(r.written, Nura.forest, Nura.cream),
+                        _pill(r.written, Voxelo.forest, Voxelo.cream),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Icon(
                             Icons.arrow_forward,
                             size: 16,
-                            color: Nura.terr,
+                            color: Voxelo.terr,
                           ),
                         ),
                         Flexible(
@@ -74,7 +74,7 @@ class LanguageGuideScreen extends ConsumerWidget {
                             r.heard,
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Nura.ink,
+                              color: Voxelo.ink,
                             ),
                           ),
                         ),
@@ -84,20 +84,20 @@ class LanguageGuideScreen extends ConsumerWidget {
                     Text(
                       r.example,
                       style: const TextStyle(
-                        color: Nura.forest,
+                        color: Voxelo.forest,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       '≈  ${r.exampleSaid}',
-                      style: const TextStyle(color: Nura.muted),
+                      style: const TextStyle(color: Voxelo.muted),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       r.why,
                       style: const TextStyle(
                         height: 1.4,
-                        color: Nura.ink,
+                        color: Voxelo.ink,
                         fontSize: 14,
                       ),
                     ),
@@ -111,8 +111,8 @@ class LanguageGuideScreen extends ConsumerWidget {
           for (final t in g.traps)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: NuraCard(
-                color: Nura.pale,
+              child: VoxeloCard(
+                color: Voxelo.pale,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -120,7 +120,7 @@ class LanguageGuideScreen extends ConsumerWidget {
                       t.title,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: Nura.forest,
+                        color: Voxelo.forest,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -163,21 +163,21 @@ class LanguageGuideBody extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           'Konuşmadan önce 2 dakika. Yazıldığı gibi okunmaz.',
-          style: const TextStyle(color: Nura.muted),
+          style: const TextStyle(color: Voxelo.muted),
         ),
         const SizedBox(height: 14),
-        NuraCard(
-          color: Nura.forest,
+        VoxeloCard(
+          color: Voxelo.forest,
           child: Text(
             g.firstWeek,
-            style: const TextStyle(color: Nura.cream, height: 1.4),
+            style: const TextStyle(color: Voxelo.cream, height: 1.4),
           ),
         ),
         const SizedBox(height: 14),
         for (final r in g.rules.take(4))
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: NuraCard(
+            child: VoxeloCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -185,13 +185,13 @@ class LanguageGuideBody extends StatelessWidget {
                     '${r.written}  →  ${r.heard}',
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: Nura.forest,
+                      color: Voxelo.forest,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     '${r.example}   ≈   ${r.exampleSaid}',
-                    style: const TextStyle(color: Nura.muted, fontSize: 13),
+                    style: const TextStyle(color: Voxelo.muted, fontSize: 13),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -204,7 +204,7 @@ class LanguageGuideBody extends StatelessWidget {
           ),
         const Text(
           'Kalan kurallar ve tuzaklar uygulama içinde. Dil rehberi her zaman Sen sekmesinde.',
-          style: TextStyle(color: Nura.soft, fontSize: 12),
+          style: TextStyle(color: Voxelo.soft, fontSize: 12),
         ),
       ],
     );

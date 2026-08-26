@@ -1,4 +1,4 @@
-# NURA Store Release Checklist
+# VOXELO Store Release Checklist
 
 ## Zorunlu
 - [x] İmza keystore üretildi
@@ -25,4 +25,4 @@
 3. Konuşma oturumu
 4. Oyunlar
 5. İlerleme / Rozetler
-6. NURA Plus
+6. VOXELO Plus

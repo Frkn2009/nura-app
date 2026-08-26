@@ -1,8 +1,8 @@
-# NURA — Rakip Analizi & Eksik Özellikler (21 Ağustos 2026)
+# VOXELO — Rakip Analizi & Eksik Özellikler (21 Ağustos 2026)
 
 ## 📊 RAKIP KARŞILAŞTIRMA TABLOSU
 
-| Özellik | Duolingo | Babbel | Drops | Memrise | NURA |
+| Özellik | Duolingo | Babbel | Drops | Memrise | VOXELO |
 |---|---|---|---|---|---|
 | **Dil sayısı** | 40+ | 14 | 55+ | 24 | **30** ✅ |
 | **Gamification** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ ❌ |
@@ -23,9 +23,9 @@
 
 ---
 
-## 🏆 NURA'NIN AVANTAJLARI
+## 🏆 VOXELO'NIN AVANTAJLARI
 
-1. **Konuşma odaklı** — Rakiplerin çoğu tap-tap. NURA ağız açtırıyor
+1. **Konuşma odaklı** — Rakiplerin çoğu tap-tap. VOXELO ağız açtırıyor
 2. **30 dil telaffuz rehberi** — Hiçbir rakipte yok
 3. **Offline konuşma** — Cihazda TTS/STT, bulut maliyeti $0
 4. **Kadın ses** — Tutarlı, güvenilir ses
@@ -33,7 +33,7 @@
 6. **NIE/kira sahneleri** — İspanya'ya giden Türk nişi
 7. **30 dilde UI** — Arayüz her dilde
 
-## ❌ NURA'NIN EKSİKLERİ (düzeltilecek)
+## ❌ VOXELO'NIN EKSİKLERİ (düzeltilecek)
 
 1. **Oyun modu yok** — Kelime eşleştirme, hız yarışı lazım
 2. **Leaderboard yok** — Rekabet motivasyonu

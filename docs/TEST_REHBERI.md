@@ -1,10 +1,10 @@
-# NURA — AI ile Test Ettirme Rehberi
+# VOXELO — AI ile Test Ettirme Rehberi
 
 ## Yöntem 1: Bu Sohbette Test (Arena.ai)
 
 Bana şunu yaz:
 ```
-nura-app klasörünü aç, lib/ altındaki tüm Dart dosyalarını analiz et.
+voxelo-app klasörünü aç, lib/ altındaki tüm Dart dosyalarını analiz et.
 Derleme hatası, eksik import, tip uyumsuzluğu var mı kontrol et.
 ```
 
@@ -16,7 +16,7 @@ Ben tüm dosyaları okuyup hataları bulur, düzeltir, push ederim.
 
 CMD aç:
 ```cmd
-cd %USERPROFILE%\Desktop\nura-app
+cd %USERPROFILE%\Desktop\voxelo-app
 flutter analyze
 ```
 
@@ -52,7 +52,7 @@ Herhangi bir AI sohbetine şunu yapıştır:
 
 ```
 Bu Flutter projesinin ana dosyalarını kontrol et.
-GitHub: https://github.com/Frkn2009/nura-app
+GitHub: https://github.com/Frkn2009/voxelo-app
 
 Şunları analiz et:
 1. Derleme hatası var mı?

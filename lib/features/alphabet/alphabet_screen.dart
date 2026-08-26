@@ -13,7 +13,7 @@ class AlphabetScreen extends StatefulWidget {
 }
 
 class _AlphabetScreenState extends State<AlphabetScreen> {
-  late NuraAlphabet _alphabet;
+  late VoxeloAlphabet _alphabet;
   final Set<String> _learned = {};
   bool _stepMode = false;
   final _pageController = PageController();
@@ -60,7 +60,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
         : _learned.length / _alphabet.letters.length;
 
     return Scaffold(
-      appBar: NuraAppBar(
+      appBar: VoxeloAppBar(
         pageTitle: Text(
           _alphabet.name,
           style: const TextStyle(fontWeight: FontWeight.w800),
@@ -69,7 +69,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
           IconButton(
             icon: Icon(
               _stepMode ? Icons.view_list : Icons.school,
-              color: NuraTokens.accent,
+              color: VoxeloTokens.accent,
             ),
             tooltip: _stepMode ? 'Liste görünümü' : 'Adım adım ders',
             onPressed: () => setState(() => _stepMode = !_stepMode),
@@ -81,7 +81,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                 '%${(progress * 100).toInt()}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: NuraTokens.primary,
+                  color: VoxeloTokens.primary,
                 ),
               ),
             ),
@@ -102,8 +102,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                 ? 0
                 : (_step + 1) / _alphabet.letters.length,
             minHeight: 10,
-            color: NuraTokens.primary,
-            backgroundColor: NuraTokens.primary.withValues(alpha: 0.15),
+            color: VoxeloTokens.primary,
+            backgroundColor: VoxeloTokens.primary.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(99),
           ),
         ),
@@ -129,11 +129,11 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                         width: 180,
                         height: 180,
                         decoration: BoxDecoration(
-                          gradient: NuraTokens.heroGradient,
+                          gradient: VoxeloTokens.heroGradient,
                           borderRadius: BorderRadius.circular(
-                            NuraTokens.radiusLarge,
+                            VoxeloTokens.radiusLarge,
                           ),
-                          boxShadow: NuraTokens.softShadow,
+                          boxShadow: VoxeloTokens.softShadow,
                         ),
                         child: Center(
                           child: Text(
@@ -150,7 +150,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                     const SizedBox(height: 8),
                     const Icon(
                       Icons.volume_up,
-                      color: NuraTokens.accent,
+                      color: VoxeloTokens.accent,
                       size: 28,
                     ),
                     const SizedBox(height: 20),
@@ -168,7 +168,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                         '${letter.exampleWord}  →  ${letter.exampleMeaning}',
                         style: const TextStyle(
                           fontSize: 18,
-                          color: NuraTokens.textSecondary,
+                          color: VoxeloTokens.textSecondary,
                         ),
                       ),
                     ),
@@ -178,7 +178,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                       height: 56,
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: NuraTokens.primary,
+                          backgroundColor: VoxeloTokens.primary,
                         ),
                         icon: Icon(
                           isLearned ? Icons.check_circle : Icons.arrow_forward,
@@ -218,8 +218,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
           child: LinearProgressIndicator(
             value: progress,
             minHeight: 10,
-            color: NuraTokens.primary,
-            backgroundColor: NuraTokens.primary.withValues(alpha: 0.15),
+            color: VoxeloTokens.primary,
+            backgroundColor: VoxeloTokens.primary.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(99),
           ),
         ),
@@ -234,11 +234,11 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
               return Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
-                  color: NuraTokens.surface,
-                  borderRadius: BorderRadius.circular(NuraTokens.radiusMedium),
-                  boxShadow: NuraTokens.softShadow,
+                  color: VoxeloTokens.surface,
+                  borderRadius: BorderRadius.circular(VoxeloTokens.radiusMedium),
+                  boxShadow: VoxeloTokens.softShadow,
                   border: Border.all(
-                    color: isLearned ? NuraTokens.primary : Colors.transparent,
+                    color: isLearned ? VoxeloTokens.primary : Colors.transparent,
                     width: 2,
                   ),
                 ),
@@ -251,10 +251,10 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      gradient: isLearned ? NuraTokens.heroGradient : null,
+                      gradient: isLearned ? VoxeloTokens.heroGradient : null,
                       color: isLearned
                           ? null
-                          : NuraTokens.accent.withValues(alpha: 0.1),
+                          : VoxeloTokens.accent.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Center(
@@ -265,7 +265,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                           fontWeight: FontWeight.w900,
                           color: isLearned
                               ? Colors.white
-                              : NuraTokens.textPrimary,
+                              : VoxeloTokens.textPrimary,
                         ),
                       ),
                     ),
@@ -279,7 +279,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                   ),
                   subtitle: Text(
                     '${letter.exampleWord}  →  ${letter.exampleMeaning}',
-                    style: const TextStyle(color: NuraTokens.textSecondary),
+                    style: const TextStyle(color: VoxeloTokens.textSecondary),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -287,7 +287,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                       IconButton(
                         icon: const Icon(
                           Icons.volume_up,
-                          color: NuraTokens.accent,
+                          color: VoxeloTokens.accent,
                         ),
                         onPressed: () => _speakWord(letter.exampleWord),
                       ),
@@ -297,8 +297,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                               ? Icons.check_circle
                               : Icons.circle_outlined,
                           color: isLearned
-                              ? NuraTokens.primary
-                              : NuraTokens.textSecondary,
+                              ? VoxeloTokens.primary
+                              : VoxeloTokens.textSecondary,
                         ),
                         onPressed: () {
                           setState(() {

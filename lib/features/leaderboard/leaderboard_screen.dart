@@ -42,7 +42,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
     final email = ref.watch(authEmailProvider);
     final profile = ref.watch(sessionProvider);
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Haftalık sıralama')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Haftalık sıralama')),
       body: SafeArea(
         child: email == null
             ? _signedOut(context, profile.dailyXp)
@@ -63,14 +63,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   Widget _signedOut(BuildContext context, int localXp) => Center(
     child: Padding(
       padding: const EdgeInsets.all(28),
-      child: NuraCard(
+      child: VoxeloCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
               Icons.leaderboard_outlined,
               size: 44,
-              color: Nura.mintDark,
+              color: Voxelo.mintDark,
             ),
             const SizedBox(height: 14),
             const Text(
@@ -81,7 +81,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
             Text(
               'Bu cihazda bugün $localXp XP kazandın. Haftalık Top 10 ve kendi sıran için hesabına giriş yap.',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Nura.muted, height: 1.45),
+              style: const TextStyle(color: Voxelo.muted, height: 1.45),
             ),
             const SizedBox(height: 18),
             FilledButton(
@@ -129,14 +129,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
           const SizedBox(height: 5),
           const Text(
             'Pazartesi 00.00 UTC’de yenilenir',
-            style: TextStyle(color: Nura.muted),
+            style: TextStyle(color: Voxelo.muted),
           ),
           const SizedBox(height: 14),
-          NuraCard(
+          VoxeloCard(
             onTap: () => context.push('/clan'),
             child: const Row(
               children: [
-                Icon(Icons.groups_outlined, color: Nura.mintDark),
+                Icon(Icons.groups_outlined, color: Voxelo.mintDark),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -144,18 +144,18 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                Icon(Icons.chevron_right, color: Nura.soft),
+                Icon(Icons.chevron_right, color: Voxelo.soft),
               ],
             ),
           ),
           const SizedBox(height: 18),
           if (top.isEmpty)
-            const NuraCard(
+            const VoxeloCard(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 24),
                 child: Column(
                   children: [
-                    Icon(Icons.flag_outlined, color: Nura.mintDark, size: 36),
+                    Icon(Icons.flag_outlined, color: Voxelo.mintDark, size: 36),
                     SizedBox(height: 10),
                     Text(
                       'İlk sırayı sen al.',
@@ -164,14 +164,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
                     SizedBox(height: 4),
                     Text(
                       'XP kazandığında burada görüneceksin.',
-                      style: TextStyle(color: Nura.muted),
+                      style: TextStyle(color: Voxelo.muted),
                     ),
                   ],
                 ),
               ),
             )
           else
-            NuraCard(
+            VoxeloCard(
               padding: EdgeInsets.zero,
               child: Column(
                 children: [
@@ -186,8 +186,8 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
             const SizedBox(height: 22),
             const Eyebrow('Senin sıran'),
             const SizedBox(height: 8),
-            NuraCard(
-              color: Nura.mintLight,
+            VoxeloCard(
+              color: Voxelo.mintLight,
               padding: EdgeInsets.zero,
               child: _row(ownOutside),
             ),
@@ -199,14 +199,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
 
   Widget _row(LeaderboardEntry entry) {
     final rankColor = switch (entry.rank) {
-      1 => Nura.sunflower,
-      2 => Nura.soft,
-      3 => Nura.coral,
-      _ => Nura.mintDark,
+      1 => Voxelo.sunflower,
+      2 => Voxelo.soft,
+      3 => Voxelo.coral,
+      _ => Voxelo.mintDark,
     };
     return Container(
       color: entry.isMe
-          ? Nura.mintLight.withValues(alpha: .55)
+          ? Voxelo.mintLight.withValues(alpha: .55)
           : Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
@@ -239,7 +239,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
           Text(
             '${entry.xp} XP',
             style: const TextStyle(
-              color: Nura.mintDark,
+              color: Voxelo.mintDark,
               fontWeight: FontWeight.w700,
             ),
           ),

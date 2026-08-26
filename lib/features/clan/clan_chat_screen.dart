@@ -15,7 +15,7 @@ class ClanChatScreen extends StatefulWidget {
 }
 
 class _ClanChatScreenState extends State<ClanChatScreen> {
-  static const _blockedKey = 'nura.clan.blocked_user_ids';
+  static const _blockedKey = 'voxelo.clan.blocked_user_ids';
 
   final _input = TextEditingController();
   Future<List<ClanChatMessage>>? _request;
@@ -81,12 +81,12 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.flag_outlined, color: Nura.coral),
+              leading: const Icon(Icons.flag_outlined, color: Voxelo.coral),
               title: const Text('Mesajı bildir'),
               onTap: () => Navigator.pop(ctx, 'report'),
             ),
             ListTile(
-              leading: const Icon(Icons.block, color: Nura.coral),
+              leading: const Icon(Icons.block, color: Voxelo.coral),
               title: Text('${m.playerName} kullanıcısını engelle'),
               onTap: () => Navigator.pop(ctx, 'block'),
             ),
@@ -105,9 +105,9 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
     } else if (action == 'report') {
       final uri = Uri(
         scheme: 'mailto',
-        path: 'destek@nura.app',
+        path: 'destek@voxelo.app',
         query:
-            'subject=${Uri.encodeComponent('NURA Klan Sohbeti - içerik bildirimi')}'
+            'subject=${Uri.encodeComponent('VOXELO Klan Sohbeti - içerik bildirimi')}'
             '&body=${Uri.encodeComponent('Bildirilen kullanıcı: ${m.playerName}\nMesaj:\n\n${m.text}')}',
       );
       await launchUrl(uri);
@@ -117,7 +117,7 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NuraAppBar(
+      appBar: VoxeloAppBar(
         pageTitle: const Text('Klan Sohbeti'),
         actions: [
           IconButton(
@@ -145,7 +145,7 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                     return const Center(
                       child: Text(
                         'Henüz mesaj yok. Klanına ilk mesajı sen at.',
-                        style: TextStyle(color: Nura.muted),
+                        style: TextStyle(color: Voxelo.muted),
                       ),
                     );
                   }
@@ -170,8 +170,8 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: m.isMe ? Nura.mintDark : Nura.cloud,
-                              borderRadius: BorderRadius.circular(Nura.radius),
+                              color: m.isMe ? Voxelo.mintDark : Voxelo.cloud,
+                              borderRadius: BorderRadius.circular(Voxelo.radius),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,13 +182,13 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                                     style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
-                                      color: Nura.mintDark,
+                                      color: Voxelo.mintDark,
                                     ),
                                   ),
                                 Text(
                                   m.text,
                                   style: TextStyle(
-                                    color: m.isMe ? Colors.white : Nura.ink,
+                                    color: m.isMe ? Colors.white : Voxelo.ink,
                                   ),
                                 ),
                               ],

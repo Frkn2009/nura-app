@@ -88,7 +88,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final story = widget.story;
     final rtl = story.lang.isRtl;
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: Text(story.titleTr)),
+      appBar: VoxeloAppBar(pageTitle: Text(story.titleTr)),
       body: SafeArea(
         child: Column(
           children: [
@@ -107,7 +107,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                   const SizedBox(height: 4),
                   Text(
                     '${story.level.name.toUpperCase()} · ${story.lang.label(UiLang.tr)}',
-                    style: const TextStyle(color: Nura.muted, fontSize: 12),
+                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
                   ),
                   const SizedBox(height: 18),
                   for (var i = 0; i < story.sentences.length; i++) ...[
@@ -155,8 +155,8 @@ class _SentenceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NuraCard(
-      color: playing ? Nura.mintLight : null,
+    return VoxeloCard(
+      color: playing ? Voxelo.mintLight : null,
       child: Row(
         children: [
           Expanded(
@@ -178,7 +178,7 @@ class _SentenceCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   sentence.glossTr,
-                  style: const TextStyle(color: Nura.muted, fontSize: 13),
+                  style: const TextStyle(color: Voxelo.muted, fontSize: 13),
                 ),
               ],
             ),
@@ -187,7 +187,7 @@ class _SentenceCard extends StatelessWidget {
             onPressed: onSpeak,
             icon: Icon(
               playing ? Icons.volume_up : Icons.volume_up_outlined,
-              color: playing ? Nura.mintDark : Nura.soft,
+              color: playing ? Voxelo.mintDark : Voxelo.soft,
             ),
           ),
         ],

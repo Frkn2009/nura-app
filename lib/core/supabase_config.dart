@@ -1,4 +1,4 @@
-/// NURA — Supabase bağlantı bilgileri.
+/// VOXELO — Supabase bağlantı bilgileri.
 ///
 /// Bu iki değeri Supabase Dashboard → Project Settings (⚙) → API bölümünden
 /// kopyala ve buraya yapıştır:

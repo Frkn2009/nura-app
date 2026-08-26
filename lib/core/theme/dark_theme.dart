@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'nura_theme.dart';
+import 'voxelo_theme.dart';
 import 'tokens.dart';
 
-ThemeData buildNuraDarkTheme() {
+ThemeData buildVoxeloDarkTheme() {
   const scheme = ColorScheme.dark(
     primary: Color(0xFF67C9C0),
     onPrimary: Color(0xFF062F2D),
@@ -21,13 +21,13 @@ ThemeData buildNuraDarkTheme() {
     outlineVariant: Color(0xFF36474A),
     error: Color(0xFFFFB4A9),
   );
-  final base = buildNuraTheme();
+  final base = buildVoxeloTheme();
   final text = base.textTheme.apply(
     bodyColor: scheme.onSurface,
     displayColor: scheme.onSurface,
   );
   final shape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Nura.radius),
+    borderRadius: BorderRadius.circular(Voxelo.radius),
   );
   return base.copyWith(
     brightness: Brightness.dark,
@@ -48,18 +48,18 @@ ThemeData buildNuraDarkTheme() {
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         side: BorderSide(color: scheme.outlineVariant),
       ),
     ),
     inputDecorationTheme: base.inputDecorationTheme.copyWith(
       fillColor: scheme.surface,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         borderSide: BorderSide(color: scheme.outlineVariant),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         borderSide: BorderSide(color: scheme.primary, width: 1.5),
       ),
     ),
@@ -77,7 +77,7 @@ ThemeData buildNuraDarkTheme() {
       backgroundColor: scheme.surface,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Nura.radiusLg),
+        borderRadius: BorderRadius.circular(Voxelo.radiusLg),
       ),
     ),
     bottomSheetTheme: BottomSheetThemeData(

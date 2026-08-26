@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:nura/core/utils/clock.dart';
-import 'package:nura/data/srs/srs_state.dart';
+import 'package:voxelo/core/utils/clock.dart';
+import 'package:voxelo/data/srs/srs_state.dart';
 
 class SrsMachine {
   const SrsMachine(this.clock);
@@ -26,7 +26,7 @@ class SrsMachine {
       step: isAgain ? 0 : card.step + 1,
       scheduledDays: intervalDays,
       dueAtUtc: dueAtUtc,
-      algorithmVersion: 'nura-fsrs-inspired-v1.4',
+      algorithmVersion: 'voxelo-fsrs-inspired-v1.4',
     );
 
     return SrsResult(

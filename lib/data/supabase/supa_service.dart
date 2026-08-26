@@ -6,7 +6,7 @@ import '../models/clan.dart';
 import '../models/leaderboard.dart';
 import '../models/models.dart';
 
-/// NURA — Supabase ile tek konuşan katman.
+/// VOXELO — Supabase ile tek konuşan katman.
 /// Anahtarlar girilmediyse (Supa.enabled == false) hiçbir şey yapmaz.
 class Supa {
   static bool get enabled => SupaConfig.isSet;

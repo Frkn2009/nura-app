@@ -7,11 +7,11 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string>NURA konuşma pratiği için mikrofonunu kullanır. Ses cihazda kalır.</string>
+		<string>VOXELO konuşma pratiği için mikrofonunu kullanır. Ses cihazda kalır.</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>Söylediğin cümleyi yazıya çevirmek için konuşma tanıma gerekir.</string>
 		<key>CFBundleDisplayName</key>
-		<string>NURA</string>
+		<string>VOXELO</string>
 		<!-- Google'ın test App ID'si. Üretimde AdMob konsolundaki App ID ile değiştir. -->
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-3940256099942544~1458002511</string>
@@ -22,7 +22,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>nura</string>
+		<string>voxelo</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleURLTypes</key>
@@ -30,7 +30,7 @@
 			<dict>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>nura</string>
+					<string>voxelo</string>
 				</array>
 			</dict>
 		</array>

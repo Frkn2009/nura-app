@@ -5,27 +5,27 @@ import 'billing_service.dart';
 import '../domain/entitlement.dart';
 import '../../../core/supabase_config.dart';
 
-/// Gerçek RevenueCat entegrasyonu. `NURA_REVENUECAT_API_KEY` dart-define'ı
+/// Gerçek RevenueCat entegrasyonu. `VOXELO_REVENUECAT_API_KEY` dart-define'ı
 /// girilmediyse [isConfigured] false döner ve `PlusController`
 /// [FakeBillingService]'i kullanmaya devam eder — anahtar yokken uygulama
 /// hiç bozulmaz, sadece gerçek satın alma kapalı kalır.
 class RevenueCatBillingService implements BillingService {
-  static const _apiKey = String.fromEnvironment('NURA_REVENUECAT_API_KEY');
+  static const _apiKey = String.fromEnvironment('VOXELO_REVENUECAT_API_KEY');
 
   /// RevenueCat panelinde tanımlı entitlement kimliği. Panelde farklı bir
-  /// isim kullandıysan `--dart-define=NURA_REVENUECAT_ENTITLEMENT_ID=...`
+  /// isim kullandıysan `--dart-define=VOXELO_REVENUECAT_ENTITLEMENT_ID=...`
   /// ile geçersiz kıl.
   static const _entitlementId = String.fromEnvironment(
-    'NURA_REVENUECAT_ENTITLEMENT_ID',
+    'VOXELO_REVENUECAT_ENTITLEMENT_ID',
     defaultValue: 'plus',
   );
 
   /// Business panelde ayrı bir entitlement olarak tanımlanır (Plus'ın
   /// üzerinde bir katman) — panelde farklı bir isim kullandıysan
-  /// `--dart-define=NURA_REVENUECAT_BUSINESS_ENTITLEMENT_ID=...` ile
+  /// `--dart-define=VOXELO_REVENUECAT_BUSINESS_ENTITLEMENT_ID=...` ile
   /// geçersiz kıl.
   static const _businessEntitlementId = String.fromEnvironment(
-    'NURA_REVENUECAT_BUSINESS_ENTITLEMENT_ID',
+    'VOXELO_REVENUECAT_BUSINESS_ENTITLEMENT_ID',
     defaultValue: 'business',
   );
 
@@ -71,14 +71,14 @@ class RevenueCatBillingService implements BillingService {
   }
 
   @override
-  Future<NuraEntitlement> currentEntitlement() async {
+  Future<VoxeloEntitlement> currentEntitlement() async {
     final info = await Purchases.getCustomerInfo();
     final active = info.entitlements.active;
     if (active.containsKey(_businessEntitlementId)) {
-      return NuraEntitlement.business;
+      return VoxeloEntitlement.business;
     }
-    if (active.containsKey(_entitlementId)) return NuraEntitlement.plus;
-    return NuraEntitlement.free;
+    if (active.containsKey(_entitlementId)) return VoxeloEntitlement.plus;
+    return VoxeloEntitlement.free;
   }
 
   @override

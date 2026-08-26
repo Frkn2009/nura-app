@@ -131,7 +131,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
     final code = error.toString();
     if (code.contains('authentication_required') ||
         code.contains('invalid_session')) {
-      return 'Plus bulut çevirisi için profilinden NURA hesabına giriş yap.';
+      return 'Plus bulut çevirisi için profilinden VOXELO hesabına giriş yap.';
     }
     if (code.contains('plus_required')) {
       return 'Bulut Plus hakkın henüz doğrulanmadı.';
@@ -156,8 +156,8 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             style: Theme.of(context).textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
-          NuraCard(
-            color: Nura.forest,
+          VoxeloCard(
+            color: Voxelo.forest,
             onTap: () => context.push('/interpreter'),
             child: Row(
               children: [
@@ -196,8 +196,8 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(Nura.radius),
-              border: Border.all(color: Nura.fog),
+              borderRadius: BorderRadius.circular(Voxelo.radius),
+              border: Border.all(color: Voxelo.fog),
             ),
             child: Row(
               children: [
@@ -208,7 +208,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                       isExpanded: true,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Nura.ink,
+                        color: Voxelo.ink,
                         fontSize: 14,
                       ),
                       items: LearnLang.values
@@ -229,7 +229,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   onPressed: _swap,
                   icon: const Icon(
                     Icons.swap_horiz,
-                    color: Nura.mint,
+                    color: Voxelo.mint,
                     size: 28,
                   ),
                 ),
@@ -240,7 +240,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                       isExpanded: true,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Nura.ink,
+                        color: Voxelo.ink,
                         fontSize: 14,
                       ),
                       items: LearnLang.values
@@ -273,7 +273,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
               hintText: i18n.typeToTranslate,
               suffixIcon: IconButton(
                 onPressed: _go,
-                icon: const Icon(Icons.arrow_forward, color: Nura.mint),
+                icon: const Icon(Icons.arrow_forward, color: Voxelo.mint),
               ),
             ),
           ),
@@ -291,21 +291,21 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
               child: Center(child: CircularProgressIndicator()),
             ),
           if (searched && hit == null && !translating)
-            NuraCard(
+            VoxeloCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.info_outline, color: Nura.muted, size: 20),
+                      Icon(Icons.info_outline, color: Voxelo.muted, size: 20),
                       const SizedBox(width: 8),
                       const Eyebrow('Müfredat dışı'),
                     ],
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Bu cümle NURA sözlüğünde yok. Uydurma çeviri göstermiyoruz — yanlış kalıp öğretmektense boş bırakırız.',
-                    style: TextStyle(color: Nura.ink, height: 1.4),
+                    'Bu cümle VOXELO sözlüğünde yok. Uydurma çeviri göstermiyoruz — yanlış kalıp öğretmektense boş bırakırız.',
+                    style: TextStyle(color: Voxelo.ink, height: 1.4),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -313,14 +313,14 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                         (p.isPlus
                             ? 'Plus bulut çevirisi için hesap ve aktif abonelik gerekir.'
                             : 'Plus ile genişletilmiş bulut çeviri ve kaydetme.'),
-                    style: const TextStyle(color: Nura.muted, fontSize: 13),
+                    style: const TextStyle(color: Voxelo.muted, fontSize: 13),
                   ),
                 ],
               ),
             ),
           if (hit != null) ...[
-            NuraCard(
-              color: Nura.mint,
+            VoxeloCard(
+              color: Voxelo.mint,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -351,9 +351,9 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   Text(
                     switch (hit!.origin) {
                       TranslationOrigin.curriculum =>
-                        'NURA müfredatından doğrulandı',
+                        'VOXELO müfredatından doğrulandı',
                       TranslationOrigin.dictionary =>
-                        'NURA sözlüğünden doğrulandı',
+                        'VOXELO sözlüğünden doğrulandı',
                       TranslationOrigin.cloud =>
                         'Plus · güvenli bulut çevirisi',
                     },

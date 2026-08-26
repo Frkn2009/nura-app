@@ -6,10 +6,10 @@ import '../core/theme/tokens.dart';
 
 enum MascotMood { neutral, wave, celebrate, encourage, streak }
 
-/// NURA'nın özgün “Nura” karakteri: konuşma ışığını taşıyan küçük rehber.
+/// VOXELO'nın özgün “Voxelo” karakteri: konuşma ışığını taşıyan küçük rehber.
 /// Harici görsel kullanmaz; tüm şekiller Flutter Canvas ile çizilir.
-class NuraMascot extends StatefulWidget {
-  const NuraMascot({
+class VoxeloMascot extends StatefulWidget {
+  const VoxeloMascot({
     super.key,
     this.size = 96,
     this.mood = MascotMood.neutral,
@@ -21,10 +21,10 @@ class NuraMascot extends StatefulWidget {
   final bool animate;
 
   @override
-  State<NuraMascot> createState() => _NuraMascotState();
+  State<VoxeloMascot> createState() => _VoxeloMascotState();
 }
 
-class _NuraMascotState extends State<NuraMascot>
+class _VoxeloMascotState extends State<VoxeloMascot>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
 
@@ -39,7 +39,7 @@ class _NuraMascotState extends State<NuraMascot>
   }
 
   @override
-  void didUpdateWidget(covariant NuraMascot oldWidget) {
+  void didUpdateWidget(covariant VoxeloMascot oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.animate && !controller.isAnimating) controller.repeat();
     if (!widget.animate && controller.isAnimating) controller.stop();
@@ -53,7 +53,7 @@ class _NuraMascotState extends State<NuraMascot>
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Nura, NURA rehberi',
+    label: 'Voxelo, VOXELO rehberi',
     image: true,
     child: AnimatedBuilder(
       animation: controller,
@@ -70,7 +70,7 @@ class _NuraMascotState extends State<NuraMascot>
             angle: tilt,
             child: CustomPaint(
               size: Size.square(widget.size),
-              painter: _NuraMascotPainter(mood: widget.mood, phase: phase),
+              painter: _VoxeloMascotPainter(mood: widget.mood, phase: phase),
             ),
           ),
         );
@@ -79,8 +79,8 @@ class _NuraMascotState extends State<NuraMascot>
   );
 }
 
-class _NuraMascotPainter extends CustomPainter {
-  const _NuraMascotPainter({required this.mood, required this.phase});
+class _VoxeloMascotPainter extends CustomPainter {
+  const _VoxeloMascotPainter({required this.mood, required this.phase});
   final MascotMood mood;
   final double phase;
 
@@ -89,7 +89,7 @@ class _NuraMascotPainter extends CustomPainter {
     final unit = size.width / 100;
     Offset p(double x, double y) => Offset(x * unit, y * unit);
     final stroke = Paint()
-      ..color = Nura.ink
+      ..color = Voxelo.ink
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.2 * unit
       ..strokeCap = StrokeCap.round
@@ -97,14 +97,14 @@ class _NuraMascotPainter extends CustomPainter {
 
     // Anten: konuşma sinyalini taşıyan mercan ışık.
     canvas.drawLine(p(50, 19), p(50, 10), stroke);
-    canvas.drawCircle(p(50, 7), 5.5 * unit, Paint()..color = Nura.coral);
+    canvas.drawCircle(p(50, 7), 5.5 * unit, Paint()..color = Voxelo.coral);
     if (mood == MascotMood.streak) {
-      final glow = Paint()..color = Nura.sunflower.withValues(alpha: .25);
+      final glow = Paint()..color = Voxelo.sunflower.withValues(alpha: .25);
       canvas.drawCircle(p(50, 7), (10 + math.sin(phase) * 2) * unit, glow);
     }
 
     // Kulak/ses kanatları.
-    final side = Paint()..color = Nura.mint;
+    final side = Paint()..color = Voxelo.mint;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromCenter(center: p(16, 46), width: 14 * unit, height: 28 * unit),
@@ -123,19 +123,19 @@ class _NuraMascotPainter extends CustomPainter {
     final bodyRect = Rect.fromLTWH(20 * unit, 20 * unit, 60 * unit, 66 * unit);
     canvas.drawRRect(
       RRect.fromRectAndRadius(bodyRect, Radius.circular(22 * unit)),
-      Paint()..color = Nura.mintDark,
+      Paint()..color = Voxelo.mintDark,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(28 * unit, 30 * unit, 44 * unit, 35 * unit),
         Radius.circular(15 * unit),
       ),
-      Paint()..color = Nura.white,
+      Paint()..color = Voxelo.white,
     );
 
     // Gözler ve ifade.
     final eye = Paint()
-      ..color = Nura.ink
+      ..color = Voxelo.ink
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.3 * unit
       ..strokeCap = StrokeCap.round;
@@ -155,8 +155,8 @@ class _NuraMascotPainter extends CustomPainter {
         eye,
       );
     } else {
-      canvas.drawCircle(p(40, 45), 2.2 * unit, Paint()..color = Nura.ink);
-      canvas.drawCircle(p(60, 45), 2.2 * unit, Paint()..color = Nura.ink);
+      canvas.drawCircle(p(40, 45), 2.2 * unit, Paint()..color = Voxelo.ink);
+      canvas.drawCircle(p(60, 45), 2.2 * unit, Paint()..color = Voxelo.ink);
       if (mood == MascotMood.encourage) {
         canvas.drawLine(p(55, 38), p(65, 40), eye);
       }
@@ -170,7 +170,7 @@ class _NuraMascotPainter extends CustomPainter {
       eye,
     );
 
-    // Göğüsteki NURA konuşma kıvılcımı.
+    // Göğüsteki VOXELO konuşma kıvılcımı.
     final spark = Path()
       ..moveTo(42 * unit, 75 * unit)
       ..lineTo(48 * unit, 69 * unit)
@@ -179,7 +179,7 @@ class _NuraMascotPainter extends CustomPainter {
     canvas.drawPath(
       spark,
       Paint()
-        ..color = Nura.peach
+        ..color = Voxelo.peach
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3 * unit
         ..strokeCap = StrokeCap.round,
@@ -198,7 +198,7 @@ class _NuraMascotPainter extends CustomPainter {
       canvas.drawCircle(
         p(92, handY - 2),
         3 * unit,
-        Paint()..color = Nura.coral,
+        Paint()..color = Voxelo.coral,
       );
     } else {
       canvas.drawLine(p(79, 60), p(88, 69), stroke);
@@ -206,7 +206,7 @@ class _NuraMascotPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _NuraMascotPainter oldDelegate) =>
+  bool shouldRepaint(covariant _VoxeloMascotPainter oldDelegate) =>
       oldDelegate.mood != mood || oldDelegate.phase != phase;
 }
 
@@ -223,7 +223,7 @@ class MascotFeedback extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      NuraMascot(
+      VoxeloMascot(
         size: 46,
         mood: correct ? MascotMood.celebrate : MascotMood.encourage,
       ),
@@ -232,7 +232,7 @@ class MascotFeedback extends StatelessWidget {
         child: Text(
           message,
           style: TextStyle(
-            color: correct ? Nura.mintDark : Nura.coral,
+            color: correct ? Voxelo.mintDark : Voxelo.coral,
             fontWeight: FontWeight.w600,
           ),
         ),

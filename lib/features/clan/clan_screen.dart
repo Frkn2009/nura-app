@@ -35,7 +35,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
   Widget build(BuildContext context) {
     final email = ref.watch(authEmailProvider);
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Takım')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Takım')),
       body: SafeArea(
         child: email == null
             ? _login(context)
@@ -57,11 +57,11 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
   Widget _login(BuildContext context) => Center(
     child: Padding(
       padding: const EdgeInsets.all(28),
-      child: NuraCard(
+      child: VoxeloCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.groups_outlined, size: 48, color: Nura.mintDark),
+            const Icon(Icons.groups_outlined, size: 48, color: Voxelo.mintDark),
             const SizedBox(height: 12),
             const Text(
               'Takıma katılmak için giriş yap',
@@ -82,7 +82,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
   Widget _empty() => ListView(
     padding: const EdgeInsets.fromLTRB(22, 24, 22, 30),
     children: [
-      const NuraMascot(size: 110, mood: MascotMood.wave),
+      const VoxeloMascot(size: 110, mood: MascotMood.wave),
       const SizedBox(height: 16),
       Text(
         'Birlikte daha düzenli',
@@ -93,7 +93,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
       const Text(
         'Takım kur veya 6 haneli davet koduyla arkadaşlarına katıl.',
         textAlign: TextAlign.center,
-        style: TextStyle(color: Nura.muted, height: 1.45),
+        style: TextStyle(color: Voxelo.muted, height: 1.45),
       ),
       const SizedBox(height: 24),
       FilledButton.icon(
@@ -112,7 +112,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         Text(
           error!,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Nura.coral),
+          style: const TextStyle(color: Voxelo.coral),
         ),
       ],
     ],
@@ -128,7 +128,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         const SizedBox(height: 4),
         const Text(
           'Bu haftanın yarışması · her Pazartesi sıfırlanır',
-          style: TextStyle(color: Nura.muted, fontSize: 12),
+          style: TextStyle(color: Voxelo.muted, fontSize: 12),
         ),
         const SizedBox(height: 10),
         InkWell(
@@ -142,7 +142,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
           },
           child: Row(
             children: [
-              const Text('Davet kodu: ', style: TextStyle(color: Nura.muted)),
+              const Text('Davet kodu: ', style: TextStyle(color: Voxelo.muted)),
               Text(
                 clan.joinCode,
                 style: const TextStyle(
@@ -151,12 +151,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
                 ),
               ),
               const SizedBox(width: 6),
-              const Icon(Icons.copy, size: 16, color: Nura.mintDark),
+              const Icon(Icons.copy, size: 16, color: Voxelo.mintDark),
             ],
           ),
         ),
         const SizedBox(height: 18),
-        NuraCard(
+        VoxeloCard(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -195,12 +195,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         SizedBox(
           width: 32,
           child: member.rank == 1
-              ? const Icon(Icons.emoji_events, color: Nura.sunflower, size: 20)
+              ? const Icon(Icons.emoji_events, color: Voxelo.sunflower, size: 20)
               : Text(
                   '${member.rank}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Nura.mintDark,
+                    color: Voxelo.mintDark,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -217,12 +217,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         if (member.isOwner)
           const Padding(
             padding: EdgeInsets.only(right: 8),
-            child: Icon(Icons.shield_outlined, size: 18, color: Nura.sunflower),
+            child: Icon(Icons.shield_outlined, size: 18, color: Voxelo.sunflower),
           ),
         Text(
           '${member.xp} XP',
           style: const TextStyle(
-            color: Nura.mintDark,
+            color: Voxelo.mintDark,
             fontWeight: FontWeight.w700,
           ),
         ),

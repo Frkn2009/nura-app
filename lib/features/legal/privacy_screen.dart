@@ -9,12 +9,12 @@ class PrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: const Text('Gizlilik')),
+      appBar: VoxeloAppBar(pageTitle: const Text('Gizlilik')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(22, 12, 22, 32),
         children: const [
           Text(
-            'NURA gizlilik özeti',
+            'VOXELO gizlilik özeti',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
           ),
           SizedBox(height: 12),
@@ -25,8 +25,8 @@ class PrivacyScreen extends StatelessWidget {
             'Free sürümde Google AdMob video reklamları kullanılabilir. Bölgen gerektiriyorsa reklam izni formu gösterilir; Plus kullanıcıya reklam isteği yapılmaz.\n\n'
             'Hesabı sil: Sen → Hesabı sil. Tüm yerel veri silinir.\n\n'
             'Çocuklara yönelik değil (13+).\n\n'
-            'İletişim: gizlilik@nura.app (yer tutucu — domain bağlanınca güncellenir).',
-            style: TextStyle(height: 1.5, color: Nura.ink, fontSize: 15),
+            'İletişim: gizlilik@voxelo.app (yer tutucu — domain bağlanınca güncellenir).',
+            style: TextStyle(height: 1.5, color: Voxelo.ink, fontSize: 15),
           ),
         ],
       ),

@@ -1,4 +1,4 @@
-# NURA — AI Geliştirici Prompt'u
+# VOXELO — AI Geliştirici Prompt'u
 
 > Bu metni herhangi bir AI'a (Claude, ChatGPT, Gemini, Cursor, Windsurf) yapıştır.
 > Projeyi okur, anlar ve devam eder.
@@ -8,12 +8,12 @@
 ## KOPYALA YAPIŞTIR — BAŞLANGIÇ PROMPT'U
 
 ```
-Sen NURA dil öğrenme uygulamasının baş geliştiricisisin.
+Sen VOXELO dil öğrenme uygulamasının baş geliştiricisisin.
 Flutter + Dart + Supabase + Riverpod projesi.
 Kodla, test et, commit et. Soru sorma, direkt yap.
 
 ## Proje Bilgileri
-- GitHub: https://github.com/Frkn2009/nura-app
+- GitHub: https://github.com/Frkn2009/voxelo-app
 - Branch: main
 - Framework: Flutter (Dart SDK ^3.9.0)
 - State: Riverpod
@@ -23,7 +23,7 @@ Kodla, test et, commit et. Soru sorma, direkt yap.
 - Supabase Key: sb_publishable_maEu9eoz4fuC_I17Vamrlg_NTtsjqzo
 - Test: 35/35 geçiyor ✅
 - Analyze: temiz ✅
-- Windows test yolu: C:\nura-app
+- Windows test yolu: C:\voxelo-app
 - PUB_CACHE: C:\pub-cache (Türkçe karakter sorunu için)
 
 ## Mevcut Durum (22 Ağustos 2026)
@@ -48,8 +48,8 @@ Kodla, test et, commit et. Soru sorma, direkt yap.
 1. docs/YAPILACAKLAR.md — 18 madde tamamlandı, kalan işler
 2. docs/DEVAM_SAYFASI.md — proje durumu
 3. docs/RAKIP_ANALIZ_VE_PLAN.md — Duolingo/Babbel karşılaştırma
-4. NURA_CODING_CONTRACT.md — 10 kural (ihlal edilemez)
-5. NURA_V14_HANDOFF_PACKET.md — teknik devir manifesti
+4. VOXELO_CODING_CONTRACT.md — 10 kural (ihlal edilemez)
+5. VOXELO_V14_HANDOFF_PACKET.md — teknik devir manifesti
 
 ## Klasör Yapısı
 lib/
@@ -58,13 +58,13 @@ lib/
 ├── data/ (ads, content, events, models, notifications, speech, srs, supabase, translate, widgets)
 ├── features/ (achievements, ads, ai, auth, clan, clips, events, family, games, guide, home, leaderboard, legal, onboarding, paywall, plus, profile, review, shell, speak, translate)
 ├── state/session.dart
-└── ui/ (brand, mascot, nura_logo, review, widgets)
+└── ui/ (brand, mascot, voxelo_logo, review, widgets)
 
 ## Kod Sözleşmesi (ZORUNLU)
 1. State: Sadece Riverpod. Static Clock YASAK.
-2. SRS: SM-2 YASAK. Sadece NuraBrain/SrsMachine (FSRS).
+2. SRS: SM-2 YASAK. Sadece VoxeloBrain/SrsMachine (FSRS).
 3. i18n: Hardcoded String YASAK. Her şey i18n.dart üzerinden.
-4. Tema: Hardcode renk YASAK. Sadece Nura token sınıfı.
+4. Tema: Hardcode renk YASAK. Sadece Voxelo token sınıfı.
 5. Test: DateTime.now() YASAK. FakeClock kullan.
 6. Billing: Client-side isPlus YASAK. PlusController üzerinden.
 7. Review: SwipeReviewCard + CognitiveTracker kullan.
@@ -92,11 +92,11 @@ lib/
 ## CURSOR IDE İÇİN (kısa versiyon)
 
 ```
-NURA Flutter dil öğrenme uygulaması.
-C:\nura-app klasöründe.
+VOXELO Flutter dil öğrenme uygulaması.
+C:\voxelo-app klasöründe.
 30 dil, 242 sahne, 64 Dart dosya, 35/35 test geçiyor.
 docs/YAPILACAKLAR.md oku, kalan işleri yap.
-NURA_CODING_CONTRACT.md kurallarına uy.
+VOXELO_CODING_CONTRACT.md kurallarına uy.
 PUB_CACHE=C:\pub-cache ayarla (Türkçe karakter sorunu).
 ```
 
@@ -106,12 +106,12 @@ PUB_CACHE=C:\pub-cache ayarla (Türkçe karakter sorunu).
 
 ```
 Bu Flutter projesini analiz et ve geliştir:
-https://github.com/Frkn2009/nura-app
+https://github.com/Frkn2009/voxelo-app
 
 Önce şu dosyaları oku:
 - docs/YAPILACAKLAR.md
 - docs/DEVAM_SAYFASI.md
-- NURA_CODING_CONTRACT.md
+- VOXELO_CODING_CONTRACT.md
 
 30 dil destekli dil öğrenme uygulaması.
 64 Dart dosya, 35/35 test, 242 sahne.
@@ -125,12 +125,12 @@ Kod sözleşmesine uy, telif yok, kadın ses, Riverpod zorunlu.
 
 ```
 Bu Flutter dil öğrenme uygulamasının veri analizini yap:
-https://github.com/Frkn2009/nura-app
+https://github.com/Frkn2009/voxelo-app
 
 Analiz et:
 1. Kod kalitesi (architecture, patterns, clean code)
 2. Rakip karşılaştırma (docs/RAKIP_ANALIZ_VE_PLAN.md oku)
-3. NURA vs Duolingo vs Babbel vs Drops — SWOT analizi
+3. VOXELO vs Duolingo vs Babbel vs Drops — SWOT analizi
 4. Büyüme stratejisi (organik + ücretli)
 5. Monetizasyon optimizasyonu
 6. UX/UI iyileştirme önerileri

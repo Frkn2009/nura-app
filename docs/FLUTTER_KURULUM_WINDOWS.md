@@ -1,4 +1,4 @@
-# NURA — Windows'ta Flutter Kurulum Rehberi
+# VOXELO — Windows'ta Flutter Kurulum Rehberi
 
 > Toplam süre: ~30-45 dakika (internet hızına göre)
 > Adımları sırayla yap, birini atlama.
@@ -82,8 +82,8 @@ Eğer hata verirse:
 CMD'de:
 ```cmd
 cd %USERPROFILE%\Desktop
-git clone https://github.com/Frkn2009/nura-app.git
-cd nura-app
+git clone https://github.com/Frkn2009/voxelo-app.git
+cd voxelo-app
 ```
 
 ---
@@ -201,8 +201,8 @@ Alternatif: **Codemagic** veya **GitHub Actions** ile bulut build.
 
 ```cmd
 :: 1. Projeyi indir
-git clone https://github.com/Frkn2009/nura-app.git
-cd nura-app
+git clone https://github.com/Frkn2009/voxelo-app.git
+cd voxelo-app
 
 :: 2. Bağımlılıklar
 flutter pub get

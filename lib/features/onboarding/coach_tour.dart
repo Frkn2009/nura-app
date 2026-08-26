@@ -123,8 +123,8 @@ class _CoachTourOverlayState extends State<_CoachTourOverlay> {
               child: Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: Nura.forest,
-                  borderRadius: BorderRadius.circular(Nura.radiusLg),
+                  color: Voxelo.forest,
+                  borderRadius: BorderRadius.circular(Voxelo.radiusLg),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: .35),
@@ -143,7 +143,7 @@ class _CoachTourOverlayState extends State<_CoachTourOverlay> {
                           child: Text(
                             step.title,
                             style: const TextStyle(
-                              color: Nura.cream,
+                              color: Voxelo.cream,
                               fontWeight: FontWeight.w700,
                               fontSize: 17,
                             ),
@@ -152,7 +152,7 @@ class _CoachTourOverlayState extends State<_CoachTourOverlay> {
                         Text(
                           '${_index + 1}/${widget.steps.length}',
                           style: const TextStyle(
-                            color: Nura.terrSoft,
+                            color: Voxelo.terrSoft,
                             fontSize: 12,
                           ),
                         ),
@@ -174,15 +174,15 @@ class _CoachTourOverlayState extends State<_CoachTourOverlay> {
                         _TourButton(
                           onTap: widget.onFinish,
                           label: 'Geç',
-                          foreground: Nura.terrSoft,
+                          foreground: Voxelo.terrSoft,
                         ),
                         _TourButton(
                           onTap: _next,
                           label: _index >= widget.steps.length - 1
                               ? 'Bitir'
                               : 'İleri',
-                          background: Nura.terr,
-                          foreground: Nura.cream,
+                          background: Voxelo.terr,
+                          foreground: Voxelo.cream,
                         ),
                       ],
                     ),
@@ -221,10 +221,10 @@ class _TourButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: background ?? Colors.transparent,
-      borderRadius: BorderRadius.circular(Nura.radiusSm),
+      borderRadius: BorderRadius.circular(Voxelo.radiusSm),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Text(
@@ -259,7 +259,7 @@ class _SpotlightPainter extends CustomPainter {
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(16)),
       Paint()
-        ..color = Nura.terr
+        ..color = Voxelo.terr
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3,
     );

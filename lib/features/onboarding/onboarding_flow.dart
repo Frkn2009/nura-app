@@ -60,11 +60,11 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
             children: [
               Row(
                 children: [
-                  const NuraWordmark(),
+                  const VoxeloWordmark(),
                   const Spacer(),
                   Text(
                     '${step + 1} / ${pages.length}',
-                    style: const TextStyle(color: Nura.soft, fontSize: 13),
+                    style: const TextStyle(color: Voxelo.soft, fontSize: 13),
                   ),
                 ],
               ),
@@ -73,20 +73,20 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                 value: (step + 1) / pages.length,
                 minHeight: 4,
                 borderRadius: BorderRadius.circular(4),
-                color: Nura.terr,
-                backgroundColor: Nura.line,
+                color: Voxelo.terr,
+                backgroundColor: Voxelo.line,
               ),
               SizedBox(height: step == 0 ? 14 : 28),
               if (step == 0) ...[
                 const Center(
-                  child: NuraMascot(size: 96, mood: MascotMood.wave),
+                  child: VoxeloMascot(size: 96, mood: MascotMood.wave),
                 ),
                 const SizedBox(height: 8),
                 const Center(
                   child: Text(
-                    'Merhaba, ben Nura. Konuşma yolculuğunda yanındayım.',
+                    'Merhaba, ben Voxelo. Konuşma yolculuğunda yanındayım.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Nura.muted, fontSize: 13),
+                    style: TextStyle(color: Voxelo.muted, fontSize: 13),
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -122,7 +122,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         const SizedBox(height: 8),
         const Text(
           'Açıklamalar ve hatalar bu dilde gelir.',
-          style: TextStyle(color: Nura.muted),
+          style: TextStyle(color: Voxelo.muted),
         ),
         const SizedBox(height: 20),
         for (final u in UiLang.values)
@@ -142,7 +142,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         const SizedBox(height: 8),
         const Text(
           'İlk dili seç. Sonra profilinden ekleyebilirsin.',
-          style: TextStyle(color: Nura.muted),
+          style: TextStyle(color: Voxelo.muted),
         ),
         const SizedBox(height: 20),
         for (final l in LearnLang.values)
@@ -184,7 +184,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         const SizedBox(height: 8),
         Text(
           i18n.freeMinute,
-          style: const TextStyle(color: Nura.terr, fontWeight: FontWeight.w500),
+          style: const TextStyle(color: Voxelo.terr, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 20),
         for (final c in Cefr.values)
@@ -253,7 +253,7 @@ class _StoryIntro extends StatelessWidget {
     final slides = _storySlides(i18n);
     final isLast = index == slides.length - 1;
     return Scaffold(
-      backgroundColor: Nura.forest,
+      backgroundColor: Voxelo.forest,
       body: SafeArea(
         child: Column(
           children: [
@@ -282,7 +282,7 @@ class _StoryIntro extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        NuraMascot(size: 120, mood: s.mood),
+                        VoxeloMascot(size: 120, mood: s.mood),
                         const SizedBox(height: 32),
                         Text(
                           s.title,
@@ -320,7 +320,7 @@ class _StoryIntro extends StatelessWidget {
                   width: active ? 22 : 7,
                   height: 7,
                   decoration: BoxDecoration(
-                    color: active ? Nura.terr : Colors.white24,
+                    color: active ? Voxelo.terr : Colors.white24,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 );
@@ -332,7 +332,7 @@ class _StoryIntro extends StatelessWidget {
                 width: double.infinity,
                 child: FilledButton(
                   style: FilledButton.styleFrom(
-                    backgroundColor: Nura.terr,
+                    backgroundColor: Voxelo.terr,
                     foregroundColor: Colors.white,
                     minimumSize: const Size.fromHeight(52),
                   ),

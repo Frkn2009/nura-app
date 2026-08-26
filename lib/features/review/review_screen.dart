@@ -24,7 +24,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final due = ref.read(sessionProvider.notifier).duePhrases();
 
     return Scaffold(
-      appBar: NuraAppBar(pageTitle: Text(i18n.review)),
+      appBar: VoxeloAppBar(pageTitle: Text(i18n.review)),
       body: SafeArea(
         child: due.isEmpty
             ? const Center(
@@ -33,7 +33,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   child: Text(
                     'Bugün tekrar yok. Konuş, kalıp biriksin.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Nura.muted, fontSize: 16),
+                    style: TextStyle(color: Voxelo.muted, fontSize: 16),
                   ),
                 ),
               )
@@ -43,11 +43,11 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   children: [
                     Text(
                       '${i + 1} / ${due.length}',
-                      style: const TextStyle(color: Nura.muted),
+                      style: const TextStyle(color: Voxelo.muted),
                     ),
                     const SizedBox(height: 18),
                     Expanded(
-                      child: NuraCard(
+                      child: VoxeloCard(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -58,7 +58,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 18,
-                                color: Nura.muted,
+                                color: Voxelo.muted,
                               ),
                             ),
                             const SizedBox(height: 22),
@@ -69,7 +69,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                                 style: const TextStyle(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: Nura.forest,
+                                  color: Voxelo.forest,
                                 ),
                               )
                             else
@@ -78,7 +78,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                                   'Konuşmak için basılı tut',
                                   'Söyle, sonra aç',
                                 ),
-                                style: const TextStyle(color: Nura.soft),
+                                style: const TextStyle(color: Voxelo.soft),
                               ),
                           ],
                         ),

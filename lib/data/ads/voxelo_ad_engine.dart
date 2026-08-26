@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-/// NURA Reklam Motoru — Sadece Ödüllü Reklam. Banner/Interstitial YASAK!
-class NuraAdEngine {
+/// VOXELO Reklam Motoru — Sadece Ödüllü Reklam. Banner/Interstitial YASAK!
+class VoxeloAdEngine {
   RewardedAd? _rewardedAd;
   bool _isAdReady = false;
 
@@ -62,8 +62,8 @@ class NuraAdEngine {
   }
 }
 
-final adEngineProvider = Provider<NuraAdEngine>((ref) {
-  final engine = NuraAdEngine();
+final adEngineProvider = Provider<VoxeloAdEngine>((ref) {
+  final engine = VoxeloAdEngine();
   engine.loadRewardedAd();
   ref.onDispose(() => engine.dispose());
   return engine;

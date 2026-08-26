@@ -32,20 +32,20 @@ class SpeakHubScreen extends ConsumerWidget {
             p.isPlus
                 ? 'Sınırsız · Maya ile senaryo'
                 : '${i18n.remainingToday}: ${remain}s',
-            style: const TextStyle(color: Nura.muted),
+            style: const TextStyle(color: Voxelo.muted),
           ),
           const SizedBox(height: 16),
-          NuraCard(
+          VoxeloCard(
             onTap: () => context.push('/clips'),
-            color: Nura.mintLight,
+            color: Voxelo.mintLight,
             child: Row(
               children: [
                 Container(
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Nura.mintDark,
-                    borderRadius: BorderRadius.circular(Nura.radius),
+                    color: Voxelo.mintDark,
+                    borderRadius: BorderRadius.circular(Voxelo.radius),
                   ),
                   child: const Icon(
                     Icons.play_arrow_rounded,
@@ -67,25 +67,25 @@ class SpeakHubScreen extends ConsumerWidget {
                       ),
                       const Text(
                         'Kısa cümleleri dinle, gölgele ve konuş',
-                        style: TextStyle(color: Nura.muted, fontSize: 12),
+                        style: TextStyle(color: Voxelo.muted, fontSize: 12),
                       ),
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Nura.mintDark),
+                const Icon(Icons.chevron_right, color: Voxelo.mintDark),
               ],
             ),
           ),
           const SizedBox(height: 10),
           if (!p.isPlus && remain <= 0)
-            NuraCard(
-              color: Nura.pale,
+            VoxeloCard(
+              color: Voxelo.pale,
               onTap: () => context.push('/paywall'),
               child: Text(
                 i18n.plusCta,
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: Nura.forest,
+                  color: Voxelo.forest,
                 ),
               ),
             ),
@@ -93,12 +93,12 @@ class SpeakHubScreen extends ConsumerWidget {
           for (final s in scenes)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: NuraCard(
+              child: VoxeloCard(
                 onTap: () => context.push('/session?id=${s.id}'),
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundColor: Nura.forest,
+                      backgroundColor: Voxelo.forest,
                       child: Text(
                         s.lang.flag(),
                         style: const TextStyle(fontSize: 18),
@@ -119,14 +119,14 @@ class SpeakHubScreen extends ConsumerWidget {
                           Text(
                             '${s.minutes} dk · ${s.cefr.name.toUpperCase()} · ${s.turns.length} tur',
                             style: const TextStyle(
-                              color: Nura.muted,
+                              color: Voxelo.muted,
                               fontSize: 13,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: Nura.soft),
+                    const Icon(Icons.chevron_right, color: Voxelo.soft),
                   ],
                 ),
               ),
@@ -195,7 +195,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
 
   String _microphoneMessage() => switch (speech.availability) {
     SpeechAvailability.permissionPermanentlyDenied =>
-      'Mikrofon izni kapalı. Telefon ayarlarından NURA için mikrofonu aç.',
+      'Mikrofon izni kapalı. Telefon ayarlarından VOXELO için mikrofonu aç.',
     SpeechAvailability.permissionDenied =>
       'Konuşabilmek için mikrofon izni vermen gerekiyor.',
     SpeechAvailability.unavailable =>
@@ -341,10 +341,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     };
 
     return Scaffold(
-      backgroundColor: Nura.forest,
-      appBar: NuraAppBar(
-        backgroundColor: Nura.forest,
-        foregroundColor: Nura.cream,
+      backgroundColor: Voxelo.forest,
+      appBar: VoxeloAppBar(
+        backgroundColor: Voxelo.forest,
+        foregroundColor: Voxelo.cream,
         pageTitle: Text(scene.title(p.uiLang)),
         actions: [
           Padding(
@@ -353,10 +353,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               p.isPlus ? '∞' : '${remain}s',
               style: TextStyle(
                 color: p.isPlus
-                    ? Nura.terrSoft
+                    ? Voxelo.terrSoft
                     : (remain <= 5
-                          ? Nura.coral
-                          : (remain <= 15 ? Nura.gold : Nura.terrSoft)),
+                          ? Voxelo.coral
+                          : (remain <= 15 ? Voxelo.gold : Voxelo.terrSoft)),
                 fontWeight: !p.isPlus && remain <= 15
                     ? FontWeight.w800
                     : FontWeight.w400,
@@ -377,7 +377,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     Text(
                       labels[s]!,
                       style: TextStyle(
-                        color: s == step ? Nura.terrSoft : Nura.soft,
+                        color: s == step ? Voxelo.terrSoft : Voxelo.soft,
                         fontWeight: s == step
                             ? FontWeight.w700
                             : FontWeight.w400,
@@ -389,12 +389,12 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               const SizedBox(height: 22),
               const CircleAvatar(
                 radius: 40,
-                backgroundColor: Nura.cream,
+                backgroundColor: Voxelo.cream,
                 child: Text(
                   'M',
                   style: TextStyle(
                     fontSize: 28,
-                    color: Nura.forest,
+                    color: Voxelo.forest,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -404,13 +404,13 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 speech.usingNeuralVoice
                     ? 'Maya · Neural'
                     : 'Maya · kadın cihaz sesi',
-                style: const TextStyle(color: Nura.terrSoft),
+                style: const TextStyle(color: Voxelo.terrSoft),
               ),
               const SizedBox(height: 18),
               Text(
                 currentTurn.prompt,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Nura.muted, fontSize: 15),
+                style: const TextStyle(color: Voxelo.muted, fontSize: 15),
               ),
               const SizedBox(height: 12),
               Directionality(
@@ -421,7 +421,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   currentTurn.expected,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Nura.cream,
+                    color: Voxelo.cream,
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                     height: 1.3,
@@ -432,7 +432,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Text(
                 currentPhrase.glossFor(p.uiLang),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Nura.muted),
+                style: const TextStyle(color: Voxelo.muted),
               ),
               if (LanguageGuide.of(scene.lang).tipFor(currentTurn.expected) !=
                   null) ...[
@@ -441,8 +441,8 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Nura.mintDark,
-                    borderRadius: BorderRadius.circular(Nura.radius),
+                    color: Voxelo.mintDark,
+                    borderRadius: BorderRadius.circular(Voxelo.radius),
                   ),
                   child: Text(
                     () {
@@ -453,7 +453,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     }(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      color: Nura.terrSoft,
+                      color: Voxelo.terrSoft,
                       height: 1.35,
                       fontSize: 13,
                     ),
@@ -462,7 +462,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               ],
               const Spacer(),
               if (step == _Step.fix) ...[
-                NuraMascot(
+                VoxeloMascot(
                   size: 64,
                   mood: score >= 70
                       ? MascotMood.celebrate
@@ -482,11 +482,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 Text(
                   pronunciationFeedback,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Nura.muted),
+                  style: const TextStyle(color: Voxelo.muted),
                 ),
                 const SizedBox(height: 18),
                 FilledButton(
-                  style: FilledButton.styleFrom(backgroundColor: Nura.terr),
+                  style: FilledButton.styleFrom(backgroundColor: Voxelo.terr),
                   onPressed: score == 0
                       ? () => setState(() => step = _Step.speak)
                       : _nextTurn,
@@ -507,13 +507,13 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     width: holding ? 96 : 84,
                     height: holding ? 96 : 84,
                     decoration: BoxDecoration(
-                      color: Nura.cream,
+                      color: Voxelo.cream,
                       shape: BoxShape.circle,
-                      border: Border.all(color: Nura.terr, width: 4),
+                      border: Border.all(color: Voxelo.terr, width: 4),
                       boxShadow: holding
                           ? [
                               BoxShadow(
-                                color: Nura.terr.withValues(alpha: 0.45),
+                                color: Voxelo.terr.withValues(alpha: 0.45),
                                 blurRadius: 24,
                               ),
                             ]
@@ -521,7 +521,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     ),
                     child: Icon(
                       Icons.mic,
-                      color: Nura.terr,
+                      color: Voxelo.terr,
                       size: holding ? 38 : 32,
                     ),
                   ),
@@ -533,7 +533,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       : (_speechReady
                             ? i18n.holdToSpeak
                             : 'Basılı tut · mikrofon izni istenecek'),
-                  style: const TextStyle(color: Nura.muted),
+                  style: const TextStyle(color: Voxelo.muted),
                 ),
                 if (heard.isNotEmpty)
                   Padding(
@@ -545,13 +545,13 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       child: Text(
                         heard,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Nura.muted, fontSize: 13),
+                        style: const TextStyle(color: Voxelo.muted, fontSize: 13),
                       ),
                     ),
                   ),
               ] else
                 FilledButton(
-                  style: FilledButton.styleFrom(backgroundColor: Nura.terr),
+                  style: FilledButton.styleFrom(backgroundColor: Voxelo.terr),
                   onPressed: () async {
                     if (step == _Step.hear) {
                       final usedPremium = await PremiumTtsService.speak(
@@ -583,10 +583,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Nura.mintDark,
-        borderRadius: BorderRadius.circular(Nura.radius),
+        color: Voxelo.mintDark,
+        borderRadius: BorderRadius.circular(Voxelo.radius),
       ),
-      child: Text(s, style: const TextStyle(color: Nura.cream, fontSize: 12)),
+      child: Text(s, style: const TextStyle(color: Voxelo.cream, fontSize: 12)),
     );
   }
 }

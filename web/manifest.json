@@ -1,11 +1,11 @@
 {
-    "name": "NURA",
-    "short_name": "NURA",
+    "name": "VOXELO",
+    "short_name": "VOXELO",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FAFAFA",
     "theme_color": "#0D5955",
-    "description": "NURA — konuşarak dil öğren.",
+    "description": "VOXELO — konuşarak dil öğren.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

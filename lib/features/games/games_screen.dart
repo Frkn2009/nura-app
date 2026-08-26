@@ -34,7 +34,7 @@ class GamesScreen extends ConsumerWidget {
         'Doğru / Yanlış',
         'Çeviri eşleşmesini değerlendir',
         Icons.rule_rounded,
-        Nura.mint,
+        Voxelo.mint,
         () => TrueFalseGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -46,7 +46,7 @@ class GamesScreen extends ConsumerWidget {
         'Harf Sıralama',
         'Karışık harflerden kelime kur',
         Icons.sort_by_alpha_rounded,
-        Nura.sky,
+        Voxelo.sky,
         () => LetterOrderGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -58,7 +58,7 @@ class GamesScreen extends ConsumerWidget {
         'Ses Bulmaca',
         'Dinle ve dört seçenekten bul',
         Icons.headphones_rounded,
-        Nura.lavender,
+        Voxelo.lavender,
         () => AudioPuzzleScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -70,7 +70,7 @@ class GamesScreen extends ConsumerWidget {
         'Boşluk Doldur',
         'Eksik kelimeyi tamamla',
         Icons.edit_note_rounded,
-        Nura.coral,
+        Voxelo.coral,
         () => FillBlankGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -82,7 +82,7 @@ class GamesScreen extends ConsumerWidget {
         'Zamana Karşı',
         '60 saniyede en çok doğru',
         Icons.timer_outlined,
-        Nura.sunflower,
+        Voxelo.sunflower,
         () => TimedGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -100,7 +100,7 @@ class GamesScreen extends ConsumerWidget {
           const SizedBox(height: 5),
           Text(
             '${profile.learnLang.flag()} ${profile.learnLang.label(profile.uiLang)} · 5 özgün pratik',
-            style: const TextStyle(color: Nura.muted),
+            style: const TextStyle(color: Voxelo.muted),
           ),
           const SizedBox(height: 20),
           for (final game in games) ...[
@@ -133,7 +133,7 @@ class _GameCard extends StatelessWidget {
   final _GameDefinition definition;
 
   @override
-  Widget build(BuildContext context) => NuraCard(
+  Widget build(BuildContext context) => VoxeloCard(
     onTap: () => Navigator.of(
       context,
       rootNavigator: true,
@@ -145,7 +145,7 @@ class _GameCard extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
             color: definition.color.withValues(alpha: .12),
-            borderRadius: BorderRadius.circular(Nura.radius),
+            borderRadius: BorderRadius.circular(Voxelo.radius),
           ),
           child: Icon(definition.icon, color: definition.color),
         ),
@@ -164,12 +164,12 @@ class _GameCard extends StatelessWidget {
               const SizedBox(height: 3),
               Text(
                 definition.subtitle,
-                style: const TextStyle(color: Nura.muted, fontSize: 13),
+                style: const TextStyle(color: Voxelo.muted, fontSize: 13),
               ),
             ],
           ),
         ),
-        const Icon(Icons.chevron_right, color: Nura.soft),
+        const Icon(Icons.chevron_right, color: Voxelo.soft),
       ],
     ),
   );
@@ -253,7 +253,7 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
     progress: (round + 1) / 10,
     child: Column(
       children: [
-        const Text('Bu çeviri doğru mu?', style: TextStyle(color: Nura.muted)),
+        const Text('Bu çeviri doğru mu?', style: TextStyle(color: Voxelo.muted)),
         const SizedBox(height: 24),
         _PromptCard(primary: phrase.target, secondary: proposed),
         const Spacer(),
@@ -384,7 +384,7 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
           Text(
             phrase.glossFor(widget.ui),
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Nura.muted),
+            style: const TextStyle(color: Voxelo.muted),
           ),
           const SizedBox(height: 26),
           Container(
@@ -392,9 +392,9 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
             constraints: const BoxConstraints(minHeight: 72),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Nura.mintLight,
-              borderRadius: BorderRadius.circular(Nura.radius),
-              border: Border.all(color: Nura.mint),
+              color: Voxelo.mintLight,
+              borderRadius: BorderRadius.circular(Voxelo.radius),
+              border: Border.all(color: Voxelo.mint),
             ),
             child: Wrap(
               alignment: WrapAlignment.center,
@@ -428,11 +428,11 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
 
   Widget _letter(_LetterTile tile, VoidCallback tap, bool selectedTile) =>
       Material(
-        color: selectedTile ? Nura.mintDark : Colors.white,
-        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        color: selectedTile ? Voxelo.mintDark : Colors.white,
+        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
         child: InkWell(
           onTap: tap,
-          borderRadius: BorderRadius.circular(Nura.radiusSm),
+          borderRadius: BorderRadius.circular(Voxelo.radiusSm),
           child: Container(
             constraints: const BoxConstraints(minWidth: 42, minHeight: 44),
             alignment: Alignment.center,
@@ -440,7 +440,7 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
             child: Text(
               tile.character,
               style: TextStyle(
-                color: selectedTile ? Colors.white : Nura.ink,
+                color: selectedTile ? Colors.white : Voxelo.ink,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
@@ -542,7 +542,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
       children: [
         const Text(
           'Cümleyi dinle ve anlamını seç',
-          style: TextStyle(color: Nura.muted),
+          style: TextStyle(color: Voxelo.muted),
         ),
         const SizedBox(height: 24),
         Semantics(
@@ -550,12 +550,12 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
           label: 'Sesi oynat',
           child: InkWell(
             onTap: _play,
-            borderRadius: BorderRadius.circular(Nura.radiusLg),
+            borderRadius: BorderRadius.circular(Voxelo.radiusLg),
             child: Container(
               width: 112,
               height: 112,
               decoration: const BoxDecoration(
-                color: Nura.mintDark,
+                color: Voxelo.mintDark,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -583,7 +583,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
             correct: lastRight,
             message: lastRight
                 ? 'Harika dinledin!'
-                : 'Nura: dinledikçe daha net olacak.',
+                : 'Voxelo: dinledikçe daha net olacak.',
           ),
       ],
     ),
@@ -687,7 +687,7 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
         Text(
           phrase.glossFor(widget.ui),
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Nura.muted),
+          style: const TextStyle(color: Voxelo.muted),
         ),
         const SizedBox(height: 26),
         _PromptCard(primary: question),
@@ -785,7 +785,7 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
     trailing: '$correct doğru',
     child: Column(
       children: [
-        const Text('Doğru çeviriyi seç', style: TextStyle(color: Nura.muted)),
+        const Text('Doğru çeviriyi seç', style: TextStyle(color: Voxelo.muted)),
         const SizedBox(height: 24),
         _PromptCard(primary: phrase.target),
         const Spacer(),
@@ -819,7 +819,7 @@ class _GameScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: NuraAppBar(
+    appBar: VoxeloAppBar(
       pageTitle: Text(title),
       actions: trailing == null
           ? null
@@ -851,8 +851,8 @@ class _PromptCard extends StatelessWidget {
   final String? secondary;
 
   @override
-  Widget build(BuildContext context) => NuraCard(
-    color: Nura.mintLight,
+  Widget build(BuildContext context) => VoxeloCard(
+    color: Voxelo.mintLight,
     child: Column(
       children: [
         Text(
@@ -862,7 +862,7 @@ class _PromptCard extends StatelessWidget {
             fontSize: 23,
             height: 1.3,
             fontWeight: FontWeight.w700,
-            color: Nura.ink,
+            color: Voxelo.ink,
           ),
         ),
         if (secondary != null) ...[
@@ -875,7 +875,7 @@ class _PromptCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 17,
               height: 1.35,
-              color: Nura.muted,
+              color: Voxelo.muted,
             ),
           ),
         ],
@@ -903,7 +903,7 @@ Future<void> showGameResult(
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          NuraMascot(
+          VoxeloMascot(
             size: 76,
             mood: percent >= 70 ? MascotMood.celebrate : MascotMood.encourage,
           ),
@@ -913,19 +913,19 @@ Future<void> showGameResult(
             style: const TextStyle(
               fontSize: 42,
               fontWeight: FontWeight.w700,
-              color: Nura.mintDark,
+              color: Voxelo.mintDark,
             ),
           ),
           const SizedBox(height: 6),
           Text(
             '$correct / $total doğru',
-            style: const TextStyle(color: Nura.muted),
+            style: const TextStyle(color: Voxelo.muted),
           ),
           const SizedBox(height: 10),
           Text(
             '+$earnedXp XP',
             style: const TextStyle(
-              color: Nura.sunflower,
+              color: Voxelo.sunflower,
               fontWeight: FontWeight.w700,
             ),
           ),

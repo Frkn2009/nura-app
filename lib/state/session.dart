@@ -26,9 +26,9 @@ final i18nProvider = Provider<I18n>(
 );
 
 class SessionController extends Notifier<UserProfile> {
-  static const _key = 'nura.profile.v1';
-  static const _profilePrefix = 'nura.family.profile.';
-  static const _activeProfileKey = 'nura.family.active';
+  static const _key = 'voxelo.profile.v1';
+  static const _profilePrefix = 'voxelo.family.profile.';
+  static const _activeProfileKey = 'voxelo.family.active';
 
   SharedPreferences get _prefs => ref.read(prefsProvider);
 

@@ -28,7 +28,7 @@ class ClanMemberEntry {
         joinCode: json['join_code'] as String,
         rank: (json['rank'] as num?)?.toInt() ?? 0,
         userId: json['user_id'] as String,
-        playerName: json['player_name'] as String? ?? 'NURA Öğrencisi',
+        playerName: json['player_name'] as String? ?? 'VOXELO Öğrencisi',
         xp: (json['xp'] as num?)?.toInt() ?? 0,
         isMe: json['is_me'] as bool? ?? false,
         isOwner: json['is_owner'] as bool? ?? false,
@@ -56,7 +56,7 @@ class ClanChatMessage {
       ClanChatMessage(
         id: (json['id'] as num).toInt(),
         userId: json['user_id'] as String,
-        playerName: json['player_name'] as String? ?? 'NURA Öğrencisi',
+        playerName: json['player_name'] as String? ?? 'VOXELO Öğrencisi',
         text: json['text'] as String? ?? '',
         createdAt: DateTime.parse(json['created_at'] as String),
         isMe: json['is_me'] as bool? ?? false,

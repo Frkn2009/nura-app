@@ -1,12 +1,12 @@
-# NURA — YENİ SOHBETTE DEVAM EKRANI
+# VOXELO — YENİ SOHBETTE DEVAM EKRANI
 
 Tarih: 21 Ağustos 2026
 
 ## Yeni sohbete yapıştır
 
 ```text
-nura-app projesine kaldığı yerden devam et.
-GitHub: https://github.com/Frkn2009/nura-app
+voxelo-app projesine kaldığı yerden devam et.
+GitHub: https://github.com/Frkn2009/voxelo-app
 Önce docs/YENI_SOHBETTE_DEVAM.md, docs/YAPILACAKLAR.md ve docs/DEPLOYMENT_STATUS.md dosyalarını oku.
 main dalının son durumunu çek; temiz çalışma ağacını doğrula.
 Tam yedek dalı ve etiketi korunmalı. Her işi ayrı commit yapıp GitHub'a push et.

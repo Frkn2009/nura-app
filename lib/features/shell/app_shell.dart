@@ -40,37 +40,37 @@ class AppShell extends ConsumerWidget {
     (
       icon: Icons.home_outlined,
       selected: Icons.home,
-      color: Nura.mint,
+      color: Voxelo.mint,
       label: i18n.home,
     ),
     (
       icon: Icons.mic_none,
       selected: Icons.mic,
-      color: Nura.mint,
+      color: Voxelo.mint,
       label: i18n.speak,
     ),
     (
       icon: Icons.sports_esports_outlined,
       selected: Icons.sports_esports,
-      color: Nura.coral,
+      color: Voxelo.coral,
       label: 'Oyun',
     ),
     (
       icon: Icons.forum_outlined,
       selected: Icons.forum,
-      color: Nura.coral,
+      color: Voxelo.coral,
       label: 'Sohbet',
     ),
     (
       icon: Icons.translate_outlined,
       selected: Icons.translate,
-      color: Nura.mint,
+      color: Voxelo.mint,
       label: i18n.translate,
     ),
     (
       icon: Icons.person_outline,
       selected: Icons.person,
-      color: Nura.mint,
+      color: Voxelo.mint,
       label: i18n.you,
     ),
   ];
@@ -91,7 +91,7 @@ class AppShell extends ConsumerWidget {
 
     if (!wide) {
       return Scaffold(
-        appBar: NuraAppBar(),
+        appBar: VoxeloAppBar(),
         body: content,
         bottomNavigationBar: NavigationBar(
           selectedIndex: index,
@@ -114,7 +114,7 @@ class AppShell extends ConsumerWidget {
     // Tablet/geniş ekran: alt bar yerine yan NavigationRail (Material
     // large-screen kılavuzu) + içerik ortalanıp gereksiz gerilmiyor.
     return Scaffold(
-      appBar: NuraAppBar(),
+      appBar: VoxeloAppBar(),
       body: Row(
         children: [
           NavigationRail(

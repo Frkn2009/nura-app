@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nura/features/plus/data/billing_service.dart';
-import 'package:nura/features/plus/data/fake_billing_service.dart';
-import 'package:nura/features/plus/data/revenuecat_billing_service.dart';
-import 'package:nura/features/plus/domain/entitlement.dart';
-import 'package:nura/state/session.dart';
+import 'package:voxelo/features/plus/data/billing_service.dart';
+import 'package:voxelo/features/plus/data/fake_billing_service.dart';
+import 'package:voxelo/features/plus/data/revenuecat_billing_service.dart';
+import 'package:voxelo/features/plus/domain/entitlement.dart';
+import 'package:voxelo/state/session.dart';
 
 final billingServiceProvider = Provider<BillingService>((ref) {
   return RevenueCatBillingService.isConfigured
@@ -12,7 +12,7 @@ final billingServiceProvider = Provider<BillingService>((ref) {
 });
 
 final plusControllerProvider =
-    StateNotifierProvider<PlusController, NuraEntitlement>((ref) {
+    StateNotifierProvider<PlusController, VoxeloEntitlement>((ref) {
       return PlusController(ref.watch(billingServiceProvider), ref);
     });
 
@@ -21,8 +21,8 @@ final plusControllerProvider =
 /// kalır. Sonucu ayrıca `SessionController.isPlus`'a yazar çünkü uygulamanın
 /// geri kalanı (speak limiti, reklamsız, AI sohbet gate'i vb.) hâlâ oradan
 /// okuyor — iki ayrı "Plus" kaynağı olmasın diye köprü burada kuruluyor.
-class PlusController extends StateNotifier<NuraEntitlement> {
-  PlusController(this._billingService, this._ref) : super(NuraEntitlement.free);
+class PlusController extends StateNotifier<VoxeloEntitlement> {
+  PlusController(this._billingService, this._ref) : super(VoxeloEntitlement.free);
 
   final BillingService _billingService;
   final Ref _ref;
@@ -50,8 +50,8 @@ class PlusController extends StateNotifier<NuraEntitlement> {
     // bağlı tüm özellikleri (sınırsız konuşma, reklamsız vb.) kullanabilsin
     // diye isPlus de true set edilir.
     await notifier.setPlus(
-      state == NuraEntitlement.plus || state == NuraEntitlement.business,
+      state == VoxeloEntitlement.plus || state == VoxeloEntitlement.business,
     );
-    await notifier.setBusiness(state == NuraEntitlement.business);
+    await notifier.setBusiness(state == VoxeloEntitlement.business);
   }
 }

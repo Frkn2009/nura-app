@@ -167,7 +167,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
 
   String _microphoneMessage() => switch (speech.availability) {
     SpeechAvailability.permissionPermanentlyDenied =>
-      'Mikrofon izni kapalı. Telefon ayarlarından NURA için mikrofonu aç.',
+      'Mikrofon izni kapalı. Telefon ayarlarından VOXELO için mikrofonu aç.',
     SpeechAvailability.permissionDenied =>
       'Konuşabilmek için mikrofon izni vermen gerekiyor.',
     SpeechAvailability.unavailable =>
@@ -179,7 +179,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
     final code = error.toString();
     if (code.contains('authentication_required') ||
         code.contains('invalid_session')) {
-      return 'Devam etmek için NURA hesabına giriş gerekiyor.';
+      return 'Devam etmek için VOXELO hesabına giriş gerekiyor.';
     }
     if (code.contains('service_not_configured')) {
       return 'Çeviri sunucusu henüz yapılandırılmadı.';
@@ -191,7 +191,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
   Widget build(BuildContext context) {
     final p = ref.watch(sessionProvider);
     return Scaffold(
-      appBar: NuraAppBar(
+      appBar: VoxeloAppBar(
         pageTitle: const Text('Toplantı Çevirmeni'),
         leading: IconButton(
           icon: const Icon(Icons.close),
@@ -205,7 +205,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
             end: Alignment.bottomCenter,
             stops: const [0.0, 0.35],
             colors: [
-              Nura.accent.withValues(alpha: .06),
+              Voxelo.accent.withValues(alpha: .06),
               Theme.of(context).scaffoldBackgroundColor,
             ],
           ),
@@ -254,12 +254,12 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                   children: [
                     const Text(
                       'Sadece çeviriyor, yorum katmıyor',
-                      style: TextStyle(color: Nura.muted, fontSize: 12),
+                      style: TextStyle(color: Voxelo.muted, fontSize: 12),
                     ),
                     Text(
                       'Bugün kalan: ${_mmss(p.interpreterSecondsLeft)}',
                       style: const TextStyle(
-                        color: Nura.muted,
+                        color: Voxelo.muted,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -276,13 +276,13 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const NuraMascot(size: 72, mood: MascotMood.wave),
+                              const VoxeloMascot(size: 72, mood: MascotMood.wave),
                               const SizedBox(height: 16),
                               const Text(
                                 'Telefonu masaya koy. Konuşacak kişi kendi dilinin butonunu basılı tutup konuşsun, bırakınca karşı tarafın diline çevrilip hem yazılı hem sesli okunur.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Nura.muted,
+                                  color: Voxelo.muted,
                                   height: 1.4,
                                 ),
                               ),
@@ -311,7 +311,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                   child: Text(
                     error!,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Nura.coral),
+                    style: const TextStyle(color: Voxelo.coral),
                   ),
                 ),
               if (translating)
@@ -355,7 +355,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
   }
 }
 
-/// Dil seçici kart — eski çıplak `DropdownButton`, `Nura` kart üslubuna
+/// Dil seçici kart — eski çıplak `DropdownButton`, `Voxelo` kart üslubuna
 /// (gölge/kenarlık) taşındı ki ekranın geri kalanıyla aynı ailede dursun.
 class _LangChip extends StatelessWidget {
   const _LangChip({
@@ -374,13 +374,13 @@ class _LangChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         border: Border.all(
           color: Theme.of(
             context,
           ).dividerColor.withValues(alpha: isDark ? 1 : .6),
         ),
-        boxShadow: isDark ? null : Nura.softShadow,
+        boxShadow: isDark ? null : Voxelo.softShadow,
       ),
       child: DropdownButtonHideUnderline(
         child: ButtonTheme(
@@ -388,10 +388,10 @@ class _LangChip extends StatelessWidget {
           child: DropdownButton<LearnLang>(
             value: lang,
             isExpanded: true,
-            borderRadius: BorderRadius.circular(Nura.radius),
+            borderRadius: BorderRadius.circular(Voxelo.radius),
             style: const TextStyle(
               fontWeight: FontWeight.w700,
-              color: Nura.ink,
+              color: Voxelo.ink,
               fontSize: 14,
             ),
             items: LearnLang.values
@@ -425,10 +425,10 @@ class _SwapButton extends StatelessWidget {
         height: 38,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: Nura.heroGradient,
+          gradient: Voxelo.heroGradient,
           boxShadow: [
             BoxShadow(
-              color: Nura.accent.withValues(alpha: .3),
+              color: Voxelo.accent.withValues(alpha: .3),
               blurRadius: 10,
               offset: const Offset(0, 3),
             ),
@@ -477,15 +477,15 @@ class _TurnBubble extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
           constraints: const BoxConstraints(maxWidth: 320),
-          child: NuraCard(
-            color: fromA ? Nura.card : Nura.mint,
+          child: VoxeloCard(
+            color: fromA ? Voxelo.card : Voxelo.mint,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${t.speaker.flag()} ${t.original}',
                   style: TextStyle(
-                    color: fromA ? Nura.muted : Colors.white70,
+                    color: fromA ? Voxelo.muted : Colors.white70,
                     fontSize: 12,
                   ),
                 ),
@@ -497,7 +497,7 @@ class _TurnBubble extends StatelessWidget {
                   child: Text(
                     t.translated,
                     style: TextStyle(
-                      color: fromA ? Nura.ink : Colors.white,
+                      color: fromA ? Voxelo.ink : Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       height: 1.3,
@@ -558,12 +558,12 @@ class _TalkButtonState extends State<_TalkButton>
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 18),
               decoration: BoxDecoration(
-                gradient: widget.active ? Nura.heroGradient : null,
-                color: widget.active ? null : Nura.mintDark,
-                borderRadius: BorderRadius.circular(Nura.radius),
+                gradient: widget.active ? Voxelo.heroGradient : null,
+                color: widget.active ? null : Voxelo.mintDark,
+                borderRadius: BorderRadius.circular(Voxelo.radius),
                 boxShadow: [
                   BoxShadow(
-                    color: (widget.active ? Nura.accent : Nura.mintDark)
+                    color: (widget.active ? Voxelo.accent : Voxelo.mintDark)
                         .withValues(alpha: .25 + .2 * t),
                     blurRadius: 10 + 10 * t,
                     spreadRadius: t,

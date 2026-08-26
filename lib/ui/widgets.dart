@@ -4,8 +4,8 @@ export 'mascot.dart';
 import 'package:flutter/material.dart';
 import '../core/theme/tokens.dart';
 
-class NuraCard extends StatelessWidget {
-  const NuraCard({
+class VoxeloCard extends StatelessWidget {
+  const VoxeloCard({
     super.key,
     required this.child,
     this.padding,
@@ -27,13 +27,13 @@ class NuraCard extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         border: Border.all(
           color: Theme.of(
             context,
           ).dividerColor.withValues(alpha: isDark ? 1 : .5),
         ),
-        boxShadow: isDark ? null : Nura.softShadow,
+        boxShadow: isDark ? null : Voxelo.softShadow,
       ),
       child: child,
     );
@@ -42,7 +42,7 @@ class NuraCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         child: box,
       ),
     );
@@ -50,7 +50,7 @@ class NuraCard extends StatelessWidget {
 }
 
 class Eyebrow extends StatelessWidget {
-  const Eyebrow(this.text, {super.key, this.color = Nura.terr});
+  const Eyebrow(this.text, {super.key, this.color = Voxelo.terr});
   final String text;
   final Color color;
 
@@ -91,7 +91,7 @@ class ChoiceTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(Nura.radius),
+        borderRadius: BorderRadius.circular(Voxelo.radius),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -99,7 +99,7 @@ class ChoiceTile extends StatelessWidget {
             color: selected
                 ? Theme.of(context).colorScheme.primaryContainer
                 : Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(Nura.radius),
+            borderRadius: BorderRadius.circular(Voxelo.radius),
             border: Border.all(
               color: selected
                   ? Theme.of(context).colorScheme.primary

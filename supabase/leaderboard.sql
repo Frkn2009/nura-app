@@ -1,4 +1,4 @@
--- NURA haftalık XP sıralaması.
+-- VOXELO haftalık XP sıralaması.
 -- supabase_setup.sql tarafından da çağrılabilmesi için ayrı ve tekrar çalıştırılabilir.
 
 alter table public.profiles add column if not exists display_name text;
@@ -91,7 +91,7 @@ as $$
       board.user_id,
       coalesce(
         nullif(trim(profile.display_name), ''),
-        'NURA ' || upper(left(board.user_id::text, 4))
+        'VOXELO ' || upper(left(board.user_id::text, 4))
       ) as player_name,
       board.xp
     from public.leaderboard board

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NURA</string>
-    <string name="nura_widget_description">Günlük NURA dersi, XP hedefi ve seri</string>
+    <string name="app_name">VOXELO</string>
+    <string name="voxelo_widget_description">Günlük VOXELO dersi, XP hedefi ve seri</string>
 </resources>

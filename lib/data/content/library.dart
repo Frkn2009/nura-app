@@ -23,10 +23,10 @@ class LibraryStory {
   final List<LibrarySentence> sentences;
 }
 
-/// NURA kitaplığı — seviyeye göre kısa okuma parçaları. Sesler cihaz TTS'i
+/// VOXELO kitaplığı — seviyeye göre kısa okuma parçaları. Sesler cihaz TTS'i
 /// ile okunur (bkz. StoryReaderScreen); metinler gerçek, dilbilgisi olarak
 /// doğru cümlelerdir, otomatik çeviri değildir.
-class NuraLibrary {
+class VoxeloLibrary {
   static List<LibraryStory> forLang(LearnLang lang) =>
       _all.where((s) => s.lang == lang).toList(growable: false);
 
