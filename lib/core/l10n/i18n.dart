@@ -216,6 +216,140 @@ class I18n {
         'التحدث مع من أمامك.',
   });
 
+  String get homeTourXpTitle => t({
+    'tr': 'Günlük hedefin',
+    'en': 'Your daily goal',
+    'es': 'Tu objetivo diario',
+    'de': 'Dein Tagesziel',
+    'fr': 'Ton objectif quotidien',
+    'nl': 'Je dagelijkse doel',
+    'ar': 'هدفك اليومي',
+  });
+
+  String get homeTourXpBody => t({
+    'tr':
+        'Her gün XP kazanarak seviyeni ilerlet. Çubuk dolunca günlük '
+        'hedefini tamamlamış olursun.',
+    'en':
+        "Earn XP every day to level up. When the bar fills, you've hit "
+        'your daily goal.',
+    'es':
+        'Gana XP cada día para subir de nivel. Cuando la barra se llena, '
+        'has cumplido tu objetivo diario.',
+    'de':
+        'Verdiene jeden Tag XP, um aufzusteigen. Wenn die Leiste voll '
+        'ist, hast du dein Tagesziel erreicht.',
+    'fr':
+        "Gagne de l'XP chaque jour pour progresser. Quand la barre est "
+        'pleine, tu as atteint ton objectif quotidien.',
+    'nl':
+        'Verdien elke dag XP om te stijgen. Als de balk vol is, heb je '
+        'je dagelijkse doel gehaald.',
+    'ar':
+        'اكسب نقاط خبرة كل يوم لترتقي. عند امتلاء الشريط تكون قد أتممت '
+        'هدفك اليومي.',
+  });
+
+  String get homeTourSpeakTitle => t({
+    'tr': 'Bugünün konuşması',
+    'en': "Today's speaking",
+    'es': 'La conversación de hoy',
+    'de': 'Das heutige Gespräch',
+    'fr': "La conversation d'aujourd'hui",
+    'nl': 'Het gesprek van vandaag',
+    'ar': 'محادثة اليوم',
+  });
+
+  String get homeTourSpeakBody => t({
+    'tr':
+        'Her gün sana özel kısa bir konuşma pratiği seçiyoruz. Buradan '
+        'başla, dinle ve tekrar et.',
+    'en':
+        'Every day we pick a short speaking practice just for you. '
+        'Start here, listen, and repeat.',
+    'es':
+        'Cada día elegimos una breve práctica de conversación para ti. '
+        'Empieza aquí, escucha y repite.',
+    'de':
+        'Jeden Tag wählen wir eine kurze Sprechübung nur für dich. '
+        'Starte hier, hör zu und wiederhole.',
+    'fr':
+        "Chaque jour, on choisit un court exercice de conversation "
+        'rien que pour toi. Commence ici, écoute et répète.',
+    'nl':
+        'Elke dag kiezen we een korte spreekoefening speciaal voor jou. '
+        'Begin hier, luister en herhaal.',
+    'ar':
+        'كل يوم نختار لك تمرين محادثة قصيرًا خاصًا بك. ابدأ من هنا، '
+        'استمع وكرر.',
+  });
+
+  String get homeTourLibraryTitle => t({
+    'tr': 'Kitaplık',
+    'en': 'Library',
+    'es': 'Biblioteca',
+    'de': 'Bibliothek',
+    'fr': 'Bibliothèque',
+    'nl': 'Bibliotheek',
+    'ar': 'المكتبة',
+  });
+
+  String get homeTourLibraryBody => t({
+    'tr':
+        'Seviyene uygun kısa hikayeleri okuyup dinleyerek okuma ve '
+        'telaffuz pratiği yap.',
+    'en':
+        'Read and listen to short stories at your level to practice '
+        'reading and pronunciation.',
+    'es':
+        'Lee y escucha historias cortas a tu nivel para practicar '
+        'lectura y pronunciación.',
+    'de':
+        'Lies und hör kurze Geschichten auf deinem Niveau, um Lesen '
+        'und Aussprache zu üben.',
+    'fr':
+        "Lis et écoute des histoires courtes à ton niveau pour "
+        "t'entraîner à la lecture et à la prononciation.",
+    'nl':
+        'Lees en luister naar korte verhalen op jouw niveau om lezen '
+        'en uitspraak te oefenen.',
+    'ar': 'اقرأ واستمع إلى قصص قصيرة بمستواك لتتمرن على القراءة والنطق.',
+  });
+
+  String get homeTourReviewTitle => t({
+    'tr': 'Tekrar',
+    'en': 'Review',
+    'es': 'Repaso',
+    'de': 'Wiederholung',
+    'fr': 'Révision',
+    'nl': 'Herhaling',
+    'ar': 'المراجعة',
+  });
+
+  String get homeTourReviewBody => t({
+    'tr':
+        'Öğrendiğin kelimeler zamanı gelince burada tekrar için '
+        'birikir — unutmadan pekiştir.',
+    'en':
+        "Words you've learned collect here for review right when it's "
+        'time — reinforce them before you forget.',
+    'es':
+        'Las palabras que aprendiste se acumulan aquí para repasarlas '
+        'en el momento justo — refuérzalas antes de olvidarlas.',
+    'de':
+        'Gelernte Wörter sammeln sich hier zur Wiederholung genau zur '
+        'richtigen Zeit — festige sie, bevor du sie vergisst.',
+    'fr':
+        "Les mots que tu as appris s'accumulent ici pour être révisés "
+        'au bon moment — renforce-les avant de les oublier.',
+    'nl':
+        'Geleerde woorden verzamelen zich hier voor herhaling op het '
+        'juiste moment — verstevig ze voordat je ze vergeet.',
+    'ar':
+        'الكلمات التي تعلمتها تتجمع هنا للمراجعة في الوقت المناسب — '
+        'ثبّتها قبل أن تنساها.',
+  });
+
   String get whyTitle => t({
     'tr': 'Neden konuşmak istiyorsun?',
     'en': 'Why do you want to speak?',

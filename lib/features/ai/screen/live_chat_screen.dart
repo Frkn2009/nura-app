@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme/tokens.dart';
 import '../../../data/models/models.dart';
@@ -340,6 +341,12 @@ class _EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(color: Nura.muted, height: 1.4),
             ),
+            const SizedBox(height: 10),
+            const Text(
+              'Uygunsuz bir cevap görürsen, üzerine basılı tutarak bildirebilirsin.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Nura.soft, fontSize: 12, height: 1.4),
+            ),
           ],
         ),
       ),
@@ -379,6 +386,43 @@ class _ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final fromUser = bubble.fromUser;
+    final content = Container(
+      constraints: const BoxConstraints(maxWidth: 280),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+      decoration: BoxDecoration(
+        gradient: fromUser ? Nura.heroGradient : null,
+        color: fromUser ? null : Theme.of(context).cardColor,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(18),
+          topRight: const Radius.circular(18),
+          bottomLeft: Radius.circular(fromUser ? 18 : 4),
+          bottomRight: Radius.circular(fromUser ? 4 : 18),
+        ),
+        border: !fromUser && isDark
+            ? Border.all(color: Theme.of(context).dividerColor)
+            : null,
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: (fromUser ? Nura.accent : Colors.black).withValues(
+                    alpha: fromUser ? .22 : .07,
+                  ),
+                  blurRadius: fromUser ? 14 : 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+      ),
+      child: Text(
+        bubble.text,
+        style: TextStyle(
+          color: fromUser
+              ? Colors.white
+              : Theme.of(context).colorScheme.onSurface,
+          height: 1.35,
+        ),
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -392,47 +436,53 @@ class _ChatBubble extends StatelessWidget {
             const SizedBox(width: 6),
           ],
           Flexible(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 280),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-              decoration: BoxDecoration(
-                gradient: fromUser ? Nura.heroGradient : null,
-                color: fromUser ? null : Theme.of(context).cardColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(18),
-                  topRight: const Radius.circular(18),
-                  bottomLeft: Radius.circular(fromUser ? 18 : 4),
-                  bottomRight: Radius.circular(fromUser ? 4 : 18),
-                ),
-                border: !fromUser && isDark
-                    ? Border.all(color: Theme.of(context).dividerColor)
-                    : null,
-                boxShadow: isDark
-                    ? null
-                    : [
-                        BoxShadow(
-                          color: (fromUser ? Nura.accent : Colors.black)
-                              .withValues(alpha: fromUser ? .22 : .07),
-                          blurRadius: fromUser ? 14 : 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-              ),
-              child: Text(
-                bubble.text,
-                style: TextStyle(
-                  color: fromUser
-                      ? Colors.white
-                      : Theme.of(context).colorScheme.onSurface,
-                  height: 1.35,
-                ),
-              ),
-            ),
+            // Google Play'in "AI ile üretilen içerik" politikası (Temmuz
+            // 2026) uygulama içinden çıkmadan bildirim/işaretleme aracı
+            // zorunlu tutuyor — sadece AI cevaplarında (kullanıcının
+            // kendi mesajında değil) uzun basınca bildirme diyaloğu açılır.
+            child: fromUser
+                ? content
+                : GestureDetector(
+                    onLongPress: () => _reportAiMessage(context, bubble.text),
+                    child: content,
+                  ),
           ),
         ],
       ),
     );
   }
+}
+
+Future<void> _reportAiMessage(BuildContext context, String text) async {
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Mesajı bildir'),
+      content: Text(
+        'Bu AI cevabını uygunsuz veya hatalı olarak bildirmek ister misin? '
+        'E-posta uygulaman açılacak.',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, false),
+          child: const Text('Vazgeç'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(ctx, true),
+          child: const Text('Bildir'),
+        ),
+      ],
+    ),
+  );
+  if (confirmed != true || !context.mounted) return;
+  final uri = Uri(
+    scheme: 'mailto',
+    path: 'destek@nura.app',
+    query:
+        'subject=${Uri.encodeComponent('NURA Sohbet - içerik bildirimi')}'
+        '&body=${Uri.encodeComponent('Bildirilen AI cevabı:\n\n$text')}',
+  );
+  await launchUrl(uri);
 }
 
 class _TypingBubble extends StatefulWidget {

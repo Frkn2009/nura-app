@@ -13,6 +13,7 @@ import '../../features/clan/clan_screen.dart';
 import '../../features/events/weekly_event_screen.dart';
 import '../../features/family/family_profiles_screen.dart';
 import '../../features/legal/privacy_screen.dart';
+import '../../features/legal/terms_screen.dart';
 import '../../features/leaderboard/leaderboard_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
 import '../../features/games/games_screen.dart';
@@ -128,6 +129,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/privacy',
         parentNavigatorKey: _root,
         builder: (_, _) => const PrivacyScreen(),
+      ),
+      GoRoute(
+        path: '/terms',
+        parentNavigatorKey: _root,
+        builder: (_, _) => const TermsScreen(),
       ),
       GoRoute(
         path: '/auth',

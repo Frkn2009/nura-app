@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/models/clan.dart';
@@ -13,14 +15,37 @@ class ClanChatScreen extends StatefulWidget {
 }
 
 class _ClanChatScreenState extends State<ClanChatScreen> {
+  static const _blockedKey = 'nura.clan.blocked_user_ids';
+
   final _input = TextEditingController();
   Future<List<ClanChatMessage>>? _request;
   bool _sending = false;
+  Set<String> _blockedUserIds = {};
 
   @override
   void initState() {
     super.initState();
     _request = Supa.clanMessages();
+    _loadBlockedUsers();
+  }
+
+  Future<void> _loadBlockedUsers() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _blockedUserIds = (prefs.getStringList(_blockedKey) ?? []).toSet();
+    });
+  }
+
+  Future<void> _blockUser(String userId, String playerName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final updated = {..._blockedUserIds, userId};
+    await prefs.setStringList(_blockedKey, updated.toList());
+    if (!mounted) return;
+    setState(() => _blockedUserIds = updated);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$playerName artık mesajların gösterilmiyor.')),
+    );
   }
 
   @override
@@ -39,6 +64,53 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
       setState(() => _request = Supa.clanMessages());
     } finally {
       if (mounted) setState(() => _sending = false);
+    }
+  }
+
+  // Apple/Google'ın kullanıcı-kullanıcı iletişimi kuralı (App Store 1.2,
+  // Google Play kullanıcı-üretimli içerik politikası) uygulama içinden
+  // çıkmadan bildirme + engelleme aracı zorunlu tutuyor. Engelleme burada
+  // istemci tarafında: engellenen kullanıcının mesajları bu cihazda bir
+  // daha listelenmiyor (aşağıdaki filtre), sunucu tarafı değişikliği
+  // gerektirmiyor.
+  Future<void> _showMessageActions(ClanChatMessage m) async {
+    final action = await showModalBottomSheet<String>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.flag_outlined, color: Nura.coral),
+              title: const Text('Mesajı bildir'),
+              onTap: () => Navigator.pop(ctx, 'report'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.block, color: Nura.coral),
+              title: Text('${m.playerName} kullanıcısını engelle'),
+              onTap: () => Navigator.pop(ctx, 'block'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.close),
+              title: const Text('Vazgeç'),
+              onTap: () => Navigator.pop(ctx),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (!mounted) return;
+    if (action == 'block') {
+      await _blockUser(m.userId, m.playerName);
+    } else if (action == 'report') {
+      final uri = Uri(
+        scheme: 'mailto',
+        path: 'destek@nura.app',
+        query:
+            'subject=${Uri.encodeComponent('NURA Klan Sohbeti - içerik bildirimi')}'
+            '&body=${Uri.encodeComponent('Bildirilen kullanıcı: ${m.playerName}\nMesaj:\n\n${m.text}')}',
+      );
+      await launchUrl(uri);
     }
   }
 
@@ -64,7 +136,11 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  final messages = snapshot.data ?? const [];
+                  final messages = (snapshot.data ?? const [])
+                      .where(
+                        (m) => m.isMe || !_blockedUserIds.contains(m.userId),
+                      )
+                      .toList();
                   if (messages.isEmpty) {
                     return const Center(
                       child: Text(
@@ -82,36 +158,41 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                         alignment: m.isMe
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
-                        child: Container(
-                          constraints: const BoxConstraints(maxWidth: 280),
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: m.isMe ? Nura.mintDark : Nura.cloud,
-                            borderRadius: BorderRadius.circular(Nura.radius),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (!m.isMe)
+                        child: GestureDetector(
+                          onLongPress: m.isMe
+                              ? null
+                              : () => _showMessageActions(m),
+                          child: Container(
+                            constraints: const BoxConstraints(maxWidth: 280),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: m.isMe ? Nura.mintDark : Nura.cloud,
+                              borderRadius: BorderRadius.circular(Nura.radius),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (!m.isMe)
+                                  Text(
+                                    m.playerName,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w700,
+                                      color: Nura.mintDark,
+                                    ),
+                                  ),
                                 Text(
-                                  m.playerName,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                    color: Nura.mintDark,
+                                  m.text,
+                                  style: TextStyle(
+                                    color: m.isMe ? Colors.white : Nura.ink,
                                   ),
                                 ),
-                              Text(
-                                m.text,
-                                style: TextStyle(
-                                  color: m.isMe ? Colors.white : Nura.ink,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );

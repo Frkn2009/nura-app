@@ -24,6 +24,32 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   late bool business = widget.business;
   int plan = 1;
   int businessPlan = 0;
+  bool _restoring = false;
+
+  // App Store Kural 3.1.5 (ve Google Play'in benzer beklentisi): otomatik
+  // yenilenen abonelik satan uygulamalar arayüzde erişilebilir bir "satın
+  // alımları geri yükle" eylemi sunmak zorunda. `PlusController.restore()`
+  // zaten vardı ama hiçbir ekranda çağrılmıyordu.
+  Future<void> _restorePurchases() async {
+    setState(() => _restoring = true);
+    await ref.read(plusControllerProvider.notifier).restore();
+    if (!mounted) return;
+    setState(() => _restoring = false);
+    final entitlement = ref.read(plusControllerProvider);
+    final restored =
+        entitlement == NuraEntitlement.plus ||
+        entitlement == NuraEntitlement.business;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          restored
+              ? 'Satın alımların geri yüklendi.'
+              : 'Geri yüklenecek bir satın alma bulunamadı.',
+        ),
+      ),
+    );
+    if (restored && mounted) context.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,10 +185,41 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               ),
             ],
             const SizedBox(height: 10),
+            Center(
+              child: TextButton(
+                onPressed: _restoring ? null : _restorePurchases,
+                child: _restoring
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Text('Satın alımları geri yükle'),
+              ),
+            ),
+            const SizedBox(height: 4),
             const Text(
               'İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
               textAlign: TextAlign.center,
               style: TextStyle(color: Nura.soft, fontSize: 12),
+            ),
+            const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () => context.push('/terms'),
+                  child: const Text(
+                    'Kullanım Koşulları',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+                const Text('·', style: TextStyle(color: Nura.soft)),
+                TextButton(
+                  onPressed: () => context.push('/privacy'),
+                  child: const Text('Gizlilik', style: TextStyle(fontSize: 12)),
+                ),
+              ],
             ),
           ],
         ),

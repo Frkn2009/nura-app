@@ -40,32 +40,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (!mounted) return;
     await prefs.setBool(_tourSeenPrefsKey, true);
     if (!mounted) return;
+    final i18n = ref.read(i18nProvider);
     CoachTour.start(
       context,
       steps: [
         CoachStep(
           targetKey: _xpCardKey,
-          title: 'Günlük hedefin',
-          body:
-              'Her gün XP kazanarak seviyeni ilerlet. Çubuk dolunca günlük hedefini tamamlamış olursun.',
+          title: i18n.homeTourXpTitle,
+          body: i18n.homeTourXpBody,
         ),
         CoachStep(
           targetKey: _todaySpeakKey,
-          title: 'Bugünün konuşması',
-          body:
-              'Her gün sana özel kısa bir konuşma pratiği seçiyoruz. Buradan başla, dinle ve tekrar et.',
+          title: i18n.homeTourSpeakTitle,
+          body: i18n.homeTourSpeakBody,
         ),
         CoachStep(
           targetKey: _libraryKey,
-          title: 'Kitaplık',
-          body:
-              'Seviyene uygun kısa hikayeleri okuyup dinleyerek okuma ve telaffuz pratiği yap.',
+          title: i18n.homeTourLibraryTitle,
+          body: i18n.homeTourLibraryBody,
         ),
         CoachStep(
           targetKey: _reviewKey,
-          title: 'Tekrar',
-          body:
-              'Öğrendiğin kelimeler zamanı gelince burada tekrar için birikir — unutmadan pekiştir.',
+          title: i18n.homeTourReviewTitle,
+          body: i18n.homeTourReviewBody,
         ),
       ],
     );
