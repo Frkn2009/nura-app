@@ -1,4 +1,30 @@
-# VOXELO — YAPILACAKLAR LİSTESİ (22 Ağustos 2026 — GÜNCEL)
+# VOXELO — YAPILACAKLAR LİSTESİ (26 Ağustos 2026 — GÜNCEL)
+
+## 🔴 GERÇEK EKSİKLER (26 Ağustos — mağazaya çıkmadan önce kalanların tam listesi)
+
+### Senin yapman gereken (hesap/ödeme gerektirir, AI yapamaz)
+| # | İş | Not |
+|---|---|---|
+| 1 | Google Cloud Translate API anahtarı al | `translate` + `interpreter-translate` Supabase fonksiyonları şu an **çalışmıyor** (`GOOGLE_TRANSLATE_API_KEY` secret'ı hiç girilmemiş). Anahtarı sohbette paylaşırsan `supabase secrets set` ile ben girerim. |
+| 2 | Google Play Console hesabı aç | Kayıt + tek seferlik $25 ödeme gerektirir, AI açamaz. |
+| 3 | AdMob hesabı aç + gerçek ad unit ID'leri üret | Şu an test ID'leri kullanılıyor (`AndroidManifest.xml`/`Info.plist`), gerçek yayın öncesi değişmeli. |
+| 4 | RevenueCat panelinde ürünleri tanımla | Kod hazır (`voxelo_plus_monthly/yearly/family`), panelde henüz tanımlı değil. Play Console hesabı olmadan da RevenueCat'in ücretsiz Test Store'uyla denenebilir. |
+| 5 | Mağaza ekran görüntüleri + tanıtım videosu | Henüz üretilmedi, gerçek prodüksiyon/cihaz kaydı gerekiyor. |
+
+### Ben yapabilirim (mekanik/kod, hemen)
+| # | İş | Durum |
+|---|---|---|
+| 6 | Android imzalama dosyaları | ✅ 26 Ağustos'ta `C:\nura-app` (ASCII build klonu)'na kopyalandı — daha önce sadece gerçek repoda vardı, build klonunda yoktu. Artık release build önündeki engel değil. |
+| 7 | `flutter build appbundle --release` | Henüz **hiç çalıştırılmadı** — söylersen şimdi deneyebilirim. |
+| 8 | Clan sohbeti canlı fallback ismi | Supabase'deki `clan_chat` fonksiyonunda hâlâ "NURA " yazıyor (rename sed'i migration dosyalarına bilerek dokunmadı) — yeni bir migration ile düzeltilir, kozmetik/düşük öncelik. |
+| 9 | iOS build | Bu oturumda hiç ele alınmadı, planda değildi. |
+
+### Zaten hazır
+- `flutter analyze` temiz, `flutter test` 35/35 geçiyor.
+- Rename (Nura→Voxelo) tamamlandı, GitHub `voxelo-app` olarak push edildi.
+- Arclume (holding şirketi) marka/logo işi bilinçli olarak ertelendi — Voxelo canlıya çıkıp ilk kullanıcıyı görmeden marka tesciline gerek yok.
+
+---
 
 ## ✅ TAMAMLANAN MADDELER
 
