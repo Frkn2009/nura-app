@@ -15,10 +15,14 @@ sundu).
 | | |
 |---|---|
 | **GitHub** | https://github.com/Frkn2009/voxelo-app |
-| **Son commit** | `a119a5c` — ElevenLabs premium ses entegrasyonu (kitaplık okuyucusu) |
-| **Test** | ✅ 35/35 geçiyor |
-| **Analyze** | ✅ Temiz (0 uyarı) |
-| **Windows test ortamı** | `C:\voxelo-app` + `PUB_CACHE=C:\pub-cache` (kullanıcı profil yolunda Türkçe karakter olduğu için `flutter test`/native-asset derleyicisi kırılıyor — ASCII yol şart) |
+| **Son commit** | `1a25b4b` — Nura → Voxelo tam yeniden adlandırma (26 Ağustos) |
+| **Test** | ✅ 35/35 geçiyor (ASCII klonda rename sonrası doğrulandı) |
+| **Analyze** | ✅ Temiz (0 hata, 1 pre-existing lint info) |
+| **Windows test ortamı** | `C:\nura-app` + `PUB_CACHE=C:\pub-cache` (kullanıcı profil yolunda Türkçe karakter olduğu için `flutter test`/native-asset derleyicisi kırılıyor — ASCII yol şart). **Not:** bu klasörün fiziksel adı bilinçli olarak `nura-app` bırakıldı (kozmetik, git remote zaten `voxelo-app`'e işaret ediyor) — düzeltme yapılırsa `git clone https://github.com/Frkn2009/voxelo-app.git C:\voxelo-app` ile taze klon alınabilir. |
+
+### 🔄 İsim değişikliği: Nura → Voxelo (26 Ağustos 2026)
+
+"Nura" adı EUIPO (AB marka ofisi) Sınıf 9'da (yazılım) iki farklı şirket tarafından tescilli bulundu (Nura Holdings Pty Ltd, NuraLogix Corporation) + Sınıf 41'de bekleyen bir başvuru (Aman Group) — gerçek bir marka çakışması. TR/Benelux/EUIPO'da 5 alternatif isim tarandı, **Voxelo** üçünde de temiz çıktı ve seçildi. Kod tabanının tamamı (101 dosya), Android paketi (`com.nura.nura` → `com.voxelo.voxelo`), GitHub reposu (`nura-app` → `voxelo-app`, otomatik yönlendirme aktif) yeniden adlandırıldı; `dart analyze` temiz, `flutter test` 35/35 geçti. Bilinçli olarak **dokunulmadı**: zaten apply edilmiş Supabase migration dosyaları (`supabase/migrations/2026...sql` — geçmiş bütünlüğü için, sadece canlıdaki `clan_chat` fallback görüntü adı hâlâ "NURA " diyor, yeni bir migration'la düzeltilmeli), iOS Xcode widget hedefi (`ios/NuraHomeWidget/*` — iOS build şu an planda değil, Xcode olmadan yapı riskli).
 
 ## ✅ ZATEN VAR — YENİDEN YAZMA
 
