@@ -20,6 +20,15 @@ class RevenueCatBillingService implements BillingService {
     defaultValue: 'plus',
   );
 
+  /// Business panelde ayrı bir entitlement olarak tanımlanır (Plus'ın
+  /// üzerinde bir katman) — panelde farklı bir isim kullandıysan
+  /// `--dart-define=NURA_REVENUECAT_BUSINESS_ENTITLEMENT_ID=...` ile
+  /// geçersiz kıl.
+  static const _businessEntitlementId = String.fromEnvironment(
+    'NURA_REVENUECAT_BUSINESS_ENTITLEMENT_ID',
+    defaultValue: 'business',
+  );
+
   static bool get isConfigured => _apiKey.isNotEmpty;
 
   static Future<void> configureIfNeeded() async {
@@ -64,9 +73,12 @@ class RevenueCatBillingService implements BillingService {
   @override
   Future<NuraEntitlement> currentEntitlement() async {
     final info = await Purchases.getCustomerInfo();
-    return info.entitlements.active.containsKey(_entitlementId)
-        ? NuraEntitlement.plus
-        : NuraEntitlement.free;
+    final active = info.entitlements.active;
+    if (active.containsKey(_businessEntitlementId)) {
+      return NuraEntitlement.business;
+    }
+    if (active.containsKey(_entitlementId)) return NuraEntitlement.plus;
+    return NuraEntitlement.free;
   }
 
   @override

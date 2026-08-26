@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,12 +38,25 @@ class SessionController extends Notifier<UserProfile> {
     final raw =
         _prefs.getString('$_profilePrefix$activeId') ?? _prefs.getString(_key);
     var profile = raw == null
-        ? UserProfile.empty
+        ? UserProfile.empty.copyWith(uiLang: _deviceUiLang())
         : UserProfile.fromJson(jsonDecode(raw) as Map<String, dynamic>);
     if (profile.profileId != activeId) {
       profile = profile.copyWith(profileId: activeId);
     }
     return _withAchievements(_rollDay(profile));
+  }
+
+  /// İlk kurulumda (kayıtlı profil yokken) arayüz dilini cihazın kendi
+  /// dilinden tahmin eder — böylece onboarding her ülkede varsayılan
+  /// olarak Türkçe değil, kullanıcının kendi dilinde açılır. Kullanıcı
+  /// onboarding'in ilk adımında (`Ana dilin hangisi?`) istediği zaman
+  /// bunu değiştirebilir; bu sadece başlangıç tahmini.
+  UiLang _deviceUiLang() {
+    final code = PlatformDispatcher.instance.locale.languageCode;
+    for (final lang in UiLang.values) {
+      if (lang.name == code) return lang;
+    }
+    return UiLang.en;
   }
 
   String _today() {
@@ -69,6 +83,13 @@ class SessionController extends Notifier<UserProfile> {
         speakDayKey: today,
         bonusSpeakSeconds: 0,
         adsWatchedToday: 0,
+      );
+    }
+    if (rolled.interpreterDayKey != today) {
+      rolled = rolled.copyWith(
+        interpreterSecondsUsed: 0,
+        interpreterDayKey: today,
+        bonusInterpreterSeconds: 0,
       );
     }
     if (rolled.xpDayKey != today) {
@@ -123,6 +144,8 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> finishOnboarding() =>
       _save(state.copyWith(onboarded: true, streak: 1));
   Future<void> setPlus(bool v) => _save(state.copyWith(isPlus: v));
+
+  Future<void> setBusiness(bool v) => _save(state.copyWith(isBusiness: v));
   Future<void> setNotificationsEnabled(bool value) =>
       _save(state.copyWith(notificationsEnabled: value));
   Future<void> setReminderHour(int hour) =>
@@ -206,6 +229,16 @@ class SessionController extends Notifier<UserProfile> {
     await _save(p.copyWith(speakSecondsUsed: p.speakSecondsUsed + seconds));
   }
 
+  /// Plus/Business'ta da gerçek günlük tavan var (2sa/8sa) — [consumeSpeak]
+  /// gibi üst katmanı atlamıyor, sadece [UserProfile.interpreterAllowance]
+  /// katmana göre büyüyor.
+  Future<void> consumeInterpreter(int seconds) async {
+    final p = _rollDay(state);
+    await _save(
+      p.copyWith(interpreterSecondsUsed: p.interpreterSecondsUsed + seconds),
+    );
+  }
+
   Future<void> learnPhrase(String id) async {
     final ids = {...state.learnedIds, id};
     final due = {...state.srs, id: _epochDay() + 1};
@@ -282,18 +315,22 @@ class SessionController extends Notifier<UserProfile> {
     );
   }
 
-  Future<void> redeemRewardedAd({required bool xpReward}) async {
+  Future<void> redeemRewardedAd({required AdReward reward}) async {
     final profile = _rollDay(state);
     if (!profile.canWatchAd) return;
     final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     await _save(
       profile.copyWith(
-        bonusSpeakSeconds: profile.bonusSpeakSeconds + (xpReward ? 0 : 30),
+        bonusSpeakSeconds:
+            profile.bonusSpeakSeconds + (reward == AdReward.speakTime ? 30 : 0),
+        bonusInterpreterSeconds:
+            profile.bonusInterpreterSeconds +
+            (reward == AdReward.interpreterTime ? 120 : 0),
         adsWatchedToday: profile.adsWatchedToday + 1,
         lastAdEpoch: now,
       ),
     );
-    if (xpReward) await awardXp(20, source: 'ad');
+    if (reward == AdReward.xp) await awardXp(20, source: 'ad');
   }
 
   Future<void> recordInterstitial() async {

@@ -45,8 +45,13 @@ class PlusController extends StateNotifier<NuraEntitlement> {
   }
 
   Future<void> _syncSession() async {
-    await _ref
-        .read(sessionProvider.notifier)
-        .setPlus(state == NuraEntitlement.plus);
+    final notifier = _ref.read(sessionProvider.notifier);
+    // Business, Plus'ın üzerinde bir katman — Business aboneleri de Plus'a
+    // bağlı tüm özellikleri (sınırsız konuşma, reklamsız vb.) kullanabilsin
+    // diye isPlus de true set edilir.
+    await notifier.setPlus(
+      state == NuraEntitlement.plus || state == NuraEntitlement.business,
+    );
+    await notifier.setBusiness(state == NuraEntitlement.business);
   }
 }

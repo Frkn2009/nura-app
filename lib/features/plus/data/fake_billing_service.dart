@@ -10,7 +10,13 @@ class FakeBillingService implements BillingService {
 
   @override
   Future<List<BillingProduct>> fetchProducts() async {
-    return const [nuraPlusMonthly, nuraPlusYearly, nuraPlusFamily];
+    return const [
+      nuraPlusMonthly,
+      nuraPlusYearly,
+      nuraPlusFamily,
+      nuraBusinessMonthly,
+      nuraBusinessYearly,
+    ];
   }
 
   @override
@@ -19,7 +25,11 @@ class FakeBillingService implements BillingService {
   @override
   Future<void> purchase(BillingProduct product) async {
     purchaseCalled = true;
-    entitlement = NuraEntitlement.plus;
+    entitlement =
+        product.id == nuraBusinessMonthly.id ||
+            product.id == nuraBusinessYearly.id
+        ? NuraEntitlement.business
+        : NuraEntitlement.plus;
   }
 
   @override

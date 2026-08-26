@@ -506,6 +506,8 @@ extension XpRankX on XpRank {
   };
 }
 
+enum AdReward { speakTime, xp, interpreterTime }
+
 class UserProfile {
   const UserProfile({
     required this.profileId,
@@ -517,6 +519,10 @@ class UserProfile {
     required this.dailyGoalMin,
     required this.onboarded,
     required this.isPlus,
+    required this.isBusiness,
+    required this.interpreterSecondsUsed,
+    required this.interpreterDayKey,
+    required this.bonusInterpreterSeconds,
     required this.streak,
     required this.lastPracticeDayKey,
     required this.totalXp,
@@ -549,6 +555,10 @@ class UserProfile {
   final int dailyGoalMin;
   final bool onboarded;
   final bool isPlus;
+  final bool isBusiness;
+  final int interpreterSecondsUsed;
+  final String interpreterDayKey;
+  final int bonusInterpreterSeconds;
   final int streak;
   final String lastPracticeDayKey;
   final int totalXp;
@@ -581,6 +591,10 @@ class UserProfile {
     dailyGoalMin: 12,
     onboarded: false,
     isPlus: false,
+    isBusiness: false,
+    interpreterSecondsUsed: 0,
+    interpreterDayKey: '',
+    bonusInterpreterSeconds: 0,
     streak: 0,
     lastPracticeDayKey: '',
     totalXp: 0,
@@ -613,7 +627,26 @@ class UserProfile {
     return (speakAllowance - speakSecondsUsed).clamp(0, speakAllowance);
   }
 
-  bool get canWatchAd => !isPlus && adsWatchedToday < maxRewardedAdsPerDay;
+  bool get canWatchAd =>
+      !isPlus && !isBusiness && adsWatchedToday < maxRewardedAdsPerDay;
+
+  /// Toplantı Çevirmeni günlük saniye kotası: Free 5dk (+ödüllü video ile
+  /// bonus), Plus 2sa, Business 8sa — Plus'ın aksine burada üst katmanlarda
+  /// da gerçek bir günlük tavan var, sınırsız değil (iş toplantısı
+  /// senaryosunda ses/çeviri maliyeti sürekli akıyor).
+  int get interpreterAllowance {
+    if (isBusiness) return 8 * 3600;
+    if (isPlus) return 2 * 3600;
+    return 5 * 60 + bonusInterpreterSeconds;
+  }
+
+  int get interpreterSecondsLeft =>
+      (interpreterAllowance - interpreterSecondsUsed).clamp(
+        0,
+        interpreterAllowance,
+      );
+
+  bool get canUseInterpreter => interpreterSecondsLeft > 0;
 
   int get nextAdCooldownSeconds => 180 + (adsWatchedToday * 31) % 121;
 
@@ -658,6 +691,10 @@ class UserProfile {
     int? dailyGoalMin,
     bool? onboarded,
     bool? isPlus,
+    bool? isBusiness,
+    int? interpreterSecondsUsed,
+    String? interpreterDayKey,
+    int? bonusInterpreterSeconds,
     int? streak,
     String? lastPracticeDayKey,
     int? totalXp,
@@ -690,6 +727,12 @@ class UserProfile {
       dailyGoalMin: dailyGoalMin ?? this.dailyGoalMin,
       onboarded: onboarded ?? this.onboarded,
       isPlus: isPlus ?? this.isPlus,
+      isBusiness: isBusiness ?? this.isBusiness,
+      interpreterSecondsUsed:
+          interpreterSecondsUsed ?? this.interpreterSecondsUsed,
+      interpreterDayKey: interpreterDayKey ?? this.interpreterDayKey,
+      bonusInterpreterSeconds:
+          bonusInterpreterSeconds ?? this.bonusInterpreterSeconds,
       streak: streak ?? this.streak,
       lastPracticeDayKey: lastPracticeDayKey ?? this.lastPracticeDayKey,
       totalXp: totalXp ?? this.totalXp,
@@ -724,6 +767,10 @@ class UserProfile {
     'dailyGoalMin': dailyGoalMin,
     'onboarded': onboarded,
     'isPlus': isPlus,
+    'isBusiness': isBusiness,
+    'interpreterSecondsUsed': interpreterSecondsUsed,
+    'interpreterDayKey': interpreterDayKey,
+    'bonusInterpreterSeconds': bonusInterpreterSeconds,
     'streak': streak,
     'lastPracticeDayKey': lastPracticeDayKey,
     'totalXp': totalXp,
@@ -768,6 +815,12 @@ class UserProfile {
       dailyGoalMin: j['dailyGoalMin'] as int? ?? 12,
       onboarded: j['onboarded'] as bool? ?? false,
       isPlus: j['isPlus'] as bool? ?? false,
+      isBusiness: j['isBusiness'] as bool? ?? false,
+      interpreterSecondsUsed:
+          (j['interpreterSecondsUsed'] as num?)?.toInt() ?? 0,
+      interpreterDayKey: j['interpreterDayKey'] as String? ?? '',
+      bonusInterpreterSeconds:
+          (j['bonusInterpreterSeconds'] as num?)?.toInt() ?? 0,
       streak: (j['streak'] as num?)?.toInt() ?? 0,
       lastPracticeDayKey: j['lastPracticeDayKey'] as String? ?? '',
       totalXp: (j['totalXp'] as num?)?.toInt() ?? 0,

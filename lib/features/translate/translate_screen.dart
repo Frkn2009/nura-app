@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
@@ -153,6 +154,40 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
           Text(
             i18n.translate,
             style: Theme.of(context).textTheme.displayMedium,
+          ),
+          const SizedBox(height: 16),
+          NuraCard(
+            color: Nura.forest,
+            onTap: () => context.push('/interpreter'),
+            child: Row(
+              children: [
+                const Icon(Icons.groups, color: Colors.white, size: 28),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Toplantı Çevirmeni',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        'İki dili sırayla dinler, hem yazılı hem sesli çevirir · bugün kalan ${p.interpreterSecondsLeft ~/ 60} dk',
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.chevron_right, color: Colors.white70),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
 

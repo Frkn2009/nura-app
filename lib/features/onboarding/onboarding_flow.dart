@@ -18,10 +18,30 @@ class OnboardingFlow extends ConsumerStatefulWidget {
 
 class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   int step = 0;
+  bool _storyDone = false;
+  int _storyIndex = 0;
+  final _storyController = PageController();
+
+  @override
+  void dispose() {
+    _storyController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
+
+    if (!_storyDone) {
+      return _StoryIntro(
+        i18n: i18n,
+        controller: _storyController,
+        index: _storyIndex,
+        onIndexChanged: (i) => setState(() => _storyIndex = i),
+        onFinish: () => setState(() => _storyDone = true),
+      );
+    }
+
     final p = ref.watch(sessionProvider);
     final pages = [
       _native(i18n, p),
@@ -174,6 +194,165 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
             onTap: () => ref.read(sessionProvider.notifier).setCefr(c),
           ),
       ],
+    );
+  }
+}
+
+class _StorySlide {
+  const _StorySlide({
+    required this.mood,
+    required this.title,
+    required this.body,
+  });
+  final MascotMood mood;
+  final String title;
+  final String body;
+}
+
+List<_StorySlide> _storySlides(I18n i18n) => [
+  _StorySlide(
+    mood: MascotMood.wave,
+    title: i18n.storySlide1Title,
+    body: i18n.storySlide1Body,
+  ),
+  _StorySlide(
+    mood: MascotMood.encourage,
+    title: i18n.storySlide2Title,
+    body: i18n.storySlide2Body,
+  ),
+  _StorySlide(
+    mood: MascotMood.celebrate,
+    title: i18n.storySlide3Title,
+    body: i18n.storySlide3Body,
+  ),
+];
+
+/// Kurulum sorularından (dil/seviye seçimi) önce gelen kısa anlatı: neden
+/// burada olduğunu, uygulamanın neyi vaat ettiğini bir form doldurmadan
+/// önce hissettiriyor. Daha önce onboarding doğrudan "Ana dilin hangisi?"
+/// sorusuyla açılıyordu — bir "giriş"i, hikayesi yoktu. Metinler `I18n`
+/// üzerinden geliyor: cihaz diline göre otomatik değişir (bkz.
+/// `SessionController.build` içindeki cihaz dili tespiti).
+class _StoryIntro extends StatelessWidget {
+  const _StoryIntro({
+    required this.i18n,
+    required this.controller,
+    required this.index,
+    required this.onIndexChanged,
+    required this.onFinish,
+  });
+
+  final I18n i18n;
+  final PageController controller;
+  final int index;
+  final ValueChanged<int> onIndexChanged;
+  final VoidCallback onFinish;
+
+  @override
+  Widget build(BuildContext context) {
+    final slides = _storySlides(i18n);
+    final isLast = index == slides.length - 1;
+    return Scaffold(
+      backgroundColor: Nura.forest,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Spacer(),
+                TextButton(
+                  onPressed: onFinish,
+                  child: Text(
+                    i18n.skipCta,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                ),
+                const SizedBox(width: 6),
+              ],
+            ),
+            Expanded(
+              child: PageView.builder(
+                controller: controller,
+                itemCount: slides.length,
+                onPageChanged: onIndexChanged,
+                itemBuilder: (_, i) {
+                  final s = slides[i];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        NuraMascot(size: 120, mood: s.mood),
+                        const SizedBox(height: 32),
+                        Text(
+                          s.title,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
+                            height: 1.25,
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                        Text(
+                          s.body,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Color(0xFFB8C8C0),
+                            fontSize: 15,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(slides.length, (i) {
+                final active = i == index;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: active ? 22 : 7,
+                  height: 7,
+                  decoration: BoxDecoration(
+                    color: active ? Nura.terr : Colors.white24,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                );
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(22, 20, 22, 18),
+              child: SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Nura.terr,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size.fromHeight(52),
+                  ),
+                  onPressed: () {
+                    if (isLast) {
+                      onFinish();
+                    } else {
+                      controller.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                  },
+                  child: Text(isLast ? i18n.letsBeginCta : i18n.continueCta),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,4 @@
-enum NuraEntitlement { free, plus }
+enum NuraEntitlement { free, plus, business }
 
 class BillingProduct {
   const BillingProduct({
@@ -25,4 +25,15 @@ const nuraPlusFamily = BillingProduct(
   id: 'nura_plus_family',
   title: 'NURA Plus Aile',
   description: '4 profil, sınırsız konuşma',
+);
+
+const nuraBusinessMonthly = BillingProduct(
+  id: 'nura_business_monthly',
+  title: 'NURA Business Aylık',
+  description: 'Toplantı Çevirmeni: günde 8 saat, tüm Plus özellikleri',
+);
+const nuraBusinessYearly = BillingProduct(
+  id: 'nura_business_yearly',
+  title: 'NURA Business Yıllık',
+  description: 'Toplantı Çevirmeni: günde 8 saat, 4 ay bedava',
 );

@@ -2,75 +2,139 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/i18n.dart';
 import '../../core/theme/tokens.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
+
+/// Tablet/büyük ekran eşiği (Material large-screen breakpoint'i, 600dp).
+const _wideBreakpoint = 600.0;
+
+/// İçeriğin geniş ekranlarda kenardan kenara gerilmemesi için üst sınır.
+const _contentMaxWidth = 900.0;
 
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.child});
   final Widget child;
 
+  static const _paths = [
+    '/app',
+    '/app/speak',
+    '/app/games',
+    '/app/chat',
+    '/app/translate',
+    '/app/you',
+  ];
+
+  int _indexFor(String location) {
+    if (location.startsWith('/app/speak')) return 1;
+    if (location.startsWith('/app/games')) return 2;
+    if (location.startsWith('/app/chat')) return 3;
+    if (location.startsWith('/app/translate')) return 4;
+    if (location.startsWith('/app/you')) return 5;
+    return 0;
+  }
+
+  List<({IconData icon, IconData selected, Color color, String label})>
+  _destinations(I18n i18n) => [
+    (
+      icon: Icons.home_outlined,
+      selected: Icons.home,
+      color: Nura.mint,
+      label: i18n.home,
+    ),
+    (
+      icon: Icons.mic_none,
+      selected: Icons.mic,
+      color: Nura.mint,
+      label: i18n.speak,
+    ),
+    (
+      icon: Icons.sports_esports_outlined,
+      selected: Icons.sports_esports,
+      color: Nura.coral,
+      label: 'Oyun',
+    ),
+    (
+      icon: Icons.forum_outlined,
+      selected: Icons.forum,
+      color: Nura.coral,
+      label: 'Sohbet',
+    ),
+    (
+      icon: Icons.translate_outlined,
+      selected: Icons.translate,
+      color: Nura.mint,
+      label: i18n.translate,
+    ),
+    (
+      icon: Icons.person_outline,
+      selected: Icons.person,
+      color: Nura.mint,
+      label: i18n.you,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final i18n = ref.watch(i18nProvider);
-    final loc = GoRouterState.of(context).uri.path;
-    int index = 0;
-    if (loc.startsWith('/app/speak')) index = 1;
-    if (loc.startsWith('/app/games')) index = 2;
-    if (loc.startsWith('/app/chat')) index = 3;
-    if (loc.startsWith('/app/translate')) index = 4;
-    if (loc.startsWith('/app/you')) index = 5;
+    final index = _indexFor(GoRouterState.of(context).uri.path);
+    final destinations = _destinations(i18n);
+    final wide = MediaQuery.sizeOf(context).width >= _wideBreakpoint;
 
+    final content = Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _contentMaxWidth),
+        child: child,
+      ),
+    );
+
+    if (!wide) {
+      return Scaffold(
+        appBar: NuraAppBar(),
+        body: content,
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: index,
+          backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
+          indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          onDestinationSelected: (i) => context.go(_paths[i]),
+          destinations: [
+            for (final d in destinations)
+              NavigationDestination(
+                icon: Icon(d.icon),
+                selectedIcon: Icon(d.selected, color: d.color),
+                label: d.label,
+              ),
+          ],
+        ),
+      );
+    }
+
+    // Tablet/geniş ekran: alt bar yerine yan NavigationRail (Material
+    // large-screen kılavuzu) + içerik ortalanıp gereksiz gerilmiyor.
     return Scaffold(
       appBar: NuraAppBar(),
-      body: child,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: index,
-        backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
-        indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        onDestinationSelected: (i) {
-          const paths = [
-            '/app',
-            '/app/speak',
-            '/app/games',
-            '/app/chat',
-            '/app/translate',
-            '/app/you',
-          ];
-          context.go(paths[i]);
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home, color: Nura.mint),
-            label: i18n.home,
+      body: Row(
+        children: [
+          NavigationRail(
+            selectedIndex: index,
+            labelType: NavigationRailLabelType.all,
+            backgroundColor: Theme.of(
+              context,
+            ).navigationBarTheme.backgroundColor,
+            onDestinationSelected: (i) => context.go(_paths[i]),
+            destinations: [
+              for (final d in destinations)
+                NavigationRailDestination(
+                  icon: Icon(d.icon),
+                  selectedIcon: Icon(d.selected, color: d.color),
+                  label: Text(d.label),
+                ),
+            ],
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.mic_none),
-            selectedIcon: Icon(Icons.mic, color: Nura.mint),
-            label: i18n.speak,
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.sports_esports_outlined),
-            selectedIcon: Icon(Icons.sports_esports, color: Nura.coral),
-            label: 'Oyun',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.forum_outlined),
-            selectedIcon: Icon(Icons.forum, color: Nura.coral),
-            label: 'Sohbet',
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.translate_outlined),
-            selectedIcon: Icon(Icons.translate, color: Nura.mint),
-            label: i18n.translate,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person, color: Nura.mint),
-            label: i18n.you,
-          ),
+          const VerticalDivider(width: 1),
+          Expanded(child: content),
         ],
       ),
     );

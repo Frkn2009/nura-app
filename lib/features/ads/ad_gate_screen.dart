@@ -9,7 +9,9 @@ import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
 class AdGateScreen extends ConsumerStatefulWidget {
-  const AdGateScreen({super.key});
+  const AdGateScreen({super.key, this.defaultReward = AdReward.speakTime});
+
+  final AdReward defaultReward;
 
   @override
   ConsumerState<AdGateScreen> createState() => _AdGateScreenState();
@@ -17,7 +19,7 @@ class AdGateScreen extends ConsumerStatefulWidget {
 
 class _AdGateScreenState extends ConsumerState<AdGateScreen> {
   bool loading = false;
-  bool xpReward = false;
+  late AdReward reward = widget.defaultReward;
   String? error;
 
   Future<void> _play() async {
@@ -41,9 +43,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
       });
       return;
     }
-    await ref
-        .read(sessionProvider.notifier)
-        .redeemRewardedAd(xpReward: xpReward);
+    await ref.read(sessionProvider.notifier).redeemRewardedAd(reward: reward);
     if (mounted) context.pop();
   }
 
@@ -90,23 +90,28 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
             const SizedBox(height: 20),
             const Eyebrow('Ödülünü seç'),
             const SizedBox(height: 8),
-            SegmentedButton<bool>(
+            SegmentedButton<AdReward>(
               segments: const [
                 ButtonSegment(
-                  value: false,
+                  value: AdReward.speakTime,
                   icon: Icon(Icons.mic_none),
                   label: Text('+30 sn konuşma'),
                 ),
                 ButtonSegment(
-                  value: true,
+                  value: AdReward.interpreterTime,
+                  icon: Icon(Icons.translate),
+                  label: Text('+2 dk çeviri'),
+                ),
+                ButtonSegment(
+                  value: AdReward.xp,
                   icon: Icon(Icons.bolt),
                   label: Text('+20 XP'),
                 ),
               ],
-              selected: {xpReward},
+              selected: {reward},
               onSelectionChanged: loading
                   ? null
-                  : (value) => setState(() => xpReward = value.first),
+                  : (value) => setState(() => reward = value.first),
             ),
             if (error != null) ...[
               const SizedBox(height: 14),

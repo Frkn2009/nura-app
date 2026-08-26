@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../core/theme/tokens.dart';
 
-/// NURA'nın özgün marka işareti.
+/// NURA'nın özgün marka işareti: bir konuşma balonu içinde ses ritmi.
 ///
-/// İki sağlam sütunu birleştiren yükselen çizgi, konuşarak kurulan bağı ve
-/// öğrenme ilerlemesini temsil eder. Tamamen Flutter ile çizildiği için ekran
-/// yoğunluğundan bağımsız olarak net kalır ve harici/telifli varlık kullanmaz.
+/// Harf tabanlı bir monogram yerine doğrudan "konuşma"yı temsil eder, bu
+/// yüzden en küçük ölçekte (uygulama simgesi) bile dil bağımsız okunur.
+/// Tamamen Flutter ile çizildiği için ekran yoğunluğundan bağımsız net
+/// kalır ve harici/telifli varlık kullanmaz.
 class NuraMark extends StatelessWidget {
   const NuraMark({super.key, this.size = 32, this.onDark = false});
 
@@ -26,10 +27,11 @@ class NuraMark extends StatelessWidget {
   }
 }
 
-/// Marka işareti: bir "N" harf gövdesi, köşegeni konuşma dalgasına
-/// dönüştürülmüş. NURA'nın "konuşarak öğren" konumlandırmasını tek bir
-/// tanınabilir sembolde taşır — jenerik yuvarlatılmış-kare monogramların
-/// ötesine geçmek için diyagonal düz çizgi yerine yumuşak bir ses dalgası.
+/// Marka işareti: "Konuşma Ritmi" — bir konuşma balonunun içinde bir
+/// ses dalgası/ekolayzır. Harf yok, direkt "konuşma" fikrinin kendisi;
+/// önceki "N" harf monogramından farklı olarak en küçük ölçekte bile
+/// (uygulama simgesi boyutunda) neyi temsil ettiği çeviri gerektirmeden
+/// okunuyor.
 class _NuraMarkPainter extends CustomPainter {
   const _NuraMarkPainter({required this.onDark});
 
@@ -37,43 +39,54 @@ class _NuraMarkPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final w = size.width;
     final rect = Offset.zero & size;
-    final radius = Radius.circular(size.width * .24);
-    final background = Paint()..color = onDark ? Colors.white : Nura.mintDark;
-    canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), background);
+    final radius = Radius.circular(w * .24);
 
-    final stroke = size.width * .12;
-    final line = Paint()
-      ..color = onDark ? Nura.mintDark : Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    final leftX = size.width * .30;
-    final rightX = size.width * .70;
-    final top = size.height * .23;
-    final bottom = size.height * .77;
-    final midY = (top + bottom) / 2;
-    final n = Path()
-      ..moveTo(leftX, bottom)
-      ..lineTo(leftX, top)
-      ..cubicTo(
-        leftX + (rightX - leftX) * .55,
-        top + (midY - top) * .25,
-        rightX - (rightX - leftX) * .55,
-        bottom - (bottom - midY) * .25,
-        rightX,
-        bottom,
-      )
-      ..lineTo(rightX, top);
-    canvas.drawPath(n, line);
-
-    canvas.drawCircle(
-      Offset(rightX, top),
-      size.width * .075,
-      Paint()..color = Nura.coral,
+    final backgroundColor = onDark ? Colors.white : Nura.mintDark;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, radius),
+      Paint()..color = backgroundColor,
     );
+
+    final bubbleColor = onDark ? Nura.mintDark : Colors.white;
+    final bubbleRect = Rect.fromLTWH(w * .15, w * .19, w * .70, w * .48);
+    final bubbleRRect = RRect.fromRectAndRadius(
+      bubbleRect,
+      Radius.circular(w * .13),
+    );
+    final tail = Path()
+      ..moveTo(w * .30, w * .655)
+      ..lineTo(w * .225, w * .80)
+      ..lineTo(w * .41, w * .655)
+      ..close();
+    final bubblePath = Path()
+      ..addRRect(bubbleRRect)
+      ..addPath(tail, Offset.zero);
+    canvas.drawPath(bubblePath, Paint()..color = bubbleColor);
+
+    // Balonun içindeki 4 çubuklu ekolayzır — sırayla zemin/mercan/
+    // zemin/altın renginde, değişen yüksekliklerde bir konuşma ritmi.
+    final barColors = [backgroundColor, Nura.coral, backgroundColor, Nura.gold];
+    const heightsRatio = [0.15, 0.30, 0.19, 0.25];
+    final barWidth = w * .065;
+    final gap = w * .05;
+    final totalWidth = barWidth * 4 + gap * 3;
+    var x = bubbleRect.center.dx - totalWidth / 2;
+    final centerY = bubbleRect.center.dy;
+    for (var i = 0; i < 4; i++) {
+      final h = heightsRatio[i] * w;
+      final barRect = Rect.fromCenter(
+        center: Offset(x + barWidth / 2, centerY),
+        width: barWidth,
+        height: h,
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(barRect, Radius.circular(barWidth / 2)),
+        Paint()..color = barColors[i],
+      );
+      x += barWidth + gap;
+    }
   }
 
   @override

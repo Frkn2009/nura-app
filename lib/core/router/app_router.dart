@@ -17,6 +17,8 @@ import '../../features/leaderboard/leaderboard_screen.dart';
 import '../../features/guide/language_guide_screen.dart';
 import '../../features/games/games_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/interpreter/interpreter_screen.dart';
+import '../../data/models/models.dart';
 import '../../data/content/library.dart';
 import '../../features/library/library_screen.dart';
 import '../../features/library/story_reader_screen.dart';
@@ -46,7 +48,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/ad',
         parentNavigatorKey: _root,
-        builder: (_, _) => const AdGateScreen(),
+        builder: (_, s) => AdGateScreen(
+          defaultReward:
+              AdReward.values.asNameMap()[s.uri.queryParameters['reward']] ??
+              AdReward.speakTime,
+        ),
+      ),
+      GoRoute(
+        path: '/interpreter',
+        parentNavigatorKey: _root,
+        builder: (_, _) => const InterpreterScreen(),
       ),
       GoRoute(
         path: '/review',

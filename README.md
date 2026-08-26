@@ -93,3 +93,13 @@ flutter build appbundle \
 - `NURA_REVENUECAT_ENTITLEMENT_ID` panelde tanımladığın entitlement kimliğiyle eşleşmeli; varsayılan `plus`.
 - RevenueCat panelindeki paket/ürünlerin store ürün kimlikleri (`nura_plus_monthly`, `nura_plus_yearly`, `nura_plus_family` — bkz. `lib/features/plus/domain/entitlement.dart`) ile birebir aynı olmalı, `RevenueCatBillingService` eşleştirmeyi bu kimlik üzerinden yapıyor.
 - Gerçek App Store/Play Store ürünleri olmadan da RevenueCat'in **Test Store** özelliğiyle (`test_` önekli anahtar) satın alma akışını uçtan uca deneyebilirsin — mağaza hesabı gerektirmez.
+
+### Business katmanı (Toplantı Çevirmeni)
+
+Plus'ın üzerinde ayrı bir katman: panelde ikinci bir entitlement (`business`) ve iki yeni ürün (`nura_business_monthly`, `nura_business_yearly` — bkz. `lib/features/plus/domain/entitlement.dart`) tanımlanmalı. `PlusController` bu entitlement aktifse hem `isBusiness` hem `isPlus`'ı true yapar (Business, Plus'ın tüm haklarını da kapsar). Panelde farklı bir kimlik kullandıysan:
+
+```bash
+--dart-define=NURA_REVENUECAT_BUSINESS_ENTITLEMENT_ID=business
+```
+
+Toplantı Çevirmeni özelliğinin çeviri çağrısı (`supabase/functions/interpreter-translate`) `translate` fonksiyonundan farklı olarak abonelik şartı koşmaz — Free katman da günde 5dk (+ödüllü videoyla +2dk bonus) kullanabilir, kota istemci tarafında (`UserProfile.interpreterSecondsUsed`) tutulur. Deploy için aynı `GOOGLE_TRANSLATE_API_KEY` secret'ı yeterli, ayrı bir anahtar gerekmez.

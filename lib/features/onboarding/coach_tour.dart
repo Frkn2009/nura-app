@@ -92,6 +92,15 @@ class _CoachTourOverlayState extends State<_CoachTourOverlay> {
 
     final showBelow = rect.center.dy < screen.height / 2;
 
+    // Balonun genişliğini `Positioned(left, right)`'ın Stack'ten miras
+    // aldığı örtük genişliğe bırakmak yerine burada açıkça veriyoruz:
+    // bazı durumlarda üstteki root `Overlay` theatre'ı bu ağaca sınırsız
+    // (infinite) genişlik constraint'i geçiriyor, bu da balonun içindeki
+    // `FilledButton`'ın layout sırasında çökmesine yol açıyordu (balon
+    // hiç görünmüyor, geride sadece kararmış/spot ışıklı boş bir kutu
+    // kalıyordu). Açık `width` bu sınırsızlığın balona sızmasını
+    // tamamen engeller.
+    final balloonWidth = screen.width - 40;
     return Stack(
       children: [
         Positioned.fill(
@@ -105,87 +114,125 @@ class _CoachTourOverlayState extends State<_CoachTourOverlay> {
         ),
         Positioned(
           left: 20,
-          right: 20,
           top: showBelow ? rect.bottom + 16 : null,
           bottom: showBelow ? null : screen.height - rect.top + 16,
-          child: Material(
-            color: Colors.transparent,
-            child: Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: Nura.forest,
-                borderRadius: BorderRadius.circular(Nura.radiusLg),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: .35),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          step.title,
-                          style: const TextStyle(
-                            color: Nura.cream,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
+          child: SizedBox(
+            width: balloonWidth,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: Nura.forest,
+                  borderRadius: BorderRadius.circular(Nura.radiusLg),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: .35),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            step.title,
+                            style: const TextStyle(
+                              color: Nura.cream,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        '${_index + 1}/${widget.steps.length}',
-                        style: const TextStyle(
-                          color: Nura.terrSoft,
-                          fontSize: 12,
+                        Text(
+                          '${_index + 1}/${widget.steps.length}',
+                          style: const TextStyle(
+                            color: Nura.terrSoft,
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    step.body,
-                    style: const TextStyle(
-                      color: Color(0xFFB8C8C0),
-                      fontSize: 14,
-                      height: 1.4,
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: widget.onFinish,
-                        child: const Text(
-                          'Geç',
-                          style: TextStyle(color: Nura.terrSoft),
-                        ),
+                    const SizedBox(height: 8),
+                    Text(
+                      step.body,
+                      style: const TextStyle(
+                        color: Color(0xFFB8C8C0),
+                        fontSize: 14,
+                        height: 1.4,
                       ),
-                      FilledButton(
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Nura.terr,
-                          foregroundColor: Nura.cream,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _TourButton(
+                          onTap: widget.onFinish,
+                          label: 'Geç',
+                          foreground: Nura.terrSoft,
                         ),
-                        onPressed: _next,
-                        child: Text(
-                          _index >= widget.steps.length - 1 ? 'Bitir' : 'İleri',
+                        _TourButton(
+                          onTap: _next,
+                          label: _index >= widget.steps.length - 1
+                              ? 'Bitir'
+                              : 'İleri',
+                          background: Nura.terr,
+                          foreground: Nura.cream,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+/// `TextButton`/`FilledButton` yerine kasıtlı olarak burada elle çizilmiş,
+/// minimal bir buton: Material'ın `ButtonStyleButton._computeSize`'ı
+/// kendi içinde `maxWidth: double.infinity` olan bir `ConstrainedBox`
+/// kullanıyor — bu overlay'in `Positioned`/`Stack` zincirinde nadiren
+/// oluşan sınırsız genişlik constraint'iyle karşılaşınca çöküyordu (bkz.
+/// yukarıdaki not). Bu basit `InkWell` + `Padding` o kod yoluna hiç
+/// girmediği için aynı çökmeye açık değil.
+class _TourButton extends StatelessWidget {
+  const _TourButton({
+    required this.onTap,
+    required this.label,
+    required this.foreground,
+    this.background,
+  });
+
+  final VoidCallback onTap;
+  final String label;
+  final Color foreground;
+  final Color? background;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: background ?? Colors.transparent,
+      borderRadius: BorderRadius.circular(Nura.radiusSm),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(Nura.radiusSm),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Text(
+            label,
+            style: TextStyle(color: foreground, fontWeight: FontWeight.w700),
+          ),
+        ),
+      ),
     );
   }
 }

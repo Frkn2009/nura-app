@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,8 +62,8 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
       if (!_scroll.hasClients) return;
       _scroll.animateTo(
         _scroll.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOutCubic,
       );
     });
   }
@@ -138,132 +139,577 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   Widget build(BuildContext context) {
     final p = ref.watch(sessionProvider);
     if (!p.isPlus) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: NuraCard(
+      return _LockedChatView(onUpgrade: () => context.push('/paywall'));
+    }
+
+    final learnLabel = p.learnLang.label(p.uiLang);
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.0, 0.4],
+          colors: [
+            Nura.accent.withValues(alpha: .07),
+            Theme.of(context).scaffoldBackgroundColor,
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: Column(
+          children: [
+            _ChatHeader(learnLabel: learnLabel),
+            Expanded(
+              child: _messages.isEmpty && !_sending
+                  ? _EmptyState(learnLabel: learnLabel)
+                  : ListView.builder(
+                      controller: _scroll,
+                      padding: const EdgeInsets.fromLTRB(14, 8, 14, 12),
+                      itemCount: _messages.length + (_sending ? 1 : 0),
+                      itemBuilder: (_, i) {
+                        if (i == _messages.length) {
+                          return const _PopIn(child: _TypingBubble());
+                        }
+                        return _PopIn(
+                          key: ValueKey(i),
+                          child: _ChatBubble(bubble: _messages[i]),
+                        );
+                      },
+                    ),
+            ),
+            if (_error != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      size: 16,
+                      color: Nura.coral,
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        _error!,
+                        style: const TextStyle(color: Nura.coral, fontSize: 13),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            _ChatInputBar(
+              controller: _input,
+              listening: _listening,
+              sending: _sending,
+              onMic: () => _toggleMic(p.learnLang.code),
+              onSend: _send,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LockedChatView extends StatelessWidget {
+  const _LockedChatView({required this.onUpgrade});
+  final VoidCallback onUpgrade;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: NuraCard(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const NuraMascot(size: 76, mood: MascotMood.wave),
+              const SizedBox(height: 12),
+              const Text(
+                'Nura ile serbest konuş',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Script yok, kural yok — gerçek zamanlı serbest sohbet Plus üyelere özel.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Nura.muted),
+              ),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: onUpgrade,
+                child: const Text('Plus\'a geç'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChatHeader extends StatefulWidget {
+  const _ChatHeader({required this.learnLabel});
+  final String learnLabel;
+
+  @override
+  State<_ChatHeader> createState() => _ChatHeaderState();
+}
+
+class _ChatHeaderState extends State<_ChatHeader>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1600),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: Row(
+        children: [
+          const NuraMascot(size: 38),
+          const SizedBox(width: 10),
+          Expanded(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.forum_outlined,
-                  size: 48,
-                  color: Nura.mintDark,
-                ),
-                const SizedBox(height: 12),
                 const Text(
-                  'Nura ile serbest konuş',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+                  'Nura',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Script yok, kural yok — gerçek zamanlı serbest sohbet Plus üyelere özel.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Nura.muted),
-                ),
-                const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: () => context.push('/paywall'),
-                  child: const Text('Plus\'a geç'),
+                Text(
+                  '${widget.learnLabel} pratiği · çevrimiçi',
+                  style: const TextStyle(fontSize: 12, color: Nura.muted),
                 ),
               ],
             ),
           ),
-        ),
-      );
-    }
-
-    return SafeArea(
-      child: Column(
-        children: [
-          Expanded(
-            child: _messages.isEmpty
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(28),
-                      child: Text(
-                        '${p.learnLang.label(p.uiLang)} pratiği için bir şeyler yaz veya mikrofona konuş.',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Nura.muted),
-                      ),
+          AnimatedBuilder(
+            animation: _pulse,
+            builder: (_, _) => Container(
+              width: 9,
+              height: 9,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Nura.primary,
+                boxShadow: [
+                  BoxShadow(
+                    color: Nura.primary.withValues(
+                      alpha: .15 + .35 * _pulse.value,
                     ),
-                  )
-                : ListView.builder(
-                    controller: _scroll,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _messages.length,
-                    itemBuilder: (_, i) {
-                      final m = _messages[i];
-                      return Align(
-                        alignment: m.fromUser
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Container(
-                          constraints: const BoxConstraints(maxWidth: 280),
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: m.fromUser ? Nura.mintDark : Nura.cloud,
-                            borderRadius: BorderRadius.circular(Nura.radius),
-                          ),
-                          child: Text(
-                            m.text,
-                            style: TextStyle(
-                              color: m.fromUser ? Colors.white : Nura.ink,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-          if (_error != null)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(_error!, style: const TextStyle(color: Nura.coral)),
-            ),
-          SafeArea(
-            top: false,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => _toggleMic(p.learnLang.code),
-                    icon: Icon(
-                      _listening ? Icons.mic : Icons.mic_none,
-                      color: _listening ? Nura.coral : Nura.mintDark,
-                    ),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: _input,
-                      decoration: const InputDecoration(
-                        hintText: 'Bir şey yaz...',
-                      ),
-                      onSubmitted: (_) => _send(),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton.filled(
-                    onPressed: _sending ? null : _send,
-                    icon: _sending
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.send),
+                    blurRadius: 6 + 6 * _pulse.value,
+                    spreadRadius: 1 + 2 * _pulse.value,
                   ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({required this.learnLabel});
+  final String learnLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const NuraMascot(size: 88, mood: MascotMood.encourage),
+            const SizedBox(height: 18),
+            Text(
+              '$learnLabel pratiği için bir şeyler yaz\nveya mikrofona konuş.',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Nura.muted, height: 1.4),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bir mesaj balonunun ilk çizimde yumuşakça belirmesi — sohbetin cansız,
+/// aniden beliren metinler yerine "canlı" hissetmesi için.
+class _PopIn extends StatelessWidget {
+  const _PopIn({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeOutBack,
+      builder: (_, v, c) => Opacity(
+        opacity: v.clamp(0, 1),
+        child: Transform.translate(
+          offset: Offset(0, (1 - v.clamp(0.0, 1.0)) * 12),
+          child: c,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class _ChatBubble extends StatelessWidget {
+  const _ChatBubble({required this.bubble});
+  final _Bubble bubble;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fromUser = bubble.fromUser;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: fromUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (!fromUser) ...[
+            const NuraMascot(size: 26, animate: false),
+            const SizedBox(width: 6),
+          ],
+          Flexible(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 280),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+              decoration: BoxDecoration(
+                gradient: fromUser ? Nura.heroGradient : null,
+                color: fromUser ? null : Theme.of(context).cardColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(18),
+                  topRight: const Radius.circular(18),
+                  bottomLeft: Radius.circular(fromUser ? 18 : 4),
+                  bottomRight: Radius.circular(fromUser ? 4 : 18),
+                ),
+                border: !fromUser && isDark
+                    ? Border.all(color: Theme.of(context).dividerColor)
+                    : null,
+                boxShadow: isDark
+                    ? null
+                    : [
+                        BoxShadow(
+                          color: (fromUser ? Nura.accent : Colors.black)
+                              .withValues(alpha: fromUser ? .22 : .07),
+                          blurRadius: fromUser ? 14 : 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+              ),
+              child: Text(
+                bubble.text,
+                style: TextStyle(
+                  color: fromUser
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.onSurface,
+                  height: 1.35,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TypingBubble extends StatefulWidget {
+  const _TypingBubble();
+
+  @override
+  State<_TypingBubble> createState() => _TypingBubbleState();
+}
+
+class _TypingBubbleState extends State<_TypingBubble>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1000),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          const NuraMascot(size: 26, animate: false),
+          const SizedBox(width: 6),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+                bottomRight: Radius.circular(18),
+                bottomLeft: Radius.circular(4),
+              ),
+              border: isDark
+                  ? Border.all(color: Theme.of(context).dividerColor)
+                  : null,
+              boxShadow: isDark
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: .07),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+            ),
+            child: AnimatedBuilder(
+              animation: _c,
+              builder: (_, _) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(3, (i) {
+                  final t = (_c.value - i * .2) % 1.0;
+                  final bounce = math.sin(t * math.pi).clamp(0.0, 1.0);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    child: Transform.translate(
+                      offset: Offset(0, -4 * bounce),
+                      child: Container(
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Nura.muted,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Dairesel, gölgeli/gradyanlı bir aksiyon düğmesi — düz `IconButton`ların
+/// verdiği yassı görünüm yerine sohbet çubuğuna hafif "kabartma" (3D) hissi.
+class _CircleButton extends StatelessWidget {
+  const _CircleButton({
+    required this.onTap,
+    required this.child,
+    this.color,
+    this.gradient,
+    this.shadow,
+    this.size = 46,
+  });
+
+  final VoidCallback? onTap;
+  final Widget child;
+  final Color? color;
+  final Gradient? gradient;
+  final List<BoxShadow>? shadow;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: gradient == null ? color : null,
+        gradient: gradient,
+        boxShadow: shadow,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        shape: const CircleBorder(),
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: onTap,
+          child: Center(child: child),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChatInputBar extends StatefulWidget {
+  const _ChatInputBar({
+    required this.controller,
+    required this.listening,
+    required this.sending,
+    required this.onMic,
+    required this.onSend,
+  });
+
+  final TextEditingController controller;
+  final bool listening;
+  final bool sending;
+  final VoidCallback onMic;
+  final VoidCallback onSend;
+
+  @override
+  State<_ChatInputBar> createState() => _ChatInputBarState();
+}
+
+class _ChatInputBarState extends State<_ChatInputBar>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _breathe = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  )..repeat(reverse: true);
+  bool _sendPressed = false;
+
+  @override
+  void dispose() {
+    _breathe.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            AnimatedBuilder(
+              animation: _breathe,
+              builder: (_, _) {
+                final glowColor = widget.listening ? Nura.coral : Nura.mintDark;
+                final t = widget.listening
+                    ? _breathe.value
+                    : _breathe.value * .35;
+                return _CircleButton(
+                  size: 46,
+                  onTap: widget.onMic,
+                  color: widget.listening
+                      ? Nura.coral.withValues(alpha: .12)
+                      : Theme.of(context).cardColor,
+                  shadow: [
+                    BoxShadow(
+                      color: glowColor.withValues(alpha: .16 + .18 * t),
+                      blurRadius: 8 + 10 * t,
+                      spreadRadius: 1 + 2 * t,
+                    ),
+                  ],
+                  child: Icon(
+                    widget.listening ? Icons.mic : Icons.mic_none,
+                    color: widget.listening ? Nura.coral : Nura.mintDark,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: Theme.of(
+                      context,
+                    ).dividerColor.withValues(alpha: isDark ? 1 : .6),
+                  ),
+                  boxShadow: isDark
+                      ? null
+                      : [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: .05),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                ),
+                child: TextField(
+                  controller: widget.controller,
+                  minLines: 1,
+                  maxLines: 4,
+                  decoration: const InputDecoration(
+                    hintText: 'Bir şey yaz...',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
+                    ),
+                  ),
+                  onSubmitted: (_) => widget.onSend(),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTapDown: (_) => setState(() => _sendPressed = true),
+              onTapUp: (_) => setState(() => _sendPressed = false),
+              onTapCancel: () => setState(() => _sendPressed = false),
+              child: AnimatedScale(
+                scale: _sendPressed ? .88 : 1,
+                duration: const Duration(milliseconds: 110),
+                curve: Curves.easeOut,
+                child: _CircleButton(
+                  size: 46,
+                  onTap: widget.sending ? null : widget.onSend,
+                  color: widget.sending ? Nura.fog : null,
+                  gradient: widget.sending ? null : Nura.heroGradient,
+                  shadow: widget.sending
+                      ? null
+                      : [
+                          BoxShadow(
+                            color: Nura.accent.withValues(alpha: .35),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                  child: widget.sending
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Nura.muted,
+                          ),
+                        )
+                      : const Icon(
+                          Icons.send_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

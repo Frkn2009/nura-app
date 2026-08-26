@@ -9,16 +9,21 @@ import '../plus/domain/entitlement.dart';
 import '../plus/state/plus_controller.dart';
 
 const _plusPlans = [nuraPlusMonthly, nuraPlusYearly, nuraPlusFamily];
+const _businessPlans = [nuraBusinessMonthly, nuraBusinessYearly];
 
 class PaywallScreen extends ConsumerStatefulWidget {
-  const PaywallScreen({super.key});
+  const PaywallScreen({super.key, this.business = false});
+
+  final bool business;
 
   @override
   ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
 }
 
 class _PaywallScreenState extends ConsumerState<PaywallScreen> {
+  late bool business = widget.business;
   int plan = 1;
+  int businessPlan = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -55,54 +60,144 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(color: Nura.muted),
             ),
-            const SizedBox(height: 22),
-            _plan(0, 'Aylık', '249 TL / ay', '≈ \$6.20 USD'),
-            _plan(
-              1,
-              'Yıllık · en iyi değer',
-              '1.490 TL / yıl',
-              '≈ \$3.10 USD / ay · 4 ay bedava',
+            const SizedBox(height: 18),
+            SegmentedButton<bool>(
+              segments: const [
+                ButtonSegment(value: false, label: Text('Plus')),
+                ButtonSegment(value: true, label: Text('Business')),
+              ],
+              selected: {business},
+              onSelectionChanged: (v) => setState(() => business = v.first),
             ),
-            _plan(2, 'Aile', '2.290 TL / yıl', '4 profil · ≈ \$4.75 USD / ay'),
-            const SizedBox(height: 12),
-            for (final f in [
-              'Sınırsız konuşma',
-              'CEFR yolu A1–B2',
-              '30 dilin tamamı',
-              'Nura ile canlı sohbet',
-              'Çevir + SRS kaydet',
-              'Reklamsız',
-            ])
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.check_circle,
-                      color: Nura.forest,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(f),
-                  ],
-                ),
+            const SizedBox(height: 16),
+            if (!business) ...[
+              _plan(0, 'Aylık', '249 TL / ay', '≈ \$6.20 USD'),
+              _plan(
+                1,
+                'Yıllık · en iyi değer',
+                '1.490 TL / yıl',
+                '≈ \$3.10 USD / ay · 4 ay bedava',
               ),
-            const SizedBox(height: 12),
-            ForestButton(
-              label: i18n.plusCta,
-              onPressed: () async {
-                await ref
-                    .read(plusControllerProvider.notifier)
-                    .purchase(_plusPlans[plan]);
-                if (context.mounted) context.pop();
-              },
-            ),
+              _plan(
+                2,
+                'Aile',
+                '2.290 TL / yıl',
+                '4 profil · ≈ \$4.75 USD / ay',
+              ),
+              const SizedBox(height: 12),
+              for (final f in [
+                'Sınırsız konuşma',
+                'CEFR yolu A1–B2',
+                '30 dilin tamamı',
+                'Nura ile canlı sohbet',
+                'Çevir + SRS kaydet',
+                'Toplantı Çevirmeni · günde 2 saat',
+                'Reklamsız',
+              ])
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.check_circle,
+                        color: Nura.forest,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(f),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: 12),
+              ForestButton(
+                label: i18n.plusCta,
+                onPressed: () async {
+                  await ref
+                      .read(plusControllerProvider.notifier)
+                      .purchase(_plusPlans[plan]);
+                  if (context.mounted) context.pop();
+                },
+              ),
+            ] else ...[
+              _businessPlanCard(0, 'Aylık', '699 TL / ay', '≈ \$17.30 USD'),
+              _businessPlanCard(
+                1,
+                'Yıllık · en iyi değer',
+                '4.190 TL / yıl',
+                '≈ \$8.70 USD / ay · 4 ay bedava',
+              ),
+              const SizedBox(height: 12),
+              for (final f in [
+                'Tüm Plus özellikleri',
+                'Toplantı Çevirmeni · günde 8 saat',
+                'Yurt dışı iş görüşmesi / toplantı için tasarlandı',
+                'Öncelikli destek',
+              ])
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.check_circle,
+                        color: Nura.forest,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(f),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: 12),
+              ForestButton(
+                label: i18n.plusCta,
+                onPressed: () async {
+                  await ref
+                      .read(plusControllerProvider.notifier)
+                      .purchase(_businessPlans[businessPlan]);
+                  if (context.mounted) context.pop();
+                },
+              ),
+            ],
             const SizedBox(height: 10),
             const Text(
               'İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
               textAlign: TextAlign.center,
               style: TextStyle(color: Nura.soft, fontSize: 12),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _businessPlanCard(int i, String t, String price, String sub) {
+    final sel = businessPlan == i;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: NuraCard(
+        onTap: () => setState(() => businessPlan = i),
+        color: sel ? Nura.cream2 : Nura.card,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    t,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: sel ? Nura.forest : Nura.ink,
+                    ),
+                  ),
+                  Text(
+                    sub,
+                    style: const TextStyle(color: Nura.muted, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            Text(price, style: const TextStyle(fontWeight: FontWeight.w700)),
           ],
         ),
       ),

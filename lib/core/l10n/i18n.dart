@@ -94,6 +94,128 @@ class I18n {
     'ar': 'أنت',
   });
 
+  String get skipCta => t({
+    'tr': 'Atla',
+    'en': 'Skip',
+    'es': 'Omitir',
+    'de': 'Überspringen',
+    'fr': 'Passer',
+    'nl': 'Overslaan',
+    'ar': 'تخطي',
+  });
+
+  String get letsBeginCta => t({
+    'tr': 'Hadi başlayalım',
+    'en': "Let's begin",
+    'es': 'Empecemos',
+    'de': "Los geht's",
+    'fr': 'Commençons',
+    'nl': 'Laten we beginnen',
+    'ar': 'هيا نبدأ',
+  });
+
+  String get storySlide1Title => t({
+    'tr': 'Bir dili öğrenmek\nezber değildir.',
+    'en': "Learning a language\nisn't memorizing.",
+    'es': 'Aprender un idioma\nno es memorizar.',
+    'de': 'Eine Sprache lernen\nheißt nicht auswendig lernen.',
+    'fr': "Apprendre une langue,\nce n'est pas mémoriser.",
+    'nl': 'Een taal leren\nis geen stampwerk.',
+    'ar': 'تعلّم لغة\nليس حفظاً.',
+  });
+
+  String get storySlide1Body => t({
+    'tr':
+        'Kelime listeleri unutulur, konuşma cesareti kalıcı olur. '
+        'Nura seni ilk cümleyi kurmaya, oradan devamına götürür.',
+    'en':
+        'Word lists get forgotten, the courage to speak stays. '
+        'Nura gets you to your first sentence, then keeps you going.',
+    'es':
+        'Las listas de palabras se olvidan, el valor para hablar '
+        'permanece. Nura te lleva a tu primera frase y luego más allá.',
+    'de':
+        'Wortlisten werden vergessen, der Mut zu sprechen bleibt. '
+        'Nura bringt dich zum ersten Satz — und weiter.',
+    'fr':
+        'Les listes de mots s\'oublient, le courage de parler reste. '
+        'Nura t\'amène à ta première phrase, puis à la suite.',
+    'nl':
+        'Woordenlijsten worden vergeten, spreekdurf blijft. '
+        'Nura brengt je naar je eerste zin, en verder.',
+    'ar':
+        'قوائم الكلمات تُنسى، شجاعة الكلام تبقى. '
+        'نورا توصلك إلى جملتك الأولى، ثم إلى ما بعدها.',
+  });
+
+  String get storySlide2Title => t({
+    'tr': 'Derse değil,\nkonuşmaya çağırıyoruz.',
+    'en': "Not a lesson —\na call to speak.",
+    'es': 'No es una lección,\nes una invitación a hablar.',
+    'de': 'Kein Unterricht —\neine Einladung zu sprechen.',
+    'fr': 'Pas un cours —\nune invitation à parler.',
+    'nl': 'Geen les —\neen uitnodiging om te spreken.',
+    'ar': 'لا درس —\nبل دعوة للكلام.',
+  });
+
+  String get storySlide2Body => t({
+    'tr':
+        'Her alıştırma sesli. Kuralı ezberlemek değil, ağzından '
+        'doğru çıkana kadar denemek — asıl öğrenme orada oluyor.',
+    'en':
+        'Every exercise is spoken aloud. Not memorizing the rule, '
+        "but trying until it comes out right — that's real learning.",
+    'es':
+        'Cada ejercicio es en voz alta. No memorizar la regla, sino '
+        'intentarlo hasta decirla bien — ahí está el aprendizaje real.',
+    'de':
+        'Jede Übung wird laut gesprochen. Nicht die Regel auswendig '
+        'lernen, sondern üben, bis es stimmt — dort passiert echtes Lernen.',
+    'fr':
+        'Chaque exercice se dit à voix haute. Pas mémoriser la règle, '
+        'mais réessayer jusqu\'à bien la dire — c\'est ça, apprendre.',
+    'nl':
+        'Elke oefening is hardop. Niet de regel uit je hoofd leren, '
+        'maar net zo lang proberen tot het goed klinkt — daar leer je van.',
+    'ar':
+        'كل تمرين يُقال بصوت عالٍ. ليس حفظ القاعدة، بل المحاولة حتى '
+        'تُنطق صحيحاً — هناك يحدث التعلّم الحقيقي.',
+  });
+
+  String get storySlide3Title => t({
+    'tr': 'Küçük adımlar,\ngerçek ilerleme.',
+    'en': 'Small steps,\nreal progress.',
+    'es': 'Pasos pequeños,\nprogreso real.',
+    'de': 'Kleine Schritte,\nechter Fortschritt.',
+    'fr': 'Petits pas,\nvrais progrès.',
+    'nl': 'Kleine stapjes,\nechte vooruitgang.',
+    'ar': 'خطوات صغيرة،\nتقدّم حقيقي.',
+  });
+
+  String get storySlide3Body => t({
+    'tr':
+        'Günde birkaç dakika yeter. Bir ay sonra karşındaki '
+        'kişiyle gerçekten konuşabildiğini fark edeceksin.',
+    'en':
+        "A few minutes a day is enough. A month from now, you'll "
+        'notice you can actually talk to the person in front of you.',
+    'es':
+        'Bastan unos minutos al día. En un mes notarás que de '
+        'verdad puedes hablar con la persona que tienes delante.',
+    'de':
+        'Ein paar Minuten am Tag reichen. In einem Monat merkst du, '
+        'dass du wirklich mit der Person vor dir sprechen kannst.',
+    'fr':
+        'Quelques minutes par jour suffisent. Dans un mois, tu '
+        'remarqueras que tu peux vraiment parler avec la personne en face.',
+    'nl':
+        'Een paar minuten per dag is genoeg. Over een maand merk '
+        'je dat je echt met die persoon tegenover je kunt praten.',
+    'ar':
+        'بضع دقائق يومياً تكفي. بعد شهر ستلاحظ أنك تستطيع فعلاً '
+        'التحدث مع من أمامك.',
+  });
+
   String get whyTitle => t({
     'tr': 'Neden konuşmak istiyorsun?',
     'en': 'Why do you want to speak?',
