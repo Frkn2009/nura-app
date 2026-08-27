@@ -32,7 +32,9 @@ class SpeakHubScreen extends ConsumerWidget {
             p.isPlus
                 ? 'Sınırsız · Maya ile senaryo'
                 : '${i18n.remainingToday}: ${remain}s',
-            style: const TextStyle(color: Voxelo.muted),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 16),
           VoxeloCard(
@@ -65,9 +67,12 @@ class SpeakHubScreen extends ConsumerWidget {
                           fontSize: 16,
                         ),
                       ),
-                      const Text(
+                      Text(
                         'Kısa cümleleri dinle, gölgele ve konuş',
-                        style: TextStyle(color: Voxelo.muted, fontSize: 12),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -118,15 +123,20 @@ class SpeakHubScreen extends ConsumerWidget {
                           ),
                           Text(
                             '${s.minutes} dk · ${s.cefr.name.toUpperCase()} · ${s.turns.length} tur',
-                            style: const TextStyle(
-                              color: Voxelo.muted,
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                               fontSize: 13,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: Voxelo.soft),
+                    Icon(
+                      Icons.chevron_right,
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
                   ],
                 ),
               ),
@@ -377,7 +387,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     Text(
                       labels[s]!,
                       style: TextStyle(
-                        color: s == step ? Voxelo.terrSoft : Voxelo.soft,
+                        color: s == step
+                            ? Voxelo.terrSoft
+                            : Theme.of(context).colorScheme.outline,
                         fontWeight: s == step
                             ? FontWeight.w700
                             : FontWeight.w400,
@@ -410,7 +422,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Text(
                 currentTurn.prompt,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Voxelo.muted, fontSize: 15),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontSize: 15,
+                ),
               ),
               const SizedBox(height: 12),
               Directionality(
@@ -432,7 +447,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Text(
                 currentPhrase.glossFor(p.uiLang),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Voxelo.muted),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               if (LanguageGuide.of(scene.lang).tipFor(currentTurn.expected) !=
                   null) ...[
@@ -482,7 +499,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 Text(
                   pronunciationFeedback,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Voxelo.muted),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: 18),
                 FilledButton(
@@ -533,7 +552,9 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       : (_speechReady
                             ? i18n.holdToSpeak
                             : 'Basılı tut · mikrofon izni istenecek'),
-                  style: const TextStyle(color: Voxelo.muted),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 if (heard.isNotEmpty)
                   Padding(
@@ -545,7 +566,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                       child: Text(
                         heard,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Voxelo.muted, fontSize: 13),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ),

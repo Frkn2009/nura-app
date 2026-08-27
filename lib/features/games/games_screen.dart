@@ -100,7 +100,9 @@ class GamesScreen extends ConsumerWidget {
           const SizedBox(height: 5),
           Text(
             '${profile.learnLang.flag()} ${profile.learnLang.label(profile.uiLang)} · 5 özgün pratik',
-            style: const TextStyle(color: Voxelo.muted),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 20),
           for (final game in games) ...[
@@ -164,12 +166,15 @@ class _GameCard extends StatelessWidget {
               const SizedBox(height: 3),
               Text(
                 definition.subtitle,
-                style: const TextStyle(color: Voxelo.muted, fontSize: 13),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontSize: 13,
+                ),
               ),
             ],
           ),
         ),
-        const Icon(Icons.chevron_right, color: Voxelo.soft),
+        Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.outline),
       ],
     ),
   );
@@ -253,7 +258,12 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
     progress: (round + 1) / 10,
     child: Column(
       children: [
-        const Text('Bu çeviri doğru mu?', style: TextStyle(color: Voxelo.muted)),
+        Text(
+          'Bu çeviri doğru mu?',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
         const SizedBox(height: 24),
         _PromptCard(primary: phrase.target, secondary: proposed),
         const Spacer(),
@@ -384,7 +394,9 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
           Text(
             phrase.glossFor(widget.ui),
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Voxelo.muted),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 26),
           Container(
@@ -440,7 +452,9 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
             child: Text(
               tile.character,
               style: TextStyle(
-                color: selectedTile ? Colors.white : Voxelo.ink,
+                color: selectedTile
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.onSurface,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
@@ -540,9 +554,11 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
     progress: (round + 1) / 10,
     child: Column(
       children: [
-        const Text(
+        Text(
           'Cümleyi dinle ve anlamını seç',
-          style: TextStyle(color: Voxelo.muted),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(height: 24),
         Semantics(
@@ -687,7 +703,9 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
         Text(
           phrase.glossFor(widget.ui),
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Voxelo.muted),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(height: 26),
         _PromptCard(primary: question),
@@ -785,7 +803,12 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
     trailing: '$correct doğru',
     child: Column(
       children: [
-        const Text('Doğru çeviriyi seç', style: TextStyle(color: Voxelo.muted)),
+        Text(
+          'Doğru çeviriyi seç',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
         const SizedBox(height: 24),
         _PromptCard(primary: phrase.target),
         const Spacer(),
@@ -858,11 +881,11 @@ class _PromptCard extends StatelessWidget {
         Text(
           primary,
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 23,
             height: 1.3,
             fontWeight: FontWeight.w700,
-            color: Voxelo.ink,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         if (secondary != null) ...[
@@ -872,10 +895,10 @@ class _PromptCard extends StatelessWidget {
           Text(
             secondary!,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 17,
               height: 1.35,
-              color: Voxelo.muted,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -919,7 +942,9 @@ Future<void> showGameResult(
           const SizedBox(height: 6),
           Text(
             '$correct / $total doğru',
-            style: const TextStyle(color: Voxelo.muted),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
