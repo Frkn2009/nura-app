@@ -4,15 +4,15 @@
 # Bu dosya splash screen ayarlarını tanımlar.
 
 flutter_native_splash:
-  color: "#0F3D32"
-  image: assets/splash_logo.png
+  color: "#58CC02"
+  image: assets/icon_source.png
   android: true
   ios: true
   web: true
 
   android_12:
-    color: "#0F3D32"
-    image: assets/splash_logo.png
+    color: "#58CC02"
+    image: assets/icon_source.png
 
   color_dark: "#0F3D32"
-  image_dark: assets/splash_logo.png
+  image_dark: assets/icon_source.png
