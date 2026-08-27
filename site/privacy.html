@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="tr">
+<head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>NURA Gizlilik</title>
-<body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:680px;margin:40px auto;padding:0 20px;line-height:1.55;color:#1C241F;background:#F4EFE6">
-<h1>NURA gizlilik politikası</h1>
-<p>Son güncelleme: 19 Ağustos 2026</p>
-<p>NURA bir dil öğrenme uygulamasıdır. Konuşma sesi mümkün olduğunca cihazda işlenir. Ücretsiz planda ses dosyası sunucuya gönderilmez.</p>
+<title>Voxelo Gizlilik</title>
+<style>
+  @font-face { font-family: 'Sora'; src: url('fonts/Sora.ttf') format('truetype'); font-weight: 400 800; font-display: swap; }
+  @font-face { font-family: 'Manrope'; src: url('fonts/Manrope.ttf') format('truetype'); font-weight: 400 800; font-display: swap; }
+  :root{ --ink:#3C3C3C; --muted:#6B6B6B; --bg:#F7F7F7; --primary-dark:#46A302; }
+  body{
+    font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    max-width:680px; margin:48px auto; padding:0 20px 60px; line-height:1.65;
+    color:var(--ink); background:var(--bg);
+  }
+  h1{ font-family:'Sora',system-ui,sans-serif; font-size:28px; margin-bottom:4px; }
+  .muted{ color:var(--muted); font-size:14px; }
+  a{ color:var(--primary-dark); font-weight:700; text-decoration:none; }
+  .back{ display:inline-block; margin-bottom:24px; font-weight:700; }
+</style>
+</head>
+<body>
+<a class="back" href="index.html">← Voxelo</a>
+<h1>Voxelo gizlilik politikası</h1>
+<p class="muted">Son güncelleme: 27 Ağustos 2026</p>
+<p>Voxelo bir dil öğrenme uygulamasıdır. Konuşma sesi mümkün olduğunca cihazda işlenir. Ücretsiz planda ses dosyası sunucuya gönderilmez.</p>
 <p>Saklanan veriler (cihaz içi): dil seçimi, seri, kalıp kimlikleri, günlük konuşma saniye sayacı.</p>
 <p>Hesap oluşturursan (e-posta + şifre, Supabase altyapısı) öğrenme ilerlemen sunucuda yedeklenir. Şifren yalnızca sunucuda güvenli şekilde saklanır; uygulama şifreyi cihazda tutmaz.</p>
 <p>Hesabı sil: uygulama içi Sen → Hesabı sil. Bu işlem sunucudaki hesabı ve profil kaydını tamamen siler.</p>
 <p>13 yaş altı için tasarlanmamıştır.</p>
-<p>İletişim: gizlilik@nura.app</p>
+<p>İletişim: <a href="mailto:gizlilik@voxelo.app">gizlilik@voxelo.app</a></p>
 </body>
 </html>
