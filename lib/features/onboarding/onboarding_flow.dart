@@ -184,7 +184,10 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         const SizedBox(height: 8),
         Text(
           i18n.freeMinute,
-          style: const TextStyle(color: Voxelo.terr, fontWeight: FontWeight.w500),
+          style: const TextStyle(
+            color: Voxelo.terr,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         const SizedBox(height: 20),
         for (final c in Cefr.values)
@@ -255,100 +258,110 @@ class _StoryIntro extends StatelessWidget {
     return Scaffold(
       backgroundColor: Voxelo.forest,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            Row(
+            // "Atla" düğmesi Column içinde ayrı bir satır olarak layout
+            // alanı kaplarsa aşağıdaki maskotu doğru merkezden aşağı iter —
+            // yerel splash ekranı maskotu tam ekran ortasında gösterdiği
+            // için bu, uygulama açılışında görünür bir "kayma" yaratıyordu.
+            // Üstte yüzen (floating) bir buton olarak layout dışına alındı.
+            Positioned(
+              top: 0,
+              right: 6,
+              child: TextButton(
+                onPressed: onFinish,
+                child: Text(
+                  i18n.skipCta,
+                  style: const TextStyle(color: Colors.white70),
+                ),
+              ),
+            ),
+            Column(
               children: [
-                const Spacer(),
-                TextButton(
-                  onPressed: onFinish,
-                  child: Text(
-                    i18n.skipCta,
-                    style: const TextStyle(color: Colors.white70),
-                  ),
-                ),
-                const SizedBox(width: 6),
-              ],
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: controller,
-                itemCount: slides.length,
-                onPageChanged: onIndexChanged,
-                itemBuilder: (_, i) {
-                  final s = slides[i];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        VoxeloMascot(size: 120, mood: s.mood),
-                        const SizedBox(height: 32),
-                        Text(
-                          s.title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 26,
-                            fontWeight: FontWeight.w800,
-                            height: 1.25,
-                          ),
+                const SizedBox(height: 44),
+                Expanded(
+                  child: PageView.builder(
+                    controller: controller,
+                    itemCount: slides.length,
+                    onPageChanged: onIndexChanged,
+                    itemBuilder: (_, i) {
+                      final s = slides[i];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            VoxeloMascot(size: 120, mood: s.mood),
+                            const SizedBox(height: 32),
+                            Text(
+                              s.title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w800,
+                                height: 1.25,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            Text(
+                              s.body,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Color(0xFFB8C8C0),
+                                fontSize: 15,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 14),
-                        Text(
-                          s.body,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Color(0xFFB8C8C0),
-                            fontSize: 15,
-                            height: 1.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(slides.length, (i) {
-                final active = i == index;
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: active ? 22 : 7,
-                  height: 7,
-                  decoration: BoxDecoration(
-                    color: active ? Voxelo.terr : Colors.white24,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                );
-              }),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(22, 20, 22, 18),
-              child: SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: Voxelo.terr,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size.fromHeight(52),
-                  ),
-                  onPressed: () {
-                    if (isLast) {
-                      onFinish();
-                    } else {
-                      controller.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
                       );
-                    }
-                  },
-                  child: Text(isLast ? i18n.letsBeginCta : i18n.continueCta),
+                    },
+                  ),
                 ),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(slides.length, (i) {
+                    final active = i == index;
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: active ? 22 : 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        color: active ? Voxelo.terr : Colors.white24,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    );
+                  }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(22, 20, 22, 18),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Voxelo.terr,
+                        foregroundColor: Colors.white,
+                        minimumSize: const Size.fromHeight(52),
+                      ),
+                      onPressed: () {
+                        if (isLast) {
+                          onFinish();
+                        } else {
+                          controller.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        }
+                      },
+                      child: Text(
+                        isLast ? i18n.letsBeginCta : i18n.continueCta,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
