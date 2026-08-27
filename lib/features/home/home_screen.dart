@@ -143,7 +143,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 Row(
                   children: [
-                    const IconChip(Icons.bolt_rounded, color: Voxelo.sunflower),
+                    const IconChip(VoxeloIcon.fire, color: Voxelo.sunflower),
                     const SizedBox(width: 8),
                     Text(
                       '${p.totalXp} XP',
@@ -321,20 +321,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const SizedBox(height: 12),
           Row(
             children: [
+              _stat(VoxeloIcon.fire, '${p.streak}', i18n.streak, Voxelo.terr),
               _stat(
-                Icons.local_fire_department,
-                '${p.streak}',
-                i18n.streak,
-                Voxelo.terr,
-              ),
-              _stat(
-                Icons.public,
+                VoxeloIcon.medal,
                 p.cefr.name.toUpperCase(),
                 'CEFR',
                 Voxelo.forest,
               ),
               _stat(
-                Icons.menu_book_outlined,
+                VoxeloIcon.book,
                 '${p.phrasesKnown}',
                 i18n.phrases,
                 Voxelo.forest,
@@ -346,7 +341,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/leaderboard'),
             child: const Row(
               children: [
-                IconChip(Icons.leaderboard_outlined, color: Voxelo.mintDark),
+                IconChip(VoxeloIcon.leaderboard, color: Voxelo.mintDark),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -363,7 +358,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/alphabet?lang=${p.learnLang.code}'),
             child: Row(
               children: [
-                const IconChip(Icons.abc, color: Voxelo.forest),
+                const IconChip(VoxeloIcon.guide, color: Voxelo.forest),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -384,7 +379,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/library'),
             child: const Row(
               children: [
-                IconChip(Icons.menu_book_outlined, color: Voxelo.forest),
+                IconChip(VoxeloIcon.book, color: Voxelo.forest),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -404,7 +399,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.go('/app/chat'),
             child: Row(
               children: [
-                const IconChip(Icons.forum_outlined, color: Voxelo.forest),
+                const IconChip(VoxeloIcon.chat, color: Voxelo.forest),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -460,7 +455,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/review'),
             child: Row(
               children: [
-                const IconChip(Icons.replay, color: Voxelo.forest),
+                const IconChip(VoxeloIcon.replay, color: Voxelo.forest),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -500,7 +495,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _stat(IconData ic, String v, String l, Color c) {
+  Widget _stat(VoxeloIcon ic, String v, String l, Color c) {
     return Expanded(
       child: VoxeloCard(
         child: Column(

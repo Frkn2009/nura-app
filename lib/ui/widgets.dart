@@ -1,8 +1,10 @@
 export 'brand.dart';
 export 'mascot.dart';
+export 'line_icons.dart';
 
 import 'package:flutter/material.dart';
 import '../core/theme/tokens.dart';
+import 'line_icons.dart';
 
 class VoxeloCard extends StatelessWidget {
   const VoxeloCard({
@@ -160,7 +162,7 @@ class IconChip extends StatelessWidget {
     this.background,
     this.size = 38,
   });
-  final IconData icon;
+  final VoxeloIcon icon;
   final Color? color;
   final Color? background;
   final double size;
@@ -181,7 +183,7 @@ class IconChip extends StatelessWidget {
                 : scheme.primaryContainer),
         borderRadius: BorderRadius.circular(size * 0.32),
       ),
-      child: Icon(icon, size: size * 0.5, color: fg),
+      child: VoxeloLineIcon(icon, size: size * 0.5, color: fg),
     );
   }
 }

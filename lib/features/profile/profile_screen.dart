@@ -59,7 +59,7 @@ class ProfileScreen extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    const IconChip(Icons.bolt_rounded),
+                    const IconChip(VoxeloIcon.fire),
                     const SizedBox(width: 10),
                     Text(
                       '${p.totalXp} XP',
@@ -95,7 +95,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/family'),
             child: Row(
               children: [
-                const IconChip(Icons.family_restroom_outlined),
+                const IconChip(VoxeloIcon.family),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -112,7 +112,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/achievements'),
             child: Row(
               children: [
-                const IconChip(Icons.military_tech_outlined),
+                const IconChip(VoxeloIcon.medal),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -133,7 +133,7 @@ class ProfileScreen extends ConsumerWidget {
                 onTap: () => context.push('/auth'),
                 child: const Row(
                   children: [
-                    IconChip(Icons.cloud_outlined),
+                    IconChip(VoxeloIcon.cloud),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -152,7 +152,7 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        const IconChip(Icons.cloud_done),
+                        const IconChip(VoxeloIcon.cloud),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
