@@ -24,6 +24,22 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   int plan = 1;
   int businessPlan = 0;
   bool _restoring = false;
+  bool _purchasing = false;
+
+  Future<void> _purchase(BillingProduct product) async {
+    setState(() => _purchasing = true);
+    try {
+      await ref.read(plusControllerProvider.notifier).purchase(product);
+      if (!mounted) return;
+      context.pop();
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _purchasing = false);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Satın alma tamamlanamadı: $e')));
+    }
+  }
 
   // App Store Kural 3.1.5 (ve Google Play'in benzer beklentisi): otomatik
   // yenilenen abonelik satan uygulamalar arayüzde erişilebilir bir "satın
@@ -131,14 +147,20 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   ),
                 ),
               const SizedBox(height: 12),
-              ForestButton(
-                label: i18n.plusCta,
-                onPressed: () async {
-                  await ref
-                      .read(plusControllerProvider.notifier)
-                      .purchase(_plusPlans[plan]);
-                  if (context.mounted) context.pop();
-                },
+              FilledButton(
+                onPressed: _purchasing
+                    ? null
+                    : () => _purchase(_plusPlans[plan]),
+                child: _purchasing
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(i18n.plusCta),
               ),
             ] else ...[
               _businessPlanCard(0, 'Aylık', '699 TL / ay', '≈ \$17.30 USD'),
@@ -166,14 +188,20 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   ),
                 ),
               const SizedBox(height: 12),
-              ForestButton(
-                label: i18n.plusCta,
-                onPressed: () async {
-                  await ref
-                      .read(plusControllerProvider.notifier)
-                      .purchase(_businessPlans[businessPlan]);
-                  if (context.mounted) context.pop();
-                },
+              FilledButton(
+                onPressed: _purchasing
+                    ? null
+                    : () => _purchase(_businessPlans[businessPlan]),
+                child: _purchasing
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(i18n.plusCta),
               ),
             ],
             const SizedBox(height: 10),
