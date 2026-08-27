@@ -85,7 +85,9 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
               profile.canWatchAd
                   ? 'Bugün kalan video: ${UserProfile.maxRewardedAdsPerDay - profile.adsWatchedToday} / ${UserProfile.maxRewardedAdsPerDay}'
                   : 'Bugünkü 5 video sınırına ulaştın.',
-              style: const TextStyle(color: Voxelo.muted),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 20),
             const Eyebrow('Ödülünü seç'),

@@ -106,10 +106,10 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                     color: Voxelo.mint.withValues(alpha: 0.1),
                     child: Text(
                       feedback!.correctedAnswer,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Voxelo.ink,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -124,7 +124,9 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: feedback!.score >= 70 ? Voxelo.mint : Voxelo.coral,
+                        color: feedback!.score >= 70
+                            ? Voxelo.mint
+                            : Voxelo.coral,
                       ),
                     ),
                   ),

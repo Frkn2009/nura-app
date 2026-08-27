@@ -30,8 +30,8 @@ class LanguageGuideScreen extends ConsumerWidget {
           const SizedBox(height: 10),
           Text(
             g.intro,
-            style: const TextStyle(
-              color: Voxelo.muted,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               height: 1.45,
               fontSize: 15,
             ),
@@ -72,9 +72,9 @@ class LanguageGuideScreen extends ConsumerWidget {
                         Flexible(
                           child: Text(
                             r.heard,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Voxelo.ink,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ),
@@ -90,14 +90,16 @@ class LanguageGuideScreen extends ConsumerWidget {
                     ),
                     Text(
                       '≈  ${r.exampleSaid}',
-                      style: const TextStyle(color: Voxelo.muted),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       r.why,
-                      style: const TextStyle(
+                      style: TextStyle(
                         height: 1.4,
-                        color: Voxelo.ink,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 14,
                       ),
                     ),
@@ -163,7 +165,9 @@ class LanguageGuideBody extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           'Konuşmadan önce 2 dakika. Yazıldığı gibi okunmaz.',
-          style: const TextStyle(color: Voxelo.muted),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
         const SizedBox(height: 14),
         VoxeloCard(
@@ -191,7 +195,10 @@ class LanguageGuideBody extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     '${r.example}   ≈   ${r.exampleSaid}',
-                    style: const TextStyle(color: Voxelo.muted, fontSize: 13),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: 13,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -202,9 +209,12 @@ class LanguageGuideBody extends StatelessWidget {
               ),
             ),
           ),
-        const Text(
+        Text(
           'Kalan kurallar ve tuzaklar uygulama içinde. Dil rehberi her zaman Sen sekmesinde.',
-          style: TextStyle(color: Voxelo.soft, fontSize: 12),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.outline,
+            fontSize: 12,
+          ),
         ),
       ],
     );

@@ -81,7 +81,10 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
             Text(
               'Bu cihazda bugün $localXp XP kazandın. Haftalık Top 10 ve kendi sıran için hesabına giriş yap.',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Voxelo.muted, height: 1.45),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                height: 1.45,
+              ),
             ),
             const SizedBox(height: 18),
             FilledButton(
@@ -127,44 +130,55 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
         children: [
           Text('Bu hafta', style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 5),
-          const Text(
+          Text(
             'Pazartesi 00.00 UTC’de yenilenir',
-            style: TextStyle(color: Voxelo.muted),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 14),
           VoxeloCard(
             onTap: () => context.push('/clan'),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.groups_outlined, color: Voxelo.mintDark),
-                SizedBox(width: 12),
-                Expanded(
+                const Icon(Icons.groups_outlined, color: Voxelo.mintDark),
+                const SizedBox(width: 12),
+                const Expanded(
                   child: Text(
                     'Takım sıralaması ve davet kodu',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                Icon(Icons.chevron_right, color: Voxelo.soft),
+                Icon(
+                  Icons.chevron_right,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
               ],
             ),
           ),
           const SizedBox(height: 18),
           if (top.isEmpty)
-            const VoxeloCard(
+            VoxeloCard(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 24),
+                padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Column(
                   children: [
-                    Icon(Icons.flag_outlined, color: Voxelo.mintDark, size: 36),
-                    SizedBox(height: 10),
-                    Text(
+                    const Icon(
+                      Icons.flag_outlined,
+                      color: Voxelo.mintDark,
+                      size: 36,
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
                       'İlk sırayı sen al.',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       'XP kazandığında burada görüneceksin.',
-                      style: TextStyle(color: Voxelo.muted),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
@@ -200,7 +214,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   Widget _row(LeaderboardEntry entry) {
     final rankColor = switch (entry.rank) {
       1 => Voxelo.sunflower,
-      2 => Voxelo.soft,
+      2 => Theme.of(context).colorScheme.outline,
       3 => Voxelo.coral,
       _ => Voxelo.mintDark,
     };
