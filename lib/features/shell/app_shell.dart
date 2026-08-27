@@ -92,21 +92,38 @@ class AppShell extends ConsumerWidget {
     if (!wide) {
       return Scaffold(
         appBar: VoxeloAppBar(),
-        body: content,
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: index,
-          backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
-          indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          onDestinationSelected: (i) => context.go(_paths[i]),
-          destinations: [
-            for (final d in destinations)
-              NavigationDestination(
-                icon: Icon(d.icon),
-                selectedIcon: Icon(d.selected, color: d.color),
-                label: d.label,
-              ),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 88),
+          child: content,
+        ),
+        extendBody: true,
+        bottomNavigationBar: SafeArea(
+          minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(Voxelo.radiusPill),
+              boxShadow: Voxelo.softShadow,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: NavigationBar(
+              selectedIndex: index,
+              backgroundColor: Colors.transparent,
+              indicatorColor: Theme.of(
+                context,
+              ).navigationBarTheme.indicatorColor,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              onDestinationSelected: (i) => context.go(_paths[i]),
+              destinations: [
+                for (final d in destinations)
+                  NavigationDestination(
+                    icon: Icon(d.icon),
+                    selectedIcon: Icon(d.selected, color: d.color),
+                    label: d.label,
+                  ),
+              ],
+            ),
+          ),
         ),
       );
     }

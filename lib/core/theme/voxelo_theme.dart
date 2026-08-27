@@ -115,9 +115,7 @@ ThemeData buildVoxeloTheme() {
     error: Color(0xFFB4453C),
   );
 
-  final controlShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Voxelo.radius),
-  );
+  const pillShape = StadiumBorder();
 
   return ThemeData(
     useMaterial3: true,
@@ -157,29 +155,28 @@ ThemeData buildVoxeloTheme() {
         foregroundColor: Colors.white,
         disabledBackgroundColor: Voxelo.fog,
         disabledForegroundColor: Voxelo.soft,
-        minimumSize: const Size.fromHeight(52),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        shape: controlShape,
-        elevation: 0,
+        minimumSize: const Size.fromHeight(56),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        shape: pillShape,
+        elevation: 3,
+        shadowColor: Voxelo.mintDark.withValues(alpha: 0.35),
         textStyle: text.labelLarge,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: Voxelo.mintDark,
-        minimumSize: const Size.fromHeight(52),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        side: const BorderSide(color: Voxelo.fog),
-        shape: controlShape,
+        minimumSize: const Size.fromHeight(56),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        side: const BorderSide(color: Voxelo.fog, width: 1.5),
+        shape: pillShape,
         textStyle: text.labelLarge?.copyWith(color: Voxelo.mintDark),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: Voxelo.mintDark,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Voxelo.radiusSm),
-        ),
+        shape: pillShape,
         textStyle: voxeloBody(fontWeight: FontWeight.w600, fontSize: 14),
       ),
     ),
@@ -205,14 +202,12 @@ ThemeData buildVoxeloTheme() {
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      height: 68,
+      height: 64,
       elevation: 0,
       backgroundColor: Voxelo.white,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Voxelo.mintLight,
-      indicatorShape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
-      ),
+      indicatorShape: pillShape,
       labelTextStyle: WidgetStatePropertyAll(
         voxeloBody(fontWeight: FontWeight.w600, fontSize: 11),
       ),

@@ -31,9 +31,10 @@ class VoxeloTokens {
   );
 
   // Radius
-  static const radiusSmall = 12.0;
-  static const radiusMedium = 20.0;
-  static const radiusLarge = 28.0;
+  static const radiusSmall = 14.0;
+  static const radiusMedium = 24.0;
+  static const radiusLarge = 32.0;
+  static const radiusPill = 999.0;
 
   // Spacing
   static const padSmall = 8.0;
@@ -52,6 +53,16 @@ class VoxeloTokens {
       color: Colors.black.withValues(alpha: 0.09),
       blurRadius: 20,
       offset: const Offset(0, 10),
+    ),
+  ];
+
+  // Renkli/tonlu gölge — CTA'lar ve öne çıkan kartlar için marka rengine
+  // boyalı, düz siyah gölgeden daha "premium" hissettiren varyant.
+  static List<BoxShadow> tintedShadow(Color color, {double opacity = 0.28}) => [
+    BoxShadow(
+      color: color.withValues(alpha: opacity),
+      blurRadius: 24,
+      offset: const Offset(0, 12),
     ),
   ];
 
