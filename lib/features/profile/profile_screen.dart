@@ -8,6 +8,29 @@ import '../../data/supabase/supa_service.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
+/// Tema rengine göre değişen dolgulu ikon rozeti — her temada (Efsane
+/// dahil) markaya sabit yeşil/altın yerine o temanın primaryContainer'ını
+/// kullanır, böylece ikonlar aktif temayla tutarlı kalır.
+class _IconChip extends StatelessWidget {
+  const _IconChip(this.icon);
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      width: 38,
+      height: 38,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: scheme.primaryContainer,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Icon(icon, size: 19, color: scheme.onPrimaryContainer),
+    );
+  }
+}
+
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
@@ -59,8 +82,8 @@ class ProfileScreen extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.bolt_rounded, color: Voxelo.sunflower),
-                    const SizedBox(width: 8),
+                    const _IconChip(Icons.bolt_rounded),
+                    const SizedBox(width: 10),
                     Text(
                       '${p.totalXp} XP',
                       style: const TextStyle(
@@ -95,10 +118,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/family'),
             child: Row(
               children: [
-                const Icon(
-                  Icons.family_restroom_outlined,
-                  color: Voxelo.mintDark,
-                ),
+                const _IconChip(Icons.family_restroom_outlined),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -115,7 +135,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/achievements'),
             child: Row(
               children: [
-                const Icon(Icons.military_tech_outlined, color: Voxelo.sunflower),
+                const _IconChip(Icons.military_tech_outlined),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -136,7 +156,7 @@ class ProfileScreen extends ConsumerWidget {
                 onTap: () => context.push('/auth'),
                 child: const Row(
                   children: [
-                    Icon(Icons.cloud_outlined, color: Voxelo.forest),
+                    _IconChip(Icons.cloud_outlined),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -155,7 +175,7 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.cloud_done, color: Voxelo.forest),
+                        const _IconChip(Icons.cloud_done),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
@@ -219,36 +239,51 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           const Eyebrow('Görünüm'),
           const SizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            child: SegmentedButton<AppThemePreference>(
-              segments: const [
-                ButtonSegment(
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final option in const [
+                (
                   value: AppThemePreference.system,
-                  icon: Icon(Icons.brightness_auto_outlined),
-                  label: Text('Sistem'),
+                  icon: Icons.brightness_auto_outlined,
+                  label: 'Sistem',
                 ),
-                ButtonSegment(
+                (
                   value: AppThemePreference.light,
-                  icon: Icon(Icons.light_mode_outlined),
-                  label: Text('Açık'),
+                  icon: Icons.light_mode_outlined,
+                  label: 'Açık',
                 ),
-                ButtonSegment(
+                (
                   value: AppThemePreference.dark,
-                  icon: Icon(Icons.dark_mode_outlined),
-                  label: Text('Koyu'),
+                  icon: Icons.dark_mode_outlined,
+                  label: 'Koyu',
                 ),
-                ButtonSegment(
+                (
                   value: AppThemePreference.amber,
-                  icon: Icon(Icons.wb_twilight_outlined),
-                  label: Text('Bal'),
+                  icon: Icons.wb_twilight_outlined,
+                  label: 'Bal',
                 ),
-              ],
-              selected: {p.themePreference},
-              onSelectionChanged: (value) => ref
-                  .read(sessionProvider.notifier)
-                  .setThemePreference(value.first),
-            ),
+                (
+                  value: AppThemePreference.legendary,
+                  icon: Icons.auto_awesome,
+                  label: 'Efsane',
+                ),
+                (
+                  value: AppThemePreference.legendaryLight,
+                  icon: Icons.auto_awesome_outlined,
+                  label: 'Efsane (Açık)',
+                ),
+              ])
+                ChoiceChip(
+                  selected: p.themePreference == option.value,
+                  avatar: Icon(option.icon, size: 18),
+                  label: Text(option.label),
+                  onSelected: (_) => ref
+                      .read(sessionProvider.notifier)
+                      .setThemePreference(option.value),
+                ),
+            ],
           ),
           const SizedBox(height: 16),
           const Eyebrow('Hatırlatmalar'),
@@ -301,7 +336,10 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/privacy'),
           ),
           ListTile(
-            title: const Text('Hesabı sil', style: TextStyle(color: Voxelo.terr)),
+            title: const Text(
+              'Hesabı sil',
+              style: TextStyle(color: Voxelo.terr),
+            ),
             subtitle: Text(
               email != null
                   ? 'Sunucudaki hesabın ve bu cihazdaki ilerleme silinir'

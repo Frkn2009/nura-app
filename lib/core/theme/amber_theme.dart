@@ -42,6 +42,7 @@ ThemeData buildVoxeloAmberTheme() {
   return base.copyWith(
     colorScheme: scheme,
     scaffoldBackgroundColor: VoxeloAmber.cream,
+    cardColor: VoxeloAmber.cardCream,
     appBarTheme: base.appBarTheme.copyWith(
       backgroundColor: VoxeloAmber.cream,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -106,7 +107,10 @@ ThemeData buildVoxeloAmberTheme() {
       backgroundColor: VoxeloAmber.cardCream,
     ),
     dividerColor: VoxeloAmber.border,
-    dividerTheme: const DividerThemeData(color: VoxeloAmber.border, thickness: 1),
+    dividerTheme: const DividerThemeData(
+      color: VoxeloAmber.border,
+      thickness: 1,
+    ),
     chipTheme: base.chipTheme.copyWith(
       backgroundColor: VoxeloAmber.cardCream,
       selectedColor: VoxeloAmber.honeyLight,

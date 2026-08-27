@@ -33,6 +33,7 @@ ThemeData buildVoxeloDarkTheme() {
     brightness: Brightness.dark,
     colorScheme: scheme,
     scaffoldBackgroundColor: const Color(0xFF10181A),
+    cardColor: scheme.surface,
     textTheme: text,
     appBarTheme: base.appBarTheme.copyWith(
       backgroundColor: const Color(0xFF10181A),

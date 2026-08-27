@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/amber_theme.dart';
 import 'core/theme/dark_theme.dart';
+import 'core/theme/legendary_theme.dart';
 import 'core/theme/voxelo_theme.dart';
 import 'data/models/models.dart';
 import 'data/notifications/notification_service.dart';
@@ -28,15 +29,22 @@ class VoxeloApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'VOXELO',
       debugShowCheckedModeBanner: false,
-      theme: themePreference == AppThemePreference.amber
-          ? buildVoxeloAmberTheme()
-          : buildVoxeloTheme(),
-      darkTheme: buildVoxeloDarkTheme(),
+      theme: switch (themePreference) {
+        AppThemePreference.amber => buildVoxeloAmberTheme(),
+        AppThemePreference.legendary => buildVoxeloLegendaryTheme(),
+        AppThemePreference.legendaryLight => buildVoxeloLegendaryLightTheme(),
+        _ => buildVoxeloTheme(),
+      },
+      darkTheme: themePreference == AppThemePreference.legendary
+          ? buildVoxeloLegendaryTheme()
+          : buildVoxeloDarkTheme(),
       themeMode: switch (themePreference) {
         AppThemePreference.system => ThemeMode.system,
         AppThemePreference.light => ThemeMode.light,
         AppThemePreference.dark => ThemeMode.dark,
         AppThemePreference.amber => ThemeMode.light,
+        AppThemePreference.legendary => ThemeMode.dark,
+        AppThemePreference.legendaryLight => ThemeMode.light,
       },
       routerConfig: router,
     );

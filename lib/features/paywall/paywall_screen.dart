@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/theme/tokens.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 import '../plus/domain/entitlement.dart';
@@ -54,6 +53,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     final i18n = ref.watch(i18nProvider);
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: VoxeloAppBar(
         leading: IconButton(
@@ -68,8 +68,8 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             Text(
               'VOXELO',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Voxelo.forest,
+              style: TextStyle(
+                color: scheme.primary,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2,
               ),
@@ -81,10 +81,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Sınırsız AI konuşma, telaffuz, çevrimdışı klip.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Voxelo.muted),
+              style: TextStyle(color: scheme.onSurfaceVariant),
             ),
             const SizedBox(height: 18),
             SegmentedButton<bool>(
@@ -124,11 +124,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.check_circle,
-                        color: Voxelo.forest,
-                        size: 20,
-                      ),
+                      Icon(Icons.check_circle, color: scheme.primary, size: 20),
                       const SizedBox(width: 8),
                       Text(f),
                     ],
@@ -163,11 +159,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.check_circle,
-                        color: Voxelo.forest,
-                        size: 20,
-                      ),
+                      Icon(Icons.check_circle, color: scheme.primary, size: 20),
                       const SizedBox(width: 8),
                       Text(f),
                     ],
@@ -198,10 +190,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
+            Text(
               'İstediğin an iptal. Fiyatlar mağazada yerelleşir; ekonomi USD kilitlidir.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Voxelo.soft, fontSize: 12),
+              style: TextStyle(color: scheme.outline, fontSize: 12),
             ),
             const SizedBox(height: 6),
             Row(
@@ -214,7 +206,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     style: TextStyle(fontSize: 12),
                   ),
                 ),
-                const Text('·', style: TextStyle(color: Voxelo.soft)),
+                Text('·', style: TextStyle(color: scheme.outline)),
                 TextButton(
                   onPressed: () => context.push('/privacy'),
                   child: const Text('Gizlilik', style: TextStyle(fontSize: 12)),
@@ -229,11 +221,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
 
   Widget _businessPlanCard(int i, String t, String price, String sub) {
     final sel = businessPlan == i;
+    final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: VoxeloCard(
         onTap: () => setState(() => businessPlan = i),
-        color: sel ? Voxelo.cream2 : Voxelo.card,
+        color: sel ? scheme.primaryContainer : Theme.of(context).cardColor,
         child: Row(
           children: [
             Expanded(
@@ -244,17 +237,26 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     t,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: sel ? Voxelo.forest : Voxelo.ink,
+                      color: sel ? scheme.primary : scheme.onSurface,
                     ),
                   ),
                   Text(
                     sub,
-                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                    style: TextStyle(
+                      color: scheme.onSurfaceVariant,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
             ),
-            Text(price, style: const TextStyle(fontWeight: FontWeight.w700)),
+            Text(
+              price,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: scheme.onSurface,
+              ),
+            ),
           ],
         ),
       ),
@@ -263,11 +265,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
 
   Widget _plan(int i, String t, String price, String sub) {
     final sel = plan == i;
+    final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: VoxeloCard(
         onTap: () => setState(() => plan = i),
-        color: sel ? Voxelo.cream2 : Voxelo.card,
+        color: sel ? scheme.primaryContainer : Theme.of(context).cardColor,
         child: Row(
           children: [
             Expanded(
@@ -278,17 +281,26 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     t,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: sel ? Voxelo.forest : Voxelo.ink,
+                      color: sel ? scheme.primary : scheme.onSurface,
                     ),
                   ),
                   Text(
                     sub,
-                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                    style: TextStyle(
+                      color: scheme.onSurfaceVariant,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
             ),
-            Text(price, style: const TextStyle(fontWeight: FontWeight.w700)),
+            Text(
+              price,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: scheme.onSurface,
+              ),
+            ),
           ],
         ),
       ),
