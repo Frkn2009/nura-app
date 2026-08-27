@@ -8,29 +8,6 @@ import '../../data/supabase/supa_service.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
-/// Tema rengine göre değişen dolgulu ikon rozeti — her temada (Efsane
-/// dahil) markaya sabit yeşil/altın yerine o temanın primaryContainer'ını
-/// kullanır, böylece ikonlar aktif temayla tutarlı kalır.
-class _IconChip extends StatelessWidget {
-  const _IconChip(this.icon);
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Container(
-      width: 38,
-      height: 38,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: scheme.primaryContainer,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Icon(icon, size: 19, color: scheme.onPrimaryContainer),
-    );
-  }
-}
-
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
@@ -82,7 +59,7 @@ class ProfileScreen extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    const _IconChip(Icons.bolt_rounded),
+                    const IconChip(Icons.bolt_rounded),
                     const SizedBox(width: 10),
                     Text(
                       '${p.totalXp} XP',
@@ -118,7 +95,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/family'),
             child: Row(
               children: [
-                const _IconChip(Icons.family_restroom_outlined),
+                const IconChip(Icons.family_restroom_outlined),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -135,7 +112,7 @@ class ProfileScreen extends ConsumerWidget {
             onTap: () => context.push('/achievements'),
             child: Row(
               children: [
-                const _IconChip(Icons.military_tech_outlined),
+                const IconChip(Icons.military_tech_outlined),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -156,7 +133,7 @@ class ProfileScreen extends ConsumerWidget {
                 onTap: () => context.push('/auth'),
                 child: const Row(
                   children: [
-                    _IconChip(Icons.cloud_outlined),
+                    IconChip(Icons.cloud_outlined),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -175,7 +152,7 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        const _IconChip(Icons.cloud_done),
+                        const IconChip(Icons.cloud_done),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(

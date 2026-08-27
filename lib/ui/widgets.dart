@@ -148,6 +148,44 @@ class ChoiceTile extends StatelessWidget {
   }
 }
 
+/// Dolgulu ikon rozeti. Verilirse `color`/`background` kullanılır (sabit
+/// marka rengi gereken yerler için, ör. seri/alfabe ikonları); verilmezse
+/// aktif temanın primaryContainer'ına düşer, böylece her temada (Efsane
+/// dahil) otomatik tutarlı kalır.
+class IconChip extends StatelessWidget {
+  const IconChip(
+    this.icon, {
+    super.key,
+    this.color,
+    this.background,
+    this.size = 38,
+  });
+  final IconData icon;
+  final Color? color;
+  final Color? background;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final fg = color ?? scheme.onPrimaryContainer;
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color:
+            background ??
+            (color != null
+                ? color!.withValues(alpha: 0.15)
+                : scheme.primaryContainer),
+        borderRadius: BorderRadius.circular(size * 0.32),
+      ),
+      child: Icon(icon, size: size * 0.5, color: fg),
+    );
+  }
+}
+
 class ForestButton extends StatelessWidget {
   const ForestButton({super.key, required this.label, required this.onPressed});
   final String label;

@@ -143,7 +143,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.bolt_rounded, color: Voxelo.sunflower),
+                    const IconChip(Icons.bolt_rounded, color: Voxelo.sunflower),
                     const SizedBox(width: 8),
                     Text(
                       '${p.totalXp} XP',
@@ -203,7 +203,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         WeeklyEvent.current().isJoined(p)
                             ? 'Katıldın · İspanyolca pratik yap'
                             : 'Video ile katıl · bu hafta',
-                        style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                        style: const TextStyle(
+                          color: Voxelo.muted,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -282,7 +285,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ? Voxelo.terr
                           : Voxelo.line,
                       child: i < idx
-                          ? const Icon(Icons.check, size: 16, color: Voxelo.cream)
+                          ? const Icon(
+                              Icons.check,
+                              size: 16,
+                              color: Voxelo.cream,
+                            )
                           : Text(
                               '${i + 1}',
                               style: TextStyle(
@@ -339,7 +346,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/leaderboard'),
             child: const Row(
               children: [
-                Icon(Icons.leaderboard_outlined, color: Voxelo.mintDark),
+                IconChip(Icons.leaderboard_outlined, color: Voxelo.mintDark),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -356,7 +363,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/alphabet?lang=${p.learnLang.code}'),
             child: Row(
               children: [
-                const Icon(Icons.abc, color: Voxelo.forest),
+                const IconChip(Icons.abc, color: Voxelo.forest),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -377,7 +384,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/library'),
             child: const Row(
               children: [
-                Icon(Icons.menu_book_outlined, color: Voxelo.forest),
+                IconChip(Icons.menu_book_outlined, color: Voxelo.forest),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -397,7 +404,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.go('/app/chat'),
             child: Row(
               children: [
-                const Icon(Icons.forum_outlined, color: Voxelo.forest),
+                const IconChip(Icons.forum_outlined, color: Voxelo.forest),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -412,7 +419,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                       Text(
                         p.isPlus ? 'Voxelo ile canlı konuş' : 'Plus ile aç',
-                        style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                        style: const TextStyle(
+                          color: Voxelo.muted,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -450,7 +460,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/review'),
             child: Row(
               children: [
-                const Icon(Icons.replay, color: Voxelo.forest),
+                const IconChip(Icons.replay, color: Voxelo.forest),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -495,8 +505,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: VoxeloCard(
         child: Column(
           children: [
-            Icon(ic, color: c, size: 20),
-            const SizedBox(height: 6),
+            IconChip(ic, color: c, size: 36),
+            const SizedBox(height: 8),
             Text(
               v,
               style: TextStyle(
