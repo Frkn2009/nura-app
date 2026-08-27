@@ -455,12 +455,12 @@ class I18n {
   });
 
   String get plusCta => t({
-    'tr': '7 gün ücretsiz dene',
-    'en': 'Start 7-day free trial',
-    'es': 'Prueba 7 días',
-    'de': '7 Tage testen',
-    'fr': 'Essai 7 jours',
-    'nl': '7 dagen proberen',
+    'tr': '3 gün ücretsiz dene',
+    'en': 'Start 3-day free trial',
+    'es': 'Prueba 3 días',
+    'de': '3 Tage testen',
+    'fr': 'Essai 3 jours',
+    'nl': '3 dagen proberen',
   });
 
   String get paywallTitle => t({

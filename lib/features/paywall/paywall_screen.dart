@@ -101,14 +101,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               _plan(
                 1,
                 'Yıllık · en iyi değer',
-                '1.490 TL / yıl',
-                '≈ \$3.10 USD / ay · 4 ay bedava',
+                '2.800 TL / yıl',
+                '\$70 USD / yıl · ≈ \$5.83 USD / ay',
               ),
               _plan(
                 2,
                 'Aile',
-                '2.290 TL / yıl',
-                '4 profil · ≈ \$4.75 USD / ay',
+                '8.000 TL / yıl',
+                '4 profil · \$200 USD / yıl · ≈ \$16.67 USD / ay',
               ),
               const SizedBox(height: 12),
               for (final f in [
@@ -145,8 +145,8 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               _businessPlanCard(
                 1,
                 'Yıllık · en iyi değer',
-                '4.190 TL / yıl',
-                '≈ \$8.70 USD / ay · 4 ay bedava',
+                '8.000 TL / yıl',
+                'Tek profil · \$200 USD / yıl · ≈ \$16.67 USD / ay',
               ),
               const SizedBox(height: 12),
               for (final f in [
