@@ -20,6 +20,26 @@ enum VoxeloIcon {
   replay,
 }
 
+/// Her ikonun kendi sabit, canlı gradyan kimliği — hangi tema aktif
+/// olursa olsun aynı (mockup'ta onaylanan tasarım tema-bağımsızdı).
+extension VoxeloIconGradient on VoxeloIcon {
+  List<Color> get gradient => switch (this) {
+    VoxeloIcon.fire => const [Color(0xFFFF9A3D), Color(0xFFF43F5E)],
+    VoxeloIcon.medal => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
+    VoxeloIcon.book => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
+    VoxeloIcon.bell => const [Color(0xFFFFC800), Color(0xFFF59E0B)],
+    VoxeloIcon.globe => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
+    VoxeloIcon.card => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
+    VoxeloIcon.family => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
+    VoxeloIcon.cloud => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
+    VoxeloIcon.leaderboard => const [Color(0xFF58CC02), Color(0xFF46A302)],
+    VoxeloIcon.guide => const [Color(0xFF58CC02), Color(0xFF46A302)],
+    VoxeloIcon.chat => const [Color(0xFFF43F5E), Color(0xFFF472B6)],
+    VoxeloIcon.replay => const [Color(0xFF58CC02), Color(0xFF46A302)],
+    VoxeloIcon.logout => const [Color(0xFF9AA0A6), Color(0xFF6B7280)],
+  };
+}
+
 class VoxeloLineIcon extends StatelessWidget {
   const VoxeloLineIcon(this.icon, {super.key, this.size = 20, this.color});
   final VoxeloIcon icon;

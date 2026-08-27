@@ -169,21 +169,37 @@ class IconChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final fg = color ?? scheme.onPrimaryContainer;
+    final grad = icon.gradient;
+    final flat = background ?? color?.withValues(alpha: 0.15);
     return Container(
       width: size,
       height: size,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color:
-            background ??
-            (color != null
-                ? color!.withValues(alpha: 0.15)
-                : scheme.primaryContainer),
+        gradient: flat == null
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: grad,
+              )
+            : null,
+        color: flat,
         borderRadius: BorderRadius.circular(size * 0.32),
+        boxShadow: flat == null
+            ? [
+                BoxShadow(
+                  color: grad.last.withValues(alpha: 0.4),
+                  blurRadius: size * 0.4,
+                  offset: Offset(0, size * 0.18),
+                ),
+              ]
+            : null,
       ),
-      child: VoxeloLineIcon(icon, size: size * 0.5, color: fg),
+      child: VoxeloLineIcon(
+        icon,
+        size: size * 0.5,
+        color: flat == null ? Colors.white : color,
+      ),
     );
   }
 }

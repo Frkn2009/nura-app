@@ -143,7 +143,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 Row(
                   children: [
-                    const IconChip(VoxeloIcon.fire, color: Voxelo.sunflower),
+                    const IconChip(VoxeloIcon.fire),
                     const SizedBox(width: 8),
                     Text(
                       '${p.totalXp} XP',
@@ -341,7 +341,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/leaderboard'),
             child: const Row(
               children: [
-                IconChip(VoxeloIcon.leaderboard, color: Voxelo.mintDark),
+                IconChip(VoxeloIcon.leaderboard),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -358,7 +358,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/alphabet?lang=${p.learnLang.code}'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.guide, color: Voxelo.forest),
+                const IconChip(VoxeloIcon.guide),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -379,7 +379,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/library'),
             child: const Row(
               children: [
-                IconChip(VoxeloIcon.book, color: Voxelo.forest),
+                IconChip(VoxeloIcon.book),
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -399,7 +399,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.go('/app/chat'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.chat, color: Voxelo.forest),
+                const IconChip(VoxeloIcon.chat),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -455,7 +455,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: () => context.push('/review'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.replay, color: Voxelo.forest),
+                const IconChip(VoxeloIcon.replay),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -500,7 +500,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: VoxeloCard(
         child: Column(
           children: [
-            IconChip(ic, color: c, size: 36),
+            IconChip(ic, size: 36),
             const SizedBox(height: 8),
             Text(
               v,
