@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../state/session.dart';
+import '../../ui/widgets.dart';
 
 class DailyWheelScreen extends ConsumerStatefulWidget {
   const DailyWheelScreen({super.key});
@@ -34,14 +35,21 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
   bool _done = false;
   int _wonIndex = 0;
 
-  static const _segments = [
-    _WheelPrize(title: '+20 XP', color: VoxeloTokens.accent, icon: '⚡', xp: 20),
-    _WheelPrize(title: '+40 XP', color: VoxeloTokens.primary, icon: '🔥', xp: 40),
-    _WheelPrize(title: '+30 XP', color: VoxeloTokens.purple, icon: '💎', xp: 30),
-    _WheelPrize(title: 'Plus Dene', color: VoxeloTokens.gold, icon: '👑'),
-    _WheelPrize(title: '+60 XP', color: Colors.teal, icon: '🎁', xp: 60),
-    _WheelPrize(title: '+25 XP', color: VoxeloTokens.danger, icon: '✨', xp: 25),
-  ];
+  List<_WheelPrize> get _segments {
+    final i18n = ref.read(i18nProvider);
+    return [
+      _WheelPrize(title: '+20 XP', color: VoxelithTokens.accent, icon: '⚡', xp: 20),
+      _WheelPrize(title: '+40 XP', color: VoxelithTokens.primary, icon: '🔥', xp: 40),
+      _WheelPrize(title: '+30 XP', color: VoxelithTokens.purple, icon: '💎', xp: 30),
+      _WheelPrize(
+        title: i18n.dailyWheelTryPlusPrize,
+        color: VoxelithTokens.gold,
+        icon: '👑',
+      ),
+      _WheelPrize(title: '+60 XP', color: Colors.teal, icon: '🎁', xp: 60),
+      _WheelPrize(title: '+25 XP', color: VoxelithTokens.danger, icon: '✨', xp: 25),
+    ];
+  }
 
   String get _todayKey {
     final n = DateTime.now().toUtc();
@@ -98,19 +106,20 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
   }
 
   void _showReward(_WheelPrize prize, int awarded) {
+    final i18n = ref.read(i18nProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (c) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         title: Text(
-          '${prize.icon} Tebrikler!',
+          i18n.dailyWheelCongrats(prize.icon),
           style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 24),
         ),
         content: Text(
           prize.xp > 0
-              ? '$awarded XP hesabına eklendi!'
-              : 'Plus ile sınırsız konuşma ve reklamsız deneyimi keşfet.',
+              ? i18n.dailyWheelXpAwarded(awarded)
+              : i18n.dailyWheelPlusPitch,
           style: const TextStyle(fontSize: 18),
         ),
         actions: [
@@ -120,7 +129,7 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
                 Navigator.pop(c);
                 Navigator.pop(context);
               },
-              child: const Text('Belki sonra'),
+              child: Text(i18n.maybeLaterCta),
             ),
           ElevatedButton(
             onPressed: () {
@@ -131,7 +140,11 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
                 Navigator.pop(context);
               }
             },
-            child: Text(prize.xp == 0 ? 'Plus\'a geç' : 'Topla'),
+            child: Text(
+              prize.xp == 0
+                  ? i18n.dailyWheelGoPlusCta
+                  : i18n.dailyWheelCollectCta,
+            ),
           ),
         ],
       ),
@@ -146,31 +159,32 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
 
   @override
   Widget build(BuildContext context) {
+    final i18n = ref.watch(i18nProvider);
     return Scaffold(
-      backgroundColor: VoxeloTokens.background,
-      appBar: AppBar(
-        title: const Text(
-          '🎡 Günlük Çark',
-          style: TextStyle(fontWeight: FontWeight.w800),
+      backgroundColor: VoxelithTokens.background,
+      appBar: VoxelithAppBar(
+        pageTitle: Text(
+          i18n.dailyWheelTitle,
+          style: const TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Günlük ödülünü al!',
-              style: TextStyle(
+            Text(
+              i18n.dailyWheelSubtitle,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: VoxeloTokens.textSecondary,
+                color: VoxelithTokens.textSecondary,
               ),
             ),
             const SizedBox(height: 24),
             const Icon(
               Icons.arrow_drop_down,
               size: 48,
-              color: VoxeloTokens.danger,
+              color: VoxelithTokens.danger,
             ),
             AnimatedBuilder(
               animation: _anim,
@@ -191,18 +205,18 @@ class _DailyWheelScreenState extends ConsumerState<DailyWheelScreen>
               child: ElevatedButton(
                 onPressed: _done ? null : _spin,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: VoxeloTokens.gold,
+                  backgroundColor: VoxelithTokens.gold,
                 ),
                 child: Text(
                   _spinning
-                      ? 'Dönüyor...'
+                      ? i18n.dailyWheelSpinningCta
                       : _done
-                      ? 'Yarın tekrar!'
-                      : 'ÇEVİR!',
+                      ? i18n.dailyWheelComeBackTomorrowCta
+                      : i18n.dailyWheelSpinCta,
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w900,
-                    color: VoxeloTokens.textPrimary,
+                    color: VoxelithTokens.textPrimary,
                   ),
                 ),
               ),
@@ -260,7 +274,7 @@ class _WheelPainter extends CustomPainter {
     }
 
     canvas.drawCircle(center, 20, Paint()..color = Colors.white);
-    canvas.drawCircle(center, 18, Paint()..color = VoxeloTokens.textPrimary);
+    canvas.drawCircle(center, 18, Paint()..color = VoxelithTokens.textPrimary);
   }
 
   @override

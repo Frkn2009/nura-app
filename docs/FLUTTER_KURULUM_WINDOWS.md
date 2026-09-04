@@ -1,4 +1,4 @@
-# VOXELO — Windows'ta Flutter Kurulum Rehberi
+# VOXELITH — Windows'ta Flutter Kurulum Rehberi
 
 > Toplam süre: ~30-45 dakika (internet hızına göre)
 > Adımları sırayla yap, birini atlama.

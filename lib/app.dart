@@ -7,14 +7,14 @@ import 'core/router/app_router.dart';
 import 'core/theme/amber_theme.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/legendary_theme.dart';
-import 'core/theme/voxelo_theme.dart';
+import 'core/theme/voxelith_theme.dart';
 import 'data/models/models.dart';
 import 'data/notifications/notification_service.dart';
 import 'data/widgets/home_widget_service.dart';
 import 'state/session.dart';
 
-class VoxeloApp extends ConsumerWidget {
-  const VoxeloApp({super.key});
+class VoxelithApp extends ConsumerWidget {
+  const VoxelithApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,20 +24,20 @@ class VoxeloApp extends ConsumerWidget {
     );
     ref.listen(sessionProvider, (_, profile) {
       unawaited(NotificationService.sync(profile).catchError((_) {}));
-      unawaited(VoxeloHomeWidgetService.sync(profile).catchError((_) {}));
+      unawaited(VoxelithHomeWidgetService.sync(profile).catchError((_) {}));
     });
     return MaterialApp.router(
-      title: 'VOXELO',
+      title: 'VOXELITH',
       debugShowCheckedModeBanner: false,
       theme: switch (themePreference) {
-        AppThemePreference.amber => buildVoxeloAmberTheme(),
-        AppThemePreference.legendary => buildVoxeloLegendaryTheme(),
-        AppThemePreference.legendaryLight => buildVoxeloLegendaryLightTheme(),
-        _ => buildVoxeloTheme(),
+        AppThemePreference.amber => buildVoxelithAmberTheme(),
+        AppThemePreference.legendary => buildVoxelithLegendaryTheme(),
+        AppThemePreference.legendaryLight => buildVoxelithLegendaryLightTheme(),
+        _ => buildVoxelithTheme(),
       },
       darkTheme: themePreference == AppThemePreference.legendary
-          ? buildVoxeloLegendaryTheme()
-          : buildVoxeloDarkTheme(),
+          ? buildVoxelithLegendaryTheme()
+          : buildVoxelithDarkTheme(),
       themeMode: switch (themePreference) {
         AppThemePreference.system => ThemeMode.system,
         AppThemePreference.light => ThemeMode.light,

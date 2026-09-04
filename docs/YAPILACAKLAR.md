@@ -1,4 +1,4 @@
-# VOXELO — YAPILACAKLAR LİSTESİ (26 Ağustos 2026 — GÜNCEL)
+# VOXELITH — YAPILACAKLAR LİSTESİ (26 Ağustos 2026 — GÜNCEL)
 
 ## 🔴 GERÇEK EKSİKLER (26 Ağustos — mağazaya çıkmadan önce kalanların tam listesi)
 
@@ -21,17 +21,17 @@
 
 ### Zaten hazır
 - `flutter analyze` temiz, `flutter test` 35/35 geçiyor.
-- Rename (Nura→Voxelo) tamamlandı, GitHub `voxelo-app` olarak push edildi.
-- Arclume (holding şirketi) marka/logo işi bilinçli olarak ertelendi — Voxelo canlıya çıkıp ilk kullanıcıyı görmeden marka tesciline gerek yok.
+- Rename (Nura→Voxelo) tamamlandı, GitHub `voxelo-app` olarak push edildi. (30 Ağustos 2026: Voxelo da UK'de tescilli çıktı — bkz. `docs/DEVAM_SAYFASI.md`, ikinci rename Voxelo→Voxelith sürüyor.)
+- Arclume (holding şirketi) marka/logo işi bilinçli olarak ertelendi — Voxelith canlıya çıkıp ilk kullanıcıyı görmeden marka tesciline gerek yok.
 
 ---
 
 ## ✅ TAMAMLANAN MADDELER
 
-### 1. Logo — Sol üste VOXELO logosu ✅
-- [x] `lib/ui/brand.dart` — VoxeloMark (CustomPaint)
-- [x] `lib/ui/voxelo_logo.dart` — VoxeloLogo + VoxeloAppBar widget
-- [x] `assets/voxelo_logo.png` — logo görseli
+### 1. Logo — Sol üste VOXELITH logosu ✅
+- [x] `lib/ui/brand.dart` — VoxelithMark (CustomPaint)
+- [x] `lib/ui/voxelith_logo.dart` — VoxelithLogo + VoxelithAppBar widget
+- [x] `assets/voxelith_logo.png` — logo görseli
 - [x] AppBar'da her sayfada görünüyor
 
 ### 2. Konuş Butonu — Mikrofon aktif ✅
@@ -51,7 +51,7 @@
 
 ### 5. Tema — Profesyonel ✅
 - [x] `lib/core/theme/tokens.dart` — Mint/Coral/Lavanta palette
-- [x] `lib/core/theme/voxelo_theme.dart` — light theme
+- [x] `lib/core/theme/voxelith_theme.dart` — light theme
 - [x] `lib/core/theme/dark_theme.dart` — dark theme
 - [x] Tutarlı border-radius, spacing, tipografi
 
@@ -82,7 +82,7 @@
 
 ### 11. Maskot / Karakter ✅
 - [x] `lib/ui/mascot.dart` — animasyonlu maskot (neutral, wave, celebrate, encourage, streak)
-- [x] `assets/mascot_voxelo.png` — maskot görseli
+- [x] `assets/mascot_voxelith.png` — maskot görseli
 - [x] Ana sayfada ve onboarding'de kullanılıyor
 
 ### 12. Süreli Etkinlikler + Video Reklam ✅
@@ -124,7 +124,7 @@
 - [x] `lib/data/widgets/home_widget_service.dart` — Android/iOS widget
 - [x] 30 dil rehberi, 242 sahne, 726 kalıp
 - [x] Supabase auth + profil senkron + RLS + hesap silme
-- [x] VOXELO_CODING_CONTRACT.md (10 kural)
+- [x] VOXELITH_CODING_CONTRACT.md (10 kural)
 - [x] Store checklist + release script
 
 ---

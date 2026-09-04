@@ -1,4 +1,4 @@
-# VOXELO Deployment Status — 21 Ağustos 2026
+# VOXELITH Deployment Status — 21 Ağustos 2026
 
 ## Supabase
 

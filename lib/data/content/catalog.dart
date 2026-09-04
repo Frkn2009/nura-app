@@ -3,6 +3,16 @@
 
 import '../models/models.dart';
 import 'intermediate_catalog.dart';
+import 'extra/catalog_extra_batch_a.dart';
+import 'extra/catalog_extra_batch_b.dart';
+import 'extra/catalog_extra_batch_c.dart';
+import 'extra/catalog_extra_batch_d.dart';
+import 'extra/catalog_extra_batch_e.dart';
+import 'extra/catalog_extra_batch_f.dart';
+import 'extra/catalog_extra_batch_g.dart';
+import 'extra/catalog_extra_batch_h.dart';
+import 'extra/catalog_extra_batch_j.dart';
+import 'extra/catalog_extra_batch_k.dart';
 
 class Catalog {
   static List<Scenario> forLang(LearnLang lang) {
@@ -9503,5 +9513,15 @@ class Catalog {
         ),
       ],
     ),
+    ...catalogExtraBatchA,
+    ...catalogExtraBatchB,
+    ...catalogExtraBatchC,
+    ...catalogExtraBatchD,
+    ...catalogExtraBatchE,
+    ...catalogExtraBatchF,
+    ...catalogExtraBatchG,
+    ...catalogExtraBatchH,
+    ...catalogExtraBatchJ,
+    ...catalogExtraBatchK,
   ];
 }

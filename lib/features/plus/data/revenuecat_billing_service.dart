@@ -71,14 +71,14 @@ class RevenueCatBillingService implements BillingService {
   }
 
   @override
-  Future<VoxeloEntitlement> currentEntitlement() async {
+  Future<VoxelithEntitlement> currentEntitlement() async {
     final info = await Purchases.getCustomerInfo();
     final active = info.entitlements.active;
     if (active.containsKey(_businessEntitlementId)) {
-      return VoxeloEntitlement.business;
+      return VoxelithEntitlement.business;
     }
-    if (active.containsKey(_entitlementId)) return VoxeloEntitlement.plus;
-    return VoxeloEntitlement.free;
+    if (active.containsKey(_entitlementId)) return VoxelithEntitlement.plus;
+    return VoxelithEntitlement.free;
   }
 
   @override

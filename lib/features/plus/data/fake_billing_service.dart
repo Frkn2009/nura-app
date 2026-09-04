@@ -1,41 +1,41 @@
-import 'package:voxelo/features/plus/data/billing_service.dart';
-import 'package:voxelo/features/plus/domain/entitlement.dart';
+import 'package:voxelith/features/plus/data/billing_service.dart';
+import 'package:voxelith/features/plus/domain/entitlement.dart';
 
 class FakeBillingService implements BillingService {
-  FakeBillingService({this.entitlement = VoxeloEntitlement.free});
+  FakeBillingService({this.entitlement = VoxelithEntitlement.free});
 
-  VoxeloEntitlement entitlement;
+  VoxelithEntitlement entitlement;
   bool restoreCalled = false;
   bool purchaseCalled = false;
 
   @override
   Future<List<BillingProduct>> fetchProducts() async {
     return const [
-      voxeloPlusMonthly,
-      voxeloPlusYearly,
-      voxeloPlusFamily,
-      voxeloBusinessMonthly,
-      voxeloBusinessYearly,
+      voxelithPlusMonthly,
+      voxelithPlusYearly,
+      voxelithPlusFamily,
+      voxelithBusinessMonthly,
+      voxelithBusinessYearly,
     ];
   }
 
   @override
-  Future<VoxeloEntitlement> currentEntitlement() async => entitlement;
+  Future<VoxelithEntitlement> currentEntitlement() async => entitlement;
 
   @override
   Future<void> purchase(BillingProduct product) async {
     purchaseCalled = true;
     entitlement =
-        product.id == voxeloBusinessMonthly.id ||
-            product.id == voxeloBusinessYearly.id
-        ? VoxeloEntitlement.business
-        : VoxeloEntitlement.plus;
+        product.id == voxelithBusinessMonthly.id ||
+            product.id == voxelithBusinessYearly.id
+        ? VoxelithEntitlement.business
+        : VoxelithEntitlement.plus;
   }
 
   @override
   Future<void> restorePurchases() async {
     restoreCalled = true;
-    entitlement = VoxeloEntitlement.plus;
+    entitlement = VoxelithEntitlement.plus;
   }
 
   @override

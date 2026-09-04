@@ -14,7 +14,7 @@ class AchievementsScreen extends ConsumerWidget {
     final profile = ref.watch(sessionProvider);
     final unlocked = profile.achievements;
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: const Text('Başarımlar')),
+      appBar: VoxelithAppBar(pageTitle: const Text('Başarımlar')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 16, 22, 30),
@@ -30,7 +30,7 @@ class AchievementsScreen extends ConsumerWidget {
                 Text(
                   '${unlocked.length} / ${Achievement.values.length}',
                   style: const TextStyle(
-                    color: Voxelo.mintDark,
+                    color: Voxelith.mintDark,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -86,9 +86,9 @@ class _AchievementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = unlocked ? Voxelo.mintDark : Voxelo.soft;
-    return VoxeloCard(
-      color: unlocked ? Voxelo.mintLight : Voxelo.cloud,
+    final foreground = unlocked ? Voxelith.mintDark : Voxelith.soft;
+    return VoxelithCard(
+      color: unlocked ? Voxelith.mintLight : Voxelith.cloud,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,12 +97,12 @@ class _AchievementCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: unlocked ? Voxelo.mintDark : Voxelo.fog,
+              color: unlocked ? Voxelith.mintDark : Voxelith.fog,
               shape: BoxShape.circle,
             ),
             child: Icon(
               unlocked ? icon : Icons.lock_outline,
-              color: unlocked ? Colors.white : Voxelo.soft,
+              color: unlocked ? Colors.white : Voxelith.soft,
             ),
           ),
           const Spacer(),
@@ -120,7 +120,7 @@ class _AchievementCard extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              color: Voxelo.muted,
+              color: Voxelith.muted,
               fontSize: 11,
               height: 1.35,
             ),

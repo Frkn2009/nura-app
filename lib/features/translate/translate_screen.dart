@@ -128,18 +128,19 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
   }
 
   String _cloudErrorMessage(Object error) {
+    final i18n = ref.read(i18nProvider);
     final code = error.toString();
     if (code.contains('authentication_required') ||
         code.contains('invalid_session')) {
-      return 'Plus bulut çevirisi için profilinden VOXELO hesabına giriş yap.';
+      return i18n.translateSignInRequired;
     }
     if (code.contains('plus_required')) {
-      return 'Bulut Plus hakkın henüz doğrulanmadı.';
+      return i18n.translatePlusNotVerified;
     }
     if (code.contains('service_not_configured')) {
-      return 'Bulut çeviri sunucusu henüz yapılandırılmadı.';
+      return i18n.translateServiceNotConfigured;
     }
-    return 'Bulut çeviriye şu an ulaşılamıyor. Daha sonra tekrar dene.';
+    return i18n.translateCloudUnavailable;
   }
 
   @override
@@ -156,8 +157,8 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             style: Theme.of(context).textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
-          VoxeloCard(
-            color: Voxelo.forest,
+          VoxelithCard(
+            color: Voxelith.forest,
             onTap: () => context.push('/interpreter'),
             child: Row(
               children: [
@@ -167,16 +168,18 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Toplantı Çevirmeni',
-                        style: TextStyle(
+                      Text(
+                        i18n.interpreterMeetingTitle,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
                         ),
                       ),
                       Text(
-                        'İki dili sırayla dinler, hem yazılı hem sesli çevirir · bugün kalan ${p.interpreterSecondsLeft ~/ 60} dk',
+                        i18n.interpreterCardSubtitle(
+                          p.interpreterSecondsLeft ~/ 60,
+                        ),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 12,
@@ -196,8 +199,8 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(Voxelo.radius),
-              border: Border.all(color: Voxelo.fog),
+              borderRadius: BorderRadius.circular(Voxelith.radius),
+              border: Border.all(color: Voxelith.fog),
             ),
             child: Row(
               children: [
@@ -208,7 +211,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                       isExpanded: true,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Voxelo.ink,
+                        color: Voxelith.ink,
                         fontSize: 14,
                       ),
                       items: LearnLang.values
@@ -229,7 +232,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   onPressed: _swap,
                   icon: const Icon(
                     Icons.swap_horiz,
-                    color: Voxelo.mint,
+                    color: Voxelith.mint,
                     size: 28,
                   ),
                 ),
@@ -240,7 +243,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                       isExpanded: true,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: Voxelo.ink,
+                        color: Voxelith.ink,
                         fontSize: 14,
                       ),
                       items: LearnLang.values
@@ -273,13 +276,13 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
               hintText: i18n.typeToTranslate,
               suffixIcon: IconButton(
                 onPressed: _go,
-                icon: const Icon(Icons.arrow_forward, color: Voxelo.mint),
+                icon: const Icon(Icons.arrow_forward, color: Voxelith.mint),
               ),
             ),
           ),
           const SizedBox(height: 12),
           ForestButton(
-            label: translating ? 'Çevriliyor…' : i18n.translate,
+            label: translating ? i18n.translatingEllipsis : i18n.translate,
             onPressed: translating ? null : _go,
           ),
           const SizedBox(height: 18),
@@ -291,36 +294,36 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
               child: Center(child: CircularProgressIndicator()),
             ),
           if (searched && hit == null && !translating)
-            VoxeloCard(
+            VoxelithCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.info_outline, color: Voxelo.muted, size: 20),
+                      Icon(Icons.info_outline, color: Voxelith.muted, size: 20),
                       const SizedBox(width: 8),
-                      const Eyebrow('Müfredat dışı'),
+                      Eyebrow(i18n.translateOutOfCurriculum),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Bu cümle VOXELO sözlüğünde yok. Uydurma çeviri göstermiyoruz — yanlış kalıp öğretmektense boş bırakırız.',
-                    style: TextStyle(color: Voxelo.ink, height: 1.4),
+                  Text(
+                    i18n.translateNoResultBody,
+                    style: const TextStyle(color: Voxelith.ink, height: 1.4),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     cloudError ??
                         (p.isPlus
-                            ? 'Plus bulut çevirisi için hesap ve aktif abonelik gerekir.'
-                            : 'Plus ile genişletilmiş bulut çeviri ve kaydetme.'),
-                    style: const TextStyle(color: Voxelo.muted, fontSize: 13),
+                            ? i18n.translatePlusRequiredNote
+                            : i18n.translatePlusUpsellNote),
+                    style: const TextStyle(color: Voxelith.muted, fontSize: 13),
                   ),
                 ],
               ),
             ),
           if (hit != null) ...[
-            VoxeloCard(
-              color: Voxelo.mint,
+            VoxelithCard(
+              color: Voxelith.mint,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -351,17 +354,16 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                   Text(
                     switch (hit!.origin) {
                       TranslationOrigin.curriculum =>
-                        'VOXELO müfredatından doğrulandı',
+                        i18n.translateOriginCurriculum,
                       TranslationOrigin.dictionary =>
-                        'VOXELO sözlüğünden doğrulandı',
-                      TranslationOrigin.cloud =>
-                        'Plus · güvenli bulut çevirisi',
+                        i18n.translateOriginDictionary,
+                      TranslationOrigin.cloud => i18n.translateOriginCloud,
                     },
                     style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'güven ${(hit!.confidence * 100).round()}% · ${hit!.gloss}',
+                    '${i18n.translateConfidence((hit!.confidence * 100).round())} · ${hit!.gloss}',
                     style: const TextStyle(color: Colors.white60, fontSize: 12),
                   ),
                 ],
@@ -374,9 +376,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
                 final id = 'tr_${toLang.name}_${hit!.target.hashCode}';
                 ref.read(sessionProvider.notifier).learnPhrase(id);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('SRS\'e eklendi · yarın tekrar'),
-                  ),
+                  SnackBar(content: Text(i18n.translateSavedToSrs)),
                 );
               },
             ),
@@ -384,7 +384,7 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
           const SizedBox(height: 22),
 
           // Hızlı kalıplar
-          const Eyebrow('Hızlı kalıplar'),
+          Eyebrow(i18n.translateQuickPhrases),
           const SizedBox(height: 10),
           Wrap(
             spacing: 8,

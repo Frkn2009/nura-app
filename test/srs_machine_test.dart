@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:voxelo/core/utils/clock.dart';
-import 'package:voxelo/data/srs/srs_machine.dart';
-import 'package:voxelo/data/srs/srs_state.dart';
+import 'package:voxelith/core/utils/clock.dart';
+import 'package:voxelith/data/srs/srs_machine.dart';
+import 'package:voxelith/data/srs/srs_state.dart';
 
 void main() {
-  group('VOXELO FSRS-inspired SRS', () {
+  group('VOXELITH FSRS-inspired SRS', () {
     late FakeClock clock;
     late SrsMachine machine;
 
@@ -35,7 +35,7 @@ void main() {
       );
       expect(result.card.stability, greaterThan(5.0));
       expect(result.dueAtUtc.isAfter(clock.nowUtc()), true);
-      expect(result.card.algorithmVersion, 'voxelo-fsrs-inspired-v1.4');
+      expect(result.card.algorithmVersion, 'voxelith-fsrs-inspired-v1.4');
     });
 
     test('Again never increases stability and adds lapse', () {

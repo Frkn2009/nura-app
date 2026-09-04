@@ -46,7 +46,7 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [prefsProvider.overrideWithValue(prefs)],
-      child: const VoxeloApp(),
+      child: const VoxelithApp(),
     ),
   );
 }

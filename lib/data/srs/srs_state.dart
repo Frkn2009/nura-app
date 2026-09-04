@@ -87,7 +87,7 @@ class SrsCard {
       dueAtUtc:
           DateTime.tryParse(json['dueAtUtc'] as String? ?? '')?.toUtc() ??
           DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
-      algorithmVersion: json['algorithmVersion'] as String? ?? 'voxelo-sm2-lite',
+      algorithmVersion: json['algorithmVersion'] as String? ?? 'voxelith-sm2-lite',
     );
   }
 }

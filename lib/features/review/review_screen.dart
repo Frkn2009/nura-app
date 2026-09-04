@@ -2,9 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/content/catalog.dart';
 import '../../data/models/models.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
+
+/// [Phrase] doesn't carry its own language (a phrase id can come from any
+/// [LearnLang] scenario, e.g. after switching learn language or family
+/// profiles), so we look up which scenario it belongs to to know whether
+/// the target text needs RTL rendering.
+bool _isRtlPhrase(String phraseId) {
+  for (final language in LearnLang.values) {
+    for (final scenario in Catalog.forLang(language)) {
+      if (scenario.phrases.any((phrase) => phrase.id == phraseId)) {
+        return scenario.lang.isRtl;
+      }
+    }
+  }
+  return false;
+}
 
 class ReviewScreen extends ConsumerStatefulWidget {
   const ReviewScreen({super.key});
@@ -24,7 +40,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final due = ref.read(sessionProvider.notifier).duePhrases();
 
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: Text(i18n.review)),
+      appBar: VoxelithAppBar(pageTitle: Text(i18n.review)),
       body: SafeArea(
         child: due.isEmpty
             ? const Center(
@@ -33,7 +49,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   child: Text(
                     'Bugün tekrar yok. Konuş, kalıp biriksin.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Voxelo.muted, fontSize: 16),
+                    style: TextStyle(color: Voxelith.muted, fontSize: 16),
                   ),
                 ),
               )
@@ -43,11 +59,11 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   children: [
                     Text(
                       '${i + 1} / ${due.length}',
-                      style: const TextStyle(color: Voxelo.muted),
+                      style: const TextStyle(color: Voxelith.muted),
                     ),
                     const SizedBox(height: 18),
                     Expanded(
-                      child: VoxeloCard(
+                      child: VoxelithCard(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -58,18 +74,25 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 18,
-                                color: Voxelo.muted,
+                                color: Voxelith.muted,
                               ),
                             ),
                             const SizedBox(height: 22),
                             if (revealed)
-                              Text(
-                                due[i.clamp(0, due.length - 1)].target,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600,
-                                  color: Voxelo.forest,
+                              Directionality(
+                                textDirection: _isRtlPhrase(
+                                  due[i.clamp(0, due.length - 1)].id,
+                                )
+                                    ? TextDirection.rtl
+                                    : TextDirection.ltr,
+                                child: Text(
+                                  due[i.clamp(0, due.length - 1)].target,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w600,
+                                    color: Voxelith.forest,
+                                  ),
                                 ),
                               )
                             else
@@ -78,7 +101,7 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                                   'Konuşmak için basılı tut',
                                   'Söyle, sonra aç',
                                 ),
-                                style: const TextStyle(color: Voxelo.soft),
+                                style: const TextStyle(color: Voxelith.soft),
                               ),
                           ],
                         ),

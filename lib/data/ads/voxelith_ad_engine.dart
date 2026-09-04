@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-/// VOXELO Reklam Motoru — Sadece Ödüllü Reklam. Banner/Interstitial YASAK!
-class VoxeloAdEngine {
+/// VOXELITH Reklam Motoru — Sadece Ödüllü Reklam. Banner/Interstitial YASAK!
+class VoxelithAdEngine {
   RewardedAd? _rewardedAd;
   bool _isAdReady = false;
 
@@ -62,8 +62,8 @@ class VoxeloAdEngine {
   }
 }
 
-final adEngineProvider = Provider<VoxeloAdEngine>((ref) {
-  final engine = VoxeloAdEngine();
+final adEngineProvider = Provider<VoxelithAdEngine>((ref) {
+  final engine = VoxelithAdEngine();
   engine.loadRewardedAd();
   ref.onDispose(() => engine.dispose());
   return engine;

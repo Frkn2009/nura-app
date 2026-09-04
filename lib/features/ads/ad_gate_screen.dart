@@ -52,29 +52,38 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
     final i18n = ref.watch(i18nProvider);
     final profile = ref.watch(sessionProvider);
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: const Text('Ödüllü video')),
+      appBar: VoxelithAppBar(pageTitle: const Text('Ödüllü video')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 18, 22, 28),
           children: [
-            VoxeloCard(
-              color: Voxelo.forest,
-              child: Column(
+            VoxelithCard(
+              color: Voxelith.forest,
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    i18n.freeMinute,
-                    style: const TextStyle(color: Voxelo.terrSoft),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    profile.speakSecondsUsed >= 60
-                        ? 'Bugün ${profile.speakSecondsUsed ~/ 60} dakika konuşma pratiği yaptın, harika gidiyorsun! Devam etmek için kısa bir video izle ve ödülünü seç.'
-                        : 'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
-                    style: const TextStyle(
-                      color: Voxelo.cream,
-                      fontSize: 18,
-                      height: 1.4,
+                  const VoxelithMascot(size: 56, mood: MascotMood.encourage),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          i18n.freeMinute,
+                          style: const TextStyle(color: Voxelith.terrSoft),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          profile.speakSecondsUsed >= 60
+                              ? 'Hay aksi, bugünkü hakkın bitti! ${profile.speakSecondsUsed ~/ 60} dakika konuşma pratiği yaptın, harika gidiyorsun. Devam etmek için kısa bir video izle ve ödülünü seç, ya da Plus ile sınırları tamamen kaldır.'
+                              : 'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
+                          style: const TextStyle(
+                            color: Voxelith.cream,
+                            fontSize: 18,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -120,7 +129,7 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
               Text(
                 error!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Voxelo.coral),
+                style: const TextStyle(color: Voxelith.coral),
               ),
             ],
             const SizedBox(height: 28),

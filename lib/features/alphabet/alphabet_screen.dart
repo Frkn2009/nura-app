@@ -13,7 +13,7 @@ class AlphabetScreen extends StatefulWidget {
 }
 
 class _AlphabetScreenState extends State<AlphabetScreen> {
-  late VoxeloAlphabet _alphabet;
+  late VoxelithAlphabet _alphabet;
   final Set<String> _learned = {};
   bool _stepMode = false;
   final _pageController = PageController();
@@ -37,7 +37,10 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
   /// telaffuzu bu yola girmiyor — [AlphabetEngine.speak]'in yavaş/yüksek
   /// perdeli ayarı harf sesini öğretmek için özellikle ayarlanmış.
   Future<void> _speakWord(String word) async {
-    final usedPremium = await PremiumTtsService.speak(word);
+    final usedPremium = await PremiumTtsService.speak(
+      word,
+      lang: widget.languageCode,
+    );
     if (!usedPremium) {
       await AlphabetEngine.speak(word, widget.languageCode);
     }
@@ -60,7 +63,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
         : _learned.length / _alphabet.letters.length;
 
     return Scaffold(
-      appBar: VoxeloAppBar(
+      appBar: VoxelithAppBar(
         pageTitle: Text(
           _alphabet.name,
           style: const TextStyle(fontWeight: FontWeight.w800),
@@ -69,7 +72,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
           IconButton(
             icon: Icon(
               _stepMode ? Icons.view_list : Icons.school,
-              color: VoxeloTokens.accent,
+              color: VoxelithTokens.accent,
             ),
             tooltip: _stepMode ? 'Liste görünümü' : 'Adım adım ders',
             onPressed: () => setState(() => _stepMode = !_stepMode),
@@ -81,7 +84,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                 '%${(progress * 100).toInt()}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: VoxeloTokens.primary,
+                  color: VoxelithTokens.primary,
                 ),
               ),
             ),
@@ -102,8 +105,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                 ? 0
                 : (_step + 1) / _alphabet.letters.length,
             minHeight: 10,
-            color: VoxeloTokens.primary,
-            backgroundColor: VoxeloTokens.primary.withValues(alpha: 0.15),
+            color: VoxelithTokens.primary,
+            backgroundColor: VoxelithTokens.primary.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(99),
           ),
         ),
@@ -129,11 +132,11 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                         width: 180,
                         height: 180,
                         decoration: BoxDecoration(
-                          gradient: VoxeloTokens.heroGradient,
+                          gradient: VoxelithTokens.heroGradient,
                           borderRadius: BorderRadius.circular(
-                            VoxeloTokens.radiusLarge,
+                            VoxelithTokens.radiusLarge,
                           ),
-                          boxShadow: VoxeloTokens.softShadow,
+                          boxShadow: VoxelithTokens.softShadow,
                         ),
                         child: Center(
                           child: Text(
@@ -150,7 +153,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                     const SizedBox(height: 8),
                     const Icon(
                       Icons.volume_up,
-                      color: VoxeloTokens.accent,
+                      color: VoxelithTokens.accent,
                       size: 28,
                     ),
                     const SizedBox(height: 20),
@@ -168,7 +171,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                         '${letter.exampleWord}  →  ${letter.exampleMeaning}',
                         style: const TextStyle(
                           fontSize: 18,
-                          color: VoxeloTokens.textSecondary,
+                          color: VoxelithTokens.textSecondary,
                         ),
                       ),
                     ),
@@ -178,7 +181,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                       height: 56,
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: VoxeloTokens.primary,
+                          backgroundColor: VoxelithTokens.primary,
                         ),
                         icon: Icon(
                           isLearned ? Icons.check_circle : Icons.arrow_forward,
@@ -218,8 +221,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
           child: LinearProgressIndicator(
             value: progress,
             minHeight: 10,
-            color: VoxeloTokens.primary,
-            backgroundColor: VoxeloTokens.primary.withValues(alpha: 0.15),
+            color: VoxelithTokens.primary,
+            backgroundColor: VoxelithTokens.primary.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(99),
           ),
         ),
@@ -234,11 +237,11 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
               return Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 decoration: BoxDecoration(
-                  color: VoxeloTokens.surface,
-                  borderRadius: BorderRadius.circular(VoxeloTokens.radiusMedium),
-                  boxShadow: VoxeloTokens.softShadow,
+                  color: VoxelithTokens.surface,
+                  borderRadius: BorderRadius.circular(VoxelithTokens.radiusMedium),
+                  boxShadow: VoxelithTokens.softShadow,
                   border: Border.all(
-                    color: isLearned ? VoxeloTokens.primary : Colors.transparent,
+                    color: isLearned ? VoxelithTokens.primary : Colors.transparent,
                     width: 2,
                   ),
                 ),
@@ -251,10 +254,10 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      gradient: isLearned ? VoxeloTokens.heroGradient : null,
+                      gradient: isLearned ? VoxelithTokens.heroGradient : null,
                       color: isLearned
                           ? null
-                          : VoxeloTokens.accent.withValues(alpha: 0.1),
+                          : VoxelithTokens.accent.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Center(
@@ -265,7 +268,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                           fontWeight: FontWeight.w900,
                           color: isLearned
                               ? Colors.white
-                              : VoxeloTokens.textPrimary,
+                              : VoxelithTokens.textPrimary,
                         ),
                       ),
                     ),
@@ -279,7 +282,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                   ),
                   subtitle: Text(
                     '${letter.exampleWord}  →  ${letter.exampleMeaning}',
-                    style: const TextStyle(color: VoxeloTokens.textSecondary),
+                    style: const TextStyle(color: VoxelithTokens.textSecondary),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -287,7 +290,7 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                       IconButton(
                         icon: const Icon(
                           Icons.volume_up,
-                          color: VoxeloTokens.accent,
+                          color: VoxelithTokens.accent,
                         ),
                         onPressed: () => _speakWord(letter.exampleWord),
                       ),
@@ -297,8 +300,8 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
                               ? Icons.check_circle
                               : Icons.circle_outlined,
                           color: isLearned
-                              ? VoxeloTokens.primary
-                              : VoxeloTokens.textSecondary,
+                              ? VoxelithTokens.primary
+                              : VoxelithTokens.textSecondary,
                         ),
                         onPressed: () {
                           setState(() {

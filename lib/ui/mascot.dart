@@ -6,10 +6,10 @@ import '../core/theme/tokens.dart';
 
 enum MascotMood { neutral, wave, celebrate, encourage, streak }
 
-/// VOXELO'nın özgün “Voxelo” karakteri: konuşma ışığını taşıyan küçük rehber.
+/// VOXELITH'nın özgün “Voxelith” karakteri: konuşma ışığını taşıyan küçük rehber.
 /// Harici görsel kullanmaz; tüm şekiller Flutter Canvas ile çizilir.
-class VoxeloMascot extends StatefulWidget {
-  const VoxeloMascot({
+class VoxelithMascot extends StatefulWidget {
+  const VoxelithMascot({
     super.key,
     this.size = 96,
     this.mood = MascotMood.neutral,
@@ -21,10 +21,10 @@ class VoxeloMascot extends StatefulWidget {
   final bool animate;
 
   @override
-  State<VoxeloMascot> createState() => _VoxeloMascotState();
+  State<VoxelithMascot> createState() => _VoxelithMascotState();
 }
 
-class _VoxeloMascotState extends State<VoxeloMascot>
+class _VoxelithMascotState extends State<VoxelithMascot>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
 
@@ -39,7 +39,7 @@ class _VoxeloMascotState extends State<VoxeloMascot>
   }
 
   @override
-  void didUpdateWidget(covariant VoxeloMascot oldWidget) {
+  void didUpdateWidget(covariant VoxelithMascot oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.animate && !controller.isAnimating) controller.repeat();
     if (!widget.animate && controller.isAnimating) controller.stop();
@@ -53,7 +53,7 @@ class _VoxeloMascotState extends State<VoxeloMascot>
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Voxelo, VOXELO rehberi',
+    label: 'Voxelith, VOXELITH rehberi',
     image: true,
     child: AnimatedBuilder(
       animation: controller,
@@ -70,7 +70,7 @@ class _VoxeloMascotState extends State<VoxeloMascot>
             angle: tilt,
             child: CustomPaint(
               size: Size.square(widget.size),
-              painter: _VoxeloMascotPainter(mood: widget.mood, phase: phase),
+              painter: _VoxelithMascotPainter(mood: widget.mood, phase: phase),
             ),
           ),
         );
@@ -79,8 +79,8 @@ class _VoxeloMascotState extends State<VoxeloMascot>
   );
 }
 
-class _VoxeloMascotPainter extends CustomPainter {
-  const _VoxeloMascotPainter({required this.mood, required this.phase});
+class _VoxelithMascotPainter extends CustomPainter {
+  const _VoxelithMascotPainter({required this.mood, required this.phase});
   final MascotMood mood;
   final double phase;
 
@@ -89,7 +89,7 @@ class _VoxeloMascotPainter extends CustomPainter {
     final unit = size.width / 100;
     Offset p(double x, double y) => Offset(x * unit, y * unit);
     final stroke = Paint()
-      ..color = Voxelo.ink
+      ..color = Voxelith.ink
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.2 * unit
       ..strokeCap = StrokeCap.round
@@ -97,14 +97,14 @@ class _VoxeloMascotPainter extends CustomPainter {
 
     // Anten: konuşma sinyalini taşıyan mercan ışık.
     canvas.drawLine(p(50, 19), p(50, 10), stroke);
-    canvas.drawCircle(p(50, 7), 5.5 * unit, Paint()..color = Voxelo.coral);
+    canvas.drawCircle(p(50, 7), 5.5 * unit, Paint()..color = Voxelith.coral);
     if (mood == MascotMood.streak) {
-      final glow = Paint()..color = Voxelo.sunflower.withValues(alpha: .25);
+      final glow = Paint()..color = Voxelith.sunflower.withValues(alpha: .25);
       canvas.drawCircle(p(50, 7), (10 + math.sin(phase) * 2) * unit, glow);
     }
 
     // Kulak/ses kanatları.
-    final side = Paint()..color = Voxelo.mint;
+    final side = Paint()..color = Voxelith.mint;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromCenter(center: p(16, 46), width: 14 * unit, height: 28 * unit),
@@ -123,19 +123,19 @@ class _VoxeloMascotPainter extends CustomPainter {
     final bodyRect = Rect.fromLTWH(20 * unit, 20 * unit, 60 * unit, 66 * unit);
     canvas.drawRRect(
       RRect.fromRectAndRadius(bodyRect, Radius.circular(22 * unit)),
-      Paint()..color = Voxelo.mintDark,
+      Paint()..color = Voxelith.mintDark,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(28 * unit, 30 * unit, 44 * unit, 35 * unit),
         Radius.circular(15 * unit),
       ),
-      Paint()..color = Voxelo.white,
+      Paint()..color = Voxelith.white,
     );
 
     // Gözler ve ifade.
     final eye = Paint()
-      ..color = Voxelo.ink
+      ..color = Voxelith.ink
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.3 * unit
       ..strokeCap = StrokeCap.round;
@@ -155,8 +155,8 @@ class _VoxeloMascotPainter extends CustomPainter {
         eye,
       );
     } else {
-      canvas.drawCircle(p(40, 45), 2.2 * unit, Paint()..color = Voxelo.ink);
-      canvas.drawCircle(p(60, 45), 2.2 * unit, Paint()..color = Voxelo.ink);
+      canvas.drawCircle(p(40, 45), 2.2 * unit, Paint()..color = Voxelith.ink);
+      canvas.drawCircle(p(60, 45), 2.2 * unit, Paint()..color = Voxelith.ink);
       if (mood == MascotMood.encourage) {
         canvas.drawLine(p(55, 38), p(65, 40), eye);
       }
@@ -170,7 +170,7 @@ class _VoxeloMascotPainter extends CustomPainter {
       eye,
     );
 
-    // Göğüsteki VOXELO konuşma kıvılcımı.
+    // Göğüsteki VOXELITH konuşma kıvılcımı.
     final spark = Path()
       ..moveTo(42 * unit, 75 * unit)
       ..lineTo(48 * unit, 69 * unit)
@@ -179,7 +179,7 @@ class _VoxeloMascotPainter extends CustomPainter {
     canvas.drawPath(
       spark,
       Paint()
-        ..color = Voxelo.peach
+        ..color = Voxelith.peach
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3 * unit
         ..strokeCap = StrokeCap.round,
@@ -198,7 +198,7 @@ class _VoxeloMascotPainter extends CustomPainter {
       canvas.drawCircle(
         p(92, handY - 2),
         3 * unit,
-        Paint()..color = Voxelo.coral,
+        Paint()..color = Voxelith.coral,
       );
     } else {
       canvas.drawLine(p(79, 60), p(88, 69), stroke);
@@ -206,7 +206,7 @@ class _VoxeloMascotPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _VoxeloMascotPainter oldDelegate) =>
+  bool shouldRepaint(covariant _VoxelithMascotPainter oldDelegate) =>
       oldDelegate.mood != mood || oldDelegate.phase != phase;
 }
 
@@ -223,7 +223,7 @@ class MascotFeedback extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      VoxeloMascot(
+      VoxelithMascot(
         size: 46,
         mood: correct ? MascotMood.celebrate : MascotMood.encourage,
       ),
@@ -232,7 +232,7 @@ class MascotFeedback extends StatelessWidget {
         child: Text(
           message,
           style: TextStyle(
-            color: correct ? Voxelo.mintDark : Voxelo.coral,
+            color: correct ? Voxelith.mintDark : Voxelith.coral,
             fontWeight: FontWeight.w600,
           ),
         ),

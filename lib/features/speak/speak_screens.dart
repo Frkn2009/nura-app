@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../ai/screen/ai_feedback_screen.dart';
 import '../../data/ads/ad_service.dart';
 import '../../data/content/catalog.dart';
 import '../../data/content/language_guides.dart';
@@ -37,17 +38,17 @@ class SpeakHubScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/clips'),
-            color: Voxelo.mintLight,
+            color: Voxelith.mintLight,
             child: Row(
               children: [
                 Container(
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Voxelo.mintDark,
-                    borderRadius: BorderRadius.circular(Voxelo.radius),
+                    color: Voxelith.mintDark,
+                    borderRadius: BorderRadius.circular(Voxelith.radius),
                   ),
                   child: const Icon(
                     Icons.play_arrow_rounded,
@@ -77,67 +78,174 @@ class SpeakHubScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Voxelo.mintDark),
+                const Icon(Icons.chevron_right, color: Voxelith.mintDark),
               ],
             ),
           ),
           const SizedBox(height: 10),
           if (!p.isPlus && remain <= 0)
-            VoxeloCard(
-              color: Voxelo.pale,
+            VoxelithCard(
+              color: Voxelith.pale,
               onTap: () => context.push('/paywall'),
-              child: Text(
-                i18n.plusCta,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Voxelo.forest,
-                ),
+              child: Row(
+                children: [
+                  const VoxelithMascot(
+                    size: 32,
+                    mood: MascotMood.encourage,
+                    animate: false,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      i18n.plusCta,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Voxelith.forest,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           const SizedBox(height: 10),
+          for (final level in Cefr.values)
+            if (scenes.any((s) => s.cefr == level))
+              _LevelSection(
+                level: level,
+                scenes: scenes.where((s) => s.cefr == level).toList(),
+                unlocked: _levelUnlocked(level, scenes, p.completedSceneIds),
+                uiLang: p.uiLang,
+              ),
+        ],
+      ),
+    );
+  }
+
+  /// A1 her zaman açık. Diğer her seviye, kendinden önceki seviyenin
+  /// sahnelerinin en az %70'i tamamlanmadan kilitli kalır — düz bir liste
+  /// yerine gerçek bir kursun "önce bunu bitir" hissini vermek için.
+  static bool _levelUnlocked(
+    Cefr level,
+    List<Scenario> allScenes,
+    Set<String> completedSceneIds,
+  ) {
+    if (level == Cefr.a1) return true;
+    for (final prev in Cefr.values.where((c) => c.index < level.index)) {
+      final prevScenes = allScenes.where((s) => s.cefr == prev).toList();
+      if (prevScenes.isEmpty) continue;
+      final done = prevScenes
+          .where((s) => completedSceneIds.contains(s.id))
+          .length;
+      if (done / prevScenes.length < 0.7) return false;
+    }
+    return true;
+  }
+}
+
+const _levelLabels = {
+  Cefr.a1: 'A1 · Hayatta kalma dili',
+  Cefr.a2: 'A2 · Bağlantılı konuşma',
+  Cefr.b1: 'B1 · Fikir ve görüş',
+  Cefr.b2: 'B2 · İleri seviye',
+};
+
+class _LevelSection extends StatelessWidget {
+  const _LevelSection({
+    required this.level,
+    required this.scenes,
+    required this.unlocked,
+    required this.uiLang,
+  });
+
+  final Cefr level;
+  final List<Scenario> scenes;
+  final bool unlocked;
+  final UiLang uiLang;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                _levelLabels[level] ?? level.name.toUpperCase(),
+                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+              ),
+              if (!unlocked) ...[
+                const SizedBox(width: 6),
+                Icon(
+                  Icons.lock_outline,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+              ],
+            ],
+          ),
+          if (!unlocked)
+            Padding(
+              padding: const EdgeInsets.only(top: 2, bottom: 6),
+              child: Text(
+                'Önceki seviyenin en az %70\'ini bitirince açılır.',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontSize: 12,
+                ),
+              ),
+            )
+          else
+            const SizedBox(height: 6),
           for (final s in scenes)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: VoxeloCard(
-                onTap: () => context.push('/session?id=${s.id}'),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Voxelo.forest,
-                      child: Text(
-                        s.lang.flag(),
-                        style: const TextStyle(fontSize: 18),
+              child: Opacity(
+                opacity: unlocked ? 1 : 0.5,
+                child: VoxelithCard(
+                  onTap: unlocked
+                      ? () => context.push('/session?id=${s.id}')
+                      : null,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Voxelith.forest,
+                        child: Text(
+                          s.lang.flag(),
+                          style: const TextStyle(fontSize: 18),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            s.title(p.uiLang),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              s.title(uiLang),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${s.minutes} dk · ${s.cefr.name.toUpperCase()} · ${s.turns.length} tur',
-                            style: TextStyle(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant,
-                              fontSize: 13,
+                            Text(
+                              '${s.minutes} dk · ${s.cefr.name.toUpperCase()} · ${s.turns.length} tur',
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                                fontSize: 13,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Icon(
-                      Icons.chevron_right,
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                  ],
+                      Icon(
+                        unlocked ? Icons.chevron_right : Icons.lock_outline,
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -157,9 +265,36 @@ class SpeakSessionScreen extends ConsumerStatefulWidget {
   ConsumerState<SpeakSessionScreen> createState() => _SpeakSessionScreenState();
 }
 
+/// [LearningStyle] tercihine göre adım sırası. Her sıra `speak` ile biter
+/// hemen öncesinde `fix` gelir — "tekrar dene" mantığı buna güvenir (bkz.
+/// [_SpeakSessionScreenState._retrySpeak]).
+List<_Step> _stepOrderFor(LearningStyle style) => switch (style) {
+  LearningStyle.balanced => const [
+    _Step.hear,
+    _Step.shadow,
+    _Step.speak,
+    _Step.fix,
+  ],
+  LearningStyle.speakingFirst => const [_Step.speak, _Step.fix],
+  LearningStyle.listeningHeavy => const [
+    _Step.hear,
+    _Step.shadow,
+    _Step.hear,
+    _Step.speak,
+    _Step.fix,
+  ],
+};
+
+const _stepLabels = {
+  _Step.hear: 'Duy',
+  _Step.shadow: 'Gölgele',
+  _Step.speak: 'Konuş',
+  _Step.fix: 'Düzelt',
+};
+
 class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   int turn = 0;
-  _Step step = _Step.hear;
+  int stepIndex = 0;
   bool holding = false;
   bool _pressActive = false;
   bool _speechReady = false;
@@ -186,6 +321,11 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
   Scenario get scene =>
       Catalog.byId(widget.scenarioId) ?? Catalog.forLang(LearnLang.en).first;
 
+  List<_Step> get _stepOrder =>
+      _stepOrderFor(ref.read(sessionProvider).learningStyle);
+
+  _Step get step => _stepOrder[stepIndex.clamp(0, _stepOrder.length - 1)];
+
   SpeakTurn get currentTurn =>
       scene.turns[turn.clamp(0, scene.turns.length - 1)];
 
@@ -205,7 +345,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
 
   String _microphoneMessage() => switch (speech.availability) {
     SpeechAvailability.permissionPermanentlyDenied =>
-      'Mikrofon izni kapalı. Telefon ayarlarından VOXELO için mikrofonu aç.',
+      'Mikrofon izni kapalı. Telefon ayarlarından VOXELITH için mikrofonu aç.',
     SpeechAvailability.permissionDenied =>
       'Konuşabilmek için mikrofon izni vermen gerekiyor.',
     SpeechAvailability.unavailable =>
@@ -289,7 +429,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
       fluencyScore = assessment.fluency;
       clarityScore = assessment.clarity;
       pronunciationFeedback = assessment.feedback;
-      step = _Step.fix;
+      stepIndex = _stepOrder.length - 1;
     });
     if (recognized.trim().isNotEmpty) {
       await ref.read(sessionProvider.notifier).learnPhrase(currentPhrase.id);
@@ -301,20 +441,21 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
 
   void _nextStep() {
     setState(() {
-      step = switch (step) {
-        _Step.hear => _Step.shadow,
-        _Step.shadow => _Step.speak,
-        _Step.speak => _Step.fix,
-        _Step.fix => _Step.hear,
-      };
+      stepIndex = (stepIndex + 1) % _stepOrder.length;
     });
+  }
+
+  /// "Tekrar dene" — her sıra `[..., speak, fix]` ile bittiği için son
+  /// `speak` konumu her zaman sondan bir önceki indekstir.
+  void _retrySpeak() {
+    setState(() => stepIndex = _stepOrder.length - 2);
   }
 
   Future<void> _nextTurn() async {
     if (turn < scene.turns.length - 1) {
       setState(() {
         turn++;
-        step = _Step.hear;
+        stepIndex = 0;
         score = 0;
         phonemeScore = 0;
         fluencyScore = 0;
@@ -324,7 +465,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     } else {
       final sceneXp = await ref
           .read(sessionProvider.notifier)
-          .completeScene(scene.lang);
+          .completeScene(scene.lang, sceneId: scene.id);
       final latest = ref.read(sessionProvider);
       if (latest.canShowInterstitial() && await AdService.showInterstitial()) {
         if (!mounted) return;
@@ -343,18 +484,13 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     final i18n = ref.watch(i18nProvider);
     final p = ref.watch(sessionProvider);
     final remain = p.remainingSpeakSeconds();
-    const labels = {
-      _Step.hear: '1  Duy',
-      _Step.shadow: '2  Gölgele',
-      _Step.speak: '3  Konuş',
-      _Step.fix: '4  Düzelt',
-    };
+    final order = _stepOrder;
 
     return Scaffold(
-      backgroundColor: Voxelo.forest,
-      appBar: VoxeloAppBar(
-        backgroundColor: Voxelo.forest,
-        foregroundColor: Voxelo.cream,
+      backgroundColor: Voxelith.forest,
+      appBar: VoxelithAppBar(
+        backgroundColor: Voxelith.forest,
+        foregroundColor: Voxelith.cream,
         pageTitle: Text(scene.title(p.uiLang)),
         actions: [
           Padding(
@@ -363,10 +499,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               p.isPlus ? '∞' : '${remain}s',
               style: TextStyle(
                 color: p.isPlus
-                    ? Voxelo.terrSoft
+                    ? Voxelith.terrSoft
                     : (remain <= 5
-                          ? Voxelo.coral
-                          : (remain <= 15 ? Voxelo.gold : Voxelo.terrSoft)),
+                          ? Voxelith.coral
+                          : (remain <= 15 ? Voxelith.gold : Voxelith.terrSoft)),
                 fontWeight: !p.isPlus && remain <= 15
                     ? FontWeight.w800
                     : FontWeight.w400,
@@ -383,14 +519,14 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  for (final s in _Step.values)
+                  for (final entry in order.asMap().entries)
                     Text(
-                      labels[s]!,
+                      '${entry.key + 1}  ${_stepLabels[entry.value]}',
                       style: TextStyle(
-                        color: s == step
-                            ? Voxelo.terrSoft
+                        color: entry.key == stepIndex
+                            ? Voxelith.terrSoft
                             : Theme.of(context).colorScheme.outline,
-                        fontWeight: s == step
+                        fontWeight: entry.key == stepIndex
                             ? FontWeight.w700
                             : FontWeight.w400,
                         fontSize: 12,
@@ -401,12 +537,12 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
               const SizedBox(height: 22),
               const CircleAvatar(
                 radius: 40,
-                backgroundColor: Voxelo.cream,
+                backgroundColor: Voxelith.cream,
                 child: Text(
                   'M',
                   style: TextStyle(
                     fontSize: 28,
-                    color: Voxelo.forest,
+                    color: Voxelith.forest,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -416,7 +552,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                 speech.usingNeuralVoice
                     ? 'Maya · Neural'
                     : 'Maya · kadın cihaz sesi',
-                style: const TextStyle(color: Voxelo.terrSoft),
+                style: const TextStyle(color: Voxelith.terrSoft),
               ),
               const SizedBox(height: 18),
               Text(
@@ -436,7 +572,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   currentTurn.expected,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Voxelo.cream,
+                    color: Voxelith.cream,
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                     height: 1.3,
@@ -458,8 +594,8 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Voxelo.mintDark,
-                    borderRadius: BorderRadius.circular(Voxelo.radius),
+                    color: Voxelith.mintDark,
+                    borderRadius: BorderRadius.circular(Voxelith.radius),
                   ),
                   child: Text(
                     () {
@@ -470,16 +606,75 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     }(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      color: Voxelo.terrSoft,
+                      color: Voxelith.terrSoft,
                       height: 1.35,
                       fontSize: 13,
                     ),
                   ),
                 ),
               ],
+              if (turn == 0 && scene.grammarNote != null) ...[
+                const SizedBox(height: 14),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Voxelith.forest,
+                    borderRadius: BorderRadius.circular(Voxelith.radius),
+                    border: Border.all(color: Voxelith.gold, width: 1),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.school_outlined,
+                            size: 15,
+                            color: Voxelith.gold,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            'Bu ünitenin kuralı',
+                            style: TextStyle(
+                              color: Voxelith.gold,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        scene.grammarNote!.ruleFor(p.uiLang),
+                        style: const TextStyle(
+                          color: Voxelith.cream,
+                          fontSize: 13,
+                          height: 1.35,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        '✓ ${scene.grammarNote!.goodExample}',
+                        style: const TextStyle(
+                          color: Voxelith.mintDark,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        '✗ ${scene.grammarNote!.badExample}',
+                        style: TextStyle(
+                          color: Voxelith.coral.withValues(alpha: 0.85),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
               const Spacer(),
               if (step == _Step.fix) ...[
-                VoxeloMascot(
+                VoxelithMascot(
                   size: 64,
                   mood: score >= 70
                       ? MascotMood.celebrate
@@ -503,12 +698,28 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(height: 18),
+                if (score > 0 && heard.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  TextButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => AiFeedbackScreen(
+                          expectedText: currentTurn.expected,
+                          userText: heard,
+                          targetLang: scene.lang.code,
+                          nativeLang: p.uiLang.code,
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.psychology_outlined, size: 18),
+                    label: const Text('Detaylı AI analizi'),
+                    style: TextButton.styleFrom(foregroundColor: Voxelith.gold),
+                  ),
+                ],
+                const SizedBox(height: 12),
                 FilledButton(
-                  style: FilledButton.styleFrom(backgroundColor: Voxelo.terr),
-                  onPressed: score == 0
-                      ? () => setState(() => step = _Step.speak)
-                      : _nextTurn,
+                  style: FilledButton.styleFrom(backgroundColor: Voxelith.terr),
+                  onPressed: score == 0 ? _retrySpeak : _nextTurn,
                   child: Text(
                     score == 0
                         ? 'Tekrar dene'
@@ -526,13 +737,13 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     width: holding ? 96 : 84,
                     height: holding ? 96 : 84,
                     decoration: BoxDecoration(
-                      color: Voxelo.cream,
+                      color: Voxelith.cream,
                       shape: BoxShape.circle,
-                      border: Border.all(color: Voxelo.terr, width: 4),
+                      border: Border.all(color: Voxelith.terr, width: 4),
                       boxShadow: holding
                           ? [
                               BoxShadow(
-                                color: Voxelo.terr.withValues(alpha: 0.45),
+                                color: Voxelith.terr.withValues(alpha: 0.45),
                                 blurRadius: 24,
                               ),
                             ]
@@ -540,7 +751,7 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                     ),
                     child: Icon(
                       Icons.mic,
-                      color: Voxelo.terr,
+                      color: Voxelith.terr,
                       size: holding ? 38 : 32,
                     ),
                   ),
@@ -575,11 +786,12 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
                   ),
               ] else
                 FilledButton(
-                  style: FilledButton.styleFrom(backgroundColor: Voxelo.terr),
+                  style: FilledButton.styleFrom(backgroundColor: Voxelith.terr),
                   onPressed: () async {
                     if (step == _Step.hear) {
                       final usedPremium = await PremiumTtsService.speak(
                         currentTurn.expected,
+                        lang: scene.lang.code,
                       );
                       if (usedPremium) {
                         await PremiumTtsService.waitUntilDone();
@@ -607,10 +819,10 @@ class _SpeakSessionScreenState extends ConsumerState<SpeakSessionScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Voxelo.mintDark,
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        color: Voxelith.mintDark,
+        borderRadius: BorderRadius.circular(Voxelith.radius),
       ),
-      child: Text(s, style: const TextStyle(color: Voxelo.cream, fontSize: 12)),
+      child: Text(s, style: const TextStyle(color: Voxelith.cream, fontSize: 12)),
     );
   }
 }

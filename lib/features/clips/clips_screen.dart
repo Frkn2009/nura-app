@@ -76,7 +76,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
     final clips = ClipCatalog.forLang(profile.learnLang);
 
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: Text(i18n.clips)),
+      appBar: VoxelithAppBar(pageTitle: Text(i18n.clips)),
       body: SafeArea(
         child: Column(
           children: [
@@ -95,7 +95,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                         Text(
                           '${clips.length} kısa müfredat klibi · kaydırarak ilerle',
                           style: const TextStyle(
-                            color: Voxelo.muted,
+                            color: Voxelith.muted,
                             fontSize: 13,
                           ),
                         ),
@@ -105,7 +105,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                   Text(
                     '${index + 1} / ${clips.length}',
                     style: const TextStyle(
-                      color: Voxelo.muted,
+                      color: Voxelith.muted,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -118,8 +118,8 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                 value: clips.isEmpty ? 0 : (index + 1) / clips.length,
                 minHeight: 3,
                 borderRadius: BorderRadius.circular(4),
-                color: Voxelo.mint,
-                backgroundColor: Voxelo.fog,
+                color: Voxelith.mint,
+                backgroundColor: Voxelith.fog,
               ),
             ),
             const SizedBox(height: 8),
@@ -163,7 +163,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
         padding: const EdgeInsets.fromLTRB(22, 8, 22, 20),
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: constraints.maxHeight - 28),
-          child: VoxeloCard(
+          child: VoxelithCard(
             padding: EdgeInsets.zero,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -185,7 +185,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                       }
                     },
                     borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(Voxelo.radius),
+                      top: Radius.circular(Voxelith.radius),
                     ),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 240),
@@ -197,7 +197,7 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                           colors: gradient,
                         ),
                         borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(Voxelo.radius),
+                          top: Radius.circular(Voxelith.radius),
                         ),
                       ),
                       child: Stack(
@@ -274,14 +274,14 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
                             height: 1.25,
-                            color: Voxelo.ink,
+                            color: Voxelith.ink,
                           ),
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         clip.phrase.glossFor(uiLanguage),
-                        style: const TextStyle(fontSize: 16, color: Voxelo.muted),
+                        style: const TextStyle(fontSize: 16, color: Voxelith.muted),
                       ),
                       const SizedBox(height: 22),
                       Row(
@@ -342,15 +342,15 @@ class _ClipsScreenState extends ConsumerState<ClipsScreen> {
     required VoidCallback onTap,
     bool emphasized = false,
   }) {
-    final background = emphasized ? Voxelo.mintDark : Voxelo.cloud;
-    final foreground = emphasized ? Colors.white : Voxelo.ink;
+    final background = emphasized ? Voxelith.mintDark : Voxelith.cloud;
+    final foreground = emphasized ? Colors.white : Voxelith.ink;
     return Expanded(
       child: Material(
         color: background,
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(Voxelo.radius),
+          borderRadius: BorderRadius.circular(Voxelith.radius),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 4),
             child: Column(

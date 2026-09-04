@@ -38,7 +38,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   /// olursa (ücretsiz kullanıcı, servis kapalı, ağ hatası) cihazın kendi
   /// TTS'ine düşer. Kullanıcı için tek fark ses kalitesi — akış aynı.
   Future<void> _speakSentence(String text) async {
-    final usedPremium = await PremiumTtsService.speak(text);
+    final usedPremium = await PremiumTtsService.speak(
+      text,
+      lang: widget.story.lang.code,
+    );
     if (usedPremium) {
       await PremiumTtsService.waitUntilDone();
       return;
@@ -88,7 +91,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final story = widget.story;
     final rtl = story.lang.isRtl;
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: Text(story.titleTr)),
+      appBar: VoxelithAppBar(pageTitle: Text(story.titleTr)),
       body: SafeArea(
         child: Column(
           children: [
@@ -107,7 +110,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                   const SizedBox(height: 4),
                   Text(
                     '${story.level.name.toUpperCase()} · ${story.lang.label(UiLang.tr)}',
-                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                    style: const TextStyle(color: Voxelith.muted, fontSize: 12),
                   ),
                   const SizedBox(height: 18),
                   for (var i = 0; i < story.sentences.length; i++) ...[
@@ -155,8 +158,8 @@ class _SentenceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VoxeloCard(
-      color: playing ? Voxelo.mintLight : null,
+    return VoxelithCard(
+      color: playing ? Voxelith.mintLight : null,
       child: Row(
         children: [
           Expanded(
@@ -178,7 +181,7 @@ class _SentenceCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   sentence.glossTr,
-                  style: const TextStyle(color: Voxelo.muted, fontSize: 13),
+                  style: const TextStyle(color: Voxelith.muted, fontSize: 13),
                 ),
               ],
             ),
@@ -187,7 +190,7 @@ class _SentenceCard extends StatelessWidget {
             onPressed: onSpeak,
             icon: Icon(
               playing ? Icons.volume_up : Icons.volume_up_outlined,
-              color: playing ? Voxelo.mintDark : Voxelo.soft,
+              color: playing ? Voxelith.mintDark : Voxelith.soft,
             ),
           ),
         ],

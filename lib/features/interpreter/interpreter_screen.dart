@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/i18n.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
 import '../../data/speech/speech_controller.dart';
@@ -65,12 +66,9 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
     if (!mounted) return;
     final p = ref.read(sessionProvider);
     if (p.isPlus || p.isBusiness) {
+      final i18n = ref.read(i18nProvider);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Bugünkü Toplantı Çevirmeni kotan bitti, yarın sıfırlanır.',
-          ),
-        ),
+        SnackBar(content: Text(i18n.interpreterQuotaExhausted)),
       );
       return;
     }
@@ -122,9 +120,10 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
       _pressActive = false;
       if (!mounted) return;
       setState(() => activeSide = null);
+      final i18n = ref.read(i18nProvider);
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(_microphoneMessage())));
+      ).showSnackBar(SnackBar(content: Text(_microphoneMessage(i18n))));
     }
   }
 
@@ -158,43 +157,45 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
       unawaited(speech.speakTarget(translated, target.code));
     } catch (e) {
       if (!mounted) return;
+      final i18n = ref.read(i18nProvider);
       setState(() {
         translating = false;
-        error = _errorMessage(e);
+        error = _errorMessage(i18n, e);
       });
     }
   }
 
-  String _microphoneMessage() => switch (speech.availability) {
+  String _microphoneMessage(I18n i18n) => switch (speech.availability) {
     SpeechAvailability.permissionPermanentlyDenied =>
-      'Mikrofon izni kapalı. Telefon ayarlarından VOXELO için mikrofonu aç.',
+      i18n.interpreterMicPermanentlyDenied,
     SpeechAvailability.permissionDenied =>
-      'Konuşabilmek için mikrofon izni vermen gerekiyor.',
-    SpeechAvailability.unavailable =>
-      'Bu cihazda konuşma tanıma kullanılamıyor.',
-    _ => 'Mikrofon başlatılamadı. Lütfen tekrar dene.',
+      i18n.interpreterMicPermissionDenied,
+    SpeechAvailability.unavailable => i18n.interpreterMicUnavailable,
+    _ => i18n.interpreterMicStartFailed,
   };
 
-  String _errorMessage(Object error) {
+  String _errorMessage(I18n i18n, Object error) {
     final code = error.toString();
     if (code.contains('authentication_required') ||
         code.contains('invalid_session')) {
-      return 'Devam etmek için VOXELO hesabına giriş gerekiyor.';
+      return i18n.interpreterSignInRequired;
     }
     if (code.contains('service_not_configured')) {
-      return 'Çeviri sunucusu henüz yapılandırılmadı.';
+      return i18n.interpreterServiceNotConfigured;
     }
-    return 'Çeviriye şu an ulaşılamıyor. Tekrar dene.';
+    return i18n.interpreterCloudUnavailable;
   }
 
   @override
   Widget build(BuildContext context) {
+    final i18n = ref.watch(i18nProvider);
     final p = ref.watch(sessionProvider);
     return Scaffold(
-      appBar: VoxeloAppBar(
-        pageTitle: const Text('Toplantı Çevirmeni'),
+      appBar: VoxelithAppBar(
+        pageTitle: Text(i18n.interpreterMeetingTitle),
         leading: IconButton(
           icon: const Icon(Icons.close),
+          tooltip: i18n.closeTooltip,
           onPressed: () => context.pop(),
         ),
       ),
@@ -205,7 +206,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
             end: Alignment.bottomCenter,
             stops: const [0.0, 0.35],
             colors: [
-              Voxelo.accent.withValues(alpha: .06),
+              Voxelith.accent.withValues(alpha: .06),
               Theme.of(context).scaffoldBackgroundColor,
             ],
           ),
@@ -252,14 +253,16 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Sadece çeviriyor, yorum katmıyor',
-                      style: TextStyle(color: Voxelo.muted, fontSize: 12),
+                    Text(
+                      i18n.interpreterDisclaimer,
+                      style: const TextStyle(color: Voxelith.muted, fontSize: 12),
                     ),
                     Text(
-                      'Bugün kalan: ${_mmss(p.interpreterSecondsLeft)}',
+                      i18n.interpreterRemainingTime(
+                        _mmss(p.interpreterSecondsLeft),
+                      ),
                       style: const TextStyle(
-                        color: Voxelo.muted,
+                        color: Voxelith.muted,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -276,13 +279,13 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const VoxeloMascot(size: 72, mood: MascotMood.wave),
+                              const VoxelithMascot(size: 72, mood: MascotMood.wave),
                               const SizedBox(height: 16),
-                              const Text(
-                                'Telefonu masaya koy. Konuşacak kişi kendi dilinin butonunu basılı tutup konuşsun, bırakınca karşı tarafın diline çevrilip hem yazılı hem sesli okunur.',
+                              Text(
+                                i18n.interpreterEmptyStateBody,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Voxelo.muted,
+                                style: const TextStyle(
+                                  color: Voxelith.muted,
                                   height: 1.4,
                                 ),
                               ),
@@ -311,7 +314,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                   child: Text(
                     error!,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Voxelo.coral),
+                    style: const TextStyle(color: Voxelith.coral),
                   ),
                 ),
               if (translating)
@@ -331,6 +334,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                       child: _TalkButton(
                         lang: langA,
                         active: activeSide == langA,
+                        i18n: i18n,
                         onDown: () => _down(langA),
                         onUp: () => _up(langA),
                       ),
@@ -340,6 +344,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
                       child: _TalkButton(
                         lang: langB,
                         active: activeSide == langB,
+                        i18n: i18n,
                         onDown: () => _down(langB),
                         onUp: () => _up(langB),
                       ),
@@ -355,7 +360,7 @@ class _InterpreterScreenState extends ConsumerState<InterpreterScreen> {
   }
 }
 
-/// Dil seçici kart — eski çıplak `DropdownButton`, `Voxelo` kart üslubuna
+/// Dil seçici kart — eski çıplak `DropdownButton`, `Voxelith` kart üslubuna
 /// (gölge/kenarlık) taşındı ki ekranın geri kalanıyla aynı ailede dursun.
 class _LangChip extends StatelessWidget {
   const _LangChip({
@@ -374,13 +379,13 @@ class _LangChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         border: Border.all(
           color: Theme.of(
             context,
           ).dividerColor.withValues(alpha: isDark ? 1 : .6),
         ),
-        boxShadow: isDark ? null : Voxelo.softShadow,
+        boxShadow: isDark ? null : Voxelith.softShadow,
       ),
       child: DropdownButtonHideUnderline(
         child: ButtonTheme(
@@ -388,10 +393,10 @@ class _LangChip extends StatelessWidget {
           child: DropdownButton<LearnLang>(
             value: lang,
             isExpanded: true,
-            borderRadius: BorderRadius.circular(Voxelo.radius),
+            borderRadius: BorderRadius.circular(Voxelith.radius),
             style: const TextStyle(
               fontWeight: FontWeight.w700,
-              color: Voxelo.ink,
+              color: Voxelith.ink,
               fontSize: 14,
             ),
             items: LearnLang.values
@@ -425,10 +430,10 @@ class _SwapButton extends StatelessWidget {
         height: 38,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: Voxelo.heroGradient,
+          gradient: Voxelith.heroGradient,
           boxShadow: [
             BoxShadow(
-              color: Voxelo.accent.withValues(alpha: .3),
+              color: Voxelith.accent.withValues(alpha: .3),
               blurRadius: 10,
               offset: const Offset(0, 3),
             ),
@@ -477,15 +482,15 @@ class _TurnBubble extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
           constraints: const BoxConstraints(maxWidth: 320),
-          child: VoxeloCard(
-            color: fromA ? Voxelo.card : Voxelo.mint,
+          child: VoxelithCard(
+            color: fromA ? Voxelith.card : Voxelith.mint,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${t.speaker.flag()} ${t.original}',
                   style: TextStyle(
-                    color: fromA ? Voxelo.muted : Colors.white70,
+                    color: fromA ? Voxelith.muted : Colors.white70,
                     fontSize: 12,
                   ),
                 ),
@@ -497,7 +502,7 @@ class _TurnBubble extends StatelessWidget {
                   child: Text(
                     t.translated,
                     style: TextStyle(
-                      color: fromA ? Voxelo.ink : Colors.white,
+                      color: fromA ? Voxelith.ink : Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       height: 1.3,
@@ -517,12 +522,14 @@ class _TalkButton extends StatefulWidget {
   const _TalkButton({
     required this.lang,
     required this.active,
+    required this.i18n,
     required this.onDown,
     required this.onUp,
   });
 
   final LearnLang lang;
   final bool active;
+  final I18n i18n;
   final VoidCallback onDown;
   final VoidCallback onUp;
 
@@ -558,12 +565,12 @@ class _TalkButtonState extends State<_TalkButton>
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 18),
               decoration: BoxDecoration(
-                gradient: widget.active ? Voxelo.heroGradient : null,
-                color: widget.active ? null : Voxelo.mintDark,
-                borderRadius: BorderRadius.circular(Voxelo.radius),
+                gradient: widget.active ? Voxelith.heroGradient : null,
+                color: widget.active ? null : Voxelith.mintDark,
+                borderRadius: BorderRadius.circular(Voxelith.radius),
                 boxShadow: [
                   BoxShadow(
-                    color: (widget.active ? Voxelo.accent : Voxelo.mintDark)
+                    color: (widget.active ? Voxelith.accent : Voxelith.mintDark)
                         .withValues(alpha: .25 + .2 * t),
                     blurRadius: 10 + 10 * t,
                     spreadRadius: t,
@@ -584,7 +591,9 @@ class _TalkButtonState extends State<_TalkButton>
                     style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   Text(
-                    widget.active ? 'Dinliyor…' : 'Basılı tut, konuş',
+                    widget.active
+                        ? widget.i18n.interpreterListening
+                        : widget.i18n.interpreterHoldToTalk,
                     style: const TextStyle(color: Colors.white70, fontSize: 11),
                   ),
                 ],

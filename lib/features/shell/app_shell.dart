@@ -40,37 +40,37 @@ class AppShell extends ConsumerWidget {
     (
       icon: Icons.home_outlined,
       selected: Icons.home,
-      color: Voxelo.mint,
+      color: Voxelith.mint,
       label: i18n.home,
     ),
     (
       icon: Icons.mic_none,
       selected: Icons.mic,
-      color: Voxelo.mint,
+      color: Voxelith.mint,
       label: i18n.speak,
     ),
     (
       icon: Icons.sports_esports_outlined,
       selected: Icons.sports_esports,
-      color: Voxelo.coral,
-      label: 'Oyun',
+      color: Voxelith.coral,
+      label: i18n.navGames,
     ),
     (
       icon: Icons.forum_outlined,
       selected: Icons.forum,
-      color: Voxelo.coral,
-      label: 'Sohbet',
+      color: Voxelith.coral,
+      label: i18n.navChat,
     ),
     (
       icon: Icons.translate_outlined,
       selected: Icons.translate,
-      color: Voxelo.mint,
+      color: Voxelith.mint,
       label: i18n.translate,
     ),
     (
       icon: Icons.person_outline,
       selected: Icons.person,
-      color: Voxelo.mint,
+      color: Voxelith.mint,
       label: i18n.you,
     ),
   ];
@@ -91,7 +91,7 @@ class AppShell extends ConsumerWidget {
 
     if (!wide) {
       return Scaffold(
-        appBar: VoxeloAppBar(),
+        appBar: VoxelithAppBar(),
         body: Padding(
           padding: const EdgeInsets.only(bottom: 88),
           child: content,
@@ -102,8 +102,8 @@ class AppShell extends ConsumerWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(Voxelo.radiusPill),
-              boxShadow: Voxelo.softShadow,
+              borderRadius: BorderRadius.circular(Voxelith.radiusPill),
+              boxShadow: Voxelith.softShadow,
             ),
             clipBehavior: Clip.antiAlias,
             child: NavigationBar(
@@ -131,7 +131,7 @@ class AppShell extends ConsumerWidget {
     // Tablet/geniş ekran: alt bar yerine yan NavigationRail (Material
     // large-screen kılavuzu) + içerik ortalanıp gereksiz gerilmiyor.
     return Scaffold(
-      appBar: VoxeloAppBar(),
+      appBar: VoxelithAppBar(),
       body: Row(
         children: [
           NavigationRail(

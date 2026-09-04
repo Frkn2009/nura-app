@@ -72,6 +72,12 @@ enum Motive { work, travel, exam, life }
 
 enum Cefr { a1, a2, b1, b2 }
 
+/// Kullanıcının konuşma pratiğinde tercih ettiği akış. Herkese aynı sabit
+/// Duy→Gölgele→Konuş→Düzelt döngüsünü dayatmak yerine, onboarding'de
+/// seçilen bu tercihe göre adımlar atlanır/tekrarlanır — bkz.
+/// `SpeakSessionScreen._stepOrderFor` (lib/features/speak/speak_screens.dart).
+enum LearningStyle { balanced, speakingFirst, listeningHeavy }
+
 enum AppThemePreference {
   system,
   light,
@@ -469,6 +475,23 @@ class SpeakTurn {
   final String? scaffold;
 }
 
+/// A single explicit grammar rule attached to a [Scenario], with one
+/// correct and one incorrect example so the learner sees the contrast
+/// rather than only being told the rule in the abstract.
+class GrammarNote {
+  const GrammarNote({
+    required this.rule,
+    required this.goodExample,
+    required this.badExample,
+  });
+
+  final Map<UiLang, String> rule;
+  final String goodExample;
+  final String badExample;
+
+  String ruleFor(UiLang ui) => rule[ui] ?? rule[UiLang.en] ?? '';
+}
+
 class Scenario {
   const Scenario({
     required this.id,
@@ -479,6 +502,7 @@ class Scenario {
     required this.phrases,
     required this.turns,
     required this.clipLine,
+    this.grammarNote,
   });
 
   final String id;
@@ -489,6 +513,7 @@ class Scenario {
   final List<Phrase> phrases;
   final List<SpeakTurn> turns;
   final String clipLine;
+  final GrammarNote? grammarNote;
 
   String title(UiLang ui) => titles[ui] ?? titles[UiLang.en] ?? id;
 }
@@ -551,6 +576,8 @@ class UserProfile {
     required this.joinedEventId,
     required this.learnedIds,
     required this.srs,
+    required this.completedSceneIds,
+    required this.learningStyle,
   });
 
   final String profileId;
@@ -587,6 +614,8 @@ class UserProfile {
   final String joinedEventId;
   final Set<String> learnedIds;
   final Map<String, int> srs;
+  final Set<String> completedSceneIds;
+  final LearningStyle learningStyle;
 
   static const empty = UserProfile(
     profileId: 'main',
@@ -623,6 +652,8 @@ class UserProfile {
     joinedEventId: '',
     learnedIds: {},
     srs: {},
+    completedSceneIds: {},
+    learningStyle: LearningStyle.balanced,
   );
 
   static const maxRewardedAdsPerDay = 5;
@@ -723,6 +754,8 @@ class UserProfile {
     String? joinedEventId,
     Set<String>? learnedIds,
     Map<String, int>? srs,
+    Set<String>? completedSceneIds,
+    LearningStyle? learningStyle,
   }) {
     return UserProfile(
       profileId: profileId ?? this.profileId,
@@ -761,6 +794,8 @@ class UserProfile {
       joinedEventId: joinedEventId ?? this.joinedEventId,
       learnedIds: learnedIds ?? this.learnedIds,
       srs: srs ?? this.srs,
+      completedSceneIds: completedSceneIds ?? this.completedSceneIds,
+      learningStyle: learningStyle ?? this.learningStyle,
     );
   }
 
@@ -803,6 +838,8 @@ class UserProfile {
     'joinedEventId': joinedEventId,
     'learnedIds': learnedIds.toList(),
     'srs': srs,
+    'completedSceneIds': completedSceneIds.toList(),
+    'learningStyle': learningStyle.name,
   };
 
   factory UserProfile.fromJson(Map<String, dynamic> j) {
@@ -860,6 +897,13 @@ class UserProfile {
       srs: ((j['srs'] as Map?) ?? const {}).map(
         (k, v) => MapEntry('$k', (v as num).toInt()),
       ),
+      completedSceneIds: {
+        ...(j['completedSceneIds'] as List? ?? const []).cast<String>(),
+      },
+      learningStyle:
+          LearningStyle.values.asNameMap()[j['learningStyle'] as String? ??
+              'balanced'] ??
+          LearningStyle.balanced,
     );
   }
 }

@@ -35,9 +35,10 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
   bool _sending = false;
   bool _listening = false;
   String? _error;
+  bool _errorIsLimit = false;
 
   Future<void> _speakReply(String reply, String langCode) async {
-    final usedPremium = await PremiumTtsService.speak(reply);
+    final usedPremium = await PremiumTtsService.speak(reply, lang: langCode);
     if (!usedPremium) {
       await _speech.speakTarget(reply, langCode);
     }
@@ -121,9 +122,12 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
       if (!mounted) return;
       setState(() {
         _sending = false;
+        _errorIsLimit = e.code == 'plus_required' || e.code == 'daily_limit_reached';
         _error = switch (e.code) {
           'plus_required' => 'Canlı sohbet Plus özelliğidir.',
           'authentication_required' => 'Önce giriş yapmalısın.',
+          'daily_limit_reached' =>
+            'Hay aksi, bugünkü sohbet hakkını doldurdun. Yarın devam edebilirsin.',
           _ => 'Şu an bağlanamadım, birazdan tekrar dene.',
         };
       });
@@ -131,6 +135,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
       if (!mounted) return;
       setState(() {
         _sending = false;
+        _errorIsLimit = false;
         _error = 'Şu an bağlanamadım, birazdan tekrar dene.';
       });
     }
@@ -152,7 +157,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
           end: Alignment.bottomCenter,
           stops: const [0.0, 0.4],
           colors: [
-            Voxelo.accent.withValues(alpha: .07),
+            Voxelith.accent.withValues(alpha: .07),
             Theme.of(context).scaffoldBackgroundColor,
           ],
         ),
@@ -184,18 +189,33 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                 padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.error_outline,
-                      size: 16,
-                      color: Voxelo.coral,
-                    ),
+                    if (_errorIsLimit)
+                      const Padding(
+                        padding: EdgeInsets.only(right: 6),
+                        child: VoxelithMascot(
+                          size: 28,
+                          mood: MascotMood.encourage,
+                          animate: false,
+                        ),
+                      )
+                    else
+                      const Icon(
+                        Icons.error_outline,
+                        size: 16,
+                        color: Voxelith.coral,
+                      ),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         _error!,
-                        style: const TextStyle(color: Voxelo.coral, fontSize: 13),
+                        style: const TextStyle(color: Voxelith.coral, fontSize: 13),
                       ),
                     ),
+                    if (_errorIsLimit)
+                      TextButton(
+                        onPressed: () => context.push('/paywall'),
+                        child: const Text('Plus\'a geç'),
+                      ),
                   ],
                 ),
               ),
@@ -222,14 +242,14 @@ class _LockedChatView extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(28),
-        child: VoxeloCard(
+        child: VoxelithCard(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const VoxeloMascot(size: 76, mood: MascotMood.wave),
+              const VoxelithMascot(size: 76, mood: MascotMood.wave),
               const SizedBox(height: 12),
               const Text(
-                'Voxelo ile serbest konuş',
+                'Voxelith ile serbest konuş',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
               ),
@@ -237,7 +257,7 @@ class _LockedChatView extends StatelessWidget {
               const Text(
                 'Script yok, kural yok — gerçek zamanlı serbest sohbet Plus üyelere özel.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Voxelo.muted),
+                style: TextStyle(color: Voxelith.muted),
               ),
               const SizedBox(height: 16),
               FilledButton(
@@ -279,19 +299,19 @@ class _ChatHeaderState extends State<_ChatHeader>
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Row(
         children: [
-          const VoxeloMascot(size: 38),
+          const VoxelithMascot(size: 38),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Voxelo',
+                  'Voxelith',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                 ),
                 Text(
                   '${widget.learnLabel} pratiği · çevrimiçi',
-                  style: const TextStyle(fontSize: 12, color: Voxelo.muted),
+                  style: const TextStyle(fontSize: 12, color: Voxelith.muted),
                 ),
               ],
             ),
@@ -303,10 +323,10 @@ class _ChatHeaderState extends State<_ChatHeader>
               height: 9,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Voxelo.primary,
+                color: Voxelith.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: Voxelo.primary.withValues(
+                    color: Voxelith.primary.withValues(
                       alpha: .15 + .35 * _pulse.value,
                     ),
                     blurRadius: 6 + 6 * _pulse.value,
@@ -334,18 +354,18 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const VoxeloMascot(size: 88, mood: MascotMood.encourage),
+            const VoxelithMascot(size: 88, mood: MascotMood.encourage),
             const SizedBox(height: 18),
             Text(
               '$learnLabel pratiği için bir şeyler yaz\nveya mikrofona konuş.',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Voxelo.muted, height: 1.4),
+              style: const TextStyle(color: Voxelith.muted, height: 1.4),
             ),
             const SizedBox(height: 10),
             const Text(
               'Uygunsuz bir cevap görürsen, üzerine basılı tutarak bildirebilirsin.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Voxelo.soft, fontSize: 12, height: 1.4),
+              style: TextStyle(color: Voxelith.soft, fontSize: 12, height: 1.4),
             ),
           ],
         ),
@@ -390,7 +410,7 @@ class _ChatBubble extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 280),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       decoration: BoxDecoration(
-        gradient: fromUser ? Voxelo.heroGradient : null,
+        gradient: fromUser ? Voxelith.heroGradient : null,
         color: fromUser ? null : Theme.of(context).cardColor,
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(18),
@@ -405,7 +425,7 @@ class _ChatBubble extends StatelessWidget {
             ? null
             : [
                 BoxShadow(
-                  color: (fromUser ? Voxelo.accent : Colors.black).withValues(
+                  color: (fromUser ? Voxelith.accent : Colors.black).withValues(
                     alpha: fromUser ? .22 : .07,
                   ),
                   blurRadius: fromUser ? 14 : 10,
@@ -432,7 +452,7 @@ class _ChatBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!fromUser) ...[
-            const VoxeloMascot(size: 26, animate: false),
+            const VoxelithMascot(size: 26, animate: false),
             const SizedBox(width: 6),
           ],
           Flexible(
@@ -477,9 +497,9 @@ Future<void> _reportAiMessage(BuildContext context, String text) async {
   if (confirmed != true || !context.mounted) return;
   final uri = Uri(
     scheme: 'mailto',
-    path: 'destek@voxelo.app',
+    path: 'destek@voxelith.app',
     query:
-        'subject=${Uri.encodeComponent('VOXELO Sohbet - içerik bildirimi')}'
+        'subject=${Uri.encodeComponent('VOXELITH Sohbet - içerik bildirimi')}'
         '&body=${Uri.encodeComponent('Bildirilen AI cevabı:\n\n$text')}',
   );
   await launchUrl(uri);
@@ -512,7 +532,7 @@ class _TypingBubbleState extends State<_TypingBubble>
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          const VoxeloMascot(size: 26, animate: false),
+          const VoxelithMascot(size: 26, animate: false),
           const SizedBox(width: 6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -553,7 +573,7 @@ class _TypingBubbleState extends State<_TypingBubble>
                         height: 6,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Voxelo.muted,
+                          color: Voxelith.muted,
                         ),
                       ),
                     ),
@@ -657,7 +677,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
             AnimatedBuilder(
               animation: _breathe,
               builder: (_, _) {
-                final glowColor = widget.listening ? Voxelo.coral : Voxelo.mintDark;
+                final glowColor = widget.listening ? Voxelith.coral : Voxelith.mintDark;
                 final t = widget.listening
                     ? _breathe.value
                     : _breathe.value * .35;
@@ -665,7 +685,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
                   size: 46,
                   onTap: widget.onMic,
                   color: widget.listening
-                      ? Voxelo.coral.withValues(alpha: .12)
+                      ? Voxelith.coral.withValues(alpha: .12)
                       : Theme.of(context).cardColor,
                   shadow: [
                     BoxShadow(
@@ -676,7 +696,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
                   ],
                   child: Icon(
                     widget.listening ? Icons.mic : Icons.mic_none,
-                    color: widget.listening ? Voxelo.coral : Voxelo.mintDark,
+                    color: widget.listening ? Voxelith.coral : Voxelith.mintDark,
                   ),
                 );
               },
@@ -730,13 +750,13 @@ class _ChatInputBarState extends State<_ChatInputBar>
                 child: _CircleButton(
                   size: 46,
                   onTap: widget.sending ? null : widget.onSend,
-                  color: widget.sending ? Voxelo.fog : null,
-                  gradient: widget.sending ? null : Voxelo.heroGradient,
+                  color: widget.sending ? Voxelith.fog : null,
+                  gradient: widget.sending ? null : Voxelith.heroGradient,
                   shadow: widget.sending
                       ? null
                       : [
                           BoxShadow(
-                            color: Voxelo.accent.withValues(alpha: .35),
+                            color: Voxelith.accent.withValues(alpha: .35),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -747,7 +767,7 @@ class _ChatInputBarState extends State<_ChatInputBar>
                           height: 18,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: Voxelo.muted,
+                            color: Voxelith.muted,
                           ),
                         )
                       : const Icon(

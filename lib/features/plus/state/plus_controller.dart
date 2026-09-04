@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:voxelo/features/plus/data/billing_service.dart';
-import 'package:voxelo/features/plus/data/fake_billing_service.dart';
-import 'package:voxelo/features/plus/data/revenuecat_billing_service.dart';
-import 'package:voxelo/features/plus/domain/entitlement.dart';
-import 'package:voxelo/state/session.dart';
+import 'package:voxelith/features/plus/data/billing_service.dart';
+import 'package:voxelith/features/plus/data/fake_billing_service.dart';
+import 'package:voxelith/features/plus/data/revenuecat_billing_service.dart';
+import 'package:voxelith/features/plus/domain/entitlement.dart';
+import 'package:voxelith/state/session.dart';
 
 final billingServiceProvider = Provider<BillingService>((ref) {
   return RevenueCatBillingService.isConfigured
@@ -12,7 +12,7 @@ final billingServiceProvider = Provider<BillingService>((ref) {
 });
 
 final plusControllerProvider =
-    StateNotifierProvider<PlusController, VoxeloEntitlement>((ref) {
+    StateNotifierProvider<PlusController, VoxelithEntitlement>((ref) {
       return PlusController(ref.watch(billingServiceProvider), ref);
     });
 
@@ -21,8 +21,8 @@ final plusControllerProvider =
 /// kalır. Sonucu ayrıca `SessionController.isPlus`'a yazar çünkü uygulamanın
 /// geri kalanı (speak limiti, reklamsız, AI sohbet gate'i vb.) hâlâ oradan
 /// okuyor — iki ayrı "Plus" kaynağı olmasın diye köprü burada kuruluyor.
-class PlusController extends StateNotifier<VoxeloEntitlement> {
-  PlusController(this._billingService, this._ref) : super(VoxeloEntitlement.free);
+class PlusController extends StateNotifier<VoxelithEntitlement> {
+  PlusController(this._billingService, this._ref) : super(VoxelithEntitlement.free);
 
   final BillingService _billingService;
   final Ref _ref;
@@ -50,8 +50,8 @@ class PlusController extends StateNotifier<VoxeloEntitlement> {
     // bağlı tüm özellikleri (sınırsız konuşma, reklamsız vb.) kullanabilsin
     // diye isPlus de true set edilir.
     await notifier.setPlus(
-      state == VoxeloEntitlement.plus || state == VoxeloEntitlement.business,
+      state == VoxelithEntitlement.plus || state == VoxelithEntitlement.business,
     );
-    await notifier.setBusiness(state == VoxeloEntitlement.business);
+    await notifier.setBusiness(state == VoxelithEntitlement.business);
   }
 }

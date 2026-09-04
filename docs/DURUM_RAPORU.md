@@ -1,4 +1,4 @@
-# VOXELO — Durum Raporu (21 Ağustos 2026)
+# VOXELITH — Durum Raporu (21 Ağustos 2026)
 
 ## ✅ 30 DİL — TAMAMLANDI
 

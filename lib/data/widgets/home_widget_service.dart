@@ -4,7 +4,7 @@ import 'package:home_widget/home_widget.dart';
 import '../content/catalog.dart';
 import '../models/models.dart';
 
-class VoxeloHomeWidgetService {
+class VoxelithHomeWidgetService {
   static const appGroupId = 'group.com.voxelo.voxelo';
 
   static Future<void> sync(UserProfile profile) async {
@@ -29,7 +29,7 @@ class VoxeloHomeWidgetService {
       HomeWidget.saveWidgetData('goal', UserProfile.dailyXpGoal),
     ]);
     await HomeWidget.updateWidget(
-      name: 'VoxeloHomeWidgetProvider',
+      name: 'VoxelithHomeWidgetProvider',
       iOSName: 'VoxeloHomeWidget',
     );
   }

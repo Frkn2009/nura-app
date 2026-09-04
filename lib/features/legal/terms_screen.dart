@@ -13,17 +13,17 @@ class TermsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: const Text('Kullanım Koşulları')),
+      appBar: VoxelithAppBar(pageTitle: const Text('Kullanım Koşulları')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(22, 12, 22, 32),
         children: const [
           Text(
-            'VOXELO Kullanım Koşulları',
+            'VOXELITH Kullanım Koşulları',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
           ),
           SizedBox(height: 12),
           Text(
-            'VOXELO Plus ve VOXELO Business abonelikleri, seçtiğin süre için '
+            'VOXELITH Plus ve VOXELITH Business abonelikleri, seçtiğin süre için '
             '(aylık/yıllık) otomatik olarak yenilenir. Ücret, satın alma '
             'onayında hesabına yansıtılır ve mevcut dönem bitmeden en az '
             '24 saat önce iptal etmediğin sürece yenileme dönemi başına '
@@ -31,7 +31,7 @@ class TermsScreen extends StatelessWidget {
             'Aboneliğini istediğin an, dönem sonuna kadar erişimini '
             'kaybetmeden iptal edebilirsin: cihazının mağaza hesap '
             'ayarlarından (App Store veya Google Play abonelikler) '
-            'yönetilir — VOXELO içinden değil, çünkü ödemeyi mağaza alır.\n\n'
+            'yönetilir — VOXELITH içinden değil, çünkü ödemeyi mağaza alır.\n\n'
             'Ücretsiz katmandan Plus/Business\'a geçiş anında etkinleşir. '
             'İndirimli/tanıtım fiyatları yalnızca belirtilen ilk dönem '
             'için geçerlidir, sonraki yenilemeler tam fiyattan yapılır.\n\n'
@@ -41,10 +41,10 @@ class TermsScreen extends StatelessWidget {
             'Hesabını istediğin an silebilirsin (Sen → Hesabı sil); bu '
             'aktif bir aboneliği otomatik iptal etmez, aboneliği ayrıca '
             'mağaza üzerinden iptal etmen gerekir.\n\n'
-            'Sorular için: destek@voxelo.app (yer tutucu — domain '
+            'Sorular için: destek@voxelith.app (yer tutucu — domain '
             'bağlanınca güncellenir). Gizlilik uygulamaların için ayrı '
             'Gizlilik sayfasına bak.',
-            style: TextStyle(height: 1.5, color: Voxelo.ink, fontSize: 15),
+            style: TextStyle(height: 1.5, color: Voxelith.ink, fontSize: 15),
           ),
         ],
       ),

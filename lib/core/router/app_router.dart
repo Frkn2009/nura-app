@@ -10,6 +10,7 @@ import '../../features/ads/ad_gate_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/clips/clips_screen.dart';
 import '../../features/clan/clan_screen.dart';
+import '../../features/clan/peer_correction_screen.dart';
 import '../../features/events/weekly_event_screen.dart';
 import '../../features/family/family_profiles_screen.dart';
 import '../../features/legal/privacy_screen.dart';
@@ -96,6 +97,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const ClanScreen(),
       ),
       GoRoute(
+        path: '/clan/corrections',
+        parentNavigatorKey: _root,
+        builder: (_, _) => const PeerCorrectionScreen(),
+      ),
+      GoRoute(
         path: '/achievements',
         parentNavigatorKey: _root,
         builder: (_, _) => const AchievementsScreen(),
@@ -120,7 +126,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/library/:storyId',
         parentNavigatorKey: _root,
         builder: (_, s) {
-          final story = VoxeloLibrary.byId(s.pathParameters['storyId'] ?? '');
+          final story = VoxelithLibrary.byId(s.pathParameters['storyId'] ?? '');
           if (story == null) return const LibraryScreen();
           return StoryReaderScreen(story: story);
         },

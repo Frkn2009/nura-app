@@ -19,7 +19,7 @@ class LanguageGuideScreen extends ConsumerWidget {
     final g = LanguageGuide.of(lang ?? p.learnLang);
 
     return Scaffold(
-      appBar: VoxeloAppBar(
+      appBar: VoxelithAppBar(
         pageTitle: Text('${g.lang.flag()}  ${g.lang.label(p.uiLang)}'),
         automaticallyImplyLeading: !onboarding,
       ),
@@ -37,12 +37,12 @@ class LanguageGuideScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 18),
-          VoxeloCard(
-            color: Voxelo.forest,
+          VoxelithCard(
+            color: Voxelith.forest,
             child: Text(
               g.firstWeek,
               style: const TextStyle(
-                color: Voxelo.cream,
+                color: Voxelith.cream,
                 height: 1.4,
                 fontSize: 15,
               ),
@@ -54,19 +54,28 @@ class LanguageGuideScreen extends ConsumerWidget {
           for (final r in g.rules)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: VoxeloCard(
+              child: VoxelithCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        _pill(r.written, Voxelo.forest, Voxelo.cream),
+                        Directionality(
+                          textDirection: g.lang.isRtl
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
+                          child: _pill(
+                            r.written,
+                            Voxelith.forest,
+                            Voxelith.cream,
+                          ),
+                        ),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Icon(
                             Icons.arrow_forward,
                             size: 16,
-                            color: Voxelo.terr,
+                            color: Voxelith.terr,
                           ),
                         ),
                         Flexible(
@@ -81,11 +90,16 @@ class LanguageGuideScreen extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      r.example,
-                      style: const TextStyle(
-                        color: Voxelo.forest,
-                        fontWeight: FontWeight.w600,
+                    Directionality(
+                      textDirection: g.lang.isRtl
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      child: Text(
+                        r.example,
+                        style: const TextStyle(
+                          color: Voxelith.forest,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     Text(
@@ -113,8 +127,8 @@ class LanguageGuideScreen extends ConsumerWidget {
           for (final t in g.traps)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: VoxeloCard(
-                color: Voxelo.pale,
+              child: VoxelithCard(
+                color: Voxelith.pale,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -122,7 +136,7 @@ class LanguageGuideScreen extends ConsumerWidget {
                       t.title,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: Voxelo.forest,
+                        color: Voxelith.forest,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -170,18 +184,18 @@ class LanguageGuideBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
-        VoxeloCard(
-          color: Voxelo.forest,
+        VoxelithCard(
+          color: Voxelith.forest,
           child: Text(
             g.firstWeek,
-            style: const TextStyle(color: Voxelo.cream, height: 1.4),
+            style: const TextStyle(color: Voxelith.cream, height: 1.4),
           ),
         ),
         const SizedBox(height: 14),
         for (final r in g.rules.take(4))
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: VoxeloCard(
+            child: VoxelithCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -189,7 +203,7 @@ class LanguageGuideBody extends StatelessWidget {
                     '${r.written}  →  ${r.heard}',
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: Voxelo.forest,
+                      color: Voxelith.forest,
                     ),
                   ),
                   const SizedBox(height: 4),

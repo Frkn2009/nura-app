@@ -15,7 +15,7 @@ class ClanChatScreen extends StatefulWidget {
 }
 
 class _ClanChatScreenState extends State<ClanChatScreen> {
-  static const _blockedKey = 'voxelo.clan.blocked_user_ids';
+  static const _blockedKey = 'voxelith.clan.blocked_user_ids';
 
   final _input = TextEditingController();
   Future<List<ClanChatMessage>>? _request;
@@ -81,12 +81,12 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.flag_outlined, color: Voxelo.coral),
+              leading: const Icon(Icons.flag_outlined, color: Voxelith.coral),
               title: const Text('Mesajı bildir'),
               onTap: () => Navigator.pop(ctx, 'report'),
             ),
             ListTile(
-              leading: const Icon(Icons.block, color: Voxelo.coral),
+              leading: const Icon(Icons.block, color: Voxelith.coral),
               title: Text('${m.playerName} kullanıcısını engelle'),
               onTap: () => Navigator.pop(ctx, 'block'),
             ),
@@ -105,9 +105,9 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
     } else if (action == 'report') {
       final uri = Uri(
         scheme: 'mailto',
-        path: 'destek@voxelo.app',
+        path: 'destek@voxelith.app',
         query:
-            'subject=${Uri.encodeComponent('VOXELO Klan Sohbeti - içerik bildirimi')}'
+            'subject=${Uri.encodeComponent('VOXELITH Klan Sohbeti - içerik bildirimi')}'
             '&body=${Uri.encodeComponent('Bildirilen kullanıcı: ${m.playerName}\nMesaj:\n\n${m.text}')}',
       );
       await launchUrl(uri);
@@ -117,11 +117,12 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: VoxeloAppBar(
+      appBar: VoxelithAppBar(
         pageTitle: const Text('Klan Sohbeti'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
+            tooltip: 'Yenile',
             onPressed: () => setState(() => _request = Supa.clanMessages()),
           ),
         ],
@@ -136,6 +137,14 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text(
+                        'Mesajlar yüklenemedi. Yenilemeyi dene.',
+                        style: TextStyle(color: Voxelith.muted),
+                      ),
+                    );
+                  }
                   final messages = (snapshot.data ?? const [])
                       .where(
                         (m) => m.isMe || !_blockedUserIds.contains(m.userId),
@@ -145,7 +154,7 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                     return const Center(
                       child: Text(
                         'Henüz mesaj yok. Klanına ilk mesajı sen at.',
-                        style: TextStyle(color: Voxelo.muted),
+                        style: TextStyle(color: Voxelith.muted),
                       ),
                     );
                   }
@@ -170,8 +179,8 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: m.isMe ? Voxelo.mintDark : Voxelo.cloud,
-                              borderRadius: BorderRadius.circular(Voxelo.radius),
+                              color: m.isMe ? Voxelith.mintDark : Voxelith.cloud,
+                              borderRadius: BorderRadius.circular(Voxelith.radius),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,13 +191,13 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                                     style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
-                                      color: Voxelo.mintDark,
+                                      color: Voxelith.mintDark,
                                     ),
                                   ),
                                 Text(
                                   m.text,
                                   style: TextStyle(
-                                    color: m.isMe ? Colors.white : Voxelo.ink,
+                                    color: m.isMe ? Colors.white : Voxelith.ink,
                                   ),
                                 ),
                               ],
@@ -220,6 +229,7 @@ class _ClanChatScreenState extends State<ClanChatScreen> {
                     IconButton.filled(
                       onPressed: _sending ? null : _send,
                       icon: const Icon(Icons.send),
+                      tooltip: 'Gönder',
                     ),
                   ],
                 ),

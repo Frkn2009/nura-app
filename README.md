@@ -1,4 +1,4 @@
-# VOXELO
+# VOXELITH
 
 Konuşarak öğren. **30 dil.**
 
@@ -66,12 +66,12 @@ Depoda Google'ın güvenli **test** App ID ve ad unit ID'leri bulunur; geliştir
 
 ```bash
 flutter build appbundle \
-  --dart-define=VOXELO_ADMOB_REWARDED_ANDROID=ca-app-pub-XXX/REWARDED \
-  --dart-define=VOXELO_ADMOB_INTERSTITIAL_ANDROID=ca-app-pub-XXX/INTERSTITIAL
+  --dart-define=VOXELITH_ADMOB_REWARDED_ANDROID=ca-app-pub-XXX/REWARDED \
+  --dart-define=VOXELITH_ADMOB_INTERSTITIAL_ANDROID=ca-app-pub-XXX/INTERSTITIAL
 
 flutter build ipa \
-  --dart-define=VOXELO_ADMOB_REWARDED_IOS=ca-app-pub-XXX/REWARDED \
-  --dart-define=VOXELO_ADMOB_INTERSTITIAL_IOS=ca-app-pub-XXX/INTERSTITIAL
+  --dart-define=VOXELITH_ADMOB_REWARDED_IOS=ca-app-pub-XXX/REWARDED \
+  --dart-define=VOXELITH_ADMOB_INTERSTITIAL_IOS=ca-app-pub-XXX/INTERSTITIAL
 ```
 
 Gelir ve eCPM, AdMob panelindeki doğrulanmış gösterimlerden hesaplanır. Free kullanıcıda 3–5 dakikalık sıklık sınırı ve günlük toplam 5 video sınırı vardır; Plus kullanıcıya reklam çağrısı yapılmaz.
@@ -103,3 +103,20 @@ Plus'ın üzerinde ayrı bir katman: panelde ikinci bir entitlement (`business`)
 ```
 
 Toplantı Çevirmeni özelliğinin çeviri çağrısı (`supabase/functions/interpreter-translate`) `translate` fonksiyonundan farklı olarak abonelik şartı koşmaz — Free katman da günde 5dk (+ödüllü videoyla +2dk bonus) kullanabilir, kota istemci tarafında (`UserProfile.interpreterSecondsUsed`) tutulur. Deploy için aynı `GOOGLE_TRANSLATE_API_KEY` secret'ı yeterli, ayrı bir anahtar gerekmez.
+
+## Claude AI Sohbet Partneri kurulumu
+
+`VOXELITH_ANTHROPIC_API_KEY` dart-define'ı girilmediyse (veya çağrı sırasında ağ/zaman aşımı/kimlik doğrulama hatası olursa) `aiServiceProvider` (`lib/features/ai/state/ai_controller.dart`) sağladığı `ClaudeAiService` otomatik ve sessizce çevrimdışı `FakeAiService`'e düşer (kaba kelime-örtüşmesi skorlaması, şablon metinler) — uygulama hiçbir zaman bozulmaz veya bloklanmaz. Gerçek AI geri bildirimini/senaryo üretimini açmak için:
+
+```bash
+flutter run \
+  --dart-define=VOXELITH_ANTHROPIC_API_KEY=sk-ant-xxxxx
+
+flutter build appbundle \
+  --dart-define=VOXELITH_ANTHROPIC_API_KEY=sk-ant-xxxxx
+```
+
+- API key'i [Anthropic Console](https://console.anthropic.com/) → API Keys'ten al.
+- `ClaudeAiService` (`lib/features/ai/data/claude_ai_service.dart`) Anthropic Messages API'yi (`claude-sonnet-5` modeli) `dart:io HttpClient` ile çağırır, modelden kesin JSON isteyip savunmacı biçimde ayrıştırır; cümle geri bildirimi, senaryo/diyalog üretimi ve günlük özet için kullanılır.
+- Web derlemesinde (`flutter run -d chrome` / `flutter build web`) `dart:io` çalışmadığından bu servis otomatik olarak fake moda düşer — Claude entegrasyonu şu an yalnızca Android/iOS derlemelerinde etkindir.
+- Anahtar asla repoya gömülmemeli; sadece `--dart-define` ile veya CI secret'ı olarak geçilmeli.

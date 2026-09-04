@@ -6,7 +6,7 @@ import '../models/clan.dart';
 import '../models/leaderboard.dart';
 import '../models/models.dart';
 
-/// VOXELO — Supabase ile tek konuşan katman.
+/// VOXELITH — Supabase ile tek konuşan katman.
 /// Anahtarlar girilmediyse (Supa.enabled == false) hiçbir şey yapmaz.
 class Supa {
   static bool get enabled => SupaConfig.isSet;
@@ -115,6 +115,87 @@ class Supa {
       'user_id': _c.auth.currentUser!.id,
       'text': clean,
     });
+  }
+
+  // ---------- PEER CORRECTION (klan içi cümle düzeltme) ----------
+
+  static Future<List<PeerSubmission>> clanPeerSubmissions({
+    int limit = 30,
+  }) async {
+    if (!enabled || _c.auth.currentUser == null) return const [];
+    final response = await _c.rpc(
+      'get_clan_peer_submissions',
+      params: {'p_limit': limit},
+    );
+    return (response as List)
+        .map(
+          (row) =>
+              PeerSubmission.fromJson(Map<String, dynamic>.from(row as Map)),
+        )
+        .toList(growable: false);
+  }
+
+  static Future<List<PeerCorrection>> peerCorrections(int submissionId) async {
+    if (!enabled || _c.auth.currentUser == null) return const [];
+    final response = await _c.rpc(
+      'get_peer_corrections',
+      params: {'p_submission_id': submissionId},
+    );
+    return (response as List)
+        .map(
+          (row) =>
+              PeerCorrection.fromJson(Map<String, dynamic>.from(row as Map)),
+        )
+        .toList(growable: false);
+  }
+
+  static Future<void> submitPeerAttempt({
+    required String attemptText,
+    required String lang,
+    String? note,
+  }) async {
+    final clean = attemptText.trim();
+    if (!enabled || _c.auth.currentUser == null || clean.isEmpty) return;
+    final clan = await _c.rpc('get_my_clan');
+    final rows = clan as List;
+    if (rows.isEmpty) return;
+    final clanId = (rows.first as Map)['clan_id'];
+    final cleanNote = note?.trim();
+    await _c.from('peer_submissions').insert({
+      'clan_id': clanId,
+      'user_id': _c.auth.currentUser!.id,
+      'lang': lang,
+      'attempt_text': clean,
+      'note': cleanNote == null || cleanNote.isEmpty ? null : cleanNote,
+    });
+  }
+
+  static Future<void> addPeerCorrection({
+    required int submissionId,
+    required String correctionText,
+    String? note,
+  }) async {
+    final clean = correctionText.trim();
+    if (!enabled || _c.auth.currentUser == null || clean.isEmpty) return;
+    final cleanNote = note?.trim();
+    await _c.from('peer_corrections').insert({
+      'submission_id': submissionId,
+      'user_id': _c.auth.currentUser!.id,
+      'correction_text': clean,
+      'note': cleanNote == null || cleanNote.isEmpty ? null : cleanNote,
+    });
+  }
+
+  static Future<void> deletePeerSubmission(int id) async {
+    final uid = _c.auth.currentUser?.id;
+    if (!enabled || uid == null) return;
+    await _c.from('peer_submissions').delete().eq('id', id).eq('user_id', uid);
+  }
+
+  static Future<void> deletePeerCorrection(int id) async {
+    final uid = _c.auth.currentUser?.id;
+    if (!enabled || uid == null) return;
+    await _c.from('peer_corrections').delete().eq('id', id).eq('user_id', uid);
   }
 
   // ---------- PROFİL ----------

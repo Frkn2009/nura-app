@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
-        android:label="VOXELO"
+        android:label="VOXELITH"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <!-- Google'ın test App ID'si. Üretimde AdMob konsolundaki App ID ile değiştir. -->
@@ -14,14 +14,14 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>
         <receiver
-            android:name=".VoxeloHomeWidgetProvider"
+            android:name=".VoxelithHomeWidgetProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/voxelo_home_widget_info"/>
+                android:resource="@xml/voxelith_home_widget_info"/>
         </receiver>
         <activity
             android:name=".MainActivity"

@@ -7,8 +7,8 @@ import '../../ui/widgets.dart';
 import '../plus/domain/entitlement.dart';
 import '../plus/state/plus_controller.dart';
 
-const _plusPlans = [voxeloPlusMonthly, voxeloPlusYearly, voxeloPlusFamily];
-const _businessPlans = [voxeloBusinessMonthly, voxeloBusinessYearly];
+const _plusPlans = [voxelithPlusMonthly, voxelithPlusYearly, voxelithPlusFamily];
+const _businessPlans = [voxelithBusinessMonthly, voxelithBusinessYearly];
 
 class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({super.key, this.business = false});
@@ -52,8 +52,8 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     setState(() => _restoring = false);
     final entitlement = ref.read(plusControllerProvider);
     final restored =
-        entitlement == VoxeloEntitlement.plus ||
-        entitlement == VoxeloEntitlement.business;
+        entitlement == VoxelithEntitlement.plus ||
+        entitlement == VoxelithEntitlement.business;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -71,9 +71,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final i18n = ref.watch(i18nProvider);
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: VoxeloAppBar(
+      appBar: VoxelithAppBar(
         leading: IconButton(
           icon: const Icon(Icons.close),
+          tooltip: 'Kapat',
           onPressed: () => context.pop(),
         ),
       ),
@@ -82,7 +83,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
           padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
           children: [
             Text(
-              'VOXELO',
+              'VOXELITH',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: scheme.primary,
@@ -113,12 +114,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             ),
             const SizedBox(height: 16),
             if (!business) ...[
-              _plan(0, 'Aylık', '249 TL / ay', '≈ \$6.20 USD'),
+              _plan(0, 'Aylık', '240 TL / ay', '≈ \$6.00 USD'),
               _plan(
                 1,
                 'Yıllık · en iyi değer',
-                '2.800 TL / yıl',
-                '\$70 USD / yıl · ≈ \$5.83 USD / ay',
+                '2.600 TL / yıl',
+                '\$65 USD / yıl · ≈ \$5.42 USD / ay',
               ),
               _plan(
                 2,
@@ -131,7 +132,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 'Sınırsız konuşma',
                 'CEFR yolu A1–B2',
                 '30 dilin tamamı',
-                'Voxelo ile canlı sohbet',
+                'Voxelith ile canlı sohbet',
                 'Çevir + SRS kaydet',
                 'Toplantı Çevirmeni · günde 2 saat',
                 'Reklamsız',
@@ -252,7 +253,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: VoxeloCard(
+      child: VoxelithCard(
         onTap: () => setState(() => businessPlan = i),
         color: sel ? scheme.primaryContainer : Theme.of(context).cardColor,
         child: Row(
@@ -296,7 +297,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: VoxeloCard(
+      child: VoxelithCard(
         onTap: () => setState(() => plan = i),
         color: sel ? scheme.primaryContainer : Theme.of(context).cardColor,
         child: Row(

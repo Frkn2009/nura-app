@@ -1,4 +1,4 @@
-package com.voxelo.voxelo
+package com.voxelith.voxelith
 
 import io.flutter.embedding.android.FlutterActivity
 

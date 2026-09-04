@@ -1,4 +1,4 @@
-# VOXELO — AI ile Test Ettirme Rehberi
+# VOXELITH — AI ile Test Ettirme Rehberi
 
 ## Yöntem 1: Bu Sohbette Test (Arena.ai)
 

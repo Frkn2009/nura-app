@@ -1,4 +1,4 @@
-# 🚨 VOXELO MEGA PROMPT — KOPYALA YAPIŞTIR, KOD YAZ
+# 🚨 VOXELITH MEGA PROMPT — KOPYALA YAPIŞTIR, KOD YAZ
 
 > Bu prompt'u Claude, ChatGPT, Cursor veya herhangi bir AI'a yapıştır.
 > Soru sormasın, direkt kod yazsın. Her dosya kopyala-yapıştır hazır olsun.
@@ -7,7 +7,7 @@
 
 ## SEN KİMSİN
 
-Sen VOXELO dil öğrenme uygulamasının baş geliştiricisisin. Flutter + Dart + Riverpod + Supabase projesi.
+Sen VOXELITH dil öğrenme uygulamasının baş geliştiricisisin. Flutter + Dart + Riverpod + Supabase projesi.
 GitHub: https://github.com/Frkn2009/voxelo-app
 35/35 test geçiyor. 64 Dart dosya. 242 sahne. 30 dil.
 
@@ -80,8 +80,8 @@ Latin alfabesi dilleri için de harf-ses farkı tablosu:
 - Sürükle bırak ile harf sıralama oyunu
 - Doğru cevap = konfeti + XP
 
-### DOSYA 6: `lib/ui/mascot/voxelo_companion.dart` — MASKOT KARAKTERİ
-- İsim: "Voxelo" (kadın karakter)
+### DOSYA 6: `lib/ui/mascot/voxelith_companion.dart` — MASKOT KARAKTERİ
+- İsim: "Voxelith" (kadın karakter)
 - Her ekranda konuşma balonu ile görünür
 - Durumlar: mutlu, kutlama, düşünen, teşvik, uyuyan
 - Mesajlar kural tabanlı (AI gerektirmez):
@@ -135,7 +135,7 @@ Kullanıcının gördüğü ana ekran. Duolingo tarzı yukarıdan aşağı yol h
 - Maskot yol boyunca yürür
 
 ### DOSYA 12: Güncellenmiş `lib/features/home/home_screen.dart` — YENİ ANA SAYFA
-- Üstte VOXELO logosu + maskot
+- Üstte VOXELITH logosu + maskot
 - "Günaydın Furkan! 🌟" (saate göre)
 - Günlük çark kartı
 - Öğrenme yolu ilerleme kartı
@@ -146,7 +146,7 @@ Kullanıcının gördüğü ana ekran. Duolingo tarzı yukarıdan aşağı yol h
 
 ### DOSYA 13: `lib/features/onboarding/new_onboarding.dart` — YENİ BAŞLANGIÇ
 Eski onboarding SİLİNSİN. Yeni akış:
-1. Maskot karşılar: "Merhaba, ben Voxelo! 👋"
+1. Maskot karşılar: "Merhaba, ben Voxelith! 👋"
 2. "Hangi dili sıfırdan öğrenmek istiyorsun?" → dil seçimi
 3. "Daha önce bu dili öğrendin mi?" → seviye (sıfır/biraz/orta)
 4. "Senin için yol haritası hazırladım!"

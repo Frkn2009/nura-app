@@ -16,7 +16,7 @@ class NotificationService {
       NotificationChannel(
         channelKey: _channelKey,
         channelName: 'Günlük pratik',
-        channelDescription: 'VOXELO günlük ders ve seri hatırlatmaları',
+        channelDescription: 'VOXELITH günlük ders ve seri hatırlatmaları',
         defaultColor: const Color(0xFF0D5955),
         ledColor: const Color(0xFFFFFFFF),
         importance: NotificationImportance.Default,
@@ -71,10 +71,10 @@ class NotificationService {
     if (profile.isPlus && dayOffset % 4 == 0) {
       return turkish
           ? (
-              'VOXELO Plus',
+              'VOXELITH Plus',
               'Sınırsız konuşma hakkın hazır. Bugünün sahnesine geç!',
             )
-          : ('VOXELO Plus', 'Unlimited speaking is ready. Start today’s scene.');
+          : ('VOXELITH Plus', 'Unlimited speaking is ready. Start today’s scene.');
     }
     if (profile.streak >= 2 && dayOffset % 3 == 1) {
       return turkish

@@ -1,11 +1,11 @@
 {
-    "name": "VOXELO",
-    "short_name": "VOXELO",
+    "name": "VOXELITH",
+    "short_name": "VOXELITH",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FAFAFA",
     "theme_color": "#0D5955",
-    "description": "VOXELO — konuşarak dil öğren.",
+    "description": "VOXELITH — konuşarak dil öğren.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

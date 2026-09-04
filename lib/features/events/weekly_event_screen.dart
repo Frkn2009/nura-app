@@ -51,7 +51,7 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
     final event = WeeklyEvent.current();
     final joined = event.isJoined(profile);
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: const Text('Haftalık etkinlik')),
+      appBar: VoxelithAppBar(pageTitle: const Text('Haftalık etkinlik')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 18, 22, 30),
@@ -64,11 +64,11 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(Voxelo.radiusLg),
+                borderRadius: BorderRadius.circular(Voxelith.radiusLg),
               ),
               child: Column(
                 children: [
-                  const VoxeloMascot(size: 100, mood: MascotMood.celebrate),
+                  const VoxelithMascot(size: 100, mood: MascotMood.celebrate),
                   const SizedBox(height: 12),
                   Text(
                     event.title,
@@ -88,7 +88,7 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
               ),
             ),
             const SizedBox(height: 18),
-            VoxeloCard(
+            VoxelithCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -111,7 +111,7 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Etkinlik haftası: ${WeeklyEvent.weekKey()}',
-                    style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                    style: const TextStyle(color: Voxelith.muted, fontSize: 12),
                   ),
                 ],
               ),
@@ -121,7 +121,7 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
               Text(
                 error!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Voxelo.coral),
+                style: const TextStyle(color: Voxelith.coral),
               ),
             ],
             const SizedBox(height: 20),
@@ -145,7 +145,7 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
               const Text(
                 '×2 XP için profilinden öğrenme dilini İspanyolca seç.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Voxelo.muted),
+                style: TextStyle(color: Voxelith.muted),
               ),
             ],
           ],
@@ -158,7 +158,7 @@ class _WeeklyEventScreenState extends ConsumerState<WeeklyEventScreen> {
     padding: const EdgeInsets.only(bottom: 10),
     child: Row(
       children: [
-        Icon(icon, size: 20, color: Voxelo.mintDark),
+        Icon(icon, size: 20, color: Voxelith.mintDark),
         const SizedBox(width: 10),
         Expanded(child: Text(text)),
       ],

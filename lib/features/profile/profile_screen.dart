@@ -24,15 +24,15 @@ class ProfileScreen extends ConsumerWidget {
         children: [
           Text(i18n.you, style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 16),
-          VoxeloCard(
-            color: Voxelo.forest,
+          VoxelithCard(
+            color: Voxelith.forest,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  p.isPlus ? 'VOXELO Plus' : 'VOXELO Free',
+                  p.isPlus ? 'VOXELITH Plus' : 'VOXELITH Free',
                   style: const TextStyle(
-                    color: Voxelo.cream,
+                    color: Voxelith.cream,
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),
@@ -45,7 +45,7 @@ class ProfileScreen extends ConsumerWidget {
                 const SizedBox(height: 14),
                 if (!p.isPlus)
                   FilledButton(
-                    style: FilledButton.styleFrom(backgroundColor: Voxelo.terr),
+                    style: FilledButton.styleFrom(backgroundColor: Voxelith.terr),
                     onPressed: () => context.push('/paywall'),
                     child: Text(i18n.plusCta),
                   ),
@@ -53,13 +53,13 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 12),
-          VoxeloCard(
+          VoxelithCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const IconChip(VoxeloIcon.fire),
+                    const IconChip(VoxelithIcon.fire),
                     const SizedBox(width: 10),
                     Text(
                       '${p.totalXp} XP',
@@ -72,7 +72,7 @@ class ProfileScreen extends ConsumerWidget {
                     Text(
                       p.xpRank.label,
                       style: const TextStyle(
-                        color: Voxelo.mintDark,
+                        color: Voxelith.mintDark,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -85,17 +85,17 @@ class ProfileScreen extends ConsumerWidget {
                   p.nextXpRank == null
                       ? 'En yüksek seviye'
                       : '${p.nextXpRank!.label} için ${p.nextXpRank!.minimumXp - p.totalXp} XP',
-                  style: const TextStyle(color: Voxelo.muted, fontSize: 12),
+                  style: const TextStyle(color: Voxelith.muted, fontSize: 12),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/family'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.family),
+                const IconChip(VoxelithIcon.family),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -103,16 +103,16 @@ class ProfileScreen extends ConsumerWidget {
                     style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Icon(Icons.swap_horiz, color: Voxelo.soft),
+                const Icon(Icons.swap_horiz, color: Voxelith.soft),
               ],
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/achievements'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.medal),
+                const IconChip(VoxelithIcon.medal),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -120,20 +120,20 @@ class ProfileScreen extends ConsumerWidget {
                     style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Voxelo.soft),
+                const Icon(Icons.chevron_right, color: Voxelith.soft),
               ],
             ),
           ),
           const SizedBox(height: 18),
           if (cloudOn) ...[
-            const Eyebrow('VOXELO Hesap'),
+            const Eyebrow('VOXELITH Hesap'),
             const SizedBox(height: 8),
             if (email == null)
-              VoxeloCard(
+              VoxelithCard(
                 onTap: () => context.push('/auth'),
                 child: const Row(
                   children: [
-                    IconChip(VoxeloIcon.cloud),
+                    IconChip(VoxelithIcon.cloud),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -141,18 +141,18 @@ class ProfileScreen extends ConsumerWidget {
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
-                    Icon(Icons.chevron_right, color: Voxelo.soft),
+                    Icon(Icons.chevron_right, color: Voxelith.soft),
                   ],
                 ),
               )
             else
-              VoxeloCard(
+              VoxelithCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const IconChip(VoxeloIcon.cloud),
+                        const IconChip(VoxelithIcon.cloud),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
@@ -165,7 +165,7 @@ class ProfileScreen extends ConsumerWidget {
                     const SizedBox(height: 6),
                     const Text(
                       'İlerlemen buluta yedekleniyor. Yeni cihazda giriş yapınca geri gelir.',
-                      style: TextStyle(color: Voxelo.muted, fontSize: 13),
+                      style: TextStyle(color: Voxelith.muted, fontSize: 13),
                     ),
                     const SizedBox(height: 10),
                     TextButton(
@@ -188,7 +188,7 @@ class ProfileScreen extends ConsumerWidget {
               onTap: () => ref.read(sessionProvider.notifier).setLearn(l),
             ),
           const SizedBox(height: 8),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/guide'),
             child: Row(
               children: [
@@ -200,7 +200,7 @@ class ProfileScreen extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Voxelo.soft),
+                const Icon(Icons.chevron_right, color: Voxelith.soft),
               ],
             ),
           ),
@@ -263,6 +263,40 @@ class ProfileScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
+          const Eyebrow('Çalışma yöntemi'),
+          const SizedBox(height: 6),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final option in const [
+                (
+                  value: LearningStyle.balanced,
+                  icon: Icons.balance_outlined,
+                  label: 'Dengeli',
+                ),
+                (
+                  value: LearningStyle.speakingFirst,
+                  icon: Icons.record_voice_over_outlined,
+                  label: 'Konuşma odaklı',
+                ),
+                (
+                  value: LearningStyle.listeningHeavy,
+                  icon: Icons.hearing_outlined,
+                  label: 'Dinleme ağırlıklı',
+                ),
+              ])
+                ChoiceChip(
+                  selected: p.learningStyle == option.value,
+                  avatar: Icon(option.icon, size: 18),
+                  label: Text(option.label),
+                  onSelected: (_) => ref
+                      .read(sessionProvider.notifier)
+                      .setLearningStyle(option.value),
+                ),
+            ],
+          ),
+          const SizedBox(height: 16),
           const Eyebrow('Hatırlatmalar'),
           const SizedBox(height: 6),
           SwitchListTile(
@@ -270,7 +304,7 @@ class ProfileScreen extends ConsumerWidget {
             title: const Text('Günlük pratik bildirimi'),
             subtitle: const Text('Günde yalnızca bir kez'),
             value: p.notificationsEnabled,
-            activeThumbColor: Voxelo.mintDark,
+            activeThumbColor: Voxelith.mintDark,
             onChanged: (value) => ref
                 .read(sessionProvider.notifier)
                 .setNotificationsEnabled(value),
@@ -304,7 +338,7 @@ class ProfileScreen extends ConsumerWidget {
             title: const Text('Plus’ı aç (geliştirici)'),
             subtitle: const Text('Mağaza bağlanınca RevenueCat alır'),
             value: p.isPlus,
-            activeThumbColor: Voxelo.forest,
+            activeThumbColor: Voxelith.forest,
             onChanged: (v) => ref.read(sessionProvider.notifier).setPlus(v),
           ),
           ListTile(
@@ -315,7 +349,7 @@ class ProfileScreen extends ConsumerWidget {
           ListTile(
             title: const Text(
               'Hesabı sil',
-              style: TextStyle(color: Voxelo.terr),
+              style: TextStyle(color: Voxelith.terr),
             ),
             subtitle: Text(
               email != null
@@ -364,7 +398,7 @@ class ProfileScreen extends ConsumerWidget {
                 ? 'Ekonomi USD kilitli. Ses mümkün olduğunca cihazda.'
                 : 'Bulut senkron kapalı: lib/core/supabase_config.dart içine anahtarları girince açılır.',
             style: const TextStyle(
-              color: Voxelo.muted,
+              color: Voxelith.muted,
               fontSize: 13,
               height: 1.4,
             ),

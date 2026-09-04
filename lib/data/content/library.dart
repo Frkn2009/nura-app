@@ -23,10 +23,10 @@ class LibraryStory {
   final List<LibrarySentence> sentences;
 }
 
-/// VOXELO kitaplığı — seviyeye göre kısa okuma parçaları. Sesler cihaz TTS'i
+/// VOXELITH kitaplığı — seviyeye göre kısa okuma parçaları. Sesler cihaz TTS'i
 /// ile okunur (bkz. StoryReaderScreen); metinler gerçek, dilbilgisi olarak
 /// doğru cümlelerdir, otomatik çeviri değildir.
-class VoxeloLibrary {
+class VoxelithLibrary {
   static List<LibraryStory> forLang(LearnLang lang) =>
       _all.where((s) => s.lang == lang).toList(growable: false);
 

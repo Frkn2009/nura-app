@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../core/theme/tokens.dart';
 
-/// VOXELO'nın özgün marka işareti: bir konuşma balonu içinde ses ritmi.
+/// VOXELITH'nın özgün marka işareti: bir konuşma balonu içinde ses ritmi.
 ///
 /// Harf tabanlı bir monogram yerine doğrudan "konuşma"yı temsil eder, bu
 /// yüzden en küçük ölçekte (uygulama simgesi) bile dil bağımsız okunur.
 /// Tamamen Flutter ile çizildiği için ekran yoğunluğundan bağımsız net
 /// kalır ve harici/telifli varlık kullanmaz.
-class VoxeloMark extends StatelessWidget {
-  const VoxeloMark({super.key, this.size = 32, this.onDark = false});
+class VoxelithMark extends StatelessWidget {
+  const VoxelithMark({super.key, this.size = 32, this.onDark = false});
 
   final double size;
   final bool onDark;
@@ -17,11 +17,11 @@ class VoxeloMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'VOXELO',
+      label: 'VOXELITH',
       image: true,
       child: SizedBox.square(
         dimension: size,
-        child: CustomPaint(painter: _VoxeloMarkPainter(onDark: onDark)),
+        child: CustomPaint(painter: _VoxelithMarkPainter(onDark: onDark)),
       ),
     );
   }
@@ -32,8 +32,8 @@ class VoxeloMark extends StatelessWidget {
 /// önceki "N" harf monogramından farklı olarak en küçük ölçekte bile
 /// (uygulama simgesi boyutunda) neyi temsil ettiği çeviri gerektirmeden
 /// okunuyor.
-class _VoxeloMarkPainter extends CustomPainter {
-  const _VoxeloMarkPainter({required this.onDark});
+class _VoxelithMarkPainter extends CustomPainter {
+  const _VoxelithMarkPainter({required this.onDark});
 
   final bool onDark;
 
@@ -43,13 +43,13 @@ class _VoxeloMarkPainter extends CustomPainter {
     final rect = Offset.zero & size;
     final radius = Radius.circular(w * .24);
 
-    final backgroundColor = onDark ? Colors.white : Voxelo.mintDark;
+    final backgroundColor = onDark ? Colors.white : Voxelith.mintDark;
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, radius),
       Paint()..color = backgroundColor,
     );
 
-    final bubbleColor = onDark ? Voxelo.mintDark : Colors.white;
+    final bubbleColor = onDark ? Voxelith.mintDark : Colors.white;
     final bubbleRect = Rect.fromLTWH(w * .15, w * .19, w * .70, w * .48);
     final bubbleRRect = RRect.fromRectAndRadius(
       bubbleRect,
@@ -67,7 +67,7 @@ class _VoxeloMarkPainter extends CustomPainter {
 
     // Balonun içindeki 4 çubuklu ekolayzır — sırayla zemin/mercan/
     // zemin/altın renginde, değişen yüksekliklerde bir konuşma ritmi.
-    final barColors = [backgroundColor, Voxelo.coral, backgroundColor, Voxelo.gold];
+    final barColors = [backgroundColor, Voxelith.coral, backgroundColor, Voxelith.gold];
     const heightsRatio = [0.15, 0.30, 0.19, 0.25];
     final barWidth = w * .065;
     final gap = w * .05;
@@ -90,29 +90,29 @@ class _VoxeloMarkPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _VoxeloMarkPainter oldDelegate) =>
+  bool shouldRepaint(covariant _VoxelithMarkPainter oldDelegate) =>
       oldDelegate.onDark != onDark;
 }
 
-class VoxeloWordmark extends StatelessWidget {
-  const VoxeloWordmark({super.key, this.onDark = false, this.compact = false});
+class VoxelithWordmark extends StatelessWidget {
+  const VoxelithWordmark({super.key, this.onDark = false, this.compact = false});
 
   final bool onDark;
   final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    final foreground = onDark ? Colors.white : Voxelo.ink;
+    final foreground = onDark ? Colors.white : Voxelith.ink;
     return Semantics(
-      label: 'VOXELO',
+      label: 'VOXELITH',
       header: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          VoxeloMark(size: compact ? 28 : 32, onDark: onDark),
+          VoxelithMark(size: compact ? 28 : 32, onDark: onDark),
           const SizedBox(width: 9),
           Text(
-            'VOXELO',
+            'VOXELITH',
             style: TextStyle(
               color: foreground,
               fontFamily: 'Inter',
@@ -128,8 +128,8 @@ class VoxeloWordmark extends StatelessWidget {
 }
 
 /// Tüm sayfalarda marka görünürlüğünü ve başlık düzenini standartlaştırır.
-class VoxeloAppBar extends AppBar {
-  VoxeloAppBar({
+class VoxelithAppBar extends AppBar {
+  VoxelithAppBar({
     super.key,
     Widget? pageTitle,
     super.leading,
@@ -139,17 +139,17 @@ class VoxeloAppBar extends AppBar {
     super.automaticallyImplyLeading,
   }) : super(
          titleSpacing: 16,
-         title: _VoxeloAppBarTitle(
+         title: _VoxelithAppBarTitle(
            pageTitle: pageTitle,
            onDark:
-               backgroundColor == Voxelo.forest ||
-               backgroundColor == Voxelo.mintDark,
+               backgroundColor == Voxelith.forest ||
+               backgroundColor == Voxelith.mintDark,
          ),
        );
 }
 
-class _VoxeloAppBarTitle extends StatelessWidget {
-  const _VoxeloAppBarTitle({required this.pageTitle, required this.onDark});
+class _VoxelithAppBarTitle extends StatelessWidget {
+  const _VoxelithAppBarTitle({required this.pageTitle, required this.onDark});
 
   final Widget? pageTitle;
   final bool onDark;
@@ -160,7 +160,7 @@ class _VoxeloAppBarTitle extends StatelessWidget {
         onDark || Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
-        VoxeloWordmark(onDark: useDarkMark, compact: true),
+        VoxelithWordmark(onDark: useDarkMark, compact: true),
         if (pageTitle != null) ...[
           Container(
             width: 1,

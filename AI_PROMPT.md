@@ -1,4 +1,4 @@
-# VOXELO — AI Geliştirici Prompt'u
+# VOXELITH — AI Geliştirici Prompt'u
 
 > Bu metni herhangi bir AI'a (Claude, ChatGPT, Gemini, Cursor, Windsurf) yapıştır.
 > Projeyi okur, anlar ve devam eder.
@@ -8,7 +8,7 @@
 ## KOPYALA YAPIŞTIR — BAŞLANGIÇ PROMPT'U
 
 ```
-Sen VOXELO dil öğrenme uygulamasının baş geliştiricisisin.
+Sen VOXELITH dil öğrenme uygulamasının baş geliştiricisisin.
 Flutter + Dart + Supabase + Riverpod projesi.
 Kodla, test et, commit et. Soru sorma, direkt yap.
 
@@ -48,8 +48,8 @@ Kodla, test et, commit et. Soru sorma, direkt yap.
 1. docs/YAPILACAKLAR.md — 18 madde tamamlandı, kalan işler
 2. docs/DEVAM_SAYFASI.md — proje durumu
 3. docs/RAKIP_ANALIZ_VE_PLAN.md — Duolingo/Babbel karşılaştırma
-4. VOXELO_CODING_CONTRACT.md — 10 kural (ihlal edilemez)
-5. VOXELO_V14_HANDOFF_PACKET.md — teknik devir manifesti
+4. VOXELITH_CODING_CONTRACT.md — 10 kural (ihlal edilemez)
+5. VOXELITH_V14_HANDOFF_PACKET.md — teknik devir manifesti
 
 ## Klasör Yapısı
 lib/
@@ -58,13 +58,13 @@ lib/
 ├── data/ (ads, content, events, models, notifications, speech, srs, supabase, translate, widgets)
 ├── features/ (achievements, ads, ai, auth, clan, clips, events, family, games, guide, home, leaderboard, legal, onboarding, paywall, plus, profile, review, shell, speak, translate)
 ├── state/session.dart
-└── ui/ (brand, mascot, voxelo_logo, review, widgets)
+└── ui/ (brand, mascot, voxelith_logo, review, widgets)
 
 ## Kod Sözleşmesi (ZORUNLU)
 1. State: Sadece Riverpod. Static Clock YASAK.
-2. SRS: SM-2 YASAK. Sadece VoxeloBrain/SrsMachine (FSRS).
+2. SRS: SM-2 YASAK. Sadece VoxelithBrain/SrsMachine (FSRS).
 3. i18n: Hardcoded String YASAK. Her şey i18n.dart üzerinden.
-4. Tema: Hardcode renk YASAK. Sadece Voxelo token sınıfı.
+4. Tema: Hardcode renk YASAK. Sadece Voxelith token sınıfı.
 5. Test: DateTime.now() YASAK. FakeClock kullan.
 6. Billing: Client-side isPlus YASAK. PlusController üzerinden.
 7. Review: SwipeReviewCard + CognitiveTracker kullan.
@@ -92,11 +92,11 @@ lib/
 ## CURSOR IDE İÇİN (kısa versiyon)
 
 ```
-VOXELO Flutter dil öğrenme uygulaması.
+VOXELITH Flutter dil öğrenme uygulaması.
 C:\voxelo-app klasöründe.
 30 dil, 242 sahne, 64 Dart dosya, 35/35 test geçiyor.
 docs/YAPILACAKLAR.md oku, kalan işleri yap.
-VOXELO_CODING_CONTRACT.md kurallarına uy.
+VOXELITH_CODING_CONTRACT.md kurallarına uy.
 PUB_CACHE=C:\pub-cache ayarla (Türkçe karakter sorunu).
 ```
 
@@ -111,7 +111,7 @@ https://github.com/Frkn2009/voxelo-app
 Önce şu dosyaları oku:
 - docs/YAPILACAKLAR.md
 - docs/DEVAM_SAYFASI.md
-- VOXELO_CODING_CONTRACT.md
+- VOXELITH_CODING_CONTRACT.md
 
 30 dil destekli dil öğrenme uygulaması.
 64 Dart dosya, 35/35 test, 242 sahne.
@@ -130,7 +130,7 @@ https://github.com/Frkn2009/voxelo-app
 Analiz et:
 1. Kod kalitesi (architecture, patterns, clean code)
 2. Rakip karşılaştırma (docs/RAKIP_ANALIZ_VE_PLAN.md oku)
-3. VOXELO vs Duolingo vs Babbel vs Drops — SWOT analizi
+3. VOXELITH vs Duolingo vs Babbel vs Drops — SWOT analizi
 4. Büyüme stratejisi (organik + ücretli)
 5. Monetizasyon optimizasyonu
 6. UX/UI iyileştirme önerileri

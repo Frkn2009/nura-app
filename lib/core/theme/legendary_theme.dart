@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'voxelo_theme.dart';
+import 'voxelith_theme.dart';
 import 'tokens.dart';
 
 /// Efsane — ödüllü, "premium" bir alternatif tema (koyu + açık varyant).
 /// Diğer temalar gibi sadece renk/gölge katmanında kalır; ekran kodlarına
 /// dokunmaz.
-class VoxeloLegendaryPalette {
-  const VoxeloLegendaryPalette({
+class VoxelithLegendaryPalette {
+  const VoxelithLegendaryPalette({
     required this.brightness,
     required this.void_,
     required this.surface,
@@ -38,7 +38,7 @@ class VoxeloLegendaryPalette {
   /// Altın zemin üstündeki metin/ikon rengi.
   final Color onAccent;
 
-  static const dark = VoxeloLegendaryPalette(
+  static const dark = VoxelithLegendaryPalette(
     brightness: Brightness.dark,
     void_: Color(0xFF0B0A17),
     surface: Color(0xFF171530),
@@ -53,7 +53,7 @@ class VoxeloLegendaryPalette {
     onAccent: Color(0xFF3D2E00),
   );
 
-  static const light = VoxeloLegendaryPalette(
+  static const light = VoxelithLegendaryPalette(
     brightness: Brightness.light,
     void_: Color(0xFFF6F3FF),
     surface: Colors.white,
@@ -69,8 +69,8 @@ class VoxeloLegendaryPalette {
   );
 }
 
-ThemeData buildVoxeloLegendaryTheme([
-  VoxeloLegendaryPalette p = VoxeloLegendaryPalette.dark,
+ThemeData buildVoxelithLegendaryTheme([
+  VoxelithLegendaryPalette p = VoxelithLegendaryPalette.dark,
 ]) {
   final scheme = ColorScheme(
     brightness: p.brightness,
@@ -96,11 +96,11 @@ ThemeData buildVoxeloLegendaryTheme([
     onError: Colors.white,
   );
 
-  final base = buildVoxeloTheme();
+  final base = buildVoxelithTheme();
   final text = base.textTheme.apply(bodyColor: p.ink, displayColor: p.ink);
   const pillShape = StadiumBorder();
   final cardShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Voxelo.radiusMedium),
+    borderRadius: BorderRadius.circular(Voxelith.radiusMedium),
     side: BorderSide(color: p.border),
   );
 
@@ -169,11 +169,11 @@ ThemeData buildVoxeloLegendaryTheme([
     inputDecorationTheme: base.inputDecorationTheme.copyWith(
       fillColor: p.surface,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         borderSide: BorderSide(color: p.border),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         borderSide: BorderSide(color: p.violet, width: 1.5),
       ),
     ),
@@ -206,7 +206,7 @@ ThemeData buildVoxeloLegendaryTheme([
       backgroundColor: p.surface,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radiusLarge),
+        borderRadius: BorderRadius.circular(Voxelith.radiusLarge),
         side: BorderSide(color: p.border),
       ),
     ),
@@ -234,5 +234,5 @@ ThemeData buildVoxeloLegendaryTheme([
   );
 }
 
-ThemeData buildVoxeloLegendaryLightTheme() =>
-    buildVoxeloLegendaryTheme(VoxeloLegendaryPalette.light);
+ThemeData buildVoxelithLegendaryLightTheme() =>
+    buildVoxelithLegendaryTheme(VoxelithLegendaryPalette.light);

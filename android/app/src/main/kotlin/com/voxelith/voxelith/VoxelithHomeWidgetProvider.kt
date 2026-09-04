@@ -1,4 +1,4 @@
-package com.voxelo.voxelo
+package com.voxelith.voxelith
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -7,7 +7,7 @@ import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetLaunchIntent
 import es.antonborri.home_widget.HomeWidgetProvider
 
-class VoxeloHomeWidgetProvider : HomeWidgetProvider() {
+class VoxelithHomeWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -19,7 +19,7 @@ class VoxeloHomeWidgetProvider : HomeWidgetProvider() {
             val goal = widgetData.getInt("goal", 100)
             val streak = widgetData.getInt("streak", 0)
             val lesson = widgetData.getString("lesson", "Bugünün pratiği")
-            val views = RemoteViews(context.packageName, R.layout.voxelo_home_widget).apply {
+            val views = RemoteViews(context.packageName, R.layout.voxelith_home_widget).apply {
                 setTextViewText(R.id.widget_lesson, lesson)
                 setTextViewText(R.id.widget_xp, "$dailyXp / $goal XP")
                 setTextViewText(R.id.widget_streak, "$streak gün")

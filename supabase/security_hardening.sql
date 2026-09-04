@@ -1,4 +1,4 @@
--- VOXELO — güvenlik denetiminden çıkan iki bulgunun düzeltmesi.
+-- VOXELITH — güvenlik denetiminden çıkan iki bulgunun düzeltmesi.
 -- supabase_setup.sql ve leaderboard.sql'den SONRA, kullanıcı tarafından
 -- manuel uygulanmalı (bu repo canlı Supabase projesine otomatik deploy
 -- edilmiyor).

@@ -5,7 +5,7 @@ This function is the server-side boundary for Plus-only translation. It:
 - validates the caller's Supabase JWT;
 - verifies an active/trialing row in `public.subscriptions`;
 - keeps the Google API key off the Flutter client;
-- accepts only VOXELO's 30 languages and up to 1,000 characters;
+- accepts only VOXELITH's 30 languages and up to 1,000 characters;
 - forwards no user identity to the translation provider.
 
 ## Deploy

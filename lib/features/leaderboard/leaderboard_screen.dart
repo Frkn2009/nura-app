@@ -42,7 +42,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
     final email = ref.watch(authEmailProvider);
     final profile = ref.watch(sessionProvider);
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: const Text('Haftalık sıralama')),
+      appBar: VoxelithAppBar(pageTitle: const Text('Haftalık sıralama')),
       body: SafeArea(
         child: email == null
             ? _signedOut(context, profile.dailyXp)
@@ -63,14 +63,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   Widget _signedOut(BuildContext context, int localXp) => Center(
     child: Padding(
       padding: const EdgeInsets.all(28),
-      child: VoxeloCard(
+      child: VoxelithCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
               Icons.leaderboard_outlined,
               size: 44,
-              color: Voxelo.mintDark,
+              color: Voxelith.mintDark,
             ),
             const SizedBox(height: 14),
             const Text(
@@ -137,11 +137,11 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
             ),
           ),
           const SizedBox(height: 14),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/clan'),
             child: Row(
               children: [
-                const Icon(Icons.groups_outlined, color: Voxelo.mintDark),
+                const Icon(Icons.groups_outlined, color: Voxelith.mintDark),
                 const SizedBox(width: 12),
                 const Expanded(
                   child: Text(
@@ -158,14 +158,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
           ),
           const SizedBox(height: 18),
           if (top.isEmpty)
-            VoxeloCard(
+            VoxelithCard(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Column(
                   children: [
                     const Icon(
                       Icons.flag_outlined,
-                      color: Voxelo.mintDark,
+                      color: Voxelith.mintDark,
                       size: 36,
                     ),
                     const SizedBox(height: 10),
@@ -185,7 +185,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
               ),
             )
           else
-            VoxeloCard(
+            VoxelithCard(
               padding: EdgeInsets.zero,
               child: Column(
                 children: [
@@ -200,8 +200,8 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
             const SizedBox(height: 22),
             const Eyebrow('Senin sıran'),
             const SizedBox(height: 8),
-            VoxeloCard(
-              color: Voxelo.mintLight,
+            VoxelithCard(
+              color: Voxelith.mintLight,
               padding: EdgeInsets.zero,
               child: _row(ownOutside),
             ),
@@ -213,14 +213,14 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
 
   Widget _row(LeaderboardEntry entry) {
     final rankColor = switch (entry.rank) {
-      1 => Voxelo.sunflower,
+      1 => Voxelith.sunflower,
       2 => Theme.of(context).colorScheme.outline,
-      3 => Voxelo.coral,
-      _ => Voxelo.mintDark,
+      3 => Voxelith.coral,
+      _ => Voxelith.mintDark,
     };
     return Container(
       color: entry.isMe
-          ? Voxelo.mintLight.withValues(alpha: .55)
+          ? Voxelith.mintLight.withValues(alpha: .55)
           : Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
@@ -253,7 +253,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
           Text(
             '${entry.xp} XP',
             style: const TextStyle(
-              color: Voxelo.mintDark,
+              color: Voxelith.mintDark,
               fontWeight: FontWeight.w700,
             ),
           ),

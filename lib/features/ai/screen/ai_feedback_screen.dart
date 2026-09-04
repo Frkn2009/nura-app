@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/tokens.dart';
+import '../../../data/ads/ad_service.dart';
 import '../../../ui/widgets.dart';
 import '../domain/ai_feedback.dart';
 import '../state/ai_controller.dart';
@@ -28,6 +30,9 @@ class AiFeedbackScreen extends ConsumerStatefulWidget {
 class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
   AiFeedback? feedback;
   bool loading = true;
+  bool _watchingAd = false;
+  bool _adBonusExhausted = false;
+  String? _adError;
 
   @override
   void initState() {
@@ -51,6 +56,49 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
     }
   }
 
+  /// Ücretsiz kullanıcı günlük 1 hakkını doldurunca gösterilen "Reklam
+  /// izle, +1 hak kazan" butonu. Reklam gerçekten tamamlanıp ödül
+  /// alındıktan SONRA sunucuya bildirilir (bkz. ClaudeAiService.
+  /// claimFeedbackAdBonus), sonra analiz otomatik tekrar denenir.
+  Future<void> _watchAdForBonus() async {
+    setState(() {
+      _watchingAd = true;
+      _adError = null;
+    });
+    final earned = await AdService.showRewarded();
+    if (!mounted) return;
+    if (!earned) {
+      setState(() {
+        _watchingAd = false;
+        _adError = AdService.supported
+            ? 'Reklam tamamlanmadı. Ödül için videoyu sonuna kadar izle.'
+            : 'Video reklamlar telefonda çalışır.';
+      });
+      return;
+    }
+    final bonus = await ref.read(claudeAiServiceProvider).claimFeedbackAdBonus();
+    if (!mounted) return;
+    if (bonus == null) {
+      setState(() {
+        _watchingAd = false;
+        _adError = 'Bağlantı hatası, tekrar dene.';
+      });
+      return;
+    }
+    if (bonus == -1) {
+      setState(() {
+        _watchingAd = false;
+        _adBonusExhausted = true;
+      });
+      return;
+    }
+    setState(() {
+      _watchingAd = false;
+      loading = true;
+    });
+    await _loadFeedback();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,32 +109,39 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
             : ListView(
                 padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
                 children: [
-                  // Skor
+                  // Skor (hak bittiyse — ücretsiz VEYA Plus günlük sınırı —
+                  // skor yerine maskot: 0 puanlık boş bir daire yerine "hay
+                  // aksi, hakkın bitti" hissini veriyor)
                   Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _scoreColor(
-                          feedback!.score,
-                        ).withValues(alpha: 0.15),
-                        border: Border.all(
-                          color: _scoreColor(feedback!.score),
-                          width: 3,
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${feedback!.score}',
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w800,
-                            color: _scoreColor(feedback!.score),
+                    child: _isLimitState
+                        ? const VoxelithMascot(
+                            size: 100,
+                            mood: MascotMood.encourage,
+                          )
+                        : Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _scoreColor(
+                                feedback!.score,
+                              ).withValues(alpha: 0.15),
+                              border: Border.all(
+                                color: _scoreColor(feedback!.score),
+                                width: 3,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${feedback!.score}',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.w800,
+                                  color: _scoreColor(feedback!.score),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -102,8 +157,8 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   // Beklenen vs Senin cevabın
                   const Eyebrow('Beklenen cevap'),
                   const SizedBox(height: 8),
-                  VoxeloCard(
-                    color: Voxelo.mint.withValues(alpha: 0.1),
+                  VoxelithCard(
+                    color: Voxelith.mint.withValues(alpha: 0.1),
                     child: Text(
                       feedback!.correctedAnswer,
                       style: TextStyle(
@@ -116,7 +171,7 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   const SizedBox(height: 12),
                   const Eyebrow('Senin cevabın'),
                   const SizedBox(height: 8),
-                  VoxeloCard(
+                  VoxelithCard(
                     child: Text(
                       feedback!.userAnswer.isEmpty
                           ? '(ses algılanamadı)'
@@ -125,8 +180,8 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: feedback!.score >= 70
-                            ? Voxelo.mint
-                            : Voxelo.coral,
+                            ? Voxelith.mint
+                            : Voxelith.coral,
                       ),
                     ),
                   ),
@@ -138,14 +193,14 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   for (final tip in feedback!.tips)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: VoxeloCard(
+                      child: VoxelithCard(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
                               '→ ',
                               style: TextStyle(
-                                color: Voxelo.mint,
+                                color: Voxelith.mint,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -162,18 +217,58 @@ class _AiFeedbackScreenState extends ConsumerState<AiFeedbackScreen> {
                   const SizedBox(height: 20),
 
                   FilledButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Devam Et'),
+                    onPressed: _watchingAd
+                        ? null
+                        : _isPaywallNudge
+                        ? () {
+                            Navigator.pop(context);
+                            context.push('/paywall');
+                          }
+                        : () => Navigator.pop(context),
+                    child: Text(_isPaywallNudge ? 'Plus\'a Geç' : 'Devam Et'),
                   ),
+                  if (_isPaywallNudge && !_adBonusExhausted) ...[
+                    const SizedBox(height: 10),
+                    OutlinedButton.icon(
+                      onPressed: _watchingAd ? null : _watchAdForBonus,
+                      icon: const Icon(Icons.play_circle_outline),
+                      label: Text(
+                        _watchingAd
+                            ? 'Video hazırlanıyor…'
+                            : 'Reklam izle, +1 hak kazan (günde 5\'e kadar)',
+                      ),
+                    ),
+                  ],
+                  if (_adBonusExhausted) ...[
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Bugünkü 5 reklam hakkına da ulaştın.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Voxelith.coral),
+                    ),
+                  ],
+                  if (_adError != null) ...[
+                    const SizedBox(height: 10),
+                    Text(
+                      _adError!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Voxelith.coral),
+                    ),
+                  ],
                 ],
               ),
       ),
     );
   }
 
+  bool get _isPaywallNudge => feedback?.encouragement.startsWith('🔒') ?? false;
+
+  bool get _isLimitState =>
+      _isPaywallNudge || (feedback?.encouragement.startsWith('⏳') ?? false);
+
   Color _scoreColor(int score) {
-    if (score >= 80) return Voxelo.mint;
-    if (score >= 60) return Voxelo.peach;
-    return Voxelo.coral;
+    if (score >= 80) return Voxelith.mint;
+    if (score >= 60) return Voxelith.peach;
+    return Voxelith.coral;
   }
 }

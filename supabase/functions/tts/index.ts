@@ -22,6 +22,23 @@ function base64FromArrayBuffer(buffer: ArrayBuffer): string {
   return btoa(binary);
 }
 
+// Per-language voice override lookup. Operatör ElevenLabs Voice Library'den
+// her dil için gerçek bir ses seçtikten sonra `supabase secrets set
+// ELEVENLABS_VOICE_ID_<LANG>=<id>` çalıştırır (örn. ELEVENLABS_VOICE_ID_JA=...).
+// Hiçbiri ayarlanmadıysa tüm diller mevcut tek varsayılan sese düşer — regresyon yok.
+function resolveVoiceId(
+  requestedVoiceId: string | undefined,
+  lang: string | undefined,
+  defaultVoiceId: string,
+): string {
+  if (requestedVoiceId) return requestedVoiceId;
+  if (lang) {
+    const perLangVoiceId = Deno.env.get(`ELEVENLABS_VOICE_ID_${lang.toUpperCase()}`);
+    if (perLangVoiceId) return perLangVoiceId;
+  }
+  return defaultVoiceId;
+}
+
 Deno.serve(async (request) => {
   if (request.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
@@ -57,32 +74,61 @@ Deno.serve(async (request) => {
     : 0;
   if (!subscription || periodEnd <= Date.now()) return json({ error: 'plus_required' }, 403);
 
-  let payload: { text?: unknown; voiceId?: unknown };
+  // Plus == pratikte sınırsız konuşma süresi (bkz. UserProfile.speakAllowance),
+  // yani TTS oynatma sayısında da istemci tarafında bir tavan yok. ~$0.0045/
+  // oynatma ile 40/gün (3 Eylül'de 80'den düşürüldü — en pahalı tek kalem
+  // buydu), bu kalemden worst-case COGS'u ~$5.4/ay/kullanıcıda tutuyor —
+  // bkz. docs/MALIYET_ANALIZI_2026_09.md.
+  const TTS_DAILY_LIMIT = 40;
+  const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
+    p_user_id: userData.user.id,
+    p_op: 'tts',
+    p_limit: TTS_DAILY_LIMIT,
+  });
+  if (usageError) return json({ error: 'usage_check_failed' }, 502);
+  if (!allowed) return json({ error: 'daily_limit_reached' }, 429);
+
+  let payload: { text?: unknown; voiceId?: unknown; lang?: unknown };
   try {
     payload = await request.json();
   } catch (_) {
     return json({ error: 'invalid_json' }, 400);
   }
   const text = typeof payload.text === 'string' ? payload.text.trim() : '';
-  const voiceId = typeof payload.voiceId === 'string' && payload.voiceId.length > 0
+  const requestedVoiceId = typeof payload.voiceId === 'string' && payload.voiceId.length > 0
     ? payload.voiceId
-    : defaultVoiceId;
+    : undefined;
+  const lang = typeof payload.lang === 'string' && payload.lang.length > 0 ? payload.lang : undefined;
+  const voiceId = resolveVoiceId(requestedVoiceId, lang, defaultVoiceId);
   if (!text || text.length > 400) return json({ error: 'invalid_request' }, 400);
 
   const endpoint = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
-  const providerResponse = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'xi-api-key': elevenLabsApiKey,
-      Accept: 'audio/mpeg',
-    },
-    body: JSON.stringify({
-      text,
-      model_id: 'eleven_multilingual_v2',
-      voice_settings: { stability: 0.5, similarity_boost: 0.8 },
-    }),
-  });
+  const voiceSettings = { stability: 0.6, similarity_boost: 0.85, use_speaker_boost: true };
+
+  async function synthesize(modelId: string): Promise<Response> {
+    return fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xi-api-key': elevenLabsApiKey,
+        Accept: 'audio/mpeg',
+      },
+      body: JSON.stringify({ text, model_id: modelId, voice_settings: voiceSettings }),
+    });
+  }
+
+  // eleven_v3 (GA since Feb 2026) is ElevenLabs' most natural/expressive
+  // model — same overage price as the older multilingual_v2 ($0.10/1k
+  // chars either way), tuned above toward a warm, consistent, non-robotic
+  // read rather than dramatic expressiveness (this is a language lesson
+  // voice, not a narrator). If v3 isn't available on the account's current
+  // plan/region, fall back once to multilingual_v2 rather than surfacing
+  // an error and losing the premium voice entirely for that request.
+  let providerResponse = await synthesize('eleven_v3');
+  if (!providerResponse.ok) {
+    console.error('ElevenLabs eleven_v3 failed, retrying with multilingual_v2', providerResponse.status);
+    providerResponse = await synthesize('eleven_multilingual_v2');
+  }
 
   if (!providerResponse.ok) {
     console.error('ElevenLabs TTS failed', providerResponse.status, await providerResponse.text());

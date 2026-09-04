@@ -1,4 +1,4 @@
--- VOXELO klan sohbeti — yalnızca aynı klandeki üyeler birbirini görür/yazar.
+-- VOXELITH klan sohbeti — yalnızca aynı klandeki üyeler birbirini görür/yazar.
 -- supabase_setup.sql ve leaderboard.sql'den SONRA çalıştırılmalı (clans/clan_members'a bağımlı).
 
 create table if not exists public.clan_messages (
@@ -39,7 +39,7 @@ returns table (
 )
 language sql security definer stable set search_path = public as $$
   select msg.id, msg.user_id,
-    coalesce(nullif(trim(profile.display_name), ''), 'VOXELO ' || upper(left(msg.user_id::text, 4))),
+    coalesce(nullif(trim(profile.display_name), ''), 'VOXELITH ' || upper(left(msg.user_id::text, 4))),
     msg.text, msg.created_at, msg.user_id = auth.uid()
   from public.clan_messages msg
   join public.clan_members member on member.clan_id = msg.clan_id and member.user_id = auth.uid()

@@ -7,7 +7,7 @@ import '../../data/supabase/supa_service.dart';
 import '../../state/session.dart';
 import '../../ui/widgets.dart';
 
-/// VOXELO Hesap — e-posta + şifre ile giriş / kayıt.
+/// VOXELITH Hesap — e-posta + şifre ile giriş / kayıt.
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
 
@@ -93,9 +93,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Voxelo.cream,
-      appBar: VoxeloAppBar(
-        backgroundColor: Voxelo.cream,
+      backgroundColor: Voxelith.cream,
+      appBar: VoxelithAppBar(
+        backgroundColor: Voxelith.cream,
         pageTitle: const Text('Hesap'),
       ),
       body: SafeArea(
@@ -109,7 +109,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             const SizedBox(height: 6),
             const Text(
               'Giriş yapınca dil seçimin, seri ve öğrendiğin kalıplar sunucuya yedeklenir. Yeni telefonda aynı hesapla girince kaldığın yerden devam edersin.',
-              style: TextStyle(color: Voxelo.muted, height: 1.45),
+              style: TextStyle(color: Voxelith.muted, height: 1.45),
             ),
             const SizedBox(height: 20),
             TextField(
@@ -132,16 +132,16 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             ),
             if (_err != null) ...[
               const SizedBox(height: 12),
-              Text(_err!, style: const TextStyle(color: Voxelo.terr)),
+              Text(_err!, style: const TextStyle(color: Voxelith.terr)),
             ],
             if (_info != null) ...[
               const SizedBox(height: 12),
-              Text(_info!, style: const TextStyle(color: Voxelo.forest)),
+              Text(_info!, style: const TextStyle(color: Voxelith.forest)),
             ],
             const SizedBox(height: 16),
             FilledButton(
               style: FilledButton.styleFrom(
-                backgroundColor: Voxelo.forest,
+                backgroundColor: Voxelith.forest,
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
               onPressed: _busy ? null : _go,
@@ -151,7 +151,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       height: 22,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: Voxelo.cream,
+                        color: Voxelith.cream,
                       ),
                     )
                   : Text(_signup ? 'Kayıt ol' : 'Giriş yap'),
@@ -173,7 +173,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             const SizedBox(height: 16),
             const Text(
               'Şifren yalnızca Supabase sunucusunda saklanır. Uygulama şifreni cihazda tutmaz.',
-              style: TextStyle(color: Voxelo.soft, fontSize: 13, height: 1.4),
+              style: TextStyle(color: Voxelith.soft, fontSize: 13, height: 1.4),
             ),
           ],
         ),

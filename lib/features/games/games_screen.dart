@@ -34,7 +34,7 @@ class GamesScreen extends ConsumerWidget {
         'Doğru / Yanlış',
         'Çeviri eşleşmesini değerlendir',
         Icons.rule_rounded,
-        Voxelo.mint,
+        Voxelith.mint,
         () => TrueFalseGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -46,7 +46,7 @@ class GamesScreen extends ConsumerWidget {
         'Harf Sıralama',
         'Karışık harflerden kelime kur',
         Icons.sort_by_alpha_rounded,
-        Voxelo.sky,
+        Voxelith.sky,
         () => LetterOrderGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -58,7 +58,7 @@ class GamesScreen extends ConsumerWidget {
         'Ses Bulmaca',
         'Dinle ve dört seçenekten bul',
         Icons.headphones_rounded,
-        Voxelo.lavender,
+        Voxelith.lavender,
         () => AudioPuzzleScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -70,7 +70,7 @@ class GamesScreen extends ConsumerWidget {
         'Boşluk Doldur',
         'Eksik kelimeyi tamamla',
         Icons.edit_note_rounded,
-        Voxelo.coral,
+        Voxelith.coral,
         () => FillBlankGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -82,7 +82,7 @@ class GamesScreen extends ConsumerWidget {
         'Zamana Karşı',
         '60 saniyede en çok doğru',
         Icons.timer_outlined,
-        Voxelo.sunflower,
+        Voxelith.sunflower,
         () => TimedGameScreen(
           lang: profile.learnLang,
           ui: profile.uiLang,
@@ -135,7 +135,7 @@ class _GameCard extends StatelessWidget {
   final _GameDefinition definition;
 
   @override
-  Widget build(BuildContext context) => VoxeloCard(
+  Widget build(BuildContext context) => VoxelithCard(
     onTap: () => Navigator.of(
       context,
       rootNavigator: true,
@@ -147,7 +147,7 @@ class _GameCard extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
             color: definition.color.withValues(alpha: .12),
-            borderRadius: BorderRadius.circular(Voxelo.radius),
+            borderRadius: BorderRadius.circular(Voxelith.radius),
           ),
           child: Icon(definition.icon, color: definition.color),
         ),
@@ -265,7 +265,13 @@ class _TrueFalseGameScreenState extends State<TrueFalseGameScreen> {
           ),
         ),
         const SizedBox(height: 24),
-        _PromptCard(primary: phrase.target, secondary: proposed),
+        _PromptCard(
+          primary: phrase.target,
+          secondary: proposed,
+          textDirection: widget.lang.isRtl
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+        ),
         const Spacer(),
         Row(
           children: [
@@ -404,9 +410,9 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
             constraints: const BoxConstraints(minHeight: 72),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Voxelo.mintLight,
-              borderRadius: BorderRadius.circular(Voxelo.radius),
-              border: Border.all(color: Voxelo.mint),
+              color: Voxelith.mintLight,
+              borderRadius: BorderRadius.circular(Voxelith.radius),
+              border: Border.all(color: Voxelith.mint),
             ),
             child: Wrap(
               alignment: WrapAlignment.center,
@@ -440,11 +446,11 @@ class _LetterOrderGameScreenState extends State<LetterOrderGameScreen> {
 
   Widget _letter(_LetterTile tile, VoidCallback tap, bool selectedTile) =>
       Material(
-        color: selectedTile ? Voxelo.mintDark : Colors.white,
-        borderRadius: BorderRadius.circular(Voxelo.radiusSm),
+        color: selectedTile ? Voxelith.mintDark : Colors.white,
+        borderRadius: BorderRadius.circular(Voxelith.radiusSm),
         child: InkWell(
           onTap: tap,
-          borderRadius: BorderRadius.circular(Voxelo.radiusSm),
+          borderRadius: BorderRadius.circular(Voxelith.radiusSm),
           child: Container(
             constraints: const BoxConstraints(minWidth: 42, minHeight: 44),
             alignment: Alignment.center,
@@ -566,12 +572,12 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
           label: 'Sesi oynat',
           child: InkWell(
             onTap: _play,
-            borderRadius: BorderRadius.circular(Voxelo.radiusLg),
+            borderRadius: BorderRadius.circular(Voxelith.radiusLg),
             child: Container(
               width: 112,
               height: 112,
               decoration: const BoxDecoration(
-                color: Voxelo.mintDark,
+                color: Voxelith.mintDark,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -599,7 +605,7 @@ class _AudioPuzzleScreenState extends State<AudioPuzzleScreen> {
             correct: lastRight,
             message: lastRight
                 ? 'Harika dinledin!'
-                : 'Voxelo: dinledikçe daha net olacak.',
+                : 'Voxelith: dinledikçe daha net olacak.',
           ),
       ],
     ),
@@ -708,7 +714,12 @@ class _FillBlankGameScreenState extends State<FillBlankGameScreen> {
           ),
         ),
         const SizedBox(height: 26),
-        _PromptCard(primary: question),
+        _PromptCard(
+          primary: question,
+          textDirection: widget.lang.isRtl
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+        ),
         const SizedBox(height: 22),
         TextField(
           controller: controller,
@@ -810,7 +821,12 @@ class _TimedGameScreenState extends State<TimedGameScreen> {
           ),
         ),
         const SizedBox(height: 24),
-        _PromptCard(primary: phrase.target),
+        _PromptCard(
+          primary: phrase.target,
+          textDirection: widget.lang.isRtl
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+        ),
         const Spacer(),
         for (final option in options)
           Padding(
@@ -842,7 +858,7 @@ class _GameScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: VoxeloAppBar(
+    appBar: VoxelithAppBar(
       pageTitle: Text(title),
       actions: trailing == null
           ? null
@@ -869,23 +885,31 @@ class _GameScaffold extends StatelessWidget {
 }
 
 class _PromptCard extends StatelessWidget {
-  const _PromptCard({required this.primary, this.secondary});
+  const _PromptCard({
+    required this.primary,
+    this.secondary,
+    this.textDirection = TextDirection.ltr,
+  });
   final String primary;
   final String? secondary;
+  final TextDirection textDirection;
 
   @override
-  Widget build(BuildContext context) => VoxeloCard(
-    color: Voxelo.mintLight,
+  Widget build(BuildContext context) => VoxelithCard(
+    color: Voxelith.mintLight,
     child: Column(
       children: [
-        Text(
-          primary,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 23,
-            height: 1.3,
-            fontWeight: FontWeight.w700,
-            color: Theme.of(context).colorScheme.onSurface,
+        Directionality(
+          textDirection: textDirection,
+          child: Text(
+            primary,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 23,
+              height: 1.3,
+              fontWeight: FontWeight.w700,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ),
         if (secondary != null) ...[
@@ -926,7 +950,7 @@ Future<void> showGameResult(
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          VoxeloMascot(
+          VoxelithMascot(
             size: 76,
             mood: percent >= 70 ? MascotMood.celebrate : MascotMood.encourage,
           ),
@@ -936,7 +960,7 @@ Future<void> showGameResult(
             style: const TextStyle(
               fontSize: 42,
               fontWeight: FontWeight.w700,
-              color: Voxelo.mintDark,
+              color: Voxelith.mintDark,
             ),
           ),
           const SizedBox(height: 6),
@@ -950,7 +974,7 @@ Future<void> showGameResult(
           Text(
             '+$earnedXp XP',
             style: const TextStyle(
-              color: Voxelo.sunflower,
+              color: Voxelith.sunflower,
               fontWeight: FontWeight.w700,
             ),
           ),

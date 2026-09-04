@@ -90,7 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Text(
             i18n.goodGreeting,
             style: const TextStyle(
-              color: Voxelo.forest,
+              color: Voxelith.forest,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -104,7 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
               ),
               if (p.streak >= 2) ...[
-                const VoxeloMascot(size: 48, mood: MascotMood.streak),
+                const VoxelithMascot(size: 48, mood: MascotMood.streak),
                 const SizedBox(width: 6),
               ],
               SizedBox(
@@ -119,8 +119,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           : (p.speakAllowance == 0
                                 ? 0
                                 : remain / p.speakAllowance),
-                      color: Voxelo.terr,
-                      backgroundColor: Voxelo.line,
+                      color: Voxelith.terr,
+                      backgroundColor: Voxelith.line,
                       strokeWidth: 5,
                     ),
                     Text(
@@ -136,14 +136,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ],
           ),
           const SizedBox(height: 14),
-          VoxeloCard(
+          VoxelithCard(
             key: _xpCardKey,
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 Row(
                   children: [
-                    const IconChip(VoxeloIcon.fire),
+                    const IconChip(VoxelithIcon.fire),
                     const SizedBox(width: 8),
                     Text(
                       '${p.totalXp} XP',
@@ -156,7 +156,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     Text(
                       p.xpRank.label,
                       style: const TextStyle(
-                        color: Voxelo.mintDark,
+                        color: Voxelith.mintDark,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -168,7 +168,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Row(
                   children: [
                     Text(
-                      'Bugün ${p.dailyXp} / ${UserProfile.dailyXpGoal} XP',
+                      i18n.homeXpToday(p.dailyXp, UserProfile.dailyXpGoal),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 12,
@@ -177,8 +177,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     const Spacer(),
                     Text(
                       p.dailyXp >= UserProfile.dailyXpGoal
-                          ? 'Hedef tamamlandı'
-                          : '${UserProfile.dailyXpGoal - p.dailyXp} XP kaldı',
+                          ? i18n.homeGoalCompleted
+                          : i18n.homeXpRemaining(
+                              UserProfile.dailyXpGoal - p.dailyXp,
+                            ),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 12,
@@ -190,12 +192,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/event'),
-            color: const Color(0xFFF5E8E5),
+            color: Voxelith.eventTint,
             child: Row(
               children: [
-                const Icon(Icons.bolt_rounded, color: Voxelo.coral, size: 28),
+                const Icon(Icons.bolt_rounded, color: Voxelith.coral, size: 28),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -207,8 +209,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                       Text(
                         WeeklyEvent.current().isJoined(p)
-                            ? 'Katıldın · İspanyolca pratik yap'
-                            : 'Video ile katıl · bu hafta',
+                            ? i18n.homeEventJoinedNote
+                            : i18n.homeEventJoinCta,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontSize: 12,
@@ -217,7 +219,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ],
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: Voxelo.coral),
+                const Icon(Icons.chevron_right, color: Voxelith.coral),
               ],
             ),
           ),
@@ -226,11 +228,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             key: _todaySpeakKey,
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              color: Voxelo.forest,
-              borderRadius: BorderRadius.circular(Voxelo.radiusLg),
+              color: Voxelith.forest,
+              borderRadius: BorderRadius.circular(Voxelith.radiusLg),
               boxShadow: [
                 BoxShadow(
-                  color: Voxelo.forest.withValues(alpha: .35),
+                  color: Voxelith.forest.withValues(alpha: .35),
                   blurRadius: 24,
                   offset: const Offset(0, 12),
                 ),
@@ -242,14 +244,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Text(
                   i18n.todaySpeak,
                   style: const TextStyle(
-                    color: Voxelo.cream,
+                    color: Voxelith.cream,
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${scene.minutes} dk · ${scene.title(p.uiLang)}',
+                  i18n.homeSceneMinutes(scene.minutes, scene.title(p.uiLang)),
                   style: const TextStyle(
                     color: Color(0xFFB8C8C0),
                     fontSize: 15,
@@ -260,8 +262,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   alignment: Alignment.centerRight,
                   child: FilledButton(
                     style: FilledButton.styleFrom(
-                      backgroundColor: Voxelo.terr,
-                      foregroundColor: Voxelo.cream,
+                      backgroundColor: Voxelith.terr,
+                      foregroundColor: Voxelith.cream,
                       minimumSize: const Size(160, 44),
                     ),
                     onPressed: () => context.push('/session?id=${scene.id}'),
@@ -286,21 +288,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     CircleAvatar(
                       radius: 18,
                       backgroundColor: i < idx
-                          ? Voxelo.forest
+                          ? Voxelith.forest
                           : current
-                          ? Voxelo.terr
-                          : Voxelo.line,
+                          ? Voxelith.terr
+                          : Voxelith.line,
                       child: i < idx
                           ? const Icon(
                               Icons.check,
                               size: 16,
-                              color: Voxelo.cream,
+                              color: Voxelith.cream,
                             )
                           : Text(
                               '${i + 1}',
                               style: TextStyle(
                                 color: current
-                                    ? Voxelo.cream
+                                    ? Voxelith.cream
                                     : Theme.of(context).colorScheme.onSurface,
                                 fontSize: 12,
                               ),
@@ -316,7 +318,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         style: TextStyle(
                           fontSize: 11,
                           color: current
-                              ? Voxelo.terr
+                              ? Voxelith.terr
                               : Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -331,32 +333,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const SizedBox(height: 12),
           Row(
             children: [
-              _stat(VoxeloIcon.fire, '${p.streak}', i18n.streak, Voxelo.terr),
+              _stat(VoxelithIcon.fire, '${p.streak}', i18n.streak, Voxelith.terr),
               _stat(
-                VoxeloIcon.medal,
+                VoxelithIcon.medal,
                 p.cefr.name.toUpperCase(),
                 'CEFR',
-                Voxelo.forest,
+                Voxelith.forest,
               ),
               _stat(
-                VoxeloIcon.book,
+                VoxelithIcon.book,
                 '${p.phrasesKnown}',
                 i18n.phrases,
-                Voxelo.forest,
+                Voxelith.forest,
               ),
             ],
           ),
           const SizedBox(height: 16),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/leaderboard'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.leaderboard),
+                const IconChip(VoxelithIcon.leaderboard),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Haftalık sıralama',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    i18n.homeWeeklyLeaderboard,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
                 Icon(
@@ -367,15 +369,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/alphabet?lang=${p.learnLang.code}'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.guide),
+                const IconChip(VoxelithIcon.guide),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Alfabe · ${p.learnLang.flag()} harfleri öğren',
+                    i18n.homeAlphabetCta(p.learnLang.flag()),
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -390,16 +392,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             key: _libraryKey,
             onTap: () => context.push('/library'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.book),
+                const IconChip(VoxelithIcon.book),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Kitaplık',
+                    i18n.homeTourLibraryTitle,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -414,25 +416,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.go('/app/chat'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.chat),
+                const IconChip(VoxelithIcon.chat),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Serbest Sohbet',
+                        i18n.homeFreeChatTitle,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       Text(
-                        p.isPlus ? 'Voxelo ile canlı konuş' : 'Plus ile aç',
+                        p.isPlus
+                            ? i18n.homeFreeChatPlusNote
+                            : i18n.homeFreeChatLockedNote,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontSize: 12,
@@ -456,7 +460,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             onTap: () => context.push('/guide'),
             child: Row(
               children: [
@@ -479,12 +483,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             key: _reviewKey,
             onTap: () => context.push('/review'),
             child: Row(
               children: [
-                const IconChip(VoxeloIcon.replay),
+                const IconChip(VoxelithIcon.replay),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -503,16 +507,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          VoxeloCard(
+          VoxelithCard(
             child: Row(
               children: [
-                const Icon(Icons.campaign_outlined, color: Voxelo.terr),
+                const Icon(Icons.campaign_outlined, color: Voxelith.terr),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    p.isPlus
-                        ? 'Plus · reklamsız, sınırsız konuşma'
-                        : i18n.freeMinute,
+                    p.isPlus ? i18n.homePlusAdFreeNote : i18n.freeMinute,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -527,9 +529,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _stat(VoxeloIcon ic, String v, String l, Color c) {
+  Widget _stat(VoxelithIcon ic, String v, String l, Color c) {
     return Expanded(
-      child: VoxeloCard(
+      child: VoxelithCard(
         child: Column(
           children: [
             IconChip(ic, size: 36),

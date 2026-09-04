@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Voxelo'nun kendi çizgi ikon seti — Material ikon fontu yerine, marka
+/// Voxelith'nun kendi çizgi ikon seti — Material ikon fontu yerine, marka
 /// önizlemesinde onaylanan modern/temiz görünümü birebir vermek için
-/// Canvas üzerine elle çizilir (VoxeloMascot'un yaptığı gibi, harici asset
+/// Canvas üzerine elle çizilir (VoxelithMascot'un yaptığı gibi, harici asset
 /// veya paket yok).
-enum VoxeloIcon {
+enum VoxelithIcon {
   fire,
   medal,
   book,
@@ -22,43 +22,43 @@ enum VoxeloIcon {
 
 /// Her ikonun kendi sabit, canlı gradyan kimliği — hangi tema aktif
 /// olursa olsun aynı (mockup'ta onaylanan tasarım tema-bağımsızdı).
-extension VoxeloIconGradient on VoxeloIcon {
+extension VoxelithIconGradient on VoxelithIcon {
   List<Color> get gradient => switch (this) {
-    VoxeloIcon.fire => const [Color(0xFFFF9A3D), Color(0xFFF43F5E)],
-    VoxeloIcon.medal => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
-    VoxeloIcon.book => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
-    VoxeloIcon.bell => const [Color(0xFFFFC800), Color(0xFFF59E0B)],
-    VoxeloIcon.globe => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
-    VoxeloIcon.card => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
-    VoxeloIcon.family => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
-    VoxeloIcon.cloud => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
-    VoxeloIcon.leaderboard => const [Color(0xFF58CC02), Color(0xFF46A302)],
-    VoxeloIcon.guide => const [Color(0xFF58CC02), Color(0xFF46A302)],
-    VoxeloIcon.chat => const [Color(0xFFF43F5E), Color(0xFFF472B6)],
-    VoxeloIcon.replay => const [Color(0xFF58CC02), Color(0xFF46A302)],
-    VoxeloIcon.logout => const [Color(0xFF9AA0A6), Color(0xFF6B7280)],
+    VoxelithIcon.fire => const [Color(0xFFFF9A3D), Color(0xFFF43F5E)],
+    VoxelithIcon.medal => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
+    VoxelithIcon.book => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
+    VoxelithIcon.bell => const [Color(0xFFFFC800), Color(0xFFF59E0B)],
+    VoxelithIcon.globe => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
+    VoxelithIcon.card => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
+    VoxelithIcon.family => const [Color(0xFF8B5CF6), Color(0xFFF472B6)],
+    VoxelithIcon.cloud => const [Color(0xFF22D3EE), Color(0xFF3B82F6)],
+    VoxelithIcon.leaderboard => const [Color(0xFF58CC02), Color(0xFF46A302)],
+    VoxelithIcon.guide => const [Color(0xFF58CC02), Color(0xFF46A302)],
+    VoxelithIcon.chat => const [Color(0xFFF43F5E), Color(0xFFF472B6)],
+    VoxelithIcon.replay => const [Color(0xFF58CC02), Color(0xFF46A302)],
+    VoxelithIcon.logout => const [Color(0xFF9AA0A6), Color(0xFF6B7280)],
   };
 }
 
-class VoxeloLineIcon extends StatelessWidget {
-  const VoxeloLineIcon(this.icon, {super.key, this.size = 20, this.color});
-  final VoxeloIcon icon;
+class VoxelithLineIcon extends StatelessWidget {
+  const VoxelithLineIcon(this.icon, {super.key, this.size = 20, this.color});
+  final VoxelithIcon icon;
   final double size;
   final Color? color;
 
   @override
   Widget build(BuildContext context) => CustomPaint(
     size: Size.square(size),
-    painter: _VoxeloIconPainter(
+    painter: _VoxelithIconPainter(
       icon,
       color ?? IconTheme.of(context).color ?? Colors.white,
     ),
   );
 }
 
-class _VoxeloIconPainter extends CustomPainter {
-  const _VoxeloIconPainter(this.icon, this.color);
-  final VoxeloIcon icon;
+class _VoxelithIconPainter extends CustomPainter {
+  const _VoxelithIconPainter(this.icon, this.color);
+  final VoxelithIcon icon;
   final Color color;
 
   @override
@@ -76,7 +76,7 @@ class _VoxeloIconPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round;
 
     switch (icon) {
-      case VoxeloIcon.fire:
+      case VoxelithIcon.fire:
         final p = Path()
           ..moveTo(12, 2.6)
           ..quadraticBezierTo(18, 9, 13.2, 12.5)
@@ -91,7 +91,7 @@ class _VoxeloIconPainter extends CustomPainter {
           ..quadraticBezierTo(9.8, 9.5, 12, 2.6)
           ..close();
         canvas.drawPath(p, fill);
-      case VoxeloIcon.medal:
+      case VoxelithIcon.medal:
         canvas.drawCircle(const Offset(12, 9.2), 5.6, fill);
         final ribbon = Path()
           ..moveTo(8.7, 13.6)
@@ -106,7 +106,7 @@ class _VoxeloIconPainter extends CustomPainter {
           2.6,
           Paint()..color = color.withValues(alpha: 0.35),
         );
-      case VoxeloIcon.book:
+      case VoxelithIcon.book:
         final rr = RRect.fromRectAndRadius(
           const Rect.fromLTWH(3.5, 4, 17, 16),
           const Radius.circular(2.4),
@@ -133,7 +133,7 @@ class _VoxeloIconPainter extends CustomPainter {
           const Offset(17.8, 11.6),
           stroke,
         );
-      case VoxeloIcon.bell:
+      case VoxelithIcon.bell:
         final p = Path()
           ..moveTo(6, 10.5)
           ..arcToPoint(
@@ -153,14 +153,14 @@ class _VoxeloIconPainter extends CustomPainter {
           false,
           stroke,
         );
-      case VoxeloIcon.globe:
+      case VoxelithIcon.globe:
         canvas.drawCircle(const Offset(12, 12), 9, stroke);
         canvas.drawOval(
           Rect.fromCenter(center: const Offset(12, 12), width: 8, height: 18),
           stroke,
         );
         canvas.drawLine(const Offset(3, 12), const Offset(21, 12), stroke);
-      case VoxeloIcon.card:
+      case VoxelithIcon.card:
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             const Rect.fromLTWH(3, 6, 18, 13),
@@ -169,7 +169,7 @@ class _VoxeloIconPainter extends CustomPainter {
           stroke,
         );
         canvas.drawRect(const Rect.fromLTWH(3, 9.5, 18, 3.2), fill);
-      case VoxeloIcon.logout:
+      case VoxelithIcon.logout:
         canvas.drawPath(
           Path()
             ..moveTo(14.5, 4.5)
@@ -191,7 +191,7 @@ class _VoxeloIconPainter extends CustomPainter {
             ..lineTo(16, 15.7),
           stroke,
         );
-      case VoxeloIcon.family:
+      case VoxelithIcon.family:
         canvas.drawCircle(const Offset(8.5, 7.5), 3.1, fill);
         canvas.drawCircle(const Offset(16, 8), 2.6, fill);
         canvas.drawPath(
@@ -208,7 +208,7 @@ class _VoxeloIconPainter extends CustomPainter {
             ..close(),
           Paint()..color = color.withValues(alpha: 0.7),
         );
-      case VoxeloIcon.cloud:
+      case VoxelithIcon.cloud:
         canvas.drawPath(
           Path()
             ..moveTo(6.5, 18)
@@ -219,7 +219,7 @@ class _VoxeloIconPainter extends CustomPainter {
             ..close(),
           fill,
         );
-      case VoxeloIcon.leaderboard:
+      case VoxelithIcon.leaderboard:
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             const Rect.fromLTWH(3.5, 14, 5, 7),
@@ -241,7 +241,7 @@ class _VoxeloIconPainter extends CustomPainter {
           ),
           fill,
         );
-      case VoxeloIcon.guide:
+      case VoxelithIcon.guide:
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             const Rect.fromLTWH(3.5, 5, 12, 2.6),
@@ -263,7 +263,7 @@ class _VoxeloIconPainter extends CustomPainter {
           ),
           fill,
         );
-      case VoxeloIcon.chat:
+      case VoxelithIcon.chat:
         canvas.drawPath(
           Path()
             ..moveTo(4.5, 6.5)
@@ -291,7 +291,7 @@ class _VoxeloIconPainter extends CustomPainter {
             ..close(),
           fill,
         );
-      case VoxeloIcon.replay:
+      case VoxelithIcon.replay:
         canvas.drawArc(
           const Rect.fromLTWH(3.5, 3.5, 17, 17),
           0.6,
@@ -312,6 +312,6 @@ class _VoxeloIconPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _VoxeloIconPainter oldDelegate) =>
+  bool shouldRepaint(covariant _VoxelithIconPainter oldDelegate) =>
       oldDelegate.icon != icon || oldDelegate.color != color;
 }

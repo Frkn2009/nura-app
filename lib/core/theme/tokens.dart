@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// VOXELO Tema Tokenleri — Duolingo/Drops tarzı canlı, oyunsu, samimi
-class VoxeloTokens {
-  VoxeloTokens._();
+/// VOXELITH Tema Tokenleri — Duolingo/Drops tarzı canlı, oyunsu, samimi
+class VoxelithTokens {
+  VoxelithTokens._();
 
   // Arka plan
   static const background = Color(0xFFF7F7F7);
@@ -80,7 +80,14 @@ class VoxeloTokens {
   static const fog = Color(0xFFE8E8ED);
   static const ink = textPrimary;
   static const muted = textSecondary;
-  static const soft = Color(0xFFB2BEC3);
+  // Eskiden 0xFFB2BEC3 idi — beyaz zeminde ~1.9:1 kontrast (WCAG AA'nın
+  // gerektirdiği 4.5:1'in çok altında), gövde metni/placeholder olarak
+  // kullanıldığında okunmuyordu. Aynı "yumuşak" ton karakterini korurken
+  // ~4.7:1 kontrasta çıkarıldı.
+  static const soft = Color(0xFF70787F);
+  // Etkinlik kartındaki pembe ton (home_screen.dart) daha önce token'sız,
+  // satır içi bir renkti — burada isimlendirilerek tutarlı hale getirildi.
+  static const eventTint = Color(0xFFF5E8E5);
   static const terr = danger;
   static const terrSoft = gold;
   static const line = fog;
@@ -96,5 +103,5 @@ class VoxeloTokens {
   static const radiusLg = radiusLarge;
 }
 
-// Voxelo alias — eski kodla uyum
-typedef Voxelo = VoxeloTokens;
+// Voxelith alias — eski kodla uyum
+typedef Voxelith = VoxelithTokens;

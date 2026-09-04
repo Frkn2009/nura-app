@@ -31,7 +31,7 @@ extension AchievementX on Achievement {
     Achievement.tenPhrases => '10 cümle öğren',
     Achievement.gamer => 'İlk oyununu tamamla',
     Achievement.traveler => '3 farklı dilde sahne tamamla',
-    Achievement.plus => 'VOXELO Plus üyesi ol',
+    Achievement.plus => 'VOXELITH Plus üyesi ol',
     Achievement.weeklyChampion => 'Haftalık sıralamada birinci ol',
     Achievement.dailyHundred => 'Günlük 100 XP hedefine ulaş',
     Achievement.sevenDayStreak => '7 gün kesintisiz pratik yap',

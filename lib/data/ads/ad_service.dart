@@ -7,19 +7,19 @@ class AdService {
   static bool _canRequestAds = false;
 
   static const _rewardedAndroid = String.fromEnvironment(
-    'VOXELO_ADMOB_REWARDED_ANDROID',
+    'VOXELITH_ADMOB_REWARDED_ANDROID',
     defaultValue: 'ca-app-pub-3940256099942544/5224354917',
   );
   static const _rewardedIos = String.fromEnvironment(
-    'VOXELO_ADMOB_REWARDED_IOS',
+    'VOXELITH_ADMOB_REWARDED_IOS',
     defaultValue: 'ca-app-pub-3940256099942544/1712485313',
   );
   static const _interstitialAndroid = String.fromEnvironment(
-    'VOXELO_ADMOB_INTERSTITIAL_ANDROID',
+    'VOXELITH_ADMOB_INTERSTITIAL_ANDROID',
     defaultValue: 'ca-app-pub-3940256099942544/1033173712',
   );
   static const _interstitialIos = String.fromEnvironment(
-    'VOXELO_ADMOB_INTERSTITIAL_IOS',
+    'VOXELITH_ADMOB_INTERSTITIAL_IOS',
     defaultValue: 'ca-app-pub-3940256099942544/4411468910',
   );
 

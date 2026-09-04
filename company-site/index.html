@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Drevonyx</title>
+<meta name="description" content="Drevonyx — Voxelith'i ve yakında gelecek masaüstü yazılımını üreten şirket."/>
+<style>
+  @font-face { font-family: 'Sora'; src: url('fonts/Sora.ttf') format('truetype'); font-weight: 400 800; font-display: swap; }
+  @font-face { font-family: 'Manrope'; src: url('fonts/Manrope.ttf') format('truetype'); font-weight: 400 800; font-display: swap; }
+
+  :root{
+    --ink:#0E1013; --ink-raised:#16191D; --line:#282C32;
+    --paper:#F3F1EC; --paper-dim:#B7B4AD;
+    --amber:#FF7A34; --amber-dim:#B4501C;
+    --voxelith:#58CC02; --voxelith-blue:#1CB0F6;
+    --radius-lg:28px; --radius-md:18px; --radius-pill:999px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand-word{ font-family:'Sora',system-ui,sans-serif; letter-spacing:-0.02em; }
+  a{ color:inherit }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; }
+
+  /* ---- nav ---- */
+  header.nav{ position:relative; z-index:5; padding:28px 0; }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark{ width:36px; height:36px; flex:none; }
+  .brand-word{ font-weight:700; font-size:19px; letter-spacing:0.02em; }
+  nav.links{ display:flex; gap:32px; font-size:14.5px; font-weight:600; color:var(--paper-dim); }
+  nav.links a{ text-decoration:none; transition:color .15s; }
+  nav.links a:hover{ color:var(--paper); }
+
+  /* ---- hero ---- */
+  .hero{ position:relative; padding:64px 0 40px; overflow:hidden; }
+  .hero-grid{ position:relative; z-index:1; display:grid; grid-template-columns:1.05fr 0.95fr; gap:40px; align-items:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); }
+  h1.headline{ font-size:clamp(40px,5.2vw,64px); line-height:1.02; font-weight:800; margin:22px 0 24px; color:var(--paper); }
+  h1.headline em{ font-style:normal; color:var(--amber); }
+  p.sub{ font-size:19px; line-height:1.6; color:var(--paper-dim); max-width:540px; margin:0 0 36px; }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:9px; font-family:'Manrope'; font-weight:700; font-size:15px; padding:16px 28px; border-radius:var(--radius-pill); text-decoration:none; border:1.5px solid transparent; transition:transform .15s, background .15s, border-color .15s; }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-amber{ background:var(--amber); color:#1A0E06; box-shadow:0 14px 28px rgba(255,122,52,.28); }
+  .btn-ghost{ background:transparent; color:var(--paper); border-color:var(--line); }
+  .btn-ghost:hover{ border-color:var(--paper-dim); }
+
+  /* ---- hero network graphic (AI motif) ---- */
+  .net-wrap{ position:relative; aspect-ratio:1/1; max-width:480px; margin:0 auto; }
+  .net-glow{ position:absolute; inset:8%; border-radius:50%; background:radial-gradient(circle, rgba(255,122,52,.20), rgba(255,122,52,0) 70%); filter:blur(6px); }
+  .net-svg{ position:relative; width:100%; height:100%; }
+  .net-line{ stroke:#3A3F46; stroke-width:1.4; fill:none; }
+  .net-line.live{ stroke:var(--amber); stroke-width:1.6; stroke-dasharray:6 10; animation:flow 5s linear infinite; opacity:.85; }
+  .net-line.live2{ stroke:var(--voxelith-blue); stroke-width:1.4; stroke-dasharray:5 9; animation:flow 6.5s linear infinite reverse; opacity:.7; }
+  @keyframes flow{ to{ stroke-dashoffset:-160; } }
+  .net-node{ fill:var(--ink-raised); stroke:#3A3F46; stroke-width:1.4; }
+  .net-node.core{ fill:var(--amber); stroke:none; animation:pulse 2.6s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
+  .net-node.a{ animation:blink 3.4s ease-in-out infinite; }
+  .net-node.b{ animation:blink 3.4s ease-in-out infinite .6s; }
+  .net-node.c{ animation:blink 3.4s ease-in-out infinite 1.2s; }
+  .net-node.d{ animation:blink 3.4s ease-in-out infinite 1.8s; }
+  @keyframes pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.18); } }
+  @keyframes blink{ 0%,100%{ stroke:#3A3F46; } 50%{ stroke:var(--amber); } }
+  .net-label{ font-family:'Manrope'; font-size:8.5px; font-weight:700; fill:var(--paper-dim); letter-spacing:.04em; }
+
+  /* ---- tech strip ---- */
+  section.tech{ padding:56px 0 24px; position:relative; z-index:1; }
+  .tech-head{ display:flex; align-items:baseline; justify-content:space-between; gap:20px; flex-wrap:wrap; margin:0 0 28px; }
+  .tech-head h2{ font-size:22px; margin:0; color:var(--paper); }
+  .tech-head span.eyebrow{ margin-bottom:0; }
+  .tech-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .tech-card{ background:var(--ink-raised); border:1px solid var(--line); border-radius:var(--radius-md); padding:24px; }
+  .tech-card .tech-icon{ width:38px; height:38px; border-radius:11px; background:rgba(255,122,52,.14); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .tech-card h3{ font-size:16px; margin:0 0 8px; color:var(--paper); font-weight:700; }
+  .tech-card p{ font-size:13.5px; line-height:1.55; color:var(--paper-dim); margin:0; }
+
+  /* ---- products ---- */
+  section.products{ padding:40px 0 96px; position:relative; z-index:1; }
+  .section-head{ max-width:560px; margin:0 0 44px; }
+  .section-head .eyebrow{ color:var(--paper-dim); }
+  .section-head h2{ font-size:34px; margin:14px 0 12px; color:var(--paper); }
+  .section-head p{ color:var(--paper-dim); font-size:16px; margin:0; line-height:1.6; }
+
+  .product-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:24px; align-items:stretch; }
+  .card{ border-radius:var(--radius-lg); padding:36px; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+  .card-voxelith{ background:linear-gradient(155deg, #12321A 0%, var(--ink-raised) 62%); border:1px solid #244D2A; }
+  .card-pc{ background:var(--ink-raised); border:1px dashed var(--line); }
+
+  .card-tag{ display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; border-radius:var(--radius-pill); width:fit-content; }
+  .tag-live{ background:rgba(88,204,2,.16); color:var(--voxelith); }
+  .tag-soon{ background:rgba(183,180,173,.12); color:var(--paper-dim); }
+
+  .card h3{ font-size:26px; margin:20px 0 10px; color:var(--paper); display:flex; align-items:center; gap:10px; }
+  .card p.desc{ color:var(--paper-dim); font-size:15px; line-height:1.6; margin:0 0 26px; max-width:420px; }
+  .card .actions{ margin-top:auto; display:flex; gap:12px; flex-wrap:wrap; }
+  .card .btn-small{ padding:12px 20px; font-size:14px; }
+  .btn-voxelith{ background:var(--voxelith); color:#0C2103; }
+  .btn-voxelith-ghost{ background:transparent; color:var(--voxelith); border-color:#2E5C1A; }
+  .apk-note{ font-size:12.5px; color:var(--paper-dim); opacity:.75; margin-top:12px; line-height:1.5; }
+
+  .voxelith-mark{ width:30px; height:30px; flex:none; }
+  .pc-icon{ width:44px; height:44px; border-radius:14px; background:rgba(183,180,173,.1); display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--paper-dim); }
+
+  /* ---- about ---- */
+  section.about{ padding:72px 0; border-top:1px solid var(--line); position:relative; z-index:1; }
+  .about-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start; }
+  .about-grid h2{ font-size:30px; margin:0 0 4px; color:var(--paper); }
+  .about-grid .kicker{ color:var(--amber); font-weight:700; font-size:13px; letter-spacing:.14em; text-transform:uppercase; }
+  .about-body p{ color:var(--paper-dim); font-size:16.5px; line-height:1.75; margin:0 0 18px; }
+  .about-body strong{ color:var(--paper); }
+
+  /* ---- footer ---- */
+  footer{ padding:36px 0 44px; border-top:1px solid var(--line); position:relative; z-index:1; }
+  .foot-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; color:var(--paper-dim); font-size:13.5px; }
+  footer .brand{ opacity:.85; }
+  footer a.contact{ font-weight:700; color:var(--amber); text-decoration:none; }
+
+  @media (max-width:860px){
+    nav.links{ display:none; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .net-wrap{ max-width:320px; }
+    .tech-grid{ grid-template-columns:1fr; }
+    .product-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; gap:28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <rect x="8" y="8" width="84" height="84" rx="20" transform="rotate(45 50 50)" fill="none" stroke="var(--amber)" stroke-width="6"/>
+        <path d="M36 30 h14 a20 20 0 0 1 0 40 h-14 Z M36 30 v40" fill="none" stroke="#F3F1EC" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-word">DREVONYX</span>
+    </div>
+    <nav class="links">
+      <a href="#products">Ürünler</a>
+      <a href="#about">Hakkımızda</a>
+      <a href="mailto:merhaba@drevonyx.com">İletişim</a>
+    </nav>
+  </div>
+</header>
+
+<main class="hero wrap">
+  <div class="hero-grid">
+    <div class="hero-inner">
+      <span class="eyebrow">● Yapay zeka destekli yazılım şirketi</span>
+      <h1 class="headline">Bir ürün değil,<br/><em>bir çatı</em> kuruyoruz.</h1>
+      <p class="sub">Drevonyx, yapay zekayı gerçek özelliklere dönüştüren bir teknoloji şirketi. İlk ürünümüz Voxelith konuşarak dil öğretiyor — sırada masaüstü için yeni bir araç var.</p>
+      <div class="cta-row">
+        <a class="btn btn-amber" href="#products">Ürünlerimiz</a>
+        <a class="btn btn-ghost" href="#tech">Teknoloji</a>
+      </div>
+    </div>
+    <div class="net-wrap">
+      <div class="net-glow"></div>
+      <svg class="net-svg" viewBox="0 0 400 400" aria-hidden="true">
+        <line class="net-line" x1="200" y1="200" x2="330" y2="300"/>
+        <line class="net-line" x1="200" y1="200" x2="80" y2="310"/>
+        <line class="net-line" x1="90" y1="110" x2="200" y2="60"/>
+        <line class="net-line" x1="320" y1="90" x2="200" y2="60"/>
+        <line class="net-line" x1="90" y1="110" x2="80" y2="310"/>
+        <line class="net-line" x1="320" y1="90" x2="330" y2="300"/>
+        <line class="net-line live" x1="200" y1="200" x2="90" y2="110"/>
+        <line class="net-line live2" x1="200" y1="200" x2="320" y2="90"/>
+
+        <circle class="net-node a" cx="90" cy="110" r="7"/>
+        <circle class="net-node b" cx="320" cy="90" r="7"/>
+        <circle class="net-node c" cx="330" cy="300" r="7"/>
+        <circle class="net-node d" cx="80" cy="310" r="7"/>
+        <circle class="net-node" cx="200" cy="60" r="5.5"/>
+        <circle class="net-node core" cx="200" cy="200" r="15"/>
+
+        <text class="net-label" x="102" y="100">AI Sohbet</text>
+        <text class="net-label" x="325" y="80">Telaffuz</text>
+        <text class="net-label" x="300" y="322">FSRS-5</text>
+        <text class="net-label" x="20" y="332">30 Dil</text>
+      </svg>
+    </div>
+  </div>
+</main>
+
+<section class="tech wrap" id="tech">
+  <div class="tech-head">
+    <div>
+      <span class="eyebrow">Teknoloji</span>
+      <h2>Yapay zeka, konsept değil — çalışan özellik.</h2>
+    </div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon">🤖</div>
+      <h3>AI Sohbet Partneri</h3>
+      <p>Gerçek zamanlı, doğal dilde konuşma pratiği için Claude tabanlı yapay zeka entegrasyonu.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🎙️</div>
+      <h3>AI Telaffuz Analizi</h3>
+      <p>Söylediğin her cümleyi analiz edip anında, ekrana değil kendi sesine odaklanan geri bildirim verir.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🧠</div>
+      <h3>FSRS-5 Akıllı Tekrar</h3>
+      <p>Bilişsel bilime dayalı algoritma, tam unutmadan önceki doğru anı hesaplayıp hatırlatır.</p>
+    </div>
+  </div>
+</section>
+
+<section class="products wrap" id="products">
+  <div class="section-head">
+    <span class="eyebrow">Ürünler</span>
+    <h2>İki ürün, tek çatı.</h2>
+    <p>Biri bugün elinde, biri yolda. İkisi de aynı titizlikle inşa ediliyor.</p>
+  </div>
+  <div class="product-grid">
+    <div class="card card-voxelith">
+      <span class="card-tag tag-live">● Yayında</span>
+      <h3>
+        <svg class="voxelith-mark" viewBox="0 0 100 100" aria-hidden="true">
+          <rect width="100" height="100" rx="26" fill="#58CC02"/>
+          <path d="M18 30 h64 a10 10 0 0 1 10 10 v20 a10 10 0 0 1 -10 10 H46 L30 84 V70 H18 a10 10 0 0 1 -10 -10 V40 a10 10 0 0 1 10 -10 Z" fill="#fff"/>
+        </svg>
+        Voxelith
+      </h3>
+      <p class="desc">Gerçek cümlelerle, konuşarak dil öğrenen uygulama. Günde 12 dakika, aralıklı tekrarla kalıcı öğrenme — 30 dilde.</p>
+      <div class="actions">
+        <a class="btn btn-small btn-voxelith" href="../site/index.html">Ürün sayfasını gör →</a>
+        <a class="btn btn-small btn-voxelith-ghost" href="../build/app/outputs/flutter-apk/app-release.apk">APK indir</a>
+      </div>
+      <p class="apk-note">Not: indirilebilir APK, bu markanın son sürümüyle henüz eşleşmeyen bir önceki build'e ait — mağaza/yeni build yayınlanınca burada güncellenecek.</p>
+    </div>
+    <div class="card card-pc">
+      <span class="card-tag tag-soon">● Yakında</span>
+      <div class="pc-icon">🖥️</div>
+      <h3>PC Yazılımı</h3>
+      <p class="desc">Masaüstü için ikinci ürünümüz üzerinde çalışıyoruz. Detaylar yakında burada.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about wrap" id="about">
+  <div class="about-grid">
+    <div>
+      <span class="kicker">Hakkımızda</span>
+      <h2>Drevonyx</h2>
+    </div>
+    <div class="about-body">
+      <p><strong>Drevonyx</strong>, tek bir ürüne bağlı kalmadan, gerçekten kullanılan yazılımlar üretmek için kurulan bir şirket. İlk ürünümüz <strong>Voxelith</strong> ile başladık; hedefimiz bununla sınırlı değil.</p>
+      <p>Her ürünümüz aynı ilkeyle inşa ediliyor: gösterişten çok işe yarayan, sahibinin arkasında durabileceği bir tasarım.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span class="brand">© 2026 Drevonyx. Tüm hakları saklıdır.</span>
+    <span><a class="contact" href="mailto:merhaba@drevonyx.com">merhaba@drevonyx.com</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

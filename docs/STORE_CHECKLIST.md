@@ -1,4 +1,4 @@
-# VOXELO Store Release Checklist
+# VOXELITH Store Release Checklist
 
 ## Zorunlu
 - [x] İmza keystore üretildi
@@ -25,4 +25,4 @@
 3. Konuşma oturumu
 4. Oyunlar
 5. İlerleme / Rozetler
-6. VOXELO Plus
+6. VOXELITH Plus

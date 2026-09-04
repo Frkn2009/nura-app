@@ -1,4 +1,4 @@
-/// VOXELO — Supabase bağlantı bilgileri.
+/// VOXELITH — Supabase bağlantı bilgileri.
 ///
 /// Bu iki değeri Supabase Dashboard → Project Settings (⚙) → API bölümünden
 /// kopyala ve buraya yapıştır:

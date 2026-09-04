@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'voxelo_theme.dart';
+import 'voxelith_theme.dart';
 import 'tokens.dart';
 
 /// Bal/amber deri — sıcak, premium bir alternatif açık tema.
-class VoxeloAmber {
-  VoxeloAmber._();
+class VoxelithAmber {
+  VoxelithAmber._();
 
   static const honey = Color(0xFFC98A12);
   static const honeyDark = Color(0xFFA06D0B);
@@ -16,53 +16,53 @@ class VoxeloAmber {
   static const border = Color(0xFFEFE2C7);
 }
 
-ThemeData buildVoxeloAmberTheme() {
+ThemeData buildVoxelithAmberTheme() {
   const scheme = ColorScheme.light(
-    primary: VoxeloAmber.honey,
+    primary: VoxelithAmber.honey,
     onPrimary: Colors.white,
-    primaryContainer: VoxeloAmber.honeyLight,
-    onPrimaryContainer: VoxeloAmber.honeyDark,
-    secondary: Voxelo.coral,
+    primaryContainer: VoxelithAmber.honeyLight,
+    onPrimaryContainer: VoxelithAmber.honeyDark,
+    secondary: Voxelith.coral,
     onSecondary: Colors.white,
-    tertiary: Voxelo.lavender,
-    surface: VoxeloAmber.cardCream,
-    onSurface: Voxelo.ink,
-    surfaceContainerLow: VoxeloAmber.cream,
-    surfaceContainer: VoxeloAmber.honeyLight,
-    outline: VoxeloAmber.border,
-    outlineVariant: VoxeloAmber.border,
+    tertiary: Voxelith.lavender,
+    surface: VoxelithAmber.cardCream,
+    onSurface: Voxelith.ink,
+    surfaceContainerLow: VoxelithAmber.cream,
+    surfaceContainer: VoxelithAmber.honeyLight,
+    outline: VoxelithAmber.border,
+    outlineVariant: VoxelithAmber.border,
     error: Color(0xFFB4453C),
   );
 
-  final base = buildVoxeloTheme();
+  final base = buildVoxelithTheme();
   final shape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(Voxelo.radius),
+    borderRadius: BorderRadius.circular(Voxelith.radius),
   );
 
   return base.copyWith(
     colorScheme: scheme,
-    scaffoldBackgroundColor: VoxeloAmber.cream,
-    cardColor: VoxeloAmber.cardCream,
+    scaffoldBackgroundColor: VoxelithAmber.cream,
+    cardColor: VoxelithAmber.cardCream,
     appBarTheme: base.appBarTheme.copyWith(
-      backgroundColor: VoxeloAmber.cream,
+      backgroundColor: VoxelithAmber.cream,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
     ),
     cardTheme: CardThemeData(
-      color: VoxeloAmber.cardCream,
+      color: VoxelithAmber.cardCream,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radius),
-        side: const BorderSide(color: VoxeloAmber.border),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
+        side: const BorderSide(color: VoxelithAmber.border),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: VoxeloAmber.honeyDark,
+        backgroundColor: VoxelithAmber.honeyDark,
         foregroundColor: Colors.white,
-        disabledBackgroundColor: VoxeloAmber.border,
-        disabledForegroundColor: Voxelo.soft,
+        disabledBackgroundColor: VoxelithAmber.border,
+        disabledForegroundColor: Voxelith.soft,
         minimumSize: const Size.fromHeight(52),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         shape: shape,
@@ -72,54 +72,54 @@ ThemeData buildVoxeloAmberTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: VoxeloAmber.honeyDark,
+        foregroundColor: VoxelithAmber.honeyDark,
         minimumSize: const Size.fromHeight(52),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        side: const BorderSide(color: VoxeloAmber.border),
+        side: const BorderSide(color: VoxelithAmber.border),
         shape: shape,
         textStyle: base.textTheme.labelLarge?.copyWith(
-          color: VoxeloAmber.honeyDark,
+          color: VoxelithAmber.honeyDark,
         ),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: VoxeloAmber.honeyDark),
+      style: TextButton.styleFrom(foregroundColor: VoxelithAmber.honeyDark),
     ),
     inputDecorationTheme: base.inputDecorationTheme.copyWith(
-      fillColor: VoxeloAmber.cardCream,
+      fillColor: VoxelithAmber.cardCream,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radius),
-        borderSide: const BorderSide(color: VoxeloAmber.border),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
+        borderSide: const BorderSide(color: VoxelithAmber.border),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Voxelo.radius),
-        borderSide: const BorderSide(color: VoxeloAmber.honey, width: 1.5),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
+        borderSide: const BorderSide(color: VoxelithAmber.honey, width: 1.5),
       ),
     ),
     navigationBarTheme: base.navigationBarTheme.copyWith(
-      backgroundColor: VoxeloAmber.cardCream,
-      indicatorColor: VoxeloAmber.honeyLight,
+      backgroundColor: VoxelithAmber.cardCream,
+      indicatorColor: VoxelithAmber.honeyLight,
     ),
     dialogTheme: base.dialogTheme.copyWith(
-      backgroundColor: VoxeloAmber.cardCream,
+      backgroundColor: VoxelithAmber.cardCream,
     ),
     bottomSheetTheme: base.bottomSheetTheme.copyWith(
-      backgroundColor: VoxeloAmber.cardCream,
+      backgroundColor: VoxelithAmber.cardCream,
     ),
-    dividerColor: VoxeloAmber.border,
+    dividerColor: VoxelithAmber.border,
     dividerTheme: const DividerThemeData(
-      color: VoxeloAmber.border,
+      color: VoxelithAmber.border,
       thickness: 1,
     ),
     chipTheme: base.chipTheme.copyWith(
-      backgroundColor: VoxeloAmber.cardCream,
-      selectedColor: VoxeloAmber.honeyLight,
-      side: const BorderSide(color: VoxeloAmber.border),
+      backgroundColor: VoxelithAmber.cardCream,
+      selectedColor: VoxelithAmber.honeyLight,
+      side: const BorderSide(color: VoxelithAmber.border),
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: VoxeloAmber.honey,
-      linearTrackColor: VoxeloAmber.border,
-      circularTrackColor: VoxeloAmber.border,
+      color: VoxelithAmber.honey,
+      linearTrackColor: VoxelithAmber.border,
+      circularTrackColor: VoxelithAmber.border,
     ),
   );
 }

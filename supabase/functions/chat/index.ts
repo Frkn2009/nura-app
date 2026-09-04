@@ -66,6 +66,18 @@ Deno.serve(async (request) => {
     : 0;
   if (!subscription || periodEnd <= Date.now()) return json({ error: 'plus_required' }, 403);
 
+  // ~$0.0011/tur (Claude Haiku 4.5) — 25/gün (3 Eylül'de 40'tan düşürüldü)
+  // worst-case COGS'u bu kalemden ~$0.83/ay/kullanıcıda tutuyor. bkz.
+  // docs/MALIYET_ANALIZI_2026_09.md.
+  const CHAT_DAILY_LIMIT = 25;
+  const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
+    p_user_id: userData.user.id,
+    p_op: 'chat',
+    p_limit: CHAT_DAILY_LIMIT,
+  });
+  if (usageError) return json({ error: 'usage_check_failed' }, 502);
+  if (!allowed) return json({ error: 'daily_limit_reached' }, 429);
+
   let payload: {
     message?: unknown;
     targetLanguage?: unknown;
@@ -100,7 +112,7 @@ Deno.serve(async (request) => {
   const nativeName = languageNames[nativeLanguage] ?? 'English';
 
   const systemPrompt =
-    `You are Voxelo, a warm and encouraging conversation partner helping a ${level.toUpperCase()} ` +
+    `You are Voxelith, a warm and encouraging conversation partner helping a ${level.toUpperCase()} ` +
     `level learner practise spoken ${targetName}. Reply only in ${targetName}, in 1-3 short ` +
     `natural sentences suitable to be read aloud. Stay strictly in character as a friendly human ` +
     `conversation partner, never mention being an AI. If the learner makes a clear grammar or ` +

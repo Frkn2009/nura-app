@@ -1,4 +1,4 @@
-# VOXELO — Mağaza Metinleri (30 dil, kopyala-yapıştır hazır)
+# VOXELITH — Mağaza Metinleri (30 dil, kopyala-yapıştır hazır)
 
 `docs/STORE_METADATA_TR.md`'deki Türkçe metnin 29 dile çevirisi. Aynı kural
 geçerli: burada olmayan bir özellik (ör. video mikro-dersler) hiçbir dilde
@@ -12,11 +12,11 @@ birleşik kelimeli dillerde) birebir çeviri sınırı hafifçe aşabilir, yayı
 
 ## English (en)
 
-**Google Play title:** `VOXELO: Speak English`
+**Google Play title:** `VOXELITH: Speak English`
 **Google Play short (80):** `1 min/day speaking practice. Spanish, German, French, Dutch. Real scenarios.`
 **Google Play long:**
 ```
-Learn VOXELO by speaking — not memorizing.
+Learn VOXELITH by speaking — not memorizing.
 
 Every day, a short speaking scene made for you: listen, shadow, speak out
 loud. AI evaluates your pronunciation in real time and gives you instant
@@ -35,25 +35,25 @@ WHAT'S INSIDE:
   struggle
 • Clans: weekly XP competition with friends
 • Daily goals, streaks, badges
-• VOXELO Plus: unlimited speaking practice, no ads, premium natural voice,
+• VOXELITH Plus: unlimited speaking practice, no ads, premium natural voice,
   live AI conversation partner
 
 30 interface languages, pairable with any language you want to learn.
 Works offline — practice without internet, cloud sync is optional.
 
 Free tier: 60 seconds of speaking practice a day (extendable with a
-rewarded video). Unlimited with VOXELO Plus.
+rewarded video). Unlimited with VOXELITH Plus.
 
 Your privacy matters — no fake reviews or incentivized ratings, we grow
 on real feedback.
 ```
 
-**App Store title:** `VOXELO: Speak English`
+**App Store title:** `VOXELITH: Speak English`
 **App Store subtitle:** `Spanish German AI Tutor`
 **App Store keywords (100):** `speaking,spanish,german,french,dutch,pronunciation,tutor,practice,travel,NIE`
 **App Store description:**
 ```
-Learn a language by speaking it. VOXELO gives you a short speaking scene
+Learn a language by speaking it. VOXELITH gives you a short speaking scene
 every day: listen, repeat (shadowing), speak in your own voice. AI
 evaluates your pronunciation instantly.
 
@@ -67,7 +67,7 @@ apartment — not tourist Spanish, the Spanish you actually need.
 Form a clan with friends, join the weekly XP race. Keep your streak with
 daily goals.
 
-VOXELO Plus: unlimited speaking practice, ad-free, premium natural voice,
+VOXELITH Plus: unlimited speaking practice, ad-free, premium natural voice,
 free-form conversation with a live AI partner.
 
 Works offline. Your data is yours — we grow on real feedback, never
@@ -78,11 +78,11 @@ purchased reviews.
 
 ## Español (es)
 
-**Google Play título:** `VOXELO: Habla Inglés`
+**Google Play título:** `VOXELITH: Habla Inglés`
 **Google Play breve (80):** `1 min/día de práctica oral. Inglés, alemán, francés, neerlandés. Escenas reales.`
 **Google Play larga:**
 ```
-Aprende con VOXELO hablando, no memorizando.
+Aprende con VOXELITH hablando, no memorizando.
 
 Cada día, una escena de conversación hecha para ti: escucha, repite
 (shadowing), habla en voz alta. La IA evalúa tu pronunciación en tiempo
@@ -103,7 +103,7 @@ QUÉ INCLUYE:
   muestra dónde te cuesta más
 • Clanes: competencia semanal de XP con amigos
 • Metas diarias, rachas, insignias
-• VOXELO Plus: práctica oral ilimitada, sin anuncios, voz premium natural,
+• VOXELITH Plus: práctica oral ilimitada, sin anuncios, voz premium natural,
   compañero de conversación con IA en vivo
 
 30 idiomas de interfaz, combinables con cualquier idioma que quieras
@@ -111,18 +111,18 @@ aprender. Funciona sin conexión — practica sin internet, la sincronización
 en la nube es opcional.
 
 Gratis: 60 segundos de práctica oral al día (ampliable con un vídeo
-recompensado). Ilimitado con VOXELO Plus.
+recompensado). Ilimitado con VOXELITH Plus.
 
 Tu privacidad nos importa — no usamos reseñas falsas ni puntuaciones
 incentivadas, crecemos con feedback real.
 ```
 
-**App Store título:** `VOXELO: Habla Inglés`
+**App Store título:** `VOXELITH: Habla Inglés`
 **App Store subtítulo:** `Tutor IA Inglés Alemán`
 **App Store palabras clave (100):** `hablar,ingles,aleman,frances,neerlandes,pronunciacion,tutor,practica,viaje,NIE`
 **App Store descripción:**
 ```
-Aprende un idioma hablándolo. VOXELO te da cada día una escena de
+Aprende un idioma hablándolo. VOXELITH te da cada día una escena de
 conversación corta: escucha, repite (shadowing), habla con tu propia voz.
 La IA evalúa tu pronunciación al instante.
 
@@ -137,7 +137,7 @@ necesitas.
 Forma un clan con tus amigos, únete a la carrera semanal de XP. Mantén tu
 racha con metas diarias.
 
-VOXELO Plus: práctica oral ilimitada, sin anuncios, voz premium natural,
+VOXELITH Plus: práctica oral ilimitada, sin anuncios, voz premium natural,
 conversación libre con un compañero de IA en vivo.
 
 Funciona sin conexión. Tus datos son tuyos — crecemos con feedback real,
@@ -148,11 +148,11 @@ nunca con reseñas compradas.
 
 ## Deutsch (de)
 
-**Google Play Titel:** `VOXELO: Englisch sprechen`
+**Google Play Titel:** `VOXELITH: Englisch sprechen`
 **Google Play kurz (80):** `1 Min/Tag sprechen. Englisch, Spanisch, Französisch, Niederländisch. Echte Szenen.`
 **Google Play lang:**
 ```
-Mit VOXELO lernst du durch Sprechen — nicht durch Auswendiglernen.
+Mit VOXELITH lernst du durch Sprechen — nicht durch Auswendiglernen.
 
 Jeden Tag eine kurze, für dich gemachte Sprechszene: zuhören, nachsprechen
 (Shadowing), laut sprechen. KI bewertet deine Aussprache in Echtzeit und
@@ -170,25 +170,25 @@ INHALT:
 • Ausspracheanalyse: Reflex/Recall/Guess zeigt, wo es hakt
 • Clans: wöchentlicher XP-Wettbewerb mit Freunden
 • Tagesziele, Streaks, Abzeichen
-• VOXELO Plus: unbegrenzte Sprechpraxis, werbefrei, natürliche Premium-
+• VOXELITH Plus: unbegrenzte Sprechpraxis, werbefrei, natürliche Premium-
   Stimme, live KI-Gesprächspartner
 
 30 Oberflächensprachen, kombinierbar mit jeder Sprache, die du lernen
 willst. Funktioniert offline — üben ohne Internet, Cloud-Sync ist optional.
 
 Kostenlos: 60 Sekunden Sprechpraxis pro Tag (erweiterbar mit
-Belohnungsvideo). Unbegrenzt mit VOXELO Plus.
+Belohnungsvideo). Unbegrenzt mit VOXELITH Plus.
 
 Deine Privatsphäre ist uns wichtig — keine gefälschten Bewertungen, wir
 wachsen mit echtem Feedback.
 ```
 
-**App Store Titel:** `VOXELO: Englisch sprechen`
+**App Store Titel:** `VOXELITH: Englisch sprechen`
 **App Store Untertitel:** `Englisch Spanisch KI-Tutor`
 **App Store Schlüsselwörter (100):** `sprechen,englisch,spanisch,franzosisch,niederlandisch,aussprache,tutor,ueben,reisen,NIE`
 **App Store Beschreibung:**
 ```
-Lerne eine Sprache, indem du sie sprichst. VOXELO gibt dir jeden Tag eine
+Lerne eine Sprache, indem du sie sprichst. VOXELITH gibt dir jeden Tag eine
 kurze Sprechszene: zuhören, nachsprechen (Shadowing), mit eigener Stimme
 sprechen. KI bewertet deine Aussprache sofort.
 
@@ -203,7 +203,7 @@ wirklich brauchst.
 Gründe einen Clan mit Freunden, nimm am wöchentlichen XP-Rennen teil.
 Halte deinen Streak mit Tageszielen.
 
-VOXELO Plus: unbegrenzte Sprechpraxis, werbefrei, natürliche Premium-
+VOXELITH Plus: unbegrenzte Sprechpraxis, werbefrei, natürliche Premium-
 Stimme, freies Gespräch mit einem live KI-Partner.
 
 Funktioniert offline. Deine Daten gehören dir — wir wachsen mit echtem
@@ -214,11 +214,11 @@ Feedback, nie mit gekauften Bewertungen.
 
 ## Français (fr)
 
-**Google Play titre :** `VOXELO : Parler Anglais`
+**Google Play titre :** `VOXELITH : Parler Anglais`
 **Google Play court (80) :** `1 min/jour à l'oral. Anglais, espagnol, allemand, néerlandais. Scènes réelles.`
 **Google Play long :**
 ```
-Apprends avec VOXELO en parlant, pas en mémorisant.
+Apprends avec VOXELITH en parlant, pas en mémorisant.
 
 Chaque jour, une courte scène de conversation faite pour toi : écoute,
 répète (shadowing), parle à voix haute. L'IA évalue ta prononciation en
@@ -239,7 +239,7 @@ AU PROGRAMME :
   où tu bloques
 • Clans : compétition d'XP hebdomadaire entre amis
 • Objectifs quotidiens, séries (streaks), badges
-• VOXELO Plus : pratique orale illimitée, sans pub, voix premium naturelle,
+• VOXELITH Plus : pratique orale illimitée, sans pub, voix premium naturelle,
   partenaire de conversation IA en direct
 
 30 langues d'interface, combinables avec la langue que tu veux apprendre.
@@ -247,18 +247,18 @@ Fonctionne hors ligne — pratique sans internet, la synchro cloud est
 optionnelle.
 
 Gratuit : 60 secondes de pratique orale par jour (extensible avec une
-vidéo récompensée). Illimité avec VOXELO Plus.
+vidéo récompensée). Illimité avec VOXELITH Plus.
 
 Ta vie privée compte pour nous — pas de faux avis ni de notes
 incitées, on grandit avec de vrais retours.
 ```
 
-**App Store titre :** `VOXELO : Parler Anglais`
+**App Store titre :** `VOXELITH : Parler Anglais`
 **App Store sous-titre :** `Tuteur IA Anglais Espagnol`
 **App Store mots-clés (100) :** `parler,anglais,espagnol,allemand,neerlandais,prononciation,tuteur,pratique,voyage,NIE`
 **App Store description :**
 ```
-Apprends une langue en la parlant. VOXELO te propose chaque jour une courte
+Apprends une langue en la parlant. VOXELITH te propose chaque jour une courte
 scène de conversation : écoute, répète (shadowing), parle avec ta propre
 voix. L'IA évalue ta prononciation à l'instant.
 
@@ -273,7 +273,7 @@ dont tu as vraiment besoin.
 Forme un clan avec tes amis, participe à la course d'XP hebdomadaire.
 Garde ta série avec des objectifs quotidiens.
 
-VOXELO Plus : pratique orale illimitée, sans pub, voix premium naturelle,
+VOXELITH Plus : pratique orale illimitée, sans pub, voix premium naturelle,
 conversation libre avec un partenaire IA en direct.
 
 Fonctionne hors ligne. Tes données t'appartiennent — on grandit avec de
@@ -284,11 +284,11 @@ vrais retours, jamais d'avis achetés.
 
 ## Nederlands (nl)
 
-**Google Play titel:** `VOXELO: Engels Spreken`
+**Google Play titel:** `VOXELITH: Engels Spreken`
 **Google Play kort (80):** `1 min/dag spreekoefening. Engels, Spaans, Duits, Frans. Echte scènes.`
 **Google Play lang:**
 ```
-Leer met VOXELO door te spreken — niet door te stampen.
+Leer met VOXELITH door te spreken — niet door te stampen.
 
 Elke dag een korte spreekscène, speciaal voor jou: luisteren, naspreken
 (shadowing), hardop spreken. AI beoordeelt je uitspraak in realtime en
@@ -306,25 +306,25 @@ WAT ZIT ERIN:
 • Uitspraakanalyse: Reflex/Recall/Guess laat zien waar je moeite hebt
 • Clans: wekelijkse XP-competitie met vrienden
 • Dagelijkse doelen, reeksen (streaks), badges
-• VOXELO Plus: onbeperkt spreekoefening, geen advertenties, premium
+• VOXELITH Plus: onbeperkt spreekoefening, geen advertenties, premium
   natuurlijke stem, live AI-gesprekspartner
 
 30 interfacetalen, te combineren met elke taal die je wilt leren. Werkt
 offline — oefen zonder internet, cloudsync is optioneel.
 
 Gratis: 60 seconden spreekoefening per dag (uit te breiden met een
-beloningsvideo). Onbeperkt met VOXELO Plus.
+beloningsvideo). Onbeperkt met VOXELITH Plus.
 
 Jouw privacy is belangrijk voor ons — geen nepreviews of gestimuleerde
 beoordelingen, we groeien met echte feedback.
 ```
 
-**App Store titel:** `VOXELO: Engels Spreken`
+**App Store titel:** `VOXELITH: Engels Spreken`
 **App Store ondertitel:** `Engels Spaans AI-Tutor`
 **App Store zoekwoorden (100):** `spreken,engels,spaans,duits,frans,uitspraak,tutor,oefenen,reizen,NIE`
 **App Store beschrijving:**
 ```
-Leer een taal door hem te spreken. VOXELO geeft je elke dag een korte
+Leer een taal door hem te spreken. VOXELITH geeft je elke dag een korte
 spreekscène: luisteren, naspreken (shadowing), spreken met je eigen stem.
 AI beoordeelt je uitspraak direct.
 
@@ -338,7 +338,7 @@ huren — geen toeristenspaans, het Spaans dat je echt nodig hebt.
 Vorm een clan met vrienden, doe mee aan de wekelijkse XP-race. Houd je
 reeks vol met dagelijkse doelen.
 
-VOXELO Plus: onbeperkt spreekoefening, geen advertenties, premium
+VOXELITH Plus: onbeperkt spreekoefening, geen advertenties, premium
 natuurlijke stem, vrij gesprek met een live AI-partner.
 
 Werkt offline. Jouw data is van jou — we groeien met echte feedback, nooit
@@ -349,11 +349,11 @@ met gekochte reviews.
 
 ## العربية (ar)
 
-**عنوان Google Play:** `VOXELO: تعلّم الإنجليزية`
+**عنوان Google Play:** `VOXELITH: تعلّم الإنجليزية`
 **وصف قصير (80):** `دقيقة محادثة يوميًا. إسبانية، ألمانية، فرنسية، هولندية. مشاهد واقعية.`
 **وصف طويل:**
 ```
-تعلّم مع VOXELO بالتحدث — لا بالحفظ.
+تعلّم مع VOXELITH بالتحدث — لا بالحفظ.
 
 كل يوم مشهد محادثة قصير مُعد خصيصًا لك: استمع، كرّر (shadowing)، تحدث
 بصوت عالٍ. يقيّم الذكاء الاصطناعي نطقك لحظيًا ويمنحك ملاحظات فورية. نظام
@@ -369,25 +369,25 @@ met gekochte reviews.
 • تحليل النطق: تصنيف Reflex/Recall/Guess يوضح أين تواجه صعوبة
 • العشائر: منافسة أسبوعية على نقاط الخبرة مع الأصدقاء
 • أهداف يومية، سلاسل، شارات
-• VOXELO Plus: تمرين محادثة غير محدود، بلا إعلانات، صوت طبيعي مميز،
+• VOXELITH Plus: تمرين محادثة غير محدود، بلا إعلانات، صوت طبيعي مميز،
   شريك محادثة بالذكاء الاصطناعي مباشرة
 
 ٣٠ لغة واجهة، يمكن دمجها مع أي لغة تريد تعلّمها. يعمل بلا إنترنت —
 تدرّب دون اتصال، والمزامنة السحابية اختيارية.
 
 مجانًا: ٦٠ ثانية تمرين محادثة يوميًا (قابلة للتمديد بمشاهدة فيديو
-مكافأة). غير محدودة مع VOXELO Plus.
+مكافأة). غير محدودة مع VOXELITH Plus.
 
 خصوصيتك تهمنا — لا تقييمات مزيفة ولا حوافز مقابل التقييم، ننمو
 بملاحظات حقيقية.
 ```
 
-**عنوان App Store:** `VOXELO: تعلّم الإنجليزية`
+**عنوان App Store:** `VOXELITH: تعلّم الإنجليزية`
 **العنوان الفرعي:** `مدرّب إنجليزية بالذكاء الاصطناعي`
 **كلمات مفتاحية (100):** `محادثة,انجليزية,اسبانية,المانية,فرنسية,نطق,مدرب,تدريب,سفر,NIE`
 **وصف App Store:**
 ```
-تعلّم لغة بالتحدث بها. يمنحك VOXELO كل يوم مشهد محادثة قصير: استمع، كرّر
+تعلّم لغة بالتحدث بها. يمنحك VOXELITH كل يوم مشهد محادثة قصير: استمع، كرّر
 (shadowing)، تحدث بصوتك. يقيّم الذكاء الاصطناعي نطقك فورًا.
 
 أبجدية كاملة بـ٣٠ لغة، كل منها بخطها الحقيقي. تمرين قراءة بقصص قصيرة.
@@ -399,7 +399,7 @@ met gekochte reviews.
 كوّن عشيرة مع أصدقائك، شارك في سباق نقاط الخبرة الأسبوعي. حافظ على
 سلسلتك بأهداف يومية.
 
-VOXELO Plus: تمرين محادثة غير محدود، بلا إعلانات، صوت طبيعي مميز، محادثة
+VOXELITH Plus: تمرين محادثة غير محدود، بلا إعلانات، صوت طبيعي مميز، محادثة
 حرة مع شريك ذكاء اصطناعي مباشر.
 
 يعمل بلا إنترنت. بياناتك ملكك — ننمو بملاحظات حقيقية، لا بتقييمات
@@ -410,11 +410,11 @@ VOXELO Plus: تمرين محادثة غير محدود، بلا إعلانات،
 
 ## Português (pt)
 
-**Google Play título:** `VOXELO: Fale Inglês`
+**Google Play título:** `VOXELITH: Fale Inglês`
 **Google Play curto (80):** `1 min/dia de prática oral. Inglês, espanhol, alemão, francês. Cenas reais.`
 **Google Play longo:**
 ```
-Aprenda com o VOXELO falando — não decorando.
+Aprenda com o VOXELITH falando — não decorando.
 
 Todo dia, uma cena de conversa curta feita para você: ouça, repita
 (shadowing), fale em voz alta. A IA avalia sua pronúncia em tempo real e
@@ -435,7 +435,7 @@ O QUE TEM:
   você mais erra
 • Clãs: competição semanal de XP com amigos
 • Metas diárias, sequências (streaks), emblemas
-• VOXELO Plus: prática de fala ilimitada, sem anúncios, voz premium
+• VOXELITH Plus: prática de fala ilimitada, sem anúncios, voz premium
   natural, parceiro de conversa com IA ao vivo
 
 30 idiomas de interface, combináveis com qualquer idioma que você queira
@@ -443,18 +443,18 @@ aprender. Funciona offline — pratique sem internet, a sincronização em
 nuvem é opcional.
 
 Grátis: 60 segundos de prática de fala por dia (ampliável com vídeo
-recompensado). Ilimitado com VOXELO Plus.
+recompensado). Ilimitado com VOXELITH Plus.
 
 Sua privacidade é importante — sem avaliações falsas ou incentivadas,
 crescemos com feedback real.
 ```
 
-**App Store título:** `VOXELO: Fale Inglês`
+**App Store título:** `VOXELITH: Fale Inglês`
 **App Store subtítulo:** `Tutor de IA Inglês Espanhol`
 **App Store palavras-chave (100):** `falar,ingles,espanhol,alemao,frances,pronuncia,tutor,pratica,viagem,NIE`
 **App Store descrição:**
 ```
-Aprenda um idioma falando. O VOXELO te dá todo dia uma cena de conversa
+Aprenda um idioma falando. O VOXELITH te dá todo dia uma cena de conversa
 curta: ouça, repita (shadowing), fale com sua própria voz. A IA avalia
 sua pronúncia na hora.
 
@@ -469,7 +469,7 @@ precisa.
 Forme um clã com amigos, entre na corrida semanal de XP. Mantenha sua
 sequência com metas diárias.
 
-VOXELO Plus: prática de fala ilimitada, sem anúncios, voz premium natural,
+VOXELITH Plus: prática de fala ilimitada, sem anúncios, voz premium natural,
 conversa livre com um parceiro de IA ao vivo.
 
 Funciona offline. Seus dados são seus — crescemos com feedback real,
@@ -480,11 +480,11 @@ nunca com avaliações compradas.
 
 ## Italiano (it)
 
-**Google Play titolo:** `VOXELO: Parla Inglese`
+**Google Play titolo:** `VOXELITH: Parla Inglese`
 **Google Play breve (80):** `1 min/giorno di conversazione. Inglese, spagnolo, tedesco, francese. Scene reali.`
 **Google Play lungo:**
 ```
-Impara con VOXELO parlando, non memorizzando.
+Impara con VOXELITH parlando, non memorizzando.
 
 Ogni giorno una breve scena di conversazione fatta per te: ascolta,
 ripeti (shadowing), parla ad alta voce. L'IA valuta la tua pronuncia in
@@ -506,7 +506,7 @@ COSA C'È:
   dove hai difficoltà
 • Clan: competizione settimanale di XP con gli amici
 • Obiettivi giornalieri, serie (streak), badge
-• VOXELO Plus: pratica orale illimitata, senza pubblicità, voce premium
+• VOXELITH Plus: pratica orale illimitata, senza pubblicità, voce premium
   naturale, partner di conversazione IA dal vivo
 
 30 lingue d'interfaccia, abbinabili a qualsiasi lingua tu voglia
@@ -514,18 +514,18 @@ imparare. Funziona offline — esercitati senza internet, la sincro cloud
 è opzionale.
 
 Gratis: 60 secondi di pratica orale al giorno (estendibile con un video
-premiato). Illimitato con VOXELO Plus.
+premiato). Illimitato con VOXELITH Plus.
 
 La tua privacy conta — niente recensioni false o valutazioni
 incentivate, cresciamo con feedback reale.
 ```
 
-**App Store titolo:** `VOXELO: Parla Inglese`
+**App Store titolo:** `VOXELITH: Parla Inglese`
 **App Store sottotitolo:** `Tutor IA Inglese Spagnolo`
 **App Store parole chiave (100):** `parlare,inglese,spagnolo,tedesco,francese,pronuncia,tutor,pratica,viaggio,NIE`
 **App Store descrizione:**
 ```
-Impara una lingua parlandola. VOXELO ti dà ogni giorno una breve scena di
+Impara una lingua parlandola. VOXELITH ti dà ogni giorno una breve scena di
 conversazione: ascolta, ripeti (shadowing), parla con la tua voce. L'IA
 valuta la tua pronuncia all'istante.
 
@@ -540,7 +540,7 @@ davvero bisogno.
 Forma un clan con gli amici, partecipa alla gara settimanale di XP.
 Mantieni la tua serie con obiettivi giornalieri.
 
-VOXELO Plus: pratica orale illimitata, senza pubblicità, voce premium
+VOXELITH Plus: pratica orale illimitata, senza pubblicità, voce premium
 naturale, conversazione libera con un partner IA dal vivo.
 
 Funziona offline. I tuoi dati sono tuoi — cresciamo con feedback reale,
@@ -551,11 +551,11 @@ mai con recensioni comprate.
 
 ## Русский (ru)
 
-**Заголовок Google Play:** `VOXELO: говори по-английски`
+**Заголовок Google Play:** `VOXELITH: говори по-английски`
 **Краткое описание (80):** `1 мин/день разговорной практики. Испанский, немецкий, французский. Реальные сцены.`
 **Полное описание:**
 ```
-Учи язык с VOXELO, говоря — а не зубря.
+Учи язык с VOXELITH, говоря — а не зубря.
 
 Каждый день короткая разговорная сцена специально для тебя: слушай,
 повторяй (shadowing), говори вслух. ИИ оценивает твоё произношение в
@@ -575,25 +575,25 @@ mai con recensioni comprate.
   сложнее всего
 • Кланы: еженедельное соревнование по опыту с друзьями
 • Ежедневные цели, серии (streak), значки
-• VOXELO Plus: неограниченная разговорная практика, без рекламы, премиум
+• VOXELITH Plus: неограниченная разговорная практика, без рекламы, премиум
   естественный голос, живой ИИ-собеседник
 
 30 языков интерфейса, можно сочетать с любым изучаемым языком. Работает
 офлайн — занимайся без интернета, облачная синхронизация опциональна.
 
 Бесплатно: 60 секунд разговорной практики в день (можно увеличить,
-посмотрев видео за награду). Без ограничений с VOXELO Plus.
+посмотрев видео за награду). Без ограничений с VOXELITH Plus.
 
 Твоя конфиденциальность важна — никаких поддельных отзывов или
 стимулированных оценок, мы растём на реальных отзывах.
 ```
 
-**Заголовок App Store:** `VOXELO: говори по-английски`
+**Заголовок App Store:** `VOXELITH: говори по-английски`
 **Подзаголовок:** `ИИ-репетитор английского`
 **Ключевые слова (100):** `говорить,английский,испанский,немецкий,французский,произношение,репетитор,практика,поездка,NIE`
 **Описание App Store:**
 ```
-Учи язык, говоря на нём. VOXELO каждый день даёт короткую разговорную
+Учи язык, говоря на нём. VOXELITH каждый день даёт короткую разговорную
 сцену: слушай, повторяй (shadowing), говори своим голосом. ИИ оценивает
 твоё произношение мгновенно.
 
@@ -607,7 +607,7 @@ mai con recensioni comprate.
 Создай клан с друзьями, участвуй в еженедельной гонке за опыт. Держи
 серию с ежедневными целями.
 
-VOXELO Plus: неограниченная разговорная практика, без рекламы, премиум
+VOXELITH Plus: неограниченная разговорная практика, без рекламы, премиум
 естественный голос, свободное общение с живым ИИ-партнёром.
 
 Работает офлайн. Твои данные принадлежат тебе — мы растём на реальных
@@ -618,11 +618,11 @@ VOXELO Plus: неограниченная разговорная практик�
 
 ## 中文 (zh)
 
-**Google Play 标题：** `VOXELO：说英语`
+**Google Play 标题：** `VOXELITH：说英语`
 **简短说明（80）：** `每天1分钟口语练习。西语、德语、法语、荷兰语，真实场景。`
 **详细说明：**
 ```
-用VOXELO通过开口说来学习——而不是死记硬背。
+用VOXELITH通过开口说来学习——而不是死记硬背。
 
 每天一个为你定制的简短对话场景：聆听、跟读（shadowing）、大声说出来。
 AI实时评估你的发音并立即给出反馈。基于FSRS-5的间隔重复系统会在你即将
@@ -638,22 +638,22 @@ AI实时评估你的发音并立即给出反馈。基于FSRS-5的间隔重复系
 • 发音分析：Reflex/Recall/Guess分类显示你薄弱的地方
 • 部落：与好友每周经验值竞赛
 • 每日目标、连续打卡、徽章
-• VOXELO Plus：无限口语练习、无广告、优质自然语音、实时AI对话伙伴
+• VOXELITH Plus：无限口语练习、无广告、优质自然语音、实时AI对话伙伴
 
 30种界面语言，可与任何你想学的语言搭配。支持离线使用——无需网络也能
 练习，云同步为可选功能。
 
-免费版：每天60秒口语练习（可通过观看奖励视频延长）。VOXELO Plus 无限制。
+免费版：每天60秒口语练习（可通过观看奖励视频延长）。VOXELITH Plus 无限制。
 
 我们重视你的隐私——不使用虚假评论或诱导性评分，靠真实反馈成长。
 ```
 
-**App Store 标题：** `VOXELO：说英语`
+**App Store 标题：** `VOXELITH：说英语`
 **副标题：** `西语德语AI口语导师`
 **关键词（100）：** `口语,英语,西班牙语,德语,法语,发音,导师,练习,旅行,NIE`
 **App Store 描述：**
 ```
-通过开口说来学一门语言。VOXELO每天给你一个简短对话场景：聆听、跟读
+通过开口说来学一门语言。VOXELITH每天给你一个简短对话场景：聆听、跟读
 （shadowing）、用自己的声音说出来。AI立即评估你的发音。
 
 30种语言的完整字母表，每种都使用真实文字。用短篇故事练习阅读。
@@ -664,7 +664,7 @@ FSRS-5间隔重复会在你即将遗忘所学内容前及时带回。
 
 和朋友组建部落，参加每周经验值竞赛。用每日目标保持连续打卡。
 
-VOXELO Plus：无限口语练习、无广告、优质自然语音，与实时AI伙伴自由对话。
+VOXELITH Plus：无限口语练习、无广告、优质自然语音，与实时AI伙伴自由对话。
 
 支持离线使用。你的数据归你所有——我们靠真实反馈成长，从不购买评论。
 ```
@@ -673,11 +673,11 @@ VOXELO Plus：无限口语练习、无广告、优质自然语音，与实时AI�
 
 ## 日本語 (ja)
 
-**Google Play タイトル：** `VOXELO：英語を話す`
+**Google Play タイトル：** `VOXELITH：英語を話す`
 **簡単な説明（80）：** `1日1分の会話練習。スペイン語・ドイツ語・フランス語・オランダ語。リアルな場面。`
 **詳しい説明：**
 ```
-VOXELOは「話すこと」で学ぶ——丸暗記ではなく。
+VOXELITHは「話すこと」で学ぶ——丸暗記ではなく。
 
 毎日あなた専用の短い会話シーン：聞く、シャドーイングする、声に出して
 話す。AIがあなたの発音をリアルタイムで評価し、すぐにフィードバックしま
@@ -695,25 +695,25 @@ VOXELOは「話すこと」で学ぶ——丸暗記ではなく。
 • 発音分析：Reflex/Recall/Guessの分類で苦手なポイントを可視化
 • クラン：友達との週間XP対決
 • 毎日の目標、連続記録（ストリーク）、バッジ
-• VOXELO Plus：無制限の会話練習、広告なし、プレミアム自然音声、
+• VOXELITH Plus：無制限の会話練習、広告なし、プレミアム自然音声、
   ライブAI会話パートナー
 
 30のインターフェース言語、学びたい言語と自由に組み合わせ可能。
 オフライン対応——インターネットなしでも練習でき、クラウド同期は任意。
 
-無料：1日60秒の会話練習（リワード動画視聴で延長可能）。VOXELO Plusなら
+無料：1日60秒の会話練習（リワード動画視聴で延長可能）。VOXELITH Plusなら
 無制限。
 
 プライバシーを大切にしています——偽レビューや誘導的な評価は一切使わ
 ず、本物のフィードバックで成長しています。
 ```
 
-**App Store タイトル：** `VOXELO：英語を話す`
+**App Store タイトル：** `VOXELITH：英語を話す`
 **サブタイトル：** `スペイン語ドイツ語AI講師`
 **キーワード（100）：** `会話,英語,スペイン語,ドイツ語,フランス語,発音,講師,練習,旅行,NIE`
 **App Store 説明：**
 ```
-言語を「話すこと」で学ぶ。VOXELOは毎日短い会話シーンを提供：聞く、
+言語を「話すこと」で学ぶ。VOXELITHは毎日短い会話シーンを提供：聞く、
 シャドーイングする、自分の声で話す。AIが発音を即座に評価します。
 
 30言語の完全なアルファベットをそれぞれ本物の文字体系で。短編物語で
@@ -725,7 +725,7 @@ VOXELOは「話すこと」で学ぶ——丸暗記ではなく。
 
 友達とクランを結成し、週間XP対決に参加。毎日の目標で連続記録を維持。
 
-VOXELO Plus：無制限の会話練習、広告なし、プレミアム自然音声、
+VOXELITH Plus：無制限の会話練習、広告なし、プレミアム自然音声、
 ライブAIパートナーとの自由な会話。
 
 オフライン対応。データはあなたのもの——本物のフィードバックで成長し、
@@ -736,11 +736,11 @@ VOXELO Plus：無制限の会話練習、広告なし、プレミアム自然音
 
 ## 한국어 (ko)
 
-**Google Play 제목:** `VOXELO: 영어로 말하기`
+**Google Play 제목:** `VOXELITH: 영어로 말하기`
 **간단한 설명 (80):** `하루 1분 말하기 연습. 스페인어·독일어·프랑스어·네덜란드어. 실전 장면.`
 **상세 설명:**
 ```
-VOXELO는 암기가 아니라 말하기로 배웁니다.
+VOXELITH는 암기가 아니라 말하기로 배웁니다.
 
 매일 당신을 위한 짧은 회화 장면: 듣고, 따라 말하고(shadowing), 소리
 내어 말하기. AI가 실시간으로 발음을 평가하고 즉시 피드백을 줍니다.
@@ -757,25 +757,25 @@ FSRS-5 간격 반복 시스템이 잊기 직전에 정확히 단어를 다시 �
 • 발음 분석: Reflex/Recall/Guess 분류로 약점을 보여줌
 • 클랜: 친구들과 주간 XP 경쟁
 • 매일 목표, 연속 기록(streak), 배지
-• VOXELO Plus: 무제한 말하기 연습, 광고 없음, 프리미엄 자연스러운 음성,
+• VOXELITH Plus: 무제한 말하기 연습, 광고 없음, 프리미엄 자연스러운 음성,
   실시간 AI 대화 파트너
 
 30개 인터페이스 언어, 배우고 싶은 어떤 언어와도 조합 가능. 오프라인
 작동 — 인터넷 없이도 연습, 클라우드 동기화는 선택 사항.
 
-무료: 하루 60초 말하기 연습(보상형 영상으로 연장 가능). VOXELO Plus로
+무료: 하루 60초 말하기 연습(보상형 영상으로 연장 가능). VOXELITH Plus로
 무제한.
 
 당신의 개인정보를 소중히 여깁니다 — 가짜 리뷰나 유도된 평점 없이,
 진짜 피드백으로 성장합니다.
 ```
 
-**App Store 제목:** `VOXELO: 영어로 말하기`
+**App Store 제목:** `VOXELITH: 영어로 말하기`
 **부제:** `스페인어 독일어 AI 튜터`
 **키워드 (100):** `말하기,영어,스페인어,독일어,프랑스어,발음,튜터,연습,여행,NIE`
 **App Store 설명:**
 ```
-언어를 말하면서 배우세요. VOXELO는 매일 짧은 회화 장면을 제공합니다:
+언어를 말하면서 배우세요. VOXELITH는 매일 짧은 회화 장면을 제공합니다:
 듣고, 따라 말하고(shadowing), 자신의 목소리로 말하기. AI가 발음을
 즉시 평가합니다.
 
@@ -789,7 +789,7 @@ FSRS-5 간격 반복 시스템이 잊기 직전에 정확히 단어를 다시 �
 친구들과 클랜을 만들고 주간 XP 경쟁에 참여하세요. 매일 목표로 연속
 기록을 유지하세요.
 
-VOXELO Plus: 무제한 말하기 연습, 광고 없음, 프리미엄 자연스러운 음성,
+VOXELITH Plus: 무제한 말하기 연습, 광고 없음, 프리미엄 자연스러운 음성,
 실시간 AI 파트너와 자유로운 대화.
 
 오프라인 작동. 데이터는 당신의 것입니다 — 진짜 피드백으로 성장하며,
@@ -800,11 +800,11 @@ VOXELO Plus: 무제한 말하기 연습, 광고 없음, 프리미엄 자연스�
 
 ## Polski (pl)
 
-**Google Play tytuł:** `VOXELO: Mów po angielsku`
+**Google Play tytuł:** `VOXELITH: Mów po angielsku`
 **Krótki opis (80):** `1 min/dzień mówienia. Hiszpański, niemiecki, francuski, niderlandzki. Realne sceny.`
 **Długi opis:**
 ```
-Ucz się z VOXELO poprzez mówienie — nie wkuwanie.
+Ucz się z VOXELITH poprzez mówienie — nie wkuwanie.
 
 Codziennie krótka scena konwersacyjna stworzona dla ciebie: słuchaj,
 powtarzaj (shadowing), mów na głos. AI ocenia twoją wymowę w czasie
@@ -826,7 +826,7 @@ CO ZAWIERA:
   trudności
 • Klany: cotygodniowa rywalizacja o XP ze znajomymi
 • Codzienne cele, serie (streaki), odznaki
-• VOXELO Plus: nieograniczone ćwiczenia mówienia, bez reklam, naturalny
+• VOXELITH Plus: nieograniczone ćwiczenia mówienia, bez reklam, naturalny
   głos premium, żywy partner do rozmów z AI
 
 30 języków interfejsu, do połączenia z dowolnym językiem, którego chcesz
@@ -834,18 +834,18 @@ się uczyć. Działa offline — ćwicz bez internetu, synchronizacja w
 chmurze jest opcjonalna.
 
 Za darmo: 60 sekund ćwiczeń mówienia dziennie (można przedłużyć,
-oglądając nagradzane wideo). Bez limitu z VOXELO Plus.
+oglądając nagradzane wideo). Bez limitu z VOXELITH Plus.
 
 Twoja prywatność ma znaczenie — żadnych fałszywych recenzji ani
 motywowanych ocen, rozwijamy się dzięki prawdziwym opiniom.
 ```
 
-**App Store tytuł:** `VOXELO: Mów po angielsku`
+**App Store tytuł:** `VOXELITH: Mów po angielsku`
 **Podtytuł:** `Korepetytor AI hiszp. niem.`
 **Słowa kluczowe (100):** `mowienie,angielski,hiszpanski,niemiecki,francuski,wymowa,korepetytor,cwiczenia,podroz,NIE`
 **Opis App Store:**
 ```
-Ucz się języka, mówiąc nim. VOXELO codziennie daje ci krótką scenę
+Ucz się języka, mówiąc nim. VOXELITH codziennie daje ci krótką scenę
 konwersacyjną: słuchaj, powtarzaj (shadowing), mów własnym głosem. AI
 od razu ocenia twoją wymowę.
 
@@ -860,7 +860,7 @@ naprawdę potrzebujesz.
 Załóż klan ze znajomymi, dołącz do cotygodniowego wyścigu o XP. Utrzymuj
 serię dzięki codziennym celom.
 
-VOXELO Plus: nieograniczone ćwiczenia mówienia, bez reklam, naturalny głos
+VOXELITH Plus: nieograniczone ćwiczenia mówienia, bez reklam, naturalny głos
 premium, swobodna rozmowa z żywym partnerem AI.
 
 Działa offline. Twoje dane należą do ciebie — rozwijamy się dzięki
@@ -871,11 +871,11 @@ prawdziwym opiniom, nigdy kupionym recenzjom.
 
 ## Svenska (sv)
 
-**Google Play titel:** `VOXELO: Tala engelska`
+**Google Play titel:** `VOXELITH: Tala engelska`
 **Kort beskrivning (80):** `1 min/dag talövning. Spanska, tyska, franska, nederländska. Riktiga scener.`
 **Lång beskrivning:**
 ```
-Lär dig med VOXELO genom att prata — inte plugga utantill.
+Lär dig med VOXELITH genom att prata — inte plugga utantill.
 
 Varje dag en kort samtalsscen gjord för dig: lyssna, upprepa (shadowing),
 prata högt. AI bedömer ditt uttal i realtid och ger dig direkt feedback.
@@ -892,25 +892,25 @@ VAD SOM INGÅR:
 • Uttalsanalys: Reflex/Recall/Guess-klassificering visar var du kämpar
 • Klaner: veckovis XP-tävling med vänner
 • Dagliga mål, serier (streaks), märken
-• VOXELO Plus: obegränsad talövning, reklamfritt, naturlig premiumröst,
+• VOXELITH Plus: obegränsad talövning, reklamfritt, naturlig premiumröst,
   levande AI-samtalspartner
 
 30 gränssnittsspråk, kombinerbara med vilket språk du vill lära dig.
 Fungerar offline — öva utan internet, molnsynk är valfritt.
 
 Gratis: 60 sekunder talövning per dag (kan förlängas med en
-belöningsvideo). Obegränsat med VOXELO Plus.
+belöningsvideo). Obegränsat med VOXELITH Plus.
 
 Din integritet är viktig för oss — inga falska recensioner eller
 incitamentsstyrda betyg, vi växer med äkta feedback.
 ```
 
-**App Store titel:** `VOXELO: Tala engelska`
+**App Store titel:** `VOXELITH: Tala engelska`
 **Undertitel:** `AI-lärare spanska tyska`
 **Nyckelord (100):** `tala,engelska,spanska,tyska,franska,uttal,larare,ovning,resa,NIE`
 **App Store beskrivning:**
 ```
-Lär dig ett språk genom att prata det. VOXELO ger dig varje dag en kort
+Lär dig ett språk genom att prata det. VOXELITH ger dig varje dag en kort
 samtalsscen: lyssna, upprepa (shadowing), prata med din egen röst. AI
 bedömer ditt uttal direkt.
 
@@ -924,7 +924,7 @@ lägenhet — inte turistspanska, utan den spanska du faktiskt behöver.
 Bilda en klan med vänner, gå med i det veckovisa XP-loppet. Håll din
 serie vid liv med dagliga mål.
 
-VOXELO Plus: obegränsad talövning, reklamfritt, naturlig premiumröst, fritt
+VOXELITH Plus: obegränsad talövning, reklamfritt, naturlig premiumröst, fritt
 samtal med en levande AI-partner.
 
 Fungerar offline. Din data är din — vi växer med äkta feedback, aldrig
@@ -935,11 +935,11 @@ köpta recensioner.
 
 ## Dansk (da)
 
-**Google Play titel:** `VOXELO: Tal engelsk`
+**Google Play titel:** `VOXELITH: Tal engelsk`
 **Kort beskrivelse (80):** `1 min/dag taletræning. Spansk, tysk, fransk, hollandsk. Virkelige scener.`
 **Lang beskrivelse:**
 ```
-Lær med VOXELO ved at tale — ikke ved udenadslære.
+Lær med VOXELITH ved at tale — ikke ved udenadslære.
 
 Hver dag en kort samtalescene lavet til dig: lyt, gentag (shadowing),
 tal højt. AI vurderer din udtale i realtid og giver dig øjeblikkelig
@@ -956,25 +956,25 @@ HVAD DU FÅR:
 • Udtaleanalyse: Reflex/Recall/Guess-klassificering viser, hvor du kæmper
 • Klaner: ugentlig XP-konkurrence med venner
 • Daglige mål, stimer (streaks), badges
-• VOXELO Plus: ubegrænset taletræning, ingen reklamer, naturlig
+• VOXELITH Plus: ubegrænset taletræning, ingen reklamer, naturlig
   premiumstemme, live AI-samtalepartner
 
 30 grænsefladesprog, kan kombineres med ethvert sprog, du vil lære.
 Virker offline — øv uden internet, cloud-synk er valgfrit.
 
 Gratis: 60 sekunders taletræning om dagen (kan forlænges med en
-belønningsvideo). Ubegrænset med VOXELO Plus.
+belønningsvideo). Ubegrænset med VOXELITH Plus.
 
 Dit privatliv betyder noget for os — ingen falske anmeldelser eller
 tilskyndede vurderinger, vi vokser med ægte feedback.
 ```
 
-**App Store titel:** `VOXELO: Tal engelsk`
+**App Store titel:** `VOXELITH: Tal engelsk`
 **Undertitel:** `AI-lærer spansk tysk`
 **Nøgleord (100):** `tale,engelsk,spansk,tysk,fransk,udtale,laerer,traening,rejse,NIE`
 **App Store beskrivelse:**
 ```
-Lær et sprog ved at tale det. VOXELO giver dig hver dag en kort
+Lær et sprog ved at tale det. VOXELITH giver dig hver dag en kort
 samtalescene: lyt, gentag (shadowing), tal med din egen stemme. AI
 vurderer din udtale med det samme.
 
@@ -988,7 +988,7 @@ en lejlighed — ikke turistspansk, men det spansk du faktisk har brug for.
 Dan en klan med venner, deltag i det ugentlige XP-løb. Hold din stime i
 gang med daglige mål.
 
-VOXELO Plus: ubegrænset taletræning, ingen reklamer, naturlig
+VOXELITH Plus: ubegrænset taletræning, ingen reklamer, naturlig
 premiumstemme, fri samtale med en live AI-partner.
 
 Virker offline. Dine data er dine — vi vokser med ægte feedback, aldrig
@@ -999,11 +999,11 @@ købte anmeldelser.
 
 ## Norsk (no)
 
-**Google Play tittel:** `VOXELO: Snakk engelsk`
+**Google Play tittel:** `VOXELITH: Snakk engelsk`
 **Kort beskrivelse (80):** `1 min/dag taletrening. Spansk, tysk, fransk, nederlandsk. Virkelige scener.`
 **Lang beskrivelse:**
 ```
-Lær med VOXELO ved å snakke — ikke ved å pugge.
+Lær med VOXELITH ved å snakke — ikke ved å pugge.
 
 Hver dag en kort samtalescene laget for deg: lytt, gjenta (shadowing),
 snakk høyt. AI vurderer uttalen din i sanntid og gir deg umiddelbar
@@ -1021,25 +1021,25 @@ HVA DU FÅR:
   strever
 • Klaner: ukentlig XP-konkurranse med venner
 • Daglige mål, streaks, merker
-• VOXELO Plus: ubegrenset taletrening, ingen reklame, naturlig
+• VOXELITH Plus: ubegrenset taletrening, ingen reklame, naturlig
   premiumstemme, live AI-samtalepartner
 
 30 grensesnittspråk, kan kombineres med hvilket som helst språk du vil
 lære. Fungerer offline — øv uten internett, skysynk er valgfritt.
 
 Gratis: 60 sekunder taletrening per dag (kan utvides med en
-belønningsvideo). Ubegrenset med VOXELO Plus.
+belønningsvideo). Ubegrenset med VOXELITH Plus.
 
 Personvernet ditt betyr noe for oss — ingen falske anmeldelser eller
 stimulerte vurderinger, vi vokser med ekte tilbakemeldinger.
 ```
 
-**App Store tittel:** `VOXELO: Snakk engelsk`
+**App Store tittel:** `VOXELITH: Snakk engelsk`
 **Undertittel:** `AI-lærer spansk tysk`
 **Nøkkelord (100):** `snakke,engelsk,spansk,tysk,fransk,uttale,laerer,trening,reise,NIE`
 **App Store beskrivelse:**
 ```
-Lær et språk ved å snakke det. VOXELO gir deg hver dag en kort
+Lær et språk ved å snakke det. VOXELITH gir deg hver dag en kort
 samtalescene: lytt, gjenta (shadowing), snakk med din egen stemme. AI
 vurderer uttalen din med en gang.
 
@@ -1053,7 +1053,7 @@ leilighet — ikke turistspansk, men spansken du faktisk trenger.
 Dann en klan med venner, bli med i det ukentlige XP-løpet. Hold streaken
 din i gang med daglige mål.
 
-VOXELO Plus: ubegrenset taletrening, ingen reklame, naturlig
+VOXELITH Plus: ubegrenset taletrening, ingen reklame, naturlig
 premiumstemme, fri samtale med en live AI-partner.
 
 Fungerer offline. Dataene dine er dine — vi vokser med ekte
@@ -1064,11 +1064,11 @@ tilbakemeldinger, aldri kjøpte anmeldelser.
 
 ## Suomi (fi)
 
-**Google Play otsikko:** `VOXELO: Puhu englantia`
+**Google Play otsikko:** `VOXELITH: Puhu englantia`
 **Lyhyt kuvaus (80):** `1 min/pv puheharjoitusta. Espanja, saksa, ranska, hollanti. Aidot tilanteet.`
 **Pitkä kuvaus:**
 ```
-Opi VOXELOlla puhumalla — älä ulkoa opettelemalla.
+Opi VOXELITHlla puhumalla — älä ulkoa opettelemalla.
 
 Joka päivä lyhyt sinulle tehty keskustelutilanne: kuuntele, toista
 (shadowing), puhu ääneen. Tekoäly arvioi ääntämystäsi reaaliajassa ja
@@ -1088,7 +1088,7 @@ MITÄ SISÄLTYY:
   kompastut
 • Klaanit: viikoittainen XP-kilpailu kavereiden kanssa
 • Päivittäiset tavoitteet, putket (streakit), merkit
-• VOXELO Plus: rajaton puheharjoitus, ei mainoksia, luonnollinen
+• VOXELITH Plus: rajaton puheharjoitus, ei mainoksia, luonnollinen
   premium-ääni, live-tekoälykeskustelukumppani
 
 30 käyttöliittymäkieltä, yhdistettävissä mihin tahansa opiskeltavaan
@@ -1096,18 +1096,18 @@ kieleen. Toimii offline — harjoittele ilman internetiä, pilvisynkronointi
 on valinnainen.
 
 Ilmaiseksi: 60 sekuntia puheharjoitusta päivässä (laajennettavissa
-palkintovideolla). Rajattomasti VOXELO Plussalla.
+palkintovideolla). Rajattomasti VOXELITH Plussalla.
 
 Yksityisyytesi on meille tärkeää — ei väärennettyjä arvosteluja tai
 kannustettuja arvioita, kasvamme aidon palautteen avulla.
 ```
 
-**App Store otsikko:** `VOXELO: Puhu englantia`
+**App Store otsikko:** `VOXELITH: Puhu englantia`
 **Alaotsikko:** `Tekoälyopettaja espanja saksa`
 **Avainsanat (100):** `puhuminen,englanti,espanja,saksa,ranska,aantamys,opettaja,harjoitus,matka,NIE`
 **App Store kuvaus:**
 ```
-Opi kieltä puhumalla sitä. VOXELO antaa joka päivä lyhyen
+Opi kieltä puhumalla sitä. VOXELITH antaa joka päivä lyhyen
 keskustelutilanteen: kuuntele, toista (shadowing), puhu omalla äänelläsi.
 Tekoäly arvioi ääntämystäsi heti.
 
@@ -1121,7 +1121,7 @@ vuokraus — ei turistiespanjaa, vaan sitä espanjaa jota oikeasti tarvitset.
 Perusta klaani kavereiden kanssa, osallistu viikoittaiseen
 XP-kilpailuun. Pidä putkesi käynnissä päivittäisillä tavoitteilla.
 
-VOXELO Plus: rajaton puheharjoitus, ei mainoksia, luonnollinen
+VOXELITH Plus: rajaton puheharjoitus, ei mainoksia, luonnollinen
 premium-ääni, vapaa keskustelu live-tekoälykumppanin kanssa.
 
 Toimii offline. Tietosi ovat sinun — kasvamme aidon palautteen avulla,
@@ -1132,11 +1132,11 @@ emme koskaan ostetuilla arvosteluilla.
 
 ## Ελληνικά (el)
 
-**Τίτλος Google Play:** `VOXELO: Μίλα Αγγλικά`
+**Τίτλος Google Play:** `VOXELITH: Μίλα Αγγλικά`
 **Σύντομη περιγραφή (80):** `1 λεπτό/ημέρα ομιλίας. Ισπανικά, γερμανικά, γαλλικά, ολλανδικά. Πραγματικές σκηνές.`
 **Πλήρης περιγραφή:**
 ```
-Μάθε με το VOXELO μιλώντας — όχι αποστηθίζοντας.
+Μάθε με το VOXELITH μιλώντας — όχι αποστηθίζοντας.
 
 Κάθε μέρα μια σύντομη σκηνή συνομιλίας φτιαγμένη για σένα: άκου,
 επανάλαβε (shadowing), μίλα δυνατά. Η ΤΝ αξιολογεί την προφορά σου σε
@@ -1159,7 +1159,7 @@ emme koskaan ostetuilla arvosteluilla.
   δυσκολεύεσαι
 • Κλαν: εβδομαδιαίος διαγωνισμός XP με φίλους
 • Καθημερινοί στόχοι, σερί (streaks), παράσημα
-• VOXELO Plus: απεριόριστη εξάσκηση ομιλίας, χωρίς διαφημίσεις, φυσική
+• VOXELITH Plus: απεριόριστη εξάσκηση ομιλίας, χωρίς διαφημίσεις, φυσική
   premium φωνή, ζωντανός συνομιλητής ΤΝ
 
 30 γλώσσες διεπαφής, συνδυάζονται με όποια γλώσσα θέλεις να μάθεις.
@@ -1167,18 +1167,18 @@ emme koskaan ostetuilla arvosteluilla.
 cloud είναι προαιρετικός.
 
 Δωρεάν: 60 δευτερόλεπτα εξάσκησης ομιλίας ημερησίως (επεκτείνεται με
-βίντεο ανταμοιβής). Απεριόριστο με το VOXELO Plus.
+βίντεο ανταμοιβής). Απεριόριστο με το VOXELITH Plus.
 
 Το απόρρητό σου μας ενδιαφέρει — καμία ψεύτικη κριτική ή παρακινημένη
 βαθμολογία, μεγαλώνουμε με πραγματική ανατροφοδότηση.
 ```
 
-**Τίτλος App Store:** `VOXELO: Μίλα Αγγλικά`
+**Τίτλος App Store:** `VOXELITH: Μίλα Αγγλικά`
 **Υπότιτλος:** `Δάσκαλος ΤΝ Ισπανικά Γερμανικά`
 **Λέξεις-κλειδιά (100):** `ομιλια,αγγλικα,ισπανικα,γερμανικα,γαλλικα,προφορα,δασκαλος,εξασκηση,ταξιδι,NIE`
 **Περιγραφή App Store:**
 ```
-Μάθε μια γλώσσα μιλώντας την. Το VOXELO σου δίνει κάθε μέρα μια σύντομη
+Μάθε μια γλώσσα μιλώντας την. Το VOXELITH σου δίνει κάθε μέρα μια σύντομη
 σκηνή συνομιλίας: άκου, επανάλαβε (shadowing), μίλα με τη δική σου
 φωνή. Η ΤΝ αξιολογεί την προφορά σου αμέσως.
 
@@ -1193,7 +1193,7 @@ cloud είναι προαιρετικός.
 Φτιάξε ένα κλαν με φίλους, συμμετέχεις στον εβδομαδιαίο αγώνα XP.
 Διατήρησε το σερί σου με καθημερινούς στόχους.
 
-VOXELO Plus: απεριόριστη εξάσκηση ομιλίας, χωρίς διαφημίσεις, φυσική
+VOXELITH Plus: απεριόριστη εξάσκηση ομιλίας, χωρίς διαφημίσεις, φυσική
 premium φωνή, ελεύθερη συνομιλία με ζωντανό συνομιλητή ΤΝ.
 
 Λειτουργεί εκτός σύνδεσης. Τα δεδομένα σου είναι δικά σου — μεγαλώνουμε
@@ -1204,11 +1204,11 @@ premium φωνή, ελεύθερη συνομιλία με ζωντανό συν
 
 ## Čeština (cs)
 
-**Google Play název:** `VOXELO: Mluv anglicky`
+**Google Play název:** `VOXELITH: Mluv anglicky`
 **Krátký popis (80):** `1 min/den mluvení. Španělština, němčina, francouzština, nizozemština. Reálné scény.`
 **Dlouhý popis:**
 ```
-Uč se s VOXELO mluvením — ne biflováním.
+Uč se s VOXELITH mluvením — ne biflováním.
 
 Každý den krátká konverzační scéna vytvořená pro tebe: poslouchej,
 opakuj (shadowing), mluv nahlas. AI hodnotí tvou výslovnost v reálném
@@ -1228,7 +1228,7 @@ CO JE UVNITŘ:
   máš potíže
 • Klany: týdenní XP soutěž s přáteli
 • Denní cíle, série (streaky), odznaky
-• VOXELO Plus: neomezená mluvní praxe, bez reklam, přirozený prémiový
+• VOXELITH Plus: neomezená mluvní praxe, bez reklam, přirozený prémiový
   hlas, živý AI konverzační partner
 
 30 jazyků rozhraní, kombinovatelných s jakýmkoli jazykem, který se chceš
@@ -1236,18 +1236,18 @@ učit. Funguje offline — cvič bez internetu, cloudová synchronizace je
 volitelná.
 
 Zdarma: 60 sekund mluvní praxe denně (lze prodloužit odměňovaným
-videem). Neomezeně s VOXELO Plus.
+videem). Neomezeně s VOXELITH Plus.
 
 Tvé soukromí je pro nás důležité — žádné falešné recenze ani
 motivovaná hodnocení, rosteme díky skutečné zpětné vazbě.
 ```
 
-**App Store název:** `VOXELO: Mluv anglicky`
+**App Store název:** `VOXELITH: Mluv anglicky`
 **Podtitul:** `AI učitel španělštiny němčiny`
 **Klíčová slova (100):** `mluveni,anglictina,spanelstina,nemcina,francouzstina,vyslovnost,ucitel,cviceni,cestovani,NIE`
 **Popis App Store:**
 ```
-Uč se jazyk tak, že jím mluvíš. VOXELO ti každý den dává krátkou
+Uč se jazyk tak, že jím mluvíš. VOXELITH ti každý den dává krátkou
 konverzační scénu: poslouchej, opakuj (shadowing), mluv vlastním hlasem.
 AI hodnotí tvou výslovnost okamžitě.
 
@@ -1261,7 +1261,7 @@ bytu — ne turistická španělština, ale ta, kterou skutečně potřebuješ.
 Založ klan s přáteli, zapoj se do týdenního XP závodu. Udržuj svou sérii
 díky denním cílům.
 
-VOXELO Plus: neomezená mluvní praxe, bez reklam, přirozený prémiový hlas,
+VOXELITH Plus: neomezená mluvní praxe, bez reklam, přirozený prémiový hlas,
 volná konverzace s živým AI partnerem.
 
 Funguje offline. Tvá data patří tobě — rosteme díky skutečné zpětné
@@ -1272,11 +1272,11 @@ vazbě, nikdy díky koupeným recenzím.
 
 ## Română (ro)
 
-**Titlu Google Play:** `VOXELO: Vorbește Engleză`
+**Titlu Google Play:** `VOXELITH: Vorbește Engleză`
 **Descriere scurtă (80):** `1 min/zi vorbit. Spaniolă, germană, franceză, olandeză. Scene reale.`
 **Descriere lungă:**
 ```
-Învață cu VOXELO vorbind — nu memorând.
+Învață cu VOXELITH vorbind — nu memorând.
 
 În fiecare zi o scenă de conversație scurtă, creată pentru tine:
 ascultă, repetă (shadowing), vorbește tare. IA îți evaluează
@@ -1298,7 +1298,7 @@ CE CONȚINE:
   întâmpini dificultăți
 • Clanuri: competiție săptămânală de XP cu prietenii
 • Obiective zilnice, serii (streak-uri), insigne
-• VOXELO Plus: practică nelimitată de vorbire, fără reclame, voce
+• VOXELITH Plus: practică nelimitată de vorbire, fără reclame, voce
   premium naturală, partener de conversație IA live
 
 30 de limbi de interfață, combinabile cu orice limbă vrei să înveți.
@@ -1306,18 +1306,18 @@ Funcționează offline — exersează fără internet, sincronizarea cloud e
 opțională.
 
 Gratuit: 60 de secunde de practică vorbire pe zi (extensibil cu un
-videoclip recompensat). Nelimitat cu VOXELO Plus.
+videoclip recompensat). Nelimitat cu VOXELITH Plus.
 
 Confidențialitatea ta contează — fără recenzii false sau evaluări
 stimulate, creștem prin feedback real.
 ```
 
-**Titlu App Store:** `VOXELO: Vorbește Engleză`
+**Titlu App Store:** `VOXELITH: Vorbește Engleză`
 **Subtitlu:** `Tutore IA spaniolă germană`
 **Cuvinte cheie (100):** `vorbire,engleza,spaniola,germana,franceza,pronuntie,tutore,practica,calatorie,NIE`
 **Descriere App Store:**
 ```
-Învață o limbă vorbind-o. VOXELO îți oferă în fiecare zi o scenă de
+Învață o limbă vorbind-o. VOXELITH îți oferă în fiecare zi o scenă de
 conversație scurtă: ascultă, repetă (shadowing), vorbește cu propria
 voce. IA îți evaluează pronunția instant.
 
@@ -1332,7 +1332,7 @@ ai cu adevărat nevoie.
 Formează un clan cu prietenii, alătură-te cursei săptămânale de XP.
 Menține-ți seria cu obiective zilnice.
 
-VOXELO Plus: practică nelimitată de vorbire, fără reclame, voce premium
+VOXELITH Plus: practică nelimitată de vorbire, fără reclame, voce premium
 naturală, conversație liberă cu un partener IA live.
 
 Funcționează offline. Datele tale îți aparțin — creștem prin feedback
@@ -1343,11 +1343,11 @@ real, niciodată prin recenzii cumpărate.
 
 ## Magyar (hu)
 
-**Google Play cím:** `VOXELO: Beszélj angolul`
+**Google Play cím:** `VOXELITH: Beszélj angolul`
 **Rövid leírás (80):** `1 perc/nap beszédgyakorlás. Spanyol, német, francia, holland. Valós jelenetek.`
 **Hosszú leírás:**
 ```
-Tanulj a VOXELO-val beszélve — ne magolással.
+Tanulj a VOXELITH-val beszélve — ne magolással.
 
 Minden nap egy rövid, neked készült beszélgetős jelenet: hallgasd meg,
 ismételd (shadowing), mondd ki hangosan. Az AI valós időben értékeli a
@@ -1369,25 +1369,25 @@ MIT KAPSZ:
   akadsz el
 • Klánok: heti XP-verseny barátokkal
 • Napi célok, sorozatok (streakek), jelvények
-• VOXELO Plus: korlátlan beszédgyakorlás, reklámmentes, prémium
+• VOXELITH Plus: korlátlan beszédgyakorlás, reklámmentes, prémium
   természetes hang, élő AI beszélgetőpartner
 
 30 felületnyelv, bármely tanulni kívánt nyelvvel kombinálható. Offline
 is működik — gyakorolj internet nélkül, a felhőszinkron opcionális.
 
 Ingyenes: napi 60 másodperc beszédgyakorlás (jutalomvideóval
-hosszabbítható). Korlátlan a VOXELO Plusszal.
+hosszabbítható). Korlátlan a VOXELITH Plusszal.
 
 Fontos számunkra a magánéleted — nincs hamis értékelés vagy ösztönzött
 minősítés, valódi visszajelzésekkel növekszünk.
 ```
 
-**App Store cím:** `VOXELO: Beszélj angolul`
+**App Store cím:** `VOXELITH: Beszélj angolul`
 **Alcím:** `AI tanár spanyol német`
 **Kulcsszavak (100):** `beszed,angol,spanyol,nemet,francia,kiejtes,tanar,gyakorlas,utazas,NIE`
 **App Store leírás:**
 ```
-Tanulj egy nyelvet úgy, hogy beszéled. A VOXELO minden nap egy rövid
+Tanulj egy nyelvet úgy, hogy beszéled. A VOXELITH minden nap egy rövid
 beszélgetős jelenetet ad: hallgasd meg, ismételd (shadowing), beszélj a
 saját hangoddal. Az AI azonnal értékeli a kiejtésedet.
 
@@ -1402,7 +1402,7 @@ van.
 Alapíts klánt barátaiddal, csatlakozz a heti XP-versenyhez. Tartsd meg
 a sorozatodat napi célokkal.
 
-VOXELO Plus: korlátlan beszédgyakorlás, reklámmentes, prémium természetes
+VOXELITH Plus: korlátlan beszédgyakorlás, reklámmentes, prémium természetes
 hang, szabad beszélgetés egy élő AI-partnerrel.
 
 Offline is működik. Az adataid a tieid — valódi visszajelzésekkel
@@ -1413,11 +1413,11 @@ növekszünk, sosem vásárolt értékelésekkel.
 
 ## हिन्दी (hi)
 
-**Google Play शीर्षक:** `VOXELO: अंग्रेज़ी बोलें`
+**Google Play शीर्षक:** `VOXELITH: अंग्रेज़ी बोलें`
 **संक्षिप्त विवरण (80):** `रोज़ाना 1 मिनट बोलने का अभ्यास। स्पेनिश, जर्मन, फ्रेंच, डच। असली दृश्य।`
 **पूरा विवरण:**
 ```
-VOXELO से बोलकर सीखें — रटकर नहीं।
+VOXELITH से बोलकर सीखें — रटकर नहीं।
 
 हर दिन आपके लिए बनाया गया एक छोटा बातचीत दृश्य: सुनें, दोहराएं
 (shadowing), ज़ोर से बोलें। AI आपके उच्चारण का वास्तविक समय में
@@ -1436,7 +1436,7 @@ VOXELO से बोलकर सीखें — रटकर नहीं।
   अटकते हैं
 • कबीले (Clans): दोस्तों के साथ साप्ताहिक XP प्रतियोगिता
 • दैनिक लक्ष्य, स्ट्रीक, बैज
-• VOXELO Plus: असीमित बोलने का अभ्यास, बिना विज्ञापन, प्रीमियम प्राकृतिक
+• VOXELITH Plus: असीमित बोलने का अभ्यास, बिना विज्ञापन, प्रीमियम प्राकृतिक
   आवाज़, लाइव AI बातचीत साथी
 
 30 इंटरफ़ेस भाषाएँ, आप जो भी भाषा सीखना चाहें उसके साथ जोड़ी जा सकती
@@ -1444,18 +1444,18 @@ VOXELO से बोलकर सीखें — रटकर नहीं।
 वैकल्पिक है।
 
 मुफ़्त: रोज़ाना 60 सेकंड बोलने का अभ्यास (रिवॉर्ड वीडियो से बढ़ाया जा
-सकता है)। VOXELO Plus के साथ असीमित।
+सकता है)। VOXELITH Plus के साथ असीमित।
 
 आपकी निजता हमारे लिए मायने रखती है — कोई नकली समीक्षा या प्रोत्साहित
 रेटिंग नहीं, हम असली फीडबैक से बढ़ते हैं।
 ```
 
-**App Store शीर्षक:** `VOXELO: अंग्रेज़ी बोलें`
+**App Store शीर्षक:** `VOXELITH: अंग्रेज़ी बोलें`
 **उपशीर्षक:** `स्पेनिश जर्मन AI ट्यूटर`
 **कीवर्ड (100):** `बोलना,अंग्रेजी,स्पेनिश,जर्मन,फ्रेंच,उच्चारण,ट्यूटर,अभ्यास,यात्रा,NIE`
 **App Store विवरण:**
 ```
-भाषा बोलकर सीखें। VOXELO हर दिन आपको एक छोटा बातचीत दृश्य देता है: सुनें,
+भाषा बोलकर सीखें। VOXELITH हर दिन आपको एक छोटा बातचीत दृश्य देता है: सुनें,
 दोहराएं (shadowing), अपनी आवाज़ में बोलें। AI तुरंत आपके उच्चारण का
 मूल्यांकन करता है।
 
@@ -1470,7 +1470,7 @@ VOXELO से बोलकर सीखें — रटकर नहीं।
 दोस्तों के साथ कबीला बनाएं, साप्ताहिक XP दौड़ में शामिल हों। दैनिक
 लक्ष्यों से अपनी स्ट्रीक बनाए रखें।
 
-VOXELO Plus: असीमित बोलने का अभ्यास, बिना विज्ञापन, प्रीमियम प्राकृतिक
+VOXELITH Plus: असीमित बोलने का अभ्यास, बिना विज्ञापन, प्रीमियम प्राकृतिक
 आवाज़, लाइव AI साथी के साथ खुली बातचीत।
 
 ऑफ़लाइन काम करता है। आपका डेटा आपका है — हम असली फीडबैक से बढ़ते हैं,
@@ -1481,11 +1481,11 @@ VOXELO Plus: असीमित बोलने का अभ्यास, ब�
 
 ## ไทย (th)
 
-**ชื่อ Google Play:** `VOXELO: พูดภาษาอังกฤษ`
+**ชื่อ Google Play:** `VOXELITH: พูดภาษาอังกฤษ`
 **คำอธิบายสั้น (80):** `ฝึกพูดวันละ 1 นาที สเปน เยอรมัน ฝรั่งเศส ดัตช์ ฉากจริง`
 **คำอธิบายแบบเต็ม:**
 ```
-เรียนกับ VOXELO ด้วยการพูด — ไม่ใช่การท่องจำ
+เรียนกับ VOXELITH ด้วยการพูด — ไม่ใช่การท่องจำ
 
 ทุกวันจะมีฉากบทสนทนาสั้นๆ ที่สร้างมาเพื่อคุณ: ฟัง เลียนเสียง
 (shadowing) พูดออกเสียง AI ประเมินการออกเสียงของคุณแบบเรียลไทม์และให้
@@ -1504,7 +1504,7 @@ VOXELO Plus: असीमित बोलने का अभ्यास, ब�
   ติดขัด
 • กลุ่ม (Clans): แข่งขัน XP รายสัปดาห์กับเพื่อน
 • เป้าหมายรายวัน สตรีค เหรียญตรา
-• VOXELO Plus: ฝึกพูดไม่จำกัด ไม่มีโฆษณา เสียงพรีเมียมเป็นธรรมชาติ คู่สนทนา
+• VOXELITH Plus: ฝึกพูดไม่จำกัด ไม่มีโฆษณา เสียงพรีเมียมเป็นธรรมชาติ คู่สนทนา
   AI แบบสด
 
 ภาษาหน้าจอ 30 ภาษา จับคู่กับภาษาที่คุณต้องการเรียนได้ทุกภาษา ใช้งาน
@@ -1512,18 +1512,18 @@ VOXELO Plus: असीमित बोलने का अभ्यास, ब�
 เสริม
 
 ฟรี: ฝึกพูด 60 วินาทีต่อวัน (ขยายเวลาได้ด้วยวิดีโอรางวัล) ไม่จำกัดด้วย
-VOXELO Plus
+VOXELITH Plus
 
 ความเป็นส่วนตัวของคุณสำคัญกับเรา — ไม่มีรีวิวปลอมหรือคะแนนที่ถูกกระตุ้น
 เราเติบโตด้วยฟีดแบ็กจริง
 ```
 
-**ชื่อ App Store:** `VOXELO: พูดภาษาอังกฤษ`
+**ชื่อ App Store:** `VOXELITH: พูดภาษาอังกฤษ`
 **คำบรรยายรอง:** `ติวเตอร์ AI สเปน เยอรมัน`
 **คำสำคัญ (100):** `พูด,อังกฤษ,สเปน,เยอรมัน,ฝรั่งเศส,ออกเสียง,ติวเตอร์,ฝึกฝน,เดินทาง,NIE`
 **คำอธิบาย App Store:**
 ```
-เรียนภาษาด้วยการพูด VOXELO มอบฉากบทสนทนาสั้นๆ ให้คุณทุกวัน: ฟัง เลียนเสียง
+เรียนภาษาด้วยการพูด VOXELITH มอบฉากบทสนทนาสั้นๆ ให้คุณทุกวัน: ฟัง เลียนเสียง
 (shadowing) พูดด้วยเสียงของคุณเอง AI ประเมินการออกเสียงของคุณทันที
 
 ตัวอักษรครบทุกภาษาใน 30 ภาษา แต่ละภาษาใช้อักษรจริง ฝึกอ่านด้วยเรื่องสั้น
@@ -1535,7 +1535,7 @@ VOXELO Plus
 ตั้งกลุ่มกับเพื่อน เข้าร่วมการแข่งขัน XP รายสัปดาห์ รักษาสตรีคด้วย
 เป้าหมายรายวัน
 
-VOXELO Plus: ฝึกพูดไม่จำกัด ไม่มีโฆษณา เสียงพรีเมียมเป็นธรรมชาติ
+VOXELITH Plus: ฝึกพูดไม่จำกัด ไม่มีโฆษณา เสียงพรีเมียมเป็นธรรมชาติ
 สนทนาอย่างอิสระกับคู่สนทนา AI แบบสด
 
 ใช้งานออฟไลน์ได้ ข้อมูลของคุณเป็นของคุณ — เราเติบโตด้วยฟีดแบ็กจริง
@@ -1546,11 +1546,11 @@ VOXELO Plus: ฝึกพูดไม่จำกัด ไม่มีโฆษ
 
 ## Tiếng Việt (vi)
 
-**Tiêu đề Google Play:** `VOXELO: Nói tiếng Anh`
+**Tiêu đề Google Play:** `VOXELITH: Nói tiếng Anh`
 **Mô tả ngắn (80):** `1 phút/ngày luyện nói. Tây Ban Nha, Đức, Pháp, Hà Lan. Tình huống thật.`
 **Mô tả đầy đủ:**
 ```
-Học cùng VOXELO bằng cách nói — không phải học thuộc lòng.
+Học cùng VOXELITH bằng cách nói — không phải học thuộc lòng.
 
 Mỗi ngày một tình huống hội thoại ngắn được thiết kế riêng cho bạn:
 nghe, lặp lại (shadowing), nói to. AI đánh giá phát âm của bạn theo
@@ -1569,7 +1569,7 @@ CÓ GÌ BÊN TRONG:
   khó khăn ở đâu
 • Bang hội (Clans): thi đua XP hàng tuần với bạn bè
 • Mục tiêu hàng ngày, chuỗi ngày (streak), huy hiệu
-• VOXELO Plus: luyện nói không giới hạn, không quảng cáo, giọng nói
+• VOXELITH Plus: luyện nói không giới hạn, không quảng cáo, giọng nói
   premium tự nhiên, bạn trò chuyện AI trực tiếp
 
 30 ngôn ngữ giao diện, kết hợp được với bất kỳ ngôn ngữ nào bạn muốn
@@ -1577,19 +1577,19 @@ học. Hoạt động ngoại tuyến — luyện tập không cần internet, �
 đám mây là tùy chọn.
 
 Miễn phí: 60 giây luyện nói mỗi ngày (kéo dài thêm bằng video thưởng).
-Không giới hạn với VOXELO Plus.
+Không giới hạn với VOXELITH Plus.
 
 Quyền riêng tư của bạn rất quan trọng với chúng tôi — không có đánh
 giá giả hay xếp hạng được khuyến khích, chúng tôi phát triển nhờ phản
 hồi thật.
 ```
 
-**Tiêu đề App Store:** `VOXELO: Nói tiếng Anh`
+**Tiêu đề App Store:** `VOXELITH: Nói tiếng Anh`
 **Phụ đề:** `Gia sư AI Tây Ban Nha Đức`
 **Từ khóa (100):** `noi,tienganh,tayBanNha,duc,phap,phatam,giasu,luyentap,dulich,NIE`
 **Mô tả App Store:**
 ```
-Học một ngôn ngữ bằng cách nói nó. VOXELO cho bạn mỗi ngày một tình
+Học một ngôn ngữ bằng cách nói nó. VOXELITH cho bạn mỗi ngày một tình
 huống hội thoại ngắn: nghe, lặp lại (shadowing), nói bằng giọng của
 chính bạn. AI đánh giá phát âm của bạn ngay lập tức.
 
@@ -1604,7 +1604,7 @@ Ban Nha bạn thực sự cần.
 Lập bang hội với bạn bè, tham gia cuộc đua XP hàng tuần. Duy trì chuỗi
 ngày với mục tiêu hàng ngày.
 
-VOXELO Plus: luyện nói không giới hạn, không quảng cáo, giọng nói
+VOXELITH Plus: luyện nói không giới hạn, không quảng cáo, giọng nói
 premium tự nhiên, trò chuyện tự do với bạn AI trực tiếp.
 
 Hoạt động ngoại tuyến. Dữ liệu của bạn là của bạn — chúng tôi phát
@@ -1615,11 +1615,11 @@ triển nhờ phản hồi thật, không bao giờ mua đánh giá.
 
 ## Bahasa Indonesia (id)
 
-**Judul Google Play:** `VOXELO: Berbicara Inggris`
+**Judul Google Play:** `VOXELITH: Berbicara Inggris`
 **Deskripsi singkat (80):** `1 menit/hari latihan bicara. Spanyol, Jerman, Prancis, Belanda. Skenario nyata.`
 **Deskripsi lengkap:**
 ```
-Belajar dengan VOXELO lewat berbicara — bukan menghafal.
+Belajar dengan VOXELITH lewat berbicara — bukan menghafal.
 
 Setiap hari ada adegan percakapan singkat yang dibuat untukmu: dengar,
 ulangi (shadowing), ucapkan dengan lantang. AI menilai pelafalanmu
@@ -1641,7 +1641,7 @@ YANG ADA DI DALAM:
   mana kamu kesulitan
 • Klan: kompetisi XP mingguan dengan teman
 • Target harian, rentetan (streak), lencana
-• VOXELO Plus: latihan bicara tanpa batas, tanpa iklan, suara premium
+• VOXELITH Plus: latihan bicara tanpa batas, tanpa iklan, suara premium
   alami, partner ngobrol AI langsung
 
 30 bahasa antarmuka, bisa dipadukan dengan bahasa apa pun yang ingin
@@ -1649,18 +1649,18 @@ kamu pelajari. Bekerja offline — berlatih tanpa internet, sinkronisasi
 cloud bersifat opsional.
 
 Gratis: 60 detik latihan bicara per hari (bisa diperpanjang dengan
-video berhadiah). Tanpa batas dengan VOXELO Plus.
+video berhadiah). Tanpa batas dengan VOXELITH Plus.
 
 Privasimu penting bagi kami — tidak ada ulasan palsu atau rating yang
 didorong, kami tumbuh dengan umpan balik yang nyata.
 ```
 
-**Judul App Store:** `VOXELO: Berbicara Inggris`
+**Judul App Store:** `VOXELITH: Berbicara Inggris`
 **Subjudul:** `Tutor AI Spanyol Jerman`
 **Kata kunci (100):** `berbicara,inggris,spanyol,jerman,prancis,pelafalan,tutor,latihan,perjalanan,NIE`
 **Deskripsi App Store:**
 ```
-Belajar bahasa dengan mengucapkannya. VOXELO memberimu adegan
+Belajar bahasa dengan mengucapkannya. VOXELITH memberimu adegan
 percakapan singkat setiap hari: dengar, ulangi (shadowing), bicara
 dengan suaramu sendiri. AI menilai pelafalanmu seketika.
 
@@ -1675,7 +1675,7 @@ Spanyol yang benar-benar kamu butuhkan.
 Bentuk klan bersama teman, ikuti balapan XP mingguan. Jaga rentetanmu
 dengan target harian.
 
-VOXELO Plus: latihan bicara tanpa batas, tanpa iklan, suara premium
+VOXELITH Plus: latihan bicara tanpa batas, tanpa iklan, suara premium
 alami, obrolan bebas dengan partner AI langsung.
 
 Bekerja offline. Datamu milikmu — kami tumbuh dengan umpan balik
@@ -1686,11 +1686,11 @@ nyata, tidak pernah dengan ulasan yang dibeli.
 
 ## Українська (uk)
 
-**Заголовок Google Play:** `VOXELO: розмовляй англійською`
+**Заголовок Google Play:** `VOXELITH: розмовляй англійською`
 **Короткий опис (80):** `1 хв/день розмовної практики. Іспанська, німецька, французька. Реальні сцени.`
 **Повний опис:**
 ```
-Вивчай мову з VOXELO, розмовляючи — а не зубрячи.
+Вивчай мову з VOXELITH, розмовляючи — а не зубрячи.
 
 Щодня коротка розмовна сцена, створена саме для тебе: слухай,
 повторюй (shadowing), говори вголос. ШІ оцінює твою вимову в
@@ -1710,7 +1710,7 @@ nyata, tidak pernah dengan ulasan yang dibeli.
   складно
 • Клани: щотижневе змагання за XP з друзями
 • Щоденні цілі, серії (streak), значки
-• VOXELO Plus: необмежена розмовна практика, без реклами, преміальний
+• VOXELITH Plus: необмежена розмовна практика, без реклами, преміальний
   природний голос, живий співрозмовник ШІ
 
 30 мов інтерфейсу, можна поєднувати з будь-якою мовою, яку хочеш
@@ -1718,18 +1718,18 @@ nyata, tidak pernah dengan ulasan yang dibeli.
 опціональна.
 
 Безкоштовно: 60 секунд розмовної практики щодня (можна продовжити,
-переглянувши відео за винагороду). Необмежено з VOXELO Plus.
+переглянувши відео за винагороду). Необмежено з VOXELITH Plus.
 
 Твоя приватність важлива для нас — жодних фальшивих відгуків чи
 стимульованих оцінок, ми зростаємо завдяки реальному фідбеку.
 ```
 
-**Заголовок App Store:** `VOXELO: розмовляй англійською`
+**Заголовок App Store:** `VOXELITH: розмовляй англійською`
 **Підзаголовок:** `ШІ-репетитор іспанської німецької`
 **Ключові слова (100):** `розмова,англійська,іспанська,німецька,французька,вимова,репетитор,практика,подорож,NIE`
 **Опис App Store:**
 ```
-Вивчай мову, розмовляючи нею. VOXELO щодня дає тобі коротку розмовну
+Вивчай мову, розмовляючи нею. VOXELITH щодня дає тобі коротку розмовну
 сцену: слухай, повторюй (shadowing), говори власним голосом. ШІ
 одразу оцінює твою вимову.
 
@@ -1743,7 +1743,7 @@ nyata, tidak pernah dengan ulasan yang dibeli.
 Створи клан з друзями, приєднайся до щотижневої гонки за XP. Тримай
 серію завдяки щоденним цілям.
 
-VOXELO Plus: необмежена розмовна практика, без реклами, преміальний
+VOXELITH Plus: необмежена розмовна практика, без реклами, преміальний
 природний голос, вільна розмова з живим ШІ-партнером.
 
 Працює офлайн. Твої дані належать тобі — ми зростаємо завдяки
@@ -1754,11 +1754,11 @@ VOXELO Plus: необмежена розмовна практика, без ре
 
 ## עברית (he)
 
-**כותרת Google Play:** `VOXELO: דבר אנגלית`
+**כותרת Google Play:** `VOXELITH: דבר אנגלית`
 **תיאור קצר (80):** `דקה ביום של תרגול דיבור. ספרדית, גרמנית, צרפתית, הולנדית. תרחישים אמיתיים.`
 **תיאור מלא:**
 ```
-למד עם VOXELO על ידי דיבור — לא שינון.
+למד עם VOXELITH על ידי דיבור — לא שינון.
 
 בכל יום תרחיש שיחה קצר שנוצר במיוחד עבורך: הקשב, חזור (shadowing),
 דבר בקול רם. הבינה המלאכותית מעריכה את ההגייה שלך בזמן אמת ונותנת
@@ -1775,25 +1775,25 @@ VOXELO Plus: необмежена розмовна практика, без ре
 • ניתוח הגייה: סיווג Reflex/Recall/Guess מראה איפה אתה מתקשה
 • שבטים: תחרות XP שבועית עם חברים
 • יעדים יומיים, רצפים (streaks), תגים
-• VOXELO Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, קול טבעי פרימיום,
+• VOXELITH Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, קול טבעי פרימיום,
   שותף שיחה בבינה מלאכותית בזמן אמת
 
 30 שפות ממשק, ניתנות לשילוב עם כל שפה שתרצה ללמוד. עובד ללא חיבור
 לאינטרנט — תרגל בלי אינטרנט, סנכרון ענן הוא אופציונלי.
 
 חינם: 60 שניות תרגול דיבור ביום (ניתן להאריך עם סרטון תגמול). ללא
-הגבלה עם VOXELO Plus.
+הגבלה עם VOXELITH Plus.
 
 הפרטיות שלך חשובה לנו — אין ביקורות מזויפות או דירוגים מתומרצים,
 אנחנו צומחים מפידבק אמיתי.
 ```
 
-**כותרת App Store:** `VOXELO: דבר אנגלית`
+**כותרת App Store:** `VOXELITH: דבר אנגלית`
 **כותרת משנה:** `מורה בינה מלאכותית ספרדית`
 **מילות מפתח (100):** `דיבור,אנגלית,ספרדית,גרמנית,צרפתית,הגייה,מורה,תרגול,נסיעות,NIE`
 **תיאור App Store:**
 ```
-למד שפה על ידי דיבור בה. VOXELO נותן לך בכל יום תרחיש שיחה קצר: הקשב,
+למד שפה על ידי דיבור בה. VOXELITH נותן לך בכל יום תרחיש שיחה קצר: הקשב,
 חזור (shadowing), דבר בקול שלך. הבינה המלאכותית מעריכה את ההגייה
 שלך באופן מיידי.
 
@@ -1806,7 +1806,7 @@ VOXELO Plus: необмежена розмовна практика, без ре
 הקם שבט עם חברים, הצטרף למרוץ ה-XP השבועי. שמור על הרצף שלך עם יעדים
 יומיים.
 
-VOXELO Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, קול טבעי פרימיום, שיחה
+VOXELITH Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, קול טבעי פרימיום, שיחה
 חופשית עם שותף בינה מלאכותית בזמן אמת.
 
 עובד ללא אינטרנט. הנתונים שלך שייכים לך — אנחנו צומחים מפידבק אמיתי,
@@ -1817,11 +1817,11 @@ VOXELO Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, ק�
 
 ## فارسی (fa)
 
-**عنوان Google Play:** `VOXELO: انگلیسی صحبت کن`
+**عنوان Google Play:** `VOXELITH: انگلیسی صحبت کن`
 **توضیح کوتاه (80):** `۱ دقیقه در روز تمرین صحبت. اسپانیایی، آلمانی، فرانسوی، هلندی. صحنه‌های واقعی.`
 **توضیح کامل:**
 ```
-با VOXELO با صحبت کردن یاد بگیر — نه با حفظ کردن.
+با VOXELITH با صحبت کردن یاد بگیر — نه با حفظ کردن.
 
 هر روز یک صحنه گفتگوی کوتاه که مخصوص تو ساخته شده: گوش کن، تکرار کن
 (shadowing)، بلند صحبت کن. هوش مصنوعی تلفظ تو را در لحظه ارزیابی
@@ -1839,7 +1839,7 @@ VOXELO Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, ק�
 • تحلیل تلفظ: دسته‌بندی Reflex/Recall/Guess نشان می‌دهد کجا مشکل داری
 • قبیله‌ها: رقابت هفتگی XP با دوستان
 • اهداف روزانه، زنجیره‌ها (streak)، نشان‌ها
-• VOXELO Plus: تمرین صحبت نامحدود، بدون تبلیغات، صدای طبیعی پریمیوم،
+• VOXELITH Plus: تمرین صحبت نامحدود، بدون تبلیغات، صدای طبیعی پریمیوم،
   همراه گفتگوی زنده با هوش مصنوعی
 
 ۳۰ زبان رابط کاربری، قابل ترکیب با هر زبانی که می‌خواهی یاد بگیری.
@@ -1847,18 +1847,18 @@ VOXELO Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, ק�
 است.
 
 رایگان: ۶۰ ثانیه تمرین صحبت در روز (با تماشای ویدیوی پاداش قابل تمدید
-است). نامحدود با VOXELO Plus.
+است). نامحدود با VOXELITH Plus.
 
 حریم خصوصی تو برای ما مهم است — بدون نظرات جعلی یا امتیازدهی
 تشویق‌شده، ما با بازخورد واقعی رشد می‌کنیم.
 ```
 
-**عنوان App Store:** `VOXELO: انگلیسی صحبت کن`
+**عنوان App Store:** `VOXELITH: انگلیسی صحبت کن`
 **زیرعنوان:** `مربی هوش مصنوعی اسپانیایی`
 **کلمات کلیدی (100):** `صحبت,انگلیسی,اسپانیایی,آلمانی,فرانسوی,تلفظ,مربی,تمرین,سفر,NIE`
 **توضیح App Store:**
 ```
-یک زبان را با صحبت کردن یاد بگیر. VOXELO هر روز یک صحنه گفتگوی کوتاه به
+یک زبان را با صحبت کردن یاد بگیر. VOXELITH هر روز یک صحنه گفتگوی کوتاه به
 تو می‌دهد: گوش کن، تکرار کن (shadowing)، با صدای خودت صحبت کن. هوش
 مصنوعی فوراً تلفظ تو را ارزیابی می‌کند.
 
@@ -1872,7 +1872,7 @@ VOXELO Plus: תרגול דיבור ללא הגבלה, ללא פרסומות, ק�
 با دوستانت قبیله بساز، در مسابقه هفتگی XP شرکت کن. زنجیره‌ات را با
 اهداف روزانه حفظ کن.
 
-VOXELO Plus: تمرین صحبت نامحدود، بدون تبلیغات، صدای طبیعی پریمیوم،
+VOXELITH Plus: تمرین صحبت نامحدود، بدون تبلیغات، صدای طبیعی پریمیوم،
 گفتگوی آزاد با یک همراه هوش مصنوعی زنده.
 
 آفلاین کار می‌کند. داده‌های تو مال خودت است — ما با بازخورد واقعی رشد
@@ -1883,11 +1883,11 @@ VOXELO Plus: تمرین صحبت نامحدود، بدون تبلیغات، صد
 
 ## Kiswahili (sw)
 
-**Kichwa Google Play:** `VOXELO: Zungumza Kiingereza`
+**Kichwa Google Play:** `VOXELITH: Zungumza Kiingereza`
 **Maelezo mafupi (80):** `Dakika 1/siku ya mazoezi ya kuzungumza. Kihispania, Kijerumani, Kifaransa. Matukio halisi.`
 **Maelezo marefu:**
 ```
-Jifunze na VOXELO kwa kuzungumza — si kukariri.
+Jifunze na VOXELITH kwa kuzungumza — si kukariri.
 
 Kila siku tukio fupi la mazungumzo lililotengenezwa kwa ajili yako:
 sikiliza, rudia (shadowing), zungumza kwa sauti. AI inatathmini
@@ -1907,7 +1907,7 @@ KILICHOMO:
   unapopambana
 • Koo (Clans): mashindano ya kila wiki ya XP na marafiki
 • Malengo ya kila siku, mfululizo (streaks), beji
-• VOXELO Plus: mazoezi ya kuzungumza yasiyo na kikomo, hakuna matangazo,
+• VOXELITH Plus: mazoezi ya kuzungumza yasiyo na kikomo, hakuna matangazo,
   sauti asilia ya premium, mshirika wa mazungumzo wa AI moja kwa moja
 
 Lugha 30 za kiolesura, zinaweza kuunganishwa na lugha yoyote unayotaka
@@ -1915,18 +1915,18 @@ kujifunza. Inafanya kazi bila mtandao — fanya mazoezi bila intaneti,
 usawazishaji wa wingu ni wa hiari.
 
 Bure: sekunde 60 za mazoezi ya kuzungumza kwa siku (inaweza kuongezwa
-kwa video ya zawadi). Bila kikomo na VOXELO Plus.
+kwa video ya zawadi). Bila kikomo na VOXELITH Plus.
 
 Faragha yako ni muhimu kwetu — hakuna maoni bandia au ukadiriaji wa
 kuhamasishwa, tunakua kwa maoni halisi.
 ```
 
-**Kichwa App Store:** `VOXELO: Zungumza Kiingereza`
+**Kichwa App Store:** `VOXELITH: Zungumza Kiingereza`
 **Kichwa kidogo:** `Mwalimu AI Kihispania Kijerumani`
 **Maneno muhimu (100):** `kuzungumza,kiingereza,kihispania,kijerumani,kifaransa,matamshi,mwalimu,mazoezi,safari,NIE`
 **Maelezo App Store:**
 ```
-Jifunze lugha kwa kuizungumza. VOXELO inakupa kila siku tukio fupi la
+Jifunze lugha kwa kuizungumza. VOXELITH inakupa kila siku tukio fupi la
 mazungumzo: sikiliza, rudia (shadowing), zungumza kwa sauti yako
 mwenyewe. AI inatathmini matamshi yako papo hapo.
 
@@ -1940,7 +1940,7 @@ kweli.
 Unda ukoo na marafiki, jiunge na mbio za kila wiki za XP. Dumisha
 mfululizo wako kwa malengo ya kila siku.
 
-VOXELO Plus: mazoezi ya kuzungumza yasiyo na kikomo, hakuna matangazo,
+VOXELITH Plus: mazoezi ya kuzungumza yasiyo na kikomo, hakuna matangazo,
 sauti asilia ya premium, mazungumzo huru na mshirika wa AI moja kwa
 moja.
 

@@ -26,9 +26,9 @@ final i18nProvider = Provider<I18n>(
 );
 
 class SessionController extends Notifier<UserProfile> {
-  static const _key = 'voxelo.profile.v1';
-  static const _profilePrefix = 'voxelo.family.profile.';
-  static const _activeProfileKey = 'voxelo.family.active';
+  static const _key = 'voxelith.profile.v1';
+  static const _profilePrefix = 'voxelith.family.profile.';
+  static const _activeProfileKey = 'voxelith.family.active';
 
   SharedPreferences get _prefs => ref.read(prefsProvider);
 
@@ -141,6 +141,8 @@ class SessionController extends Notifier<UserProfile> {
   Future<void> setLearn(LearnLang l) => _save(state.copyWith(learnLang: l));
   Future<void> setMotive(Motive m) => _save(state.copyWith(motive: m));
   Future<void> setCefr(Cefr c) => _save(state.copyWith(cefr: c));
+  Future<void> setLearningStyle(LearningStyle s) =>
+      _save(state.copyWith(learningStyle: s));
   Future<void> finishOnboarding() =>
       _save(state.copyWith(onboarded: true, streak: 1));
   Future<void> setPlus(bool v) => _save(state.copyWith(isPlus: v));
@@ -297,12 +299,15 @@ class SessionController extends Notifier<UserProfile> {
     return granted;
   }
 
-  Future<int> completeScene(LearnLang language) async {
+  Future<int> completeScene(LearnLang language, {String? sceneId}) async {
     final granted = await awardXp(50, source: 'scene');
     await _save(
       state.copyWith(
         completedScenes: state.completedScenes + 1,
         completedLanguages: {...state.completedLanguages, language},
+        completedSceneIds: sceneId == null
+            ? state.completedSceneIds
+            : {...state.completedSceneIds, sceneId},
       ),
     );
     return granted;

@@ -3,21 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:voxelo/core/theme/dark_theme.dart';
-import 'package:voxelo/data/content/catalog.dart';
-import 'package:voxelo/data/content/clips.dart';
-import 'package:voxelo/data/content/language_guides.dart';
-import 'package:voxelo/data/events/weekly_event.dart';
-import 'package:voxelo/data/models/achievements.dart';
-import 'package:voxelo/data/models/clan.dart';
-import 'package:voxelo/data/models/leaderboard.dart';
-import 'package:voxelo/data/models/models.dart';
-import 'package:voxelo/data/notifications/notification_service.dart';
-import 'package:voxelo/data/speech/phoneme_scorer.dart';
-import 'package:voxelo/data/speech/speech_controller.dart';
-import 'package:voxelo/data/translate/offline_translate.dart';
-import 'package:voxelo/state/session.dart';
-import 'package:voxelo/ui/widgets.dart';
+import 'package:voxelith/core/theme/dark_theme.dart';
+import 'package:voxelith/data/content/catalog.dart';
+import 'package:voxelith/data/content/clips.dart';
+import 'package:voxelith/data/content/language_guides.dart';
+import 'package:voxelith/data/events/weekly_event.dart';
+import 'package:voxelith/data/models/achievements.dart';
+import 'package:voxelith/data/models/clan.dart';
+import 'package:voxelith/data/models/leaderboard.dart';
+import 'package:voxelith/data/models/models.dart';
+import 'package:voxelith/data/notifications/notification_service.dart';
+import 'package:voxelith/data/speech/phoneme_scorer.dart';
+import 'package:voxelith/data/speech/speech_controller.dart';
+import 'package:voxelith/data/translate/offline_translate.dart';
+import 'package:voxelith/state/session.dart';
+import 'package:voxelith/ui/widgets.dart';
 
 void main() {
   test('all 30 learn languages have A1 plus A2/B1 scenarios', () {
@@ -31,8 +31,8 @@ void main() {
     }
   });
 
-  test('Spanish has 12 scenarios including A2/B1 and bonus packs', () {
-    expect(Catalog.forLang(LearnLang.es).length, 12);
+  test('Spanish has 21 scenarios including A2/B1 and bonus packs', () {
+    expect(Catalog.forLang(LearnLang.es).length, 21);
   });
 
   test('Arabic A1 pack exists', () {
@@ -75,12 +75,12 @@ void main() {
     }
   });
 
-  test('total scenario count is 302', () {
+  test('total scenario count is 572', () {
     var total = 0;
     for (final lang in LearnLang.values) {
       total += Catalog.forLang(lang).length;
     }
-    expect(total, 302);
+    expect(total, 572);
   });
 
   test('pronunciation scoring is honest and deterministic', () {
@@ -176,7 +176,7 @@ void main() {
     final entry = LeaderboardEntry.fromJson({
       'rank': 12,
       'user_id': 'user-1',
-      'player_name': 'VOXELO A1B2',
+      'player_name': 'VOXELITH A1B2',
       'xp': 340,
       'is_me': true,
     });
@@ -215,7 +215,7 @@ void main() {
     );
     expect(
       NotificationService.contentFor(base.copyWith(isPlus: true), 0).$1,
-      'VOXELO Plus',
+      'VOXELITH Plus',
     );
   });
 
@@ -229,14 +229,14 @@ void main() {
     expect(restored.reminderHour, 10);
   });
 
-  testWidgets('original Voxelo mascot renders every expression', (tester) async {
+  testWidgets('original Voxelith mascot renders every expression', (tester) async {
     for (final mood in MascotMood.values) {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(body: VoxeloMascot(mood: mood, animate: false)),
+          home: Scaffold(body: VoxelithMascot(mood: mood, animate: false)),
         ),
       );
-      expect(find.byType(VoxeloMascot), findsOneWidget);
+      expect(find.byType(VoxelithMascot), findsOneWidget);
     }
   });
 
@@ -321,7 +321,7 @@ void main() {
   });
 
   test('dark theme and user preference are persisted', () {
-    final dark = buildVoxeloDarkTheme();
+    final dark = buildVoxelithDarkTheme();
     expect(dark.brightness, Brightness.dark);
     expect(dark.colorScheme.surface.computeLuminance(), lessThan(.1));
     final restored = UserProfile.fromJson(
@@ -357,7 +357,7 @@ void main() {
   test('clan member rows preserve team rank and ownership', () {
     final member = ClanMemberEntry.fromJson({
       'clan_id': 'clan-1',
-      'clan_name': 'VOXELO Takımı',
+      'clan_name': 'VOXELITH Takımı',
       'join_code': 'A1B2C3',
       'rank': 1,
       'user_id': 'user-1',

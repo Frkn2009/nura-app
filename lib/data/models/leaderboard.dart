@@ -17,7 +17,7 @@ class LeaderboardEntry {
       LeaderboardEntry(
         rank: (json['rank'] as num).toInt(),
         userId: json['user_id'] as String,
-        playerName: json['player_name'] as String? ?? 'VOXELO Öğrencisi',
+        playerName: json['player_name'] as String? ?? 'VOXELITH Öğrencisi',
         xp: (json['xp'] as num?)?.toInt() ?? 0,
         isMe: json['is_me'] as bool? ?? false,
       );

@@ -1,4 +1,4 @@
-enum VoxeloEntitlement { free, plus, business }
+enum VoxelithEntitlement { free, plus, business }
 
 class BillingProduct {
   const BillingProduct({
@@ -11,29 +11,29 @@ class BillingProduct {
   final String description;
 }
 
-const voxeloPlusMonthly = BillingProduct(
+const voxelithPlusMonthly = BillingProduct(
   id: 'voxelo_plus_monthly',
-  title: 'VOXELO Plus Aylık',
+  title: 'VOXELITH Plus Aylık',
   description: 'Sınırsız konuşma, reklamsız',
 );
-const voxeloPlusYearly = BillingProduct(
+const voxelithPlusYearly = BillingProduct(
   id: 'voxelo_plus_yearly',
-  title: 'VOXELO Plus Yıllık',
+  title: 'VOXELITH Plus Yıllık',
   description: 'Sınırsız konuşma, reklamsız, 4 ay bedava',
 );
-const voxeloPlusFamily = BillingProduct(
+const voxelithPlusFamily = BillingProduct(
   id: 'voxelo_plus_family',
-  title: 'VOXELO Plus Aile',
+  title: 'VOXELITH Plus Aile',
   description: '4 profil, sınırsız konuşma',
 );
 
-const voxeloBusinessMonthly = BillingProduct(
+const voxelithBusinessMonthly = BillingProduct(
   id: 'voxelo_business_monthly',
-  title: 'VOXELO Business Aylık',
+  title: 'VOXELITH Business Aylık',
   description: 'Toplantı Çevirmeni: günde 8 saat, tüm Plus özellikleri',
 );
-const voxeloBusinessYearly = BillingProduct(
+const voxelithBusinessYearly = BillingProduct(
   id: 'voxelo_business_yearly',
-  title: 'VOXELO Business Yıllık',
+  title: 'VOXELITH Business Yıllık',
   description: 'Toplantı Çevirmeni: günde 8 saat, 4 ay bedava',
 );

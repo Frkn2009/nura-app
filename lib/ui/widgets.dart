@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../core/theme/tokens.dart';
 import 'line_icons.dart';
 
-class VoxeloCard extends StatelessWidget {
-  const VoxeloCard({
+class VoxelithCard extends StatelessWidget {
+  const VoxelithCard({
     super.key,
     required this.child,
     this.padding,
@@ -29,13 +29,13 @@ class VoxeloCard extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         border: Border.all(
           color: Theme.of(
             context,
           ).dividerColor.withValues(alpha: isDark ? 1 : .5),
         ),
-        boxShadow: isDark ? null : Voxelo.softShadow,
+        boxShadow: isDark ? null : Voxelith.softShadow,
       ),
       child: child,
     );
@@ -44,7 +44,7 @@ class VoxeloCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         child: box,
       ),
     );
@@ -52,7 +52,7 @@ class VoxeloCard extends StatelessWidget {
 }
 
 class Eyebrow extends StatelessWidget {
-  const Eyebrow(this.text, {super.key, this.color = Voxelo.terr});
+  const Eyebrow(this.text, {super.key, this.color = Voxelith.terr});
   final String text;
   final Color color;
 
@@ -93,7 +93,7 @@ class ChoiceTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(Voxelo.radius),
+        borderRadius: BorderRadius.circular(Voxelith.radius),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -101,7 +101,7 @@ class ChoiceTile extends StatelessWidget {
             color: selected
                 ? Theme.of(context).colorScheme.primaryContainer
                 : Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(Voxelo.radius),
+            borderRadius: BorderRadius.circular(Voxelith.radius),
             border: Border.all(
               color: selected
                   ? Theme.of(context).colorScheme.primary
@@ -162,7 +162,7 @@ class IconChip extends StatelessWidget {
     this.background,
     this.size = 38,
   });
-  final VoxeloIcon icon;
+  final VoxelithIcon icon;
   final Color? color;
   final Color? background;
   final double size;
@@ -195,7 +195,7 @@ class IconChip extends StatelessWidget {
               ]
             : null,
       ),
-      child: VoxeloLineIcon(
+      child: VoxelithLineIcon(
         icon,
         size: size * 0.5,
         color: flat == null ? Colors.white : color,

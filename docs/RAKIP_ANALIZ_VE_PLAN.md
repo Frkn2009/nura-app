@@ -1,8 +1,8 @@
-# VOXELO — Rakip Analizi & Eksik Özellikler (21 Ağustos 2026)
+# VOXELITH — Rakip Analizi & Eksik Özellikler (21 Ağustos 2026)
 
 ## 📊 RAKIP KARŞILAŞTIRMA TABLOSU
 
-| Özellik | Duolingo | Babbel | Drops | Memrise | VOXELO |
+| Özellik | Duolingo | Babbel | Drops | Memrise | VOXELITH |
 |---|---|---|---|---|---|
 | **Dil sayısı** | 40+ | 14 | 55+ | 24 | **30** ✅ |
 | **Gamification** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ ❌ |
@@ -19,21 +19,21 @@
 | **Offline** | Premium | ✅ | Premium | Premium | ✅ Ücretsiz |
 | **Kültürel içerik** | Az | ✅ | ❌ | ✅ Video | ✅ NIE/kira |
 | **Ücretsiz katman** | Güçlü+reklam | 1 ders | 5dk/gün | Sınırlı | 1dk/gün |
-| **Fiyat (yıllık)** | ~$84 | ~$84 | ~$70 | ~$60 | ~$37 ✅ UCUZ |
+| **Fiyat (yıllık)** | ~$84 | ~$84 | ~$70 | ~$60 | ~$65 ✅ UCUZ |
 
 ---
 
-## 🏆 VOXELO'NIN AVANTAJLARI
+## 🏆 VOXELITH'NIN AVANTAJLARI
 
-1. **Konuşma odaklı** — Rakiplerin çoğu tap-tap. VOXELO ağız açtırıyor
+1. **Konuşma odaklı** — Rakiplerin çoğu tap-tap. VOXELITH ağız açtırıyor
 2. **30 dil telaffuz rehberi** — Hiçbir rakipte yok
 3. **Offline konuşma** — Cihazda TTS/STT, bulut maliyeti $0
 4. **Kadın ses** — Tutarlı, güvenilir ses
-5. **Ucuz** — Yıllık $37 (rakipler $60-84)
+5. **Ucuz** — Yıllık $65 (rakipler $60-84, Duolingo Max $168)
 6. **NIE/kira sahneleri** — İspanya'ya giden Türk nişi
 7. **30 dilde UI** — Arayüz her dilde
 
-## ❌ VOXELO'NIN EKSİKLERİ (düzeltilecek)
+## ❌ VOXELITH'NIN EKSİKLERİ (düzeltilecek)
 
 1. **Oyun modu yok** — Kelime eşleştirme, hız yarışı lazım
 2. **Leaderboard yok** — Rekabet motivasyonu

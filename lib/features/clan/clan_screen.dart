@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n/i18n.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/models/clan.dart';
 import '../../data/supabase/supa_service.dart';
+import '../../state/session.dart';
 import '../../ui/widgets.dart';
 import 'clan_chat_screen.dart';
 
@@ -33,45 +35,48 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final i18n = ref.watch(i18nProvider);
     final email = ref.watch(authEmailProvider);
     return Scaffold(
-      appBar: VoxeloAppBar(pageTitle: const Text('Takım')),
+      appBar: VoxelithAppBar(pageTitle: Text(i18n.clanTitle)),
       body: SafeArea(
         child: email == null
-            ? _login(context)
+            ? _login(context, i18n)
             : FutureBuilder<List<ClanMemberEntry>>(
                 future: request ??= Supa.myClan(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  if (snapshot.hasError) return _failed();
+                  if (snapshot.hasError) return _failed(i18n);
                   final members = snapshot.data ?? const [];
-                  return members.isEmpty ? _empty() : _team(members);
+                  return members.isEmpty
+                      ? _empty(i18n)
+                      : _team(members, i18n);
                 },
               ),
       ),
     );
   }
 
-  Widget _login(BuildContext context) => Center(
+  Widget _login(BuildContext context, I18n i18n) => Center(
     child: Padding(
       padding: const EdgeInsets.all(28),
-      child: VoxeloCard(
+      child: VoxelithCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.groups_outlined, size: 48, color: Voxelo.mintDark),
+            const Icon(Icons.groups_outlined, size: 48, color: Voxelith.mintDark),
             const SizedBox(height: 12),
-            const Text(
-              'Takıma katılmak için giriş yap',
+            Text(
+              i18n.clanLoginPrompt,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 16),
             FilledButton(
               onPressed: () => context.push('/auth'),
-              child: const Text('Giriş yap'),
+              child: Text(i18n.clanLoginCta),
             ),
           ],
         ),
@@ -79,46 +84,46 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
     ),
   );
 
-  Widget _empty() => ListView(
+  Widget _empty(I18n i18n) => ListView(
     padding: const EdgeInsets.fromLTRB(22, 24, 22, 30),
     children: [
-      const VoxeloMascot(size: 110, mood: MascotMood.wave),
+      const VoxelithMascot(size: 110, mood: MascotMood.wave),
       const SizedBox(height: 16),
       Text(
-        'Birlikte daha düzenli',
+        i18n.clanEmptyTitle,
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.displayMedium,
       ),
       const SizedBox(height: 8),
-      const Text(
-        'Takım kur veya 6 haneli davet koduyla arkadaşlarına katıl.',
+      Text(
+        i18n.clanEmptyBody,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Voxelo.muted, height: 1.45),
+        style: const TextStyle(color: Voxelith.muted, height: 1.45),
       ),
       const SizedBox(height: 24),
       FilledButton.icon(
         onPressed: _create,
         icon: const Icon(Icons.add),
-        label: const Text('Takım kur'),
+        label: Text(i18n.clanCreateCta),
       ),
       const SizedBox(height: 10),
       OutlinedButton.icon(
         onPressed: _join,
         icon: const Icon(Icons.login),
-        label: const Text('Kodla katıl'),
+        label: Text(i18n.clanJoinCta),
       ),
       if (error != null) ...[
         const SizedBox(height: 14),
         Text(
           error!,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Voxelo.coral),
+          style: const TextStyle(color: Voxelith.coral),
         ),
       ],
     ],
   );
 
-  Widget _team(List<ClanMemberEntry> members) {
+  Widget _team(List<ClanMemberEntry> members, I18n i18n) {
     final clan = members.first;
     final me = members.where((member) => member.isMe).first;
     return ListView(
@@ -126,9 +131,9 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
       children: [
         Text(clan.clanName, style: Theme.of(context).textTheme.displayMedium),
         const SizedBox(height: 4),
-        const Text(
-          'Bu haftanın yarışması · her Pazartesi sıfırlanır',
-          style: TextStyle(color: Voxelo.muted, fontSize: 12),
+        Text(
+          i18n.clanWeeklyContestNote,
+          style: const TextStyle(color: Voxelith.muted, fontSize: 12),
         ),
         const SizedBox(height: 10),
         InkWell(
@@ -136,13 +141,16 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
             await Clipboard.setData(ClipboardData(text: clan.joinCode));
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Davet kodu kopyalandı')),
+                SnackBar(content: Text(i18n.clanCodeCopied)),
               );
             }
           },
           child: Row(
             children: [
-              const Text('Davet kodu: ', style: TextStyle(color: Voxelo.muted)),
+              Text(
+                i18n.clanInviteCodeLabel,
+                style: const TextStyle(color: Voxelith.muted),
+              ),
               Text(
                 clan.joinCode,
                 style: const TextStyle(
@@ -151,17 +159,17 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
                 ),
               ),
               const SizedBox(width: 6),
-              const Icon(Icons.copy, size: 16, color: Voxelo.mintDark),
+              const Icon(Icons.copy, size: 16, color: Voxelith.mintDark),
             ],
           ),
         ),
         const SizedBox(height: 18),
-        VoxeloCard(
+        VoxelithCard(
           padding: EdgeInsets.zero,
           child: Column(
             children: [
               for (var index = 0; index < members.length; index++) ...[
-                _member(members[index]),
+                _member(members[index], i18n),
                 if (index < members.length - 1) const Divider(height: 1),
               ],
             ],
@@ -173,34 +181,60 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
             context,
           ).push(MaterialPageRoute(builder: (_) => const ClanChatScreen())),
           icon: const Icon(Icons.chat_bubble_outline),
-          label: const Text('Klan sohbeti'),
+          label: Text(i18n.clanChatCta),
+        ),
+        const SizedBox(height: 10),
+        VoxelithCard(
+          onTap: () => context.push('/clan/corrections'),
+          child: Row(
+            children: [
+              const Icon(Icons.spellcheck, color: Voxelith.mintDark),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      i18n.peerCorrectionCta,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      i18n.peerCorrectionCardSubtitle,
+                      style: const TextStyle(color: Voxelith.muted, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Voxelith.muted),
+            ],
+          ),
         ),
         const SizedBox(height: 10),
         OutlinedButton(
           onPressed: () => _leave(me.isOwner, members.length),
           child: Text(
             me.isOwner && members.length > 1
-                ? 'Sahip takımdan ayrılamaz'
-                : 'Takımdan ayrıl',
+                ? i18n.clanOwnerCannotLeave
+                : i18n.clanLeaveCta,
           ),
         ),
       ],
     );
   }
 
-  Widget _member(ClanMemberEntry member) => Padding(
+  Widget _member(ClanMemberEntry member, I18n i18n) => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     child: Row(
       children: [
         SizedBox(
           width: 32,
           child: member.rank == 1
-              ? const Icon(Icons.emoji_events, color: Voxelo.sunflower, size: 20)
+              ? const Icon(Icons.emoji_events, color: Voxelith.sunflower, size: 20)
               : Text(
                   '${member.rank}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Voxelo.mintDark,
+                    color: Voxelith.mintDark,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -208,7 +242,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         const SizedBox(width: 8),
         Expanded(
           child: Text(
-            '${member.playerName}${member.isMe ? ' · Sen' : ''}',
+            '${member.playerName}${member.isMe ? ' · ${i18n.you}' : ''}',
             style: TextStyle(
               fontWeight: member.isMe ? FontWeight.w700 : FontWeight.w500,
             ),
@@ -217,12 +251,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         if (member.isOwner)
           const Padding(
             padding: EdgeInsets.only(right: 8),
-            child: Icon(Icons.shield_outlined, size: 18, color: Voxelo.sunflower),
+            child: Icon(Icons.shield_outlined, size: 18, color: Voxelith.sunflower),
           ),
         Text(
           '${member.xp} XP',
           style: const TextStyle(
-            color: Voxelo.mintDark,
+            color: Voxelith.mintDark,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -230,36 +264,42 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
     ),
   );
 
-  Widget _failed() => Center(
+  Widget _failed(I18n i18n) => Center(
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text('Takım bilgisi alınamadı.'),
+        Text(i18n.clanLoadFailed),
         const SizedBox(height: 10),
-        OutlinedButton(onPressed: reload, child: const Text('Tekrar dene')),
+        OutlinedButton(onPressed: reload, child: Text(i18n.retryCta)),
       ],
     ),
   );
 
   Future<void> _create() async {
-    final name = await _input('Takım kur', 'Takım adı');
+    final i18n = ref.read(i18nProvider);
+    final name = await _input(i18n.clanCreateCta, i18n.clanNameLabel, i18n);
     if (name == null) return;
     try {
       await Supa.createClan(name);
       reload();
     } catch (exception) {
-      setState(() => error = _message(exception));
+      setState(() => error = _message(i18n, exception));
     }
   }
 
   Future<void> _join() async {
-    final code = await _input('Takıma katıl', '6 haneli davet kodu');
+    final i18n = ref.read(i18nProvider);
+    final code = await _input(
+      i18n.clanJoinDialogTitle,
+      i18n.clanInviteCodeHint,
+      i18n,
+    );
     if (code == null) return;
     try {
       await Supa.joinClan(code);
       reload();
     } catch (exception) {
-      setState(() => error = _message(exception));
+      setState(() => error = _message(i18n, exception));
     }
   }
 
@@ -269,7 +309,7 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
     reload();
   }
 
-  Future<String?> _input(String title, String label) async {
+  Future<String?> _input(String title, String label, I18n i18n) async {
     final controller = TextEditingController();
     final value = await showDialog<String>(
       context: context,
@@ -284,12 +324,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Vazgeç'),
+            child: Text(i18n.cancelCta),
           ),
           FilledButton(
             onPressed: () =>
                 Navigator.pop(dialogContext, controller.text.trim()),
-            child: const Text('Devam'),
+            child: Text(i18n.continueCta),
           ),
         ],
       ),
@@ -298,12 +338,12 @@ class _ClanScreenState extends ConsumerState<ClanScreen> {
     return value == null || value.isEmpty ? null : value;
   }
 
-  String _message(Object error) {
+  String _message(I18n i18n, Object error) {
     final text = error.toString();
-    if (text.contains('already_in_clan')) return 'Zaten bir takımdasın.';
+    if (text.contains('already_in_clan')) return i18n.clanAlreadyInClan;
     if (text.contains('clan_not_found')) {
-      return 'Bu davet koduyla takım bulunamadı.';
+      return i18n.clanCodeNotFound;
     }
-    return 'İşlem tamamlanamadı. Tekrar dene.';
+    return i18n.clanActionFailed;
   }
 }

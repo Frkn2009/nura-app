@@ -1,10 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/ai_service.dart';
-import '../data/fake_ai_service.dart';
+import '../data/claude_ai_service.dart';
 import '../domain/ai_feedback.dart';
 
+/// Gerçek Claude API'ye bağlı servis. `VOXELITH_ANTHROPIC_API_KEY`
+/// dart-define'ı girilmediyse (veya API çağrısı başarısız olursa)
+/// [ClaudeAiService] kendi içinde sessizce çevrimdışı/fake moda düşer —
+/// uygulama hiçbir zaman bloklanmaz veya çökmez.
+final claudeAiServiceProvider = Provider<ClaudeAiService>((ref) {
+  return ClaudeAiService();
+});
+
 final aiServiceProvider = Provider<AiService>((ref) {
-  return FakeAiService();
+  return ref.watch(claudeAiServiceProvider);
 });
 
 final dailySummaryProvider =
