@@ -27,11 +27,12 @@ function decodeHtml(value: string) {
 
 // Toplantı Çevirmeni: `translate` fonksiyonundan farklı olarak Plus/Business
 // aboneliği ZORUNLU değil — Free katman da günde 5dk (+ödüllü videoyla bonus)
-// kullanabiliyor, kota istemci tarafında (SessionController.interpreterSecondsUsed)
-// tutuluyor; tıpkı mevcut ücretsiz konuşma dakikası (speakSecondsUsed) gibi
-// sunucu tarafında ayrıca sayılmıyor. Buradaki tek zorunluluk geçerli bir
-// Supabase oturumu (anonim girişte bile main.dart açılışta bunu garantiliyor)
-// — amaç anahtarın (GOOGLE_TRANSLATE_API_KEY) istemciye hiç sızmaması.
+// kullanabiliyor, birincil kota hâlâ istemci tarafında
+// (SessionController.interpreterSecondsUsed) tutuluyor. Sunucu tarafında da
+// ayrıca (4 Eylül'den beri) günlük çağrı sınırı var — aşağıya bak — amaç hem
+// anahtarın (GOOGLE_TRANSLATE_API_KEY) istemciye hiç sızmaması hem de
+// istemci sınırının bir hata/manipülasyonla aşılması durumunda maliyetin
+// sınırsız kalmaması.
 Deno.serve(async (request) => {
   if (request.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (request.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
@@ -53,6 +54,34 @@ Deno.serve(async (request) => {
   const { data: userData, error: userError } = await admin.auth.getUser(jwt);
   if (userError || !userData.user) return json({ error: 'invalid_session' }, 401);
 
+  // Maliyet denetiminde bulundu: bu fonksiyon hiçbir günlük sınıra tabi
+  // değildi ve Plus gerektirmiyor — uygulama her açılışta otomatik anonim
+  // oturum açtığı için kaydolmadan/ödeme yapmadan bile sınırsız çağrılabilirdi.
+  // Artık ai-feedback/tts/chat ile aynı desende sunucu tarafında sınırlanıyor
+  // (bkz. docs/MALIYET_ANALIZI_2026_09.md). İstemcideki dakika sayacı
+  // (UserProfile.interpreterSecondsUsed) hâlâ birincil UX sınırı — bu, onun
+  // arkasındaki güvenlik ağı.
+  const { data: subscription } = await admin
+    .from('subscriptions')
+    .select('status, current_period_end')
+    .eq('user_id', userData.user.id)
+    .in('status', ['active', 'trialing'])
+    .maybeSingle();
+  const periodEnd = subscription?.current_period_end
+    ? new Date(subscription.current_period_end).getTime()
+    : 0;
+  const isPlus = Boolean(subscription) && periodEnd > Date.now();
+  const FREE_DAILY_LIMIT = 10;
+  const PLUS_DAILY_LIMIT = 15;
+
+  const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
+    p_user_id: userData.user.id,
+    p_op: 'interpreter',
+    p_limit: isPlus ? PLUS_DAILY_LIMIT : FREE_DAILY_LIMIT,
+  });
+  if (usageError) return json({ error: 'usage_check_failed' }, 502);
+  if (!allowed) return json({ error: 'daily_limit_reached' }, 429);
+
   let payload: { text?: unknown; from?: unknown; to?: unknown };
   try {
     payload = await request.json();
@@ -62,7 +91,7 @@ Deno.serve(async (request) => {
   const text = typeof payload.text === 'string' ? payload.text.trim() : '';
   const from = typeof payload.from === 'string' ? payload.from : '';
   const to = typeof payload.to === 'string' ? payload.to : '';
-  if (!text || text.length > 1000 || !supportedLanguages.has(from) || !supportedLanguages.has(to) || from === to) {
+  if (!text || text.length > 150 || !supportedLanguages.has(from) || !supportedLanguages.has(to) || from === to) {
     return json({ error: 'invalid_request' }, 400);
   }
 

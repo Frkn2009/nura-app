@@ -63,6 +63,29 @@ fiziksel makinedeki çalışma dizinine erişmek ya da (b) önce oradan
   commit edilmemiş değişikliklerin (bugünküler + önceki oturumlardan kalan
   Voxelo→Voxelith rename'i dahil, ~124 dosya) git diff yedekleri, repo
   DIŞINDA. Hiçbiri commit edilmedi.
+- **Güvenlik + maliyet denetimi yapıldı, 2 gerçek açık kapatıldı**:
+  `translate` ve `interpreter-translate` fonksiyonlarının hiçbirinde
+  günlük sınır yoktu (`interpreter-translate` Plus bile gerektirmiyordu —
+  otomatik anonim girişle herkes sınırsız çağırabiliyordu). İkisi de
+  `try_consume_ai_usage` desenine bağlandı
+  (`20260904120001_translate_interpreter_daily_cap.sql`), girdi uzunluğu
+  sıkılaştırıldı. Aynı anda `tts` (40→8/gün) ve `chat` (25→20/gün) daha da
+  düşürüldü ki **5 kalemin toplam worst-case COGS'u ($5.25/ay ≈ $63/yıl)
+  Plus'ın $65/yıl fiyatının altında kalsın** — bkz. `docs/MALIYET_ANALIZI_2026_09.md`.
+  **Karara bağlandı (aynı gün, ikinci tur):** "Toplantı Çevirmeni" ilk
+  sürümde kârlı olamayacağı için **tamamen kaldırıldı** — `interpreter_screen.dart`
+  ve `interpreter_translate.dart` silindi, `/interpreter` route'u, çeviri
+  sekmesindeki giriş kartı, reklam ekranındaki "+2 dk çeviri" seçeneği,
+  paywall'daki "günde 2 saat/8 saat" vaatleri ve kullanım şartlarındaki
+  referansı kaldırıldı. `interpreter-translate` Edge Function'ı Supabase'de
+  duruyor (günlük sınırlı, artık hiç çağrılmıyor, zararsız) — istenirse
+  tamamen silinebilir. Bunun sonucunda Plus'ın worst-case COGS'u $63'ten
+  **$46.80/yıl**'a düştü (bkz. `docs/MALIYET_ANALIZI_2026_09.md`).
+  **Açık kalan ürün notu**: Business paketinin ($200/yıl) tanıtım
+  metnindeki tek farklılaştırıcısı Toplantı Çevirmeni'ydi — o kaldırılınca
+  Business'ın Plus'a göre gerçek bir üstünlüğü kalmadı ("öncelikli destek"
+  dışında). Business paketinin kendisini gizlemek/kaldırmak istenip
+  istenmediği kullanıcıya soruldu, henüz cevap yok.
 - `dart analyze`: temiz (2 pre-existing info uyarısı, hata yok).
   `flutter test`: 35/35 geçiyor.
 

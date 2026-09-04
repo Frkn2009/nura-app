@@ -57,7 +57,7 @@ Deno.serve(async (request) => {
   // webhook'unun yazdığı subscriptions tablosundan doğrulanır.
   const { data: subscription } = await admin
     .from('subscriptions')
-    .select('status, current_period_end')
+    .select('status, plan, current_period_end')
     .eq('user_id', userData.user.id)
     .in('status', ['active', 'trialing'])
     .maybeSingle();
@@ -65,15 +65,18 @@ Deno.serve(async (request) => {
     ? new Date(subscription.current_period_end).getTime()
     : 0;
   if (!subscription || periodEnd <= Date.now()) return json({ error: 'plus_required' }, 403);
+  const isBusiness = subscription.plan === 'business';
 
-  // ~$0.0011/tur (Claude Haiku 4.5) — 25/gün (3 Eylül'de 40'tan düşürüldü)
-  // worst-case COGS'u bu kalemden ~$0.83/ay/kullanıcıda tutuyor. bkz.
-  // docs/MALIYET_ANALIZI_2026_09.md.
-  const CHAT_DAILY_LIMIT = 25;
+  // ~$0.0011/tur (Claude Haiku 4.5) — 4 Eylül'deki maliyet denetiminde
+  // 25'ten 20'ye düşürüldü ki tüm AI/ses kalemlerinin toplamı aylık
+  // abonelik ücretini aşmasın. Business, $200/yıl fiyatını karşılayan
+  // gerçek bir değer olarak 50/gün alır. bkz. docs/MALIYET_ANALIZI_2026_09.md.
+  const CHAT_DAILY_LIMIT = 20;
+  const CHAT_BUSINESS_DAILY_LIMIT = 50;
   const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
     p_user_id: userData.user.id,
     p_op: 'chat',
-    p_limit: CHAT_DAILY_LIMIT,
+    p_limit: isBusiness ? CHAT_BUSINESS_DAILY_LIMIT : CHAT_DAILY_LIMIT,
   });
   if (usageError) return json({ error: 'usage_check_failed' }, 502);
   if (!allowed) return json({ error: 'daily_limit_reached' }, 429);

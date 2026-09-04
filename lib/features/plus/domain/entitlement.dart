@@ -30,10 +30,10 @@ const voxelithPlusFamily = BillingProduct(
 const voxelithBusinessMonthly = BillingProduct(
   id: 'voxelo_business_monthly',
   title: 'VOXELITH Business Aylık',
-  description: 'Toplantı Çevirmeni: günde 8 saat, tüm Plus özellikleri',
+  description: 'Tüm Plus özellikleri, ~3 kat daha yüksek AI/ses hakkı, öncelikli destek',
 );
 const voxelithBusinessYearly = BillingProduct(
   id: 'voxelo_business_yearly',
   title: 'VOXELITH Business Yıllık',
-  description: 'Toplantı Çevirmeni: günde 8 saat, 4 ay bedava',
+  description: 'Tüm Plus özellikleri, ~3 kat daha yüksek AI/ses hakkı, öncelikli destek, 4 ay bedava',
 );

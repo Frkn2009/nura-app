@@ -68,6 +68,15 @@ Deno.serve(async (request) => {
     ? String(event.original_transaction_id)
     : null;
 
+  // Hangi paket alındığını belirler — RevenueCat panelinde Business için
+  // ayrı bir entitlement var (varsayılan kimlik: "business", bkz.
+  // lib/features/plus/data/revenuecat_billing_service.dart). Bu event'te
+  // hangi entitlement'lar aktifse `entitlement_ids` içinde gelir.
+  const entitlementIds = Array.isArray(event.entitlement_ids)
+    ? event.entitlement_ids.map((id) => String(id))
+    : [];
+  const plan = entitlementIds.includes('business') ? 'business' : 'plus';
+
   let status: 'trialing' | 'active' | 'past_due' | 'canceled' | 'expired';
   if (type === 'EXPIRATION') {
     status = 'expired';
@@ -95,6 +104,7 @@ Deno.serve(async (request) => {
       provider: `revenuecat_${store}`,
       provider_customer_id: originalTransactionId,
       status,
+      plan,
       current_period_end: expirationAtMs
         ? new Date(expirationAtMs).toISOString()
         : new Date().toISOString(),

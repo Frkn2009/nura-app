@@ -61,7 +61,7 @@ Code lives under four top-level buckets and files must not be created outside th
 
 ### Content and monetization model
 
-- Free tier: 60 seconds/day of speaking practice (on-device, ~$0 cost), extendable by watching a rewarded ad (max 3/day) or upgrading to Plus.
+- Free tier: 30 seconds/day of speaking practice (on-device, ~$0 cost), extendable by watching a rewarded ad (+30s each, max 5/day) or upgrading to Plus.
 - AdMob: repo ships Google's test App ID/ad unit IDs by default; production IDs are injected at build time via `--dart-define` (see README) and must replace the test App IDs in `AndroidManifest.xml`/`Info.plist` before a store release.
 
 ## Where to look for project status/history

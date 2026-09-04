@@ -65,7 +65,7 @@ Deno.serve(async (request) => {
   // aynı chat/translate fonksiyonlarındaki subscriptions kontrolü.
   const { data: subscription } = await admin
     .from('subscriptions')
-    .select('status, current_period_end')
+    .select('status, plan, current_period_end')
     .eq('user_id', userData.user.id)
     .in('status', ['active', 'trialing'])
     .maybeSingle();
@@ -73,17 +73,21 @@ Deno.serve(async (request) => {
     ? new Date(subscription.current_period_end).getTime()
     : 0;
   if (!subscription || periodEnd <= Date.now()) return json({ error: 'plus_required' }, 403);
+  const isBusiness = subscription.plan === 'business';
 
   // Plus == pratikte sınırsız konuşma süresi (bkz. UserProfile.speakAllowance),
   // yani TTS oynatma sayısında da istemci tarafında bir tavan yok. ~$0.0045/
-  // oynatma ile 40/gün (3 Eylül'de 80'den düşürüldü — en pahalı tek kalem
-  // buydu), bu kalemden worst-case COGS'u ~$5.4/ay/kullanıcıda tutuyor —
-  // bkz. docs/MALIYET_ANALIZI_2026_09.md.
-  const TTS_DAILY_LIMIT = 40;
+  // oynatma — en pahalı tek kalem bu, 4 Eylül'deki maliyet denetiminde
+  // 40'tan 8'e düşürüldü ki TÜM AI/ses kalemlerinin toplam worst-case'i
+  // aylık abonelik ücretini (~$65/yıl ≈ $5.42/ay) aşmasın. Business, 3 kat
+  // daha yüksek fiyatını ($200/yıl) karşılayan gerçek bir değer olarak
+  // 20/gün alır — bkz. docs/MALIYET_ANALIZI_2026_09.md.
+  const TTS_DAILY_LIMIT = 8;
+  const TTS_BUSINESS_DAILY_LIMIT = 20;
   const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
     p_user_id: userData.user.id,
     p_op: 'tts',
-    p_limit: TTS_DAILY_LIMIT,
+    p_limit: isBusiness ? TTS_BUSINESS_DAILY_LIMIT : TTS_DAILY_LIMIT,
   });
   if (usageError) return json({ error: 'usage_check_failed' }, 502);
   if (!allowed) return json({ error: 'daily_limit_reached' }, 429);

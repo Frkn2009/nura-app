@@ -658,7 +658,7 @@ class UserProfile {
 
   static const maxRewardedAdsPerDay = 5;
 
-  int get speakAllowance => isPlus ? 3600 : 60 + bonusSpeakSeconds;
+  int get speakAllowance => isPlus ? 3600 : 30 + bonusSpeakSeconds;
 
   int remainingSpeakSeconds() {
     if (isPlus) return 3600;

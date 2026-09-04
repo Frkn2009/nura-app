@@ -134,7 +134,6 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 '30 dilin tamamı',
                 'Voxelith ile canlı sohbet',
                 'Çevir + SRS kaydet',
-                'Toplantı Çevirmeni · günde 2 saat',
                 'Reklamsız',
               ])
                 Padding(
@@ -174,8 +173,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               const SizedBox(height: 12),
               for (final f in [
                 'Tüm Plus özellikleri',
-                'Toplantı Çevirmeni · günde 8 saat',
-                'Yurt dışı iş görüşmesi / toplantı için tasarlandı',
+                'Günlük AI analiz, sohbet, ses ve çeviri hakkı ~3 kat daha yüksek',
                 'Öncelikli destek',
               ])
                 Padding(

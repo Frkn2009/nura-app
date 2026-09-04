@@ -437,12 +437,12 @@ class I18n {
   });
 
   String get freeMinute => t({
-    'tr': 'Ücretsiz: günde 1 dakika',
-    'en': 'Free: 1 minute per day',
-    'es': 'Gratis: 1 minuto al día',
-    'de': 'Gratis: 1 Minute pro Tag',
-    'fr': 'Gratuit : 1 minute par jour',
-    'nl': 'Gratis: 1 minuut per dag',
+    'tr': 'Ücretsiz: günde 30 saniye',
+    'en': 'Free: 30 seconds per day',
+    'es': 'Gratis: 30 segundos al día',
+    'de': 'Gratis: 30 Sekunden pro Tag',
+    'fr': 'Gratuit : 30 secondes par jour',
+    'nl': 'Gratis: 30 seconden per dag',
   });
 
   String get holdToSpeak => t({

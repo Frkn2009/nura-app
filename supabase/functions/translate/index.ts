@@ -50,7 +50,7 @@ Deno.serve(async (request) => {
   // ödeme webhook'unun yazabildiği subscriptions tablosundan doğrulanır.
   const { data: subscription } = await admin
     .from('subscriptions')
-    .select('status, current_period_end')
+    .select('status, plan, current_period_end')
     .eq('user_id', userData.user.id)
     .in('status', ['active', 'trialing'])
     .maybeSingle();
@@ -58,6 +58,22 @@ Deno.serve(async (request) => {
     ? new Date(subscription.current_period_end).getTime()
     : 0;
   if (!subscription || periodEnd <= Date.now()) return json({ error: 'plus_required' }, 403);
+  const isBusiness = subscription.plan === 'business';
+
+  // Maliyet denetiminde bulundu: bu fonksiyonun günlük bir üst sınırı hiç
+  // yoktu (~$0.006/çağrı worst-case, 300 karakter üst sınırıyla) — bir Plus
+  // kullanıcı (ya da çalınmış bir oturum) günde sınırsız çağırabiliyordu.
+  // Business, 3 kat daha yüksek fiyatını karşılayan gerçek bir değer olarak
+  // 15/gün alır. Bkz. docs/MALIYET_ANALIZI_2026_09.md.
+  const TRANSLATE_DAILY_LIMIT = 6;
+  const TRANSLATE_BUSINESS_DAILY_LIMIT = 15;
+  const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
+    p_user_id: userData.user.id,
+    p_op: 'translate',
+    p_limit: isBusiness ? TRANSLATE_BUSINESS_DAILY_LIMIT : TRANSLATE_DAILY_LIMIT,
+  });
+  if (usageError) return json({ error: 'usage_check_failed' }, 502);
+  if (!allowed) return json({ error: 'daily_limit_reached' }, 429);
 
   let payload: { text?: unknown; from?: unknown; to?: unknown };
   try {
@@ -68,7 +84,7 @@ Deno.serve(async (request) => {
   const text = typeof payload.text === 'string' ? payload.text.trim() : '';
   const from = typeof payload.from === 'string' ? payload.from : '';
   const to = typeof payload.to === 'string' ? payload.to : '';
-  if (!text || text.length > 1000 || !supportedLanguages.has(from) || !supportedLanguages.has(to) || from === to) {
+  if (!text || text.length > 300 || !supportedLanguages.has(from) || !supportedLanguages.has(to) || from === to) {
     return json({ error: 'invalid_request' }, 400);
   }
 

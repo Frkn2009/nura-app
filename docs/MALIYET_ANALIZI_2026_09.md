@@ -1,10 +1,48 @@
-# VOXELITH — Bir Kullanıcının Maksimum Maliyeti (3 Eylül 2026)
+# VOXELITH — Bir Kullanıcının Maksimum Maliyeti (4 Eylül 2026 — güncel)
 
-Bu doküman, bugün gerçek API'lere bağlanan üç Edge Function'ın (`chat`,
-`tts`, `ai-feedback`) birim maliyetini ve bir Plus kullanıcısının bize
-ayda **en fazla** ne kadara mal olabileceğini hesaplar. Kaynak: Anthropic
-ve ElevenLabs'ın 3 Eylül 2026 itibariyle güncel fiyat listeleri (web
-araştırması, sohbet geçmişinde kaynak linkleri var).
+Bu doküman, gerçek API'lere bağlanan dört aktif Edge Function'ın (`chat`,
+`tts`, `ai-feedback`, `translate`) birim maliyetini ve bir Plus
+kullanıcısının bize ayda **en fazla** ne kadara mal olabileceğini
+hesaplar. Kaynak: Anthropic, ElevenLabs ve Google Cloud Translate'in 4
+Eylül 2026 itibariyle güncel fiyat listeleri.
+
+**4 Eylül güncellemesi #4 — Business paketine gerçek değer verildi:**
+Toplantı Çevirmeni kaldırılınca Business ($200/yıl) Plus'a göre ("öncelikli
+destek" dışında) hiçbir üstünlüğü olmayan bir paket haline gelmişti — üstelik
+Plus Family de aynı $200/yıl'a 4 profil veriyordu, Business ise 1 profile
+sahipti. Düzeltme: `subscriptions` tablosuna bir `plan` sütunu eklendi
+(`20260904130001_business_plan_tier.sql`), `revenuecat-webhook` artık
+RevenueCat'in `entitlement_ids`'inden hangi paketin alındığını kaydediyor,
+ve dört Edge Function da (`ai-feedback`/`chat`/`tts`/`translate`) Business
+kullanıcılara Plus'ın **~2.5-3 katı** günlük hak veriyor (aşağıdaki §2.1
+tablosu). Bu, kod tarafında teslim edilebilen, gerçek ve sürdürülebilir bir
+farklılaştırıcı.
+
+**4 Eylül güncellemesi #3 — ücretsiz konuşma tabanı 60sn → 30sn:**
+`UserProfile.speakAllowance` (ücretsiz kullanıcının günlük temel konuşma
+süresi) 60 saniyeden 30 saniyeye düşürüldü. **Bunun API maliyetine sıfır
+etkisi var** — konuşma pratiği tamamen cihaz üzerinde (STT/TTS), hiçbir
+sunucu çağrısı içermiyor, zaten $0 maliyetliydi. Bu tamamen bir **Plus
+dönüşüm** kararı: ücretsiz deneyim daha kıt olunca (a) kullanıcı daha
+hızlı "hakkım bitti" duvarına çarpıp Plus'a yönleniyor, (b) aynı miktarda
+ekstra süreye ulaşmak için artık 2 kat daha fazla ödüllü video izlemesi
+gerekiyor (video başına ödül hâlâ +30sn, sabit) — yani reklam geliri
+tarafında da hafif bir artış beklenebilir. Ödüllü video sınırı (günde 5)
+ve video başına ödül (+30sn) **değişmedi**.
+
+**4 Eylül güncellemesi #2 — "Toplantı Çevirmeni" tamamen kaldırıldı:**
+Ürün kararıyla interpreter özelliği (ekran, istemci servisi, tüm giriş
+noktaları ve paywall vaatleri) bu oturumda tamamen çıkarıldı — ilk sürümde
+kârlı olamayacağı netleşti. `interpreter-translate` Edge Function'ı hâlâ
+Supabase'de duruyor (günlük sınırlı, zararsız) ama istemciden artık **hiç
+çağrılmıyor** — maliyeti fiilen **$0**. Aşağıdaki tüm hesaplar buna göre
+güncellendi.
+
+**4 Eylül güncellemesi #1 — kural artık kesin:** Toplam worst-case COGS,
+Plus'ın yıllık fiyatını ($65 ≈ $5.42/ay) **hiçbir zaman aşmayacak** şekilde
+sınırlar yeniden hesaplandı ve deploy edildi. O güne kadar **hiçbir günlük
+sınırı olmayan** iki fonksiyon (`translate`, `interpreter-translate`)
+bulunmuştu — ilki hâlâ aktif ve sınırlı, ikincisi artık kullanılmıyor.
 
 ## 1. Birim maliyetler
 
@@ -14,84 +52,108 @@ araştırması, sohbet geçmişinde kaynak linkleri var).
 | `ai-feedback` (senaryo üretimi) | Claude Sonnet 5 | ~280 tok | ~400 tok | ≈ $0.0046 |
 | `chat` (canlı sohbet turu) | Claude Haiku 4.5 ($1/$5 per MTok) | ~500 tok | ~120 tok | **≈ $0.0011** |
 | `tts` (bir cümle oynatma) | ElevenLabs `eleven_v3`, ~45 karakter, $0.10/1000 karakter (overage) | — | — | **≈ $0.0045** |
+| `translate` (bulut çeviri, worst-case) | Google Cloud Translation v2, $20/1M karakter, 300 karakter üst sınırı | — | — | **≈ $0.006** |
 
-Not: ElevenLabs $0.10/1k karakter rakamı **plan aşımı (overage)** fiyatı —
-yani "en kötü durum" varsayımı. Aylık paket kotası içinde kalınırsa gerçek
-marjinal maliyet daha düşük, ama "maksimum maliyet" sorusu için doğru
-referans overage fiyatıdır.
+`interpreter-translate` artık istemciden hiç çağrılmadığı için bu tablodan
+çıkarıldı (maliyeti $0) — kod hâlâ Supabase'de duruyor, dilersen tamamen
+silebiliriz, ama zararsız durumda.
 
-## 2. Bugüne kadarki durum: sınır yoktu
+Not: ElevenLabs $0.10/1k karakter ve Google'ın $20/1M karakter rakamları
+**worst-case (en kötü durum)** varsayımı — gerçek ortalama kullanım
+(kısa cümleler, tam limite dayanmayan metinler) daha ucuzdur, ama sunucu
+tarafındaki sınırın *garanti etmesi gereken* tavan budur; bu yüzden hesap
+hep worst-case üzerinden yapılıyor.
 
-Üç fonksiyon da yalnızca "oturum açık mı" ve (tts/chat için) "Plus mı"
-kontrolü yapıyordu — **hiçbirinde günlük/aylık üst sınır yoktu.**
-`UserProfile.speakAllowance`, Plus kullanıcılar için pratikte sınırsız
-konuşma süresi tanımlıyor (`isPlus ? 3600 : ...` — 1 saatlik "gösterim"
-değeri, gerçek bir tavan değil). Bu, **teorik maksimum maliyetin
-sınırsız** olduğu anlamına geliyordu — bir kullanıcı (kasıtlı ya da
-yoğun kullanımla) günde yüzlerce çağrı yapabilirdi.
+## 2. Güncel durum: her kalem sunucu tarafında sınırlı
 
-**Bu oturumda düzeltildi:** `supabase/migrations/20260903120001_ai_usage_daily_cap.sql`
-ile `ai_usage_daily` tablosu + `try_consume_ai_usage()` RPC'si eklendi, her
-üç fonksiyon da artık çağrı öncesi bu sınırı kontrol ediyor. **3 Eylül'de
-ikinci bir tur sıkılaştırma daha yapıldı** (aşağıdaki tablo güncel):
+**4 Eylül denetiminde bulundu:** `translate` ve `interpreter-translate`
+fonksiyonlarının **hiçbirinde günlük sınır yoktu** — `translate` Plus
+gerektiriyordu ama Plus bir kullanıcı (ya da çalınmış bir oturum) günde
+sınırsız çağırabiliyordu; `interpreter-translate` ise Plus bile
+gerektirmiyordu — uygulama her açılışta otomatik anonim oturum açtığı
+için **kaydolmadan, ödeme yapmadan** herkes sınırsız çağırabiliyordu. Bu,
+`ai-feedback`/`tts`/`chat`'in 3 Eylül'de kapatılan aynı türden açığının
+gözden kaçmış hâliydi.
+
+`supabase/migrations/20260904120001_translate_interpreter_daily_cap.sql`
+ile bu ikisi de aynı `ai_usage_daily` + `try_consume_ai_usage()` desenine
+bağlandı, girdi uzunluğu sınırları sıkılaştırıldı (`translate`: 1000→300
+karakter, `interpreter-translate`: 1000→150 karakter — tek bir konuşma
+cümlesi için hâlâ bol), ve **tüm beş kalemin toplam worst-case'i aylık
+abonelik ücretini aşmayacak** şekilde `tts`/`chat` sınırları da aynı anda
+yeniden düşürüldü:
 
 | Operasyon | Ücretsiz | Plus | Plus sınıra tam ulaşılırsa/ay |
 |---|---|---|---|
-| `ai-feedback` | **1/gün** (Plus'a yönlendirme mesajıyla biter) | 15/gün (25'ten düşürüldü) | 15 × 30 × $0.0024 ≈ **$1.08** |
-| `tts` | Plus'a kilitli, $0 | 40/gün (80'den düşürüldü) | 40 × 30 × $0.0045 ≈ **$5.40** |
-| `chat` | Plus'a kilitli, $0 | 25/gün (40'tan düşürüldü) | 25 × 30 × $0.0011 ≈ **$0.83** |
-| **Toplam (Plus, üçü de her gün tam dolarsa)** | | | **≈ $7.31/ay/kullanıcı (~$88/yıl)** |
+| `ai-feedback` | **1/gün** (+reklamla 5'e kadar ek hak) | 15/gün | 15 × 30 × $0.0024 ≈ **$1.08** |
+| `chat` | Plus'a kilitli, $0 | 20/gün | 20 × 30 × $0.0011 ≈ **$0.66** |
+| `tts` | Plus'a kilitli, $0 | 8/gün | 8 × 30 × $0.0045 ≈ **$1.08** |
+| `translate` | Plus gerektirir, $0 | 6/gün | 6 × 30 × $0.006 ≈ **$1.08** |
+| `interpreter-translate` | kaldırıldı — kod var, çağrılmıyor | kaldırıldı | **$0** |
+| **Toplam (Plus, hepsi her gün tam dolarsa)** | | | **≈ $3.90/ay/kullanıcı (~$46.80/yıl)** |
 
-Önceki tura göre worst-case **%48 düştü** ($13.92 → $7.31/ay). Hâlâ yıllık
-$65 (~$5.42/ay) fiyatın biraz üstünde ama artık çok daha yakın — ve bu
-rakam yalnızca sınırlara HER GÜN tam ulaşan aykırı kullanıcılar için
-geçerli, ortalama kullanıcı çok daha altında kalıyor (aşağıya bkz.).
+**$46.80/yıl, $65/yıl fiyatın belirgin şekilde altında** — kullanıcı 4
+kalemin TÜMÜNE HER GÜN tam ulaşsa bile (gerçek dünyada olmayacak en kötü
+senaryo). İnterpreter'ı kaldırınca (önceki turdaki $63'ten) worst-case bir
+kez daha **%26 düştü**. İlk turdan (3 Eylül, $88/yıl, sınırsız 2 fonksiyon
+dahil değil) bu yana toplam düşüş **%47**.
 
-**`ai-feedback` artık Plus'a kilitli** — ücretsiz kullanıcı günde 1 kez
-deneyebilir (özelliğin gerçek olduğunu görsün), sonrasında net bir "Plus'a
-geç" mesajıyla karşılaşır (skor yerine 🔒 ikonu + yönlendirme metni,
-istemci tarafında ayrıca "Plus'a Geç" butonu paywall'a götürüyor). `tts` ve
-`chat` zaten Plus'a kilitliydi, değişmedi.
+**Mağaza kesintisi dahil edilince de güvenli:** Apple/Google genelde
+%15 (Küçük İşletme Programı / ikinci yıl ve sonrası, çoğu indie geliştirici
+bu kapsama girer) ile %30 (standart oran) arası komisyon alıyor.
+- %15 kesintiyle net gelir: $65 × 0.85 = **$55.25/yıl** → $46.80 COGS,
+  **%85 marj bırakır.**
+- %30 (en kötü, genelde geçerli olmayan) kesintiyle net gelir: $65 × 0.70
+  = **$45.50/yıl** → $46.80 COGS bunu **~$1.30 aşar** — yani sadece en
+  kötü mağaza oranında VE tüm kullanıcı tüm sınırlara her gün tam
+  ulaşırsa (ikisi birden gerçekleşmesi son derece olası değil) teorik
+  olarak marj negatife döner. Gerçek ortalama kullanımda (aşağıya bkz.)
+  bu senaryo hiç yaklaşmıyor bile.
 
 Sınır sayıları (`FREE_DAILY_LIMIT`, `PLUS_DAILY_LIMIT`, `TTS_DAILY_LIMIT`,
-`CHAT_DAILY_LIMIT`) her fonksiyonun kodunda açıkça sabit olarak duruyor —
-daha da sıkılaştırmak istersen tek satır değiştirip yeniden deploy etmen
-yeterli.
+`CHAT_DAILY_LIMIT`, `TRANSLATE_DAILY_LIMIT`) her fonksiyonun kodunda açıkça
+sabit olarak duruyor — değiştirmek istersen tek satır + yeniden deploy
+yeterli, ama değiştirirken bu dokümandaki toplamı yeniden hesapla.
+
+### 2.1 Business ($200/yıl) — Plus'ın ~2.5-3 katı günlük hak
+
+`subscriptions.plan` sütunu (RevenueCat `entitlement_ids`'inden dolduruluyor)
+sayesinde artık sunucu Plus/Business ayrımını biliyor:
+
+| Operasyon | Plus/gün | Business/gün | Business sınıra tam ulaşılırsa/ay |
+|---|---|---|---|
+| `ai-feedback` | 15 | **40** | 40 × 30 × $0.0024 ≈ **$2.88** |
+| `chat` | 20 | **50** | 50 × 30 × $0.0011 ≈ **$1.65** |
+| `tts` | 8 | **20** | 20 × 30 × $0.0045 ≈ **$2.70** |
+| `translate` | 6 | **15** | 15 × 30 × $0.006 ≈ **$2.70** |
+| **Toplam** | | | **≈ $9.93/ay ≈ $119.16/yıl** |
+
+Business fiyatı $200/yıl (aylık $17.30 × 12 = $207.60/yıl da benzer):
+- %15 mağaza kesintisiyle net $170/yıl → $119.16 COGS, **%30 marj** (worst-case).
+- %30 kesintiyle net $140/yıl → $119.16 COGS, **%15 marj** (worst-case) —
+  Plus'ın aksine bu senaryoda bile Business hâlâ **kârda kalıyor.**
 
 ## 3. Gerçekçi kullanım senaryoları
 
 ### Ortalama aktif Plus kullanıcısı (günde ~20 dk pratik)
-- ~20 TTS oynatma/gün, ~3 AI analiz/gün, ~5 sohbet turu/gün
-- Aylık: (20×$0.0045 + 3×$0.0024 + 5×$0.0011) × 30 ≈ **$3.09/ay ≈ $37/yıl**
-- Yıllık $65 gelire karşı ≈ **%57 COGS** — marj var ama rahat değil.
+- ~8 TTS oynatma/gün (sınırda), ~3 AI analiz/gün, ~5 sohbet turu/gün,
+  ~2 çeviri/gün
+- Aylık: (8×$0.0045 + 3×$0.0024 + 5×$0.0011 + 2×$0.006) × 30
+  ≈ **$1.87/ay ≈ $22.40/yıl**
+- Yıllık $65 gelire karşı ≈ **%34 COGS** — ilk turdaki %57'den çok daha
+  sağlıklı bir marj.
 
-### Yoğun kullanıcı (günde ~60 dk, sınırların çoğuna yaklaşan)
-- ~80 TTS (tam sınırda), ~15 AI analiz, ~20 sohbet turu
-- Aylık: (80×$0.0045 + 15×$0.0024 + 20×$0.0011) × 30 ≈ **$12.54/ay ≈ $150/yıl**
-- Bu, $65/yıl fiyatı **aşıyor.** Böyle kullanıcılar azınlıkta olacaktır
-  ama varlığı, günlük sınırların (özellikle `tts`'in) bugünkü haliyle hâlâ
-  gevşek olduğunu gösteriyor.
+### Yoğun kullanıcı (tüm sınırlara her gün tam ulaşan)
+- Bkz. §2 tablosundaki toplam: **$3.90/ay ≈ $46.80/yıl** — $65/yıl fiyatın
+  belirgin şekilde altında, ilk turda ($150/yıl) fiyatı ciddi şekilde aşan
+  senaryonun aksine.
 
-## 4. Öneri
+## 4. Ücretsiz katman
 
-Sınırlar şu an kasıtlı olarak "gerçek kullanımı kısıtlamayacak kadar
-gevşek" seçildi (ürünü bozmamak için). İki seçenek:
-1. **Böyle bırak, izle** — Supabase'de `ai_usage_daily` tablosunu
-   sorgulayarak gerçek kullanıcıların günlük ortalamasının sınırlara ne
-   kadar yakın olduğunu birkaç hafta sonra görebilirsin. Çoğu kullanıcı
-   sınırın çok altında kalacaktır (yukarıdaki "ortalama" senaryo bunu
-   gösteriyor) — asıl risk kuyruktaki birkaç aşırı kullanıcı.
-2. **`tts` sınırını sıkılaştır** — en pahalı kalem bu (80×$0.0045=$0.36/gün,
-   diğer ikisinin toplamından ~7 kat fazla). 40/gün'e indirmek worst-case'i
-   ~$4.86 düşürür, gerçek kullanıcıların çoğunu etkilemez (ortalama senaryo
-   zaten 20/gün kullanıyor).
-
-## 5. Ücretsiz katman
-
-3 Eylül'deki ikinci turdan sonra: `tts` ve `chat` Plus'a kilitli — ücretsiz
-kullanıcı bu iki kalemden **$0** maliyet yaratıyor. `ai-feedback` de artık
-Plus'a kilitli, tek istisna: günde **1 ücretsiz deneme** — bu, "freemium
-teaser" mantığıyla bilinçli bırakıldı (özelliğin varlığını ve değerini
-görsün, sonra Plus'a yönlensin). Ücretsiz bir kullanıcının bize toplam
-maksimum aylık maliyeti artık **1 × 30 × $0.0024 ≈ $0.07/ay** — pratikte
-sıfıra yakın.
+`tts`, `chat` ve `translate` Plus'a kilitli — ücretsiz kullanıcı bu üç
+kalemden **$0** maliyet yaratıyor. Tek kalem: `ai-feedback` — günde 1
+ücretsiz deneme + reklamla günde 5'e kadar ek hak
+(`docs/DEVAM_SAYFASI.md`'deki "reklamla ek AI-feedback hakkı" bölümüne
+bkz.) — worst-case (1 + 5 reklam) × 30 × $0.0024 ≈ **$0.43/ay**. Bir
+ücretsiz kullanıcının toplam maksimum aylık maliyeti artık **$0.43/ay** —
+pratikte sıfıra yakın, reklam geliriyle rahatça karşılanır.

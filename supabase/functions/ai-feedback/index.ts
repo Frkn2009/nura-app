@@ -92,18 +92,19 @@ Deno.serve(async (request) => {
 
   // Freemium teaser (3 Eylül 2026 kararı): ücretsiz kullanıcı günde 1 kez
   // deneyebilir — özelliğin varlığını ve değerini görsün, sonra Plus'a
-  // yönlensin. Plus kullanıcı günde 15'e kadar (25'ten düşürüldü — bkz.
-  // docs/MALIYET_ANALIZI_2026_09.md, gerçekçi kullanım senaryosu COGS'u
-  // sıkılaştırmak için).
+  // yönlensin. Plus kullanıcı günde 15'e kadar, Business günde 40'a kadar
+  // (Business'ın $200/yıl fiyatını gerçek bir değerle karşılamak için 4
+  // Eylül'de eklendi — bkz. docs/MALIYET_ANALIZI_2026_09.md).
   const FREE_DAILY_LIMIT = 1;
   const PLUS_DAILY_LIMIT = 15;
+  const BUSINESS_DAILY_LIMIT = 40;
   // Var olan ödüllü reklam sınırıyla aynı (bkz.
   // lib/data/models/models.dart -> UserProfile.maxRewardedAdsPerDay).
   const AD_BONUS_MAX = 5;
 
   const { data: subscription } = await admin
     .from('subscriptions')
-    .select('status, current_period_end')
+    .select('status, plan, current_period_end')
     .eq('user_id', userData.user.id)
     .in('status', ['active', 'trialing'])
     .maybeSingle();
@@ -111,6 +112,7 @@ Deno.serve(async (request) => {
     ? new Date(subscription.current_period_end).getTime()
     : 0;
   const isPlus = Boolean(subscription) && periodEnd > Date.now();
+  const isBusiness = isPlus && subscription?.plan === 'business';
 
   let payload: Record<string, unknown>;
   try {
@@ -141,7 +143,7 @@ Deno.serve(async (request) => {
   const { data: allowed, error: usageError } = await admin.rpc('try_consume_ai_usage', {
     p_user_id: userData.user.id,
     p_op: 'feedback',
-    p_limit: isPlus ? PLUS_DAILY_LIMIT : FREE_DAILY_LIMIT,
+    p_limit: isBusiness ? BUSINESS_DAILY_LIMIT : isPlus ? PLUS_DAILY_LIMIT : FREE_DAILY_LIMIT,
   });
   if (usageError) return json({ error: 'usage_check_failed' }, 502);
   if (!allowed) return json({ error: isPlus ? 'daily_limit_reached' : 'plus_required' }, isPlus ? 429 : 403);

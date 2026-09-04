@@ -74,8 +74,8 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          profile.speakSecondsUsed >= 60
-                              ? 'Hay aksi, bugünkü hakkın bitti! ${profile.speakSecondsUsed ~/ 60} dakika konuşma pratiği yaptın, harika gidiyorsun. Devam etmek için kısa bir video izle ve ödülünü seç, ya da Plus ile sınırları tamamen kaldır.'
+                          profile.speakSecondsUsed >= 30
+                              ? 'Hay aksi, bugünkü hakkın bitti! Devam etmek için kısa bir video izle ve ödülünü seç, ya da Plus ile sınırları tamamen kaldır.'
                               : 'Kısa bir video izle ve ödülünü seç. Plus üyeler hiçbir video reklam görmez.',
                           style: const TextStyle(
                             color: Voxelith.cream,
@@ -107,11 +107,6 @@ class _AdGateScreenState extends ConsumerState<AdGateScreen> {
                   value: AdReward.speakTime,
                   icon: Icon(Icons.mic_none),
                   label: Text('+30 sn konuşma'),
-                ),
-                ButtonSegment(
-                  value: AdReward.interpreterTime,
-                  icon: Icon(Icons.translate),
-                  label: Text('+2 dk çeviri'),
                 ),
                 ButtonSegment(
                   value: AdReward.xp,

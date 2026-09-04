@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/models/models.dart';
@@ -156,43 +155,6 @@ class _TranslateScreenState extends ConsumerState<TranslateScreen> {
             i18n.translate,
             style: Theme.of(context).textTheme.displayMedium,
           ),
-          const SizedBox(height: 16),
-          VoxelithCard(
-            color: Voxelith.forest,
-            onTap: () => context.push('/interpreter'),
-            child: Row(
-              children: [
-                const Icon(Icons.groups, color: Colors.white, size: 28),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        i18n.interpreterMeetingTitle,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        i18n.interpreterCardSubtitle(
-                          p.interpreterSecondsLeft ~/ 60,
-                        ),
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(Icons.chevron_right, color: Colors.white70),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
 
           // Dil seçici (Google Translate tarzı)
           Container(
